@@ -24,7 +24,34 @@ export async function GET(request: Request) {
         },
       }
     );
-    await supabase.auth.exchangeCodeForSession(code);
+
+    const { data } = await supabase.auth.exchangeCodeForSession(code);
+    const user = data.user;
+
+    if (user) {
+      const { username, mobile_number } = user.user_metadata as {
+        username?: string;
+        mobile_number?: string;
+      };
+
+      if (username && mobile_number) {
+        const { error: profileError } = await supabase.from('users').upsert(
+          {
+            id: user.id,
+            username,
+            mobile_number,
+            parent_email: user.email,
+          },
+          { onConflict: 'id' }
+        );
+
+        if (profileError) {
+          return NextResponse.redirect(
+            `${origin}/login?error=${encodeURIComponent('That mobile number is already in use on another account.')}`
+          );
+        }
+      }
+    }
   }
 
   return NextResponse.redirect(`${origin}/dashboard`);

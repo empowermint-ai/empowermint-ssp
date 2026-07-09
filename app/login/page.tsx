@@ -1,24 +1,40 @@
 'use client';
 
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { supabase } from '@/lib/supabaseClient';
 import AuthCard from '@/components/AuthCard';
 import TextField from '@/components/TextField';
 import Button from '@/components/Button';
 
-export default function LoginPage() {
+function LoginForm() {
   const router = useRouter();
-  const [email, setEmail] = useState('');
+  const searchParams = useSearchParams();
+  const [mobileNumber, setMobileNumber] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(searchParams.get('error'));
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
     setLoading(true);
+
+    const resolveRes = await fetch('/api/resolve-login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ mobile_number: mobileNumber }),
+    });
+
+    if (!resolveRes.ok) {
+      setLoading(false);
+      const body = await resolveRes.json().catch(() => null);
+      setError(body?.error ?? 'No account found with that mobile number');
+      return;
+    }
+
+    const { email } = await resolveRes.json();
 
     const { error } = await supabase.auth.signInWithPassword({ email, password });
 
@@ -37,13 +53,13 @@ export default function LoginPage() {
     <AuthCard title="Welcome back" subtitle="Log in to your empowermint account.">
       <form onSubmit={handleSubmit} className="space-y-4">
         <TextField
-          id="email"
-          label="Email"
-          type="email"
-          autoComplete="email"
+          id="mobileNumber"
+          label="Mobile number"
+          type="tel"
+          autoComplete="tel"
           required
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          value={mobileNumber}
+          onChange={(e) => setMobileNumber(e.target.value)}
         />
         <TextField
           id="password"
@@ -66,5 +82,13 @@ export default function LoginPage() {
         </Link>
       </p>
     </AuthCard>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense>
+      <LoginForm />
+    </Suspense>
   );
 }
