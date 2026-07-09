@@ -66,16 +66,21 @@ export default async function Home() {
 
       <div className="flex-1" />
 
-      <div className="flex flex-col items-center">
-        <div className="flex items-center gap-1 mb-1">
-          <span className="w-2 h-2 rounded-full bg-navy" />
-          <span className="w-2 h-2 rounded-full bg-teal" />
-          <span className="w-2 h-2 rounded-full bg-purple" />
-        </div>
-        <span className="font-heading text-sm font-bold text-text-primary">
-          empowermint
-        </span>
-        <span className="w-16 h-[2px] bg-orange mt-1" />
+      <div className="w-16">
+        <Image
+          src="/brand/logo-em-power-black.png"
+          alt="empower"
+          width={375}
+          height={268}
+          className="block dark:hidden w-full h-auto"
+        />
+        <Image
+          src="/brand/logo-em-power-white.png"
+          alt="empower"
+          width={375}
+          height={268}
+          className="hidden dark:block w-full h-auto"
+        />
       </div>
     </main>
   );
