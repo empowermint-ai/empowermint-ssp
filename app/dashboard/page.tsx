@@ -5,10 +5,10 @@ import SignOutButton from '@/components/SignOutButton';
 export default async function DashboardPage() {
   const supabase = createSupabaseServerClient();
   const {
-    data: { session },
-  } = await supabase.auth.getSession();
+    data: { user },
+  } = await supabase.auth.getUser();
 
-  if (!session) {
+  if (!user) {
     redirect('/login');
   }
 
@@ -21,7 +21,7 @@ export default async function DashboardPage() {
         </div>
         <div className="bg-card border border-card-border rounded-2xl p-6">
           <p className="text-text-body text-sm">Signed in as</p>
-          <p className="text-text-primary font-medium">{session.user.email}</p>
+          <p className="text-text-primary font-medium">{user.email}</p>
         </div>
       </div>
     </main>
