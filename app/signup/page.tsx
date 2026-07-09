@@ -1,0 +1,88 @@
+'use client';
+
+import { useState } from 'react';
+import Link from 'next/link';
+import { supabase } from '@/lib/supabaseClient';
+import AuthCard from '@/components/AuthCard';
+import TextField from '@/components/TextField';
+import Button from '@/components/Button';
+
+export default function SignUpPage() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [submitted, setSubmitted] = useState(false);
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setError(null);
+    setLoading(true);
+
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        emailRedirectTo: `${window.location.origin}/auth/callback`,
+      },
+    });
+
+    setLoading(false);
+
+    if (error) {
+      setError(error.message);
+      return;
+    }
+
+    setSubmitted(true);
+  }
+
+  if (submitted) {
+    return (
+      <AuthCard title="Check your email" subtitle="We've sent you a confirmation link.">
+        <p className="text-text-body text-sm">
+          Click the link in the email to confirm your account, then come back and log in.
+        </p>
+        <Link href="/login" className="block mt-6 text-teal text-sm font-medium">
+          Back to log in
+        </Link>
+      </AuthCard>
+    );
+  }
+
+  return (
+    <AuthCard title="Create your account" subtitle="Start planning smarter with empowermint.">
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <TextField
+          id="email"
+          label="Email"
+          type="email"
+          autoComplete="email"
+          required
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <TextField
+          id="password"
+          label="Password"
+          type="password"
+          autoComplete="new-password"
+          minLength={6}
+          required
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        {error && <p className="text-sm text-red-600">{error}</p>}
+        <Button type="submit" loading={loading}>
+          Create account
+        </Button>
+      </form>
+      <p className="text-center text-sm text-text-muted mt-5">
+        Already have an account?{' '}
+        <Link href="/login" className="text-teal font-medium">
+          Log in
+        </Link>
+      </p>
+    </AuthCard>
+  );
+}
