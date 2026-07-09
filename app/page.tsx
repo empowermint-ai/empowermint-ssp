@@ -66,19 +66,19 @@ export default async function Home() {
 
       <div className="flex-1" />
 
-      <div className="w-16">
+      <div className="w-32">
         <Image
-          src="/brand/logo-em-power-black.png"
-          alt="empower"
-          width={375}
-          height={268}
+          src="/brand/logo-empowermint-black.png"
+          alt="empowermint"
+          width={421}
+          height={105}
           className="block dark:hidden w-full h-auto"
         />
         <Image
-          src="/brand/logo-em-power-white.png"
-          alt="empower"
-          width={375}
-          height={268}
+          src="/brand/logo-empowermint-white.png"
+          alt="empowermint"
+          width={421}
+          height={105}
           className="hidden dark:block w-full h-auto"
         />
       </div>
