@@ -16,7 +16,7 @@ export default async function DashboardPage() {
     <main className="min-h-screen bg-bg px-6 py-8">
       <div className="max-w-sm mx-auto">
         <div className="flex items-center justify-between mb-8">
-          <h1 className="font-heading text-2xl text-navy">Dashboard</h1>
+          <h1 className="font-heading text-2xl text-navy dark:text-text-primary">Dashboard</h1>
           <SignOutButton />
         </div>
         <div className="bg-card border border-card-border rounded-2xl p-6">
