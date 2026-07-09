@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { createSupabaseServerClient } from '@/lib/supabaseServerClient';
@@ -14,14 +15,23 @@ export default async function Home() {
 
   return (
     <main className="min-h-screen bg-bg flex flex-col items-center px-6 pt-20 pb-10 text-center">
-      <div className="flex flex-col items-center">
-        <span className="font-heading text-5xl font-extrabold leading-[0.85] text-text-primary">
-          em
-        </span>
-        <span className="w-14 h-[3px] bg-orange my-1.5" />
-        <span className="font-heading text-3xl font-extrabold leading-[0.85] text-text-primary">
-          power
-        </span>
+      <div className="w-40">
+        <Image
+          src="/brand/logo-em-power-black.png"
+          alt="empower"
+          width={375}
+          height={268}
+          priority
+          className="block dark:hidden w-full h-auto"
+        />
+        <Image
+          src="/brand/logo-em-power-white.png"
+          alt="empower"
+          width={375}
+          height={268}
+          priority
+          className="hidden dark:block w-full h-auto"
+        />
       </div>
       <p className="mt-4 text-sm font-semibold tracking-[0.2em] text-teal">
         SMART STUDY PLANNER
