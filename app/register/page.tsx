@@ -7,7 +7,7 @@ import AuthCard from '@/components/AuthCard';
 import TextField from '@/components/TextField';
 import Button from '@/components/Button';
 
-export default function SignUpPage() {
+export default function RegisterPage() {
   const [username, setUsername] = useState('');
   const [mobileNumber, setMobileNumber] = useState('');
   const [email, setEmail] = useState('');

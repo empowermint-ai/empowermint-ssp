@@ -77,7 +77,7 @@ function LoginForm() {
       </form>
       <p className="text-center text-sm text-text-muted mt-5">
         Don&apos;t have an account?{' '}
-        <Link href="/signup" className="text-teal font-medium">
+        <Link href="/register" className="text-teal font-medium">
           Sign up
         </Link>
       </p>
