@@ -2,143 +2,160 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { supabase } from '@/lib/supabaseClient';
+import { useRouter } from 'next/navigation';
 import { normalizeMobileNumber } from '@/lib/normalizeMobileNumber';
-import AuthCard from '@/components/AuthCard';
-import TextField from '@/components/TextField';
-import Button from '@/components/Button';
+import { isValidSAMobile } from '@/lib/validateMobileNumber';
 
-export default function RegisterPage() {
+interface FieldErrors {
+  username?: string;
+  mobileNumber?: string;
+  password?: string;
+}
+
+export default function RegisterStep1Page() {
+  const router = useRouter();
   const [username, setUsername] = useState('');
   const [mobileNumber, setMobileNumber] = useState('');
-  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
+  const [takenError, setTakenError] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [submitted, setSubmitted] = useState(false);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setError(null);
+    setTakenError(false);
+
+    const errors: FieldErrors = {};
+
+    if (!username.trim()) {
+      errors.username = 'Please enter a username.';
+    }
+
+    if (!mobileNumber.trim()) {
+      errors.mobileNumber = 'Please enter your mobile number.';
+    } else if (!isValidSAMobile(mobileNumber)) {
+      errors.mobileNumber = 'Enter a valid SA mobile number, e.g. 082 000 0000.';
+    }
+
+    if (!password) {
+      errors.password = 'Please enter a password.';
+    } else if (password.length < 6) {
+      errors.password = 'Password must be at least 6 characters.';
+    }
+
+    setFieldErrors(errors);
+
+    if (Object.keys(errors).length > 0) {
+      return;
+    }
+
     setLoading(true);
 
     const normalizedMobile = normalizeMobileNumber(mobileNumber);
 
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: {
-          username,
-          mobile_number: normalizedMobile,
-        },
-        emailRedirectTo: `${window.location.origin}/auth/callback`,
-      },
+    const resolveRes = await fetch('/api/resolve-login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ mobile_number: normalizedMobile }),
     });
 
-    if (error) {
-      setLoading(false);
-      setError(error.message);
+    setLoading(false);
+
+    if (resolveRes.ok) {
+      setTakenError(true);
       return;
     }
 
-    const userId = data.user?.id;
-
-    if (userId) {
-      const profileRes = await fetch('/api/create-profile', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          id: userId,
-          username,
-          mobile_number: normalizedMobile,
-          parent_email: email,
-        }),
-      });
-
-      if (!profileRes.ok) {
-        setLoading(false);
-        const body = await profileRes.json().catch(() => null);
-        setError(body?.error ?? 'That mobile number is already registered.');
-        return;
-      }
-    }
-
-    setLoading(false);
-    setSubmitted(true);
-  }
-
-  if (submitted) {
-    return (
-      <AuthCard title="Check your email" subtitle="We've sent you a confirmation link.">
-        <p className="text-text-body text-sm">
-          Click the link in the email to confirm your account. After that, log in using
-          your mobile number and password.
-        </p>
-        <Link href="/login" className="block mt-6 text-teal text-sm font-medium">
-          Back to log in
-        </Link>
-      </AuthCard>
+    sessionStorage.setItem(
+      'registerStep1',
+      JSON.stringify({ username, mobileNumber: normalizedMobile, password })
     );
+
+    router.push('/register/step2');
   }
 
   return (
-    <AuthCard title="Create your account" subtitle="Start planning smarter with empowermint.">
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <TextField
-          id="username"
-          label="Student username"
-          type="text"
-          autoComplete="name"
-          required
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <TextField
-          id="mobileNumber"
-          label="Student mobile number"
-          type="tel"
-          autoComplete="tel"
-          required
-          value={mobileNumber}
-          onChange={(e) => setMobileNumber(e.target.value)}
-        />
-        <p className="text-xs text-text-muted -mt-2">
-          You&apos;ll use this mobile number to log in from now on.
-        </p>
-        <TextField
-          id="email"
-          label="Parent&apos;s email"
-          type="email"
-          autoComplete="email"
-          required
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <p className="text-xs text-text-muted -mt-2">
-          Used once to confirm this account. You won&apos;t need it to log in.
-        </p>
-        <TextField
-          id="password"
-          label="Password"
-          type="password"
-          autoComplete="new-password"
-          minLength={6}
-          required
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        {error && <p className="text-sm text-red-600">{error}</p>}
-        <Button type="submit" loading={loading}>
-          Create account
-        </Button>
-      </form>
-      <p className="text-center text-sm text-text-muted mt-5">
-        Already have an account?{' '}
-        <Link href="/login" className="text-teal font-medium">
-          Log in
-        </Link>
+    <main className="min-h-screen bg-bg flex flex-col px-[38px] py-10">
+      <p className="font-heading font-bold text-[10px] uppercase tracking-[1.5px] text-teal">
+        STEP 1 OF 2
       </p>
-    </AuthCard>
+
+      <h1 className="font-heading font-bold text-[26px] tracking-[-0.066em] text-text-primary mt-3">
+        Let&apos;s set you up.
+      </h1>
+
+      <p className="font-body text-[14px] text-text-body mt-2">
+        This is yours. Just the basics to get started.
+      </p>
+
+      <form onSubmit={handleSubmit} className="mt-8 flex flex-col flex-1 space-y-4">
+        <div>
+          <input
+            id="username"
+            type="text"
+            autoComplete="name"
+            placeholder="e.g. thabo_m"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            className="w-full bg-card border-[1.5px] border-card-border rounded-[10px] px-[14px] py-[13px] font-body text-[14px] text-text-primary outline-none focus:border-teal"
+          />
+          {fieldErrors.username && (
+            <p className="text-red-600 text-xs mt-1">{fieldErrors.username}</p>
+          )}
+        </div>
+
+        <div>
+          <input
+            id="mobileNumber"
+            type="tel"
+            autoComplete="tel"
+            placeholder="082 000 0000"
+            value={mobileNumber}
+            onChange={(e) => setMobileNumber(e.target.value)}
+            className="w-full bg-card border-[1.5px] border-card-border rounded-[10px] px-[14px] py-[13px] font-body text-[14px] text-text-primary outline-none focus:border-teal"
+          />
+          {fieldErrors.mobileNumber && (
+            <p className="text-red-600 text-xs mt-1">{fieldErrors.mobileNumber}</p>
+          )}
+          {takenError && (
+            <p className="text-red-600 text-xs mt-1">
+              This number is already registered.{' '}
+              <Link href="/login" className="underline font-medium">
+                Log in instead
+              </Link>
+            </p>
+          )}
+        </div>
+
+        <div>
+          <input
+            id="password"
+            type="password"
+            autoComplete="new-password"
+            placeholder="Min 6 characters"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full bg-card border-[1.5px] border-card-border rounded-[10px] px-[14px] py-[13px] font-body text-[14px] text-text-primary outline-none focus:border-teal"
+          />
+          {fieldErrors.password && (
+            <p className="text-red-600 text-xs mt-1">{fieldErrors.password}</p>
+          )}
+        </div>
+
+        <div className="flex-1" />
+
+        <button
+          type="submit"
+          disabled={loading}
+          className="w-full bg-orange text-white font-heading font-bold text-[13.5px] rounded-[10px] py-[14px] disabled:opacity-60"
+        >
+          {loading ? 'Please wait…' : 'Continue'}
+        </button>
+      </form>
+
+      <p className="font-body text-[10px] text-text-muted text-center mt-6">
+        Your mobile number is how you&apos;ll log in from now on.
+      </p>
+    </main>
   );
 }
