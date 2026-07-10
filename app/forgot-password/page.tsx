@@ -1,21 +1,18 @@
 'use client';
 
-import { Suspense, useState } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
 import { supabase } from '@/lib/supabaseClient';
 import { normalizeMobileNumber } from '@/lib/normalizeMobileNumber';
 import AuthCard from '@/components/AuthCard';
 import TextField from '@/components/TextField';
 import Button from '@/components/Button';
 
-function LoginForm() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
+export default function ForgotPasswordPage() {
   const [mobileNumber, setMobileNumber] = useState('');
-  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(searchParams.get('error'));
+  const [error, setError] = useState<string | null>(null);
+  const [submitted, setSubmitted] = useState(false);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -37,7 +34,9 @@ function LoginForm() {
 
     const { email } = await resolveRes.json();
 
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/auth/callback?next=/reset-password`,
+    });
 
     setLoading(false);
 
@@ -46,12 +45,27 @@ function LoginForm() {
       return;
     }
 
-    router.push('/dashboard');
-    router.refresh();
+    setSubmitted(true);
+  }
+
+  if (submitted) {
+    return (
+      <AuthCard title="Check your email" subtitle="We've sent a password reset link.">
+        <p className="text-text-body text-sm">
+          Click the link in the email to choose a new password.
+        </p>
+        <Link href="/login" className="block mt-6 text-teal text-sm font-medium">
+          Back to log in
+        </Link>
+      </AuthCard>
+    );
   }
 
   return (
-    <AuthCard title="Welcome back" subtitle="Log in to your empowermint account.">
+    <AuthCard
+      title="Forgot password?"
+      subtitle="We'll send a reset link to the email on file for your account."
+    >
       <form onSubmit={handleSubmit} className="space-y-4">
         <TextField
           id="mobileNumber"
@@ -62,39 +76,16 @@ function LoginForm() {
           value={mobileNumber}
           onChange={(e) => setMobileNumber(e.target.value)}
         />
-        <TextField
-          id="password"
-          label="Password"
-          type="password"
-          autoComplete="current-password"
-          required
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
         {error && <p className="text-sm text-red-600">{error}</p>}
         <Button type="submit" loading={loading}>
-          Log in
+          Send reset link
         </Button>
       </form>
-      <p className="text-center text-sm mt-4">
-        <Link href="/forgot-password" className="text-teal font-medium">
-          Forgot password?
-        </Link>
-      </p>
-      <p className="text-center text-sm text-text-muted mt-2">
-        Don&apos;t have an account?{' '}
-        <Link href="/register" className="text-teal font-medium">
-          Sign up
+      <p className="text-center text-sm text-text-muted mt-5">
+        <Link href="/login" className="text-teal font-medium">
+          Back to log in
         </Link>
       </p>
     </AuthCard>
-  );
-}
-
-export default function LoginPage() {
-  return (
-    <Suspense>
-      <LoginForm />
-    </Suspense>
   );
 }

@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation';
 import { createSupabaseServerClient } from '@/lib/supabaseServerClient';
 import SignOutButton from '@/components/SignOutButton';
+import ChangePasswordForm from '@/components/ChangePasswordForm';
 
 export default async function DashboardPage() {
   const supabase = createSupabaseServerClient();
@@ -22,6 +23,12 @@ export default async function DashboardPage() {
         <div className="bg-card border border-card-border rounded-2xl p-6">
           <p className="text-text-body text-sm">Signed in as</p>
           <p className="text-text-primary font-medium">{user.email}</p>
+        </div>
+        <div className="bg-card border border-card-border rounded-2xl p-6 mt-4">
+          <h2 className="font-heading text-lg text-navy dark:text-text-primary mb-4">
+            Change password
+          </h2>
+          <ChangePasswordForm />
         </div>
       </div>
     </main>
