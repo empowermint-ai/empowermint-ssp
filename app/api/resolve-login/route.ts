@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { createSupabaseAdminClient } from '@/lib/supabaseAdminClient';
+import { normalizeMobileNumber } from '@/lib/normalizeMobileNumber';
 
 export async function POST(request: Request) {
   const { mobile_number } = await request.json();
@@ -13,7 +14,7 @@ export async function POST(request: Request) {
   const { data, error } = await supabase
     .from('users')
     .select('parent_email')
-    .eq('mobile_number', mobile_number.trim())
+    .eq('mobile_number', normalizeMobileNumber(mobile_number))
     .maybeSingle();
 
   if (error || !data || !data.parent_email) {

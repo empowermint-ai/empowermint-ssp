@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { supabase } from '@/lib/supabaseClient';
+import { normalizeMobileNumber } from '@/lib/normalizeMobileNumber';
 import AuthCard from '@/components/AuthCard';
 import TextField from '@/components/TextField';
 import Button from '@/components/Button';
@@ -27,7 +28,7 @@ export default function RegisterPage() {
       options: {
         data: {
           username,
-          mobile_number: mobileNumber,
+          mobile_number: normalizeMobileNumber(mobileNumber),
         },
         emailRedirectTo: `${window.location.origin}/auth/callback`,
       },

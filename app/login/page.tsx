@@ -4,6 +4,7 @@ import { Suspense, useState } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { supabase } from '@/lib/supabaseClient';
+import { normalizeMobileNumber } from '@/lib/normalizeMobileNumber';
 import AuthCard from '@/components/AuthCard';
 import TextField from '@/components/TextField';
 import Button from '@/components/Button';
@@ -24,7 +25,7 @@ function LoginForm() {
     const resolveRes = await fetch('/api/resolve-login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ mobile_number: mobileNumber }),
+      body: JSON.stringify({ mobile_number: normalizeMobileNumber(mobileNumber) }),
     });
 
     if (!resolveRes.ok) {

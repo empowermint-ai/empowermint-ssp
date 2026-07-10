@@ -1,6 +1,7 @@
 import { createServerClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
+import { normalizeMobileNumber } from '@/lib/normalizeMobileNumber';
 
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url);
@@ -39,7 +40,7 @@ export async function GET(request: Request) {
           {
             id: user.id,
             username,
-            mobile_number,
+            mobile_number: normalizeMobileNumber(mobile_number),
             parent_email: user.email,
           },
           { onConflict: 'id' }
