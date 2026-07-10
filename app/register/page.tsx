@@ -22,25 +22,49 @@ export default function RegisterPage() {
     setError(null);
     setLoading(true);
 
-    const { error } = await supabase.auth.signUp({
+    const normalizedMobile = normalizeMobileNumber(mobileNumber);
+
+    const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
         data: {
           username,
-          mobile_number: normalizeMobileNumber(mobileNumber),
+          mobile_number: normalizedMobile,
         },
         emailRedirectTo: `${window.location.origin}/auth/callback`,
       },
     });
 
-    setLoading(false);
-
     if (error) {
+      setLoading(false);
       setError(error.message);
       return;
     }
 
+    const userId = data.user?.id;
+
+    if (userId) {
+      const profileRes = await fetch('/api/create-profile', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: userId,
+          username,
+          mobile_number: normalizedMobile,
+          parent_email: email,
+        }),
+      });
+
+      if (!profileRes.ok) {
+        setLoading(false);
+        const body = await profileRes.json().catch(() => null);
+        setError(body?.error ?? 'That mobile number is already registered.');
+        return;
+      }
+    }
+
+    setLoading(false);
     setSubmitted(true);
   }
 
