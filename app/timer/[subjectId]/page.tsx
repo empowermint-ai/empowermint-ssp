@@ -1,6 +1,6 @@
-import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { createSupabaseServerClient } from '@/lib/supabaseServerClient';
+import TimerClient from '@/components/TimerClient';
 
 export default async function TimerPage({ params }: { params: { subjectId: string } }) {
   const supabase = createSupabaseServerClient();
@@ -19,17 +19,33 @@ export default async function TimerPage({ params }: { params: { subjectId: strin
     .eq('user_id', user.id)
     .maybeSingle();
 
+  if (!subject) {
+    redirect('/dashboard');
+  }
+
+  const todayStr = new Date().toISOString().slice(0, 10);
+
+  const { data: planRows } = await supabase
+    .from('daily_plans')
+    .select('id, subject_id, session_order')
+    .eq('user_id', user.id)
+    .eq('plan_date', todayStr)
+    .order('session_order', { ascending: true });
+
+  const rows = planRows ?? [];
+  const currentRow = rows.find((r) => r.subject_id === params.subjectId);
+
+  if (!currentRow) {
+    redirect('/dashboard');
+  }
+
   return (
-    <main className="min-h-screen bg-bg flex flex-col items-center justify-center px-10 text-center">
-      <h1 className="font-heading font-bold text-[21px] tracking-[-0.066em] text-text-primary">
-        {subject?.subject_name ?? 'Study session'}
-      </h1>
-      <p className="font-body text-[14px] text-text-body mt-2 max-w-xs">
-        This screen is a placeholder — the real focus timer design comes next.
-      </p>
-      <Link href="/dashboard" className="text-teal text-sm font-medium mt-6">
-        Back to today&apos;s plan
-      </Link>
-    </main>
+    <TimerClient
+      subjectId={params.subjectId}
+      subjectName={subject.subject_name}
+      sessionNumber={currentRow.session_order}
+      totalSessions={rows.length}
+      dailyPlanId={currentRow.id}
+    />
   );
 }
