@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation';
 import { createSupabaseServerClient } from '@/lib/supabaseServerClient';
 import SignOutButton from '@/components/SignOutButton';
 import ChangePasswordForm from '@/components/ChangePasswordForm';
+import ParentNotifyForm from '@/components/ParentNotifyForm';
 
 export default async function DashboardPage() {
   const supabase = createSupabaseServerClient();
@@ -15,7 +16,7 @@ export default async function DashboardPage() {
 
   const { data: profile } = await supabase
     .from('users')
-    .select('username')
+    .select('username, parent_notify_email, parent_notify_confirmed_at')
     .eq('id', user.id)
     .maybeSingle();
 
@@ -37,6 +38,12 @@ export default async function DashboardPage() {
             Change password
           </h2>
           <ChangePasswordForm />
+        </div>
+        <div className="bg-card border border-card-border rounded-2xl p-6 mt-4">
+          <ParentNotifyForm
+            initialEmail={profile?.parent_notify_email ?? null}
+            initialConfirmed={!!profile?.parent_notify_confirmed_at}
+          />
         </div>
       </div>
     </main>
