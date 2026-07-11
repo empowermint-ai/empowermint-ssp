@@ -3,6 +3,7 @@
 import { useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabaseClient';
+import { priorityScore } from '@/lib/priorityScore';
 
 interface Subject {
   id: string;
@@ -14,21 +15,6 @@ interface Subject {
 function formatDateChip(dateStr: string): string {
   const date = new Date(`${dateStr}T00:00:00`);
   return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
-}
-
-function daysWeight(examDate: string, targetDate: string): number {
-  const exam = new Date(`${examDate}T00:00:00Z`).getTime();
-  const target = new Date(`${targetDate}T00:00:00Z`).getTime();
-  const days = Math.round((exam - target) / 86_400_000);
-  if (days > 14) return 1;
-  if (days >= 8) return 2;
-  if (days >= 4) return 3;
-  return 4;
-}
-
-function priorityScore(subject: Subject, targetDate: string): number {
-  const confidence = subject.confidence_score ?? 3;
-  return (6 - confidence) * daysWeight(subject.exam_date!, targetDate);
 }
 
 export default function ExamDatesForm({
@@ -84,7 +70,11 @@ export default function ExamDatesForm({
     }
 
     const topThree = [...subjects]
-      .sort((a, b) => priorityScore(b, todayStr) - priorityScore(a, todayStr))
+      .sort(
+        (a, b) =>
+          priorityScore(b.confidence_score, b.exam_date, todayStr) -
+          priorityScore(a.confidence_score, a.exam_date, todayStr)
+      )
       .slice(0, 3);
 
     await supabase.from('daily_plans').delete().eq('user_id', userId).eq('plan_date', todayStr);
