@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabaseClient';
 import { priorityScore } from '@/lib/priorityScore';
+import ProgressStrip from '@/components/ProgressStrip';
 
 interface Session {
   id: string;
@@ -124,18 +125,7 @@ export default function TodayPlanClient({
         </button>
       )}
 
-      <div className="flex gap-[5px]">
-        {Array.from({ length: 5 }).map((_, i) => {
-          const session = sessions[i];
-          const done = session?.completed ?? false;
-          return (
-            <span
-              key={i}
-              className={`flex-1 h-[6px] rounded-[3px] ${done ? 'bg-teal' : 'bg-line'}`}
-            />
-          );
-        })}
-      </div>
+      <ProgressStrip completedFlags={sessions.map((s) => s.completed)} />
     </>
   );
 }
