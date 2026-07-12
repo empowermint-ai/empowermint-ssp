@@ -46,8 +46,8 @@ export default function RankSubjectsForm({ initialSubjects }: { initialSubjects:
   }
 
   return (
-    <div className="flex flex-col flex-1 min-h-0">
-      <div className="flex-1 overflow-y-auto min-h-0">
+    <div className="flex flex-col flex-1">
+      <div>
         {subjects.map((subject) => (
           <div
             key={subject.id}
@@ -80,18 +80,18 @@ export default function RankSubjectsForm({ initialSubjects }: { initialSubjects:
         ))}
       </div>
 
-      <div className="flex-1" />
+      <div className="mt-6">
+        {error && <p className="text-red-600 text-xs text-center mb-2">{error}</p>}
 
-      {error && <p className="text-red-600 text-xs text-center mb-2">{error}</p>}
-
-      <button
-        type="button"
-        disabled={!allRanked || saving}
-        onClick={handleNext}
-        className="w-full bg-orange text-white font-heading font-bold text-[13.5px] rounded-[10px] py-[14px] disabled:opacity-40"
-      >
-        {saving ? 'Saving…' : 'Next: exam dates'}
-      </button>
+        <button
+          type="button"
+          disabled={!allRanked || saving}
+          onClick={handleNext}
+          className="w-full bg-orange text-white font-heading font-bold text-[13.5px] rounded-[10px] py-[14px] disabled:opacity-40"
+        >
+          {saving ? 'Saving…' : 'Next: exam dates'}
+        </button>
+      </div>
     </div>
   );
 }

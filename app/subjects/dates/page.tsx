@@ -24,7 +24,7 @@ export default async function SubjectDatesPage() {
   }
 
   return (
-    <main className="h-screen flex flex-col px-[38px] py-8 bg-bg overflow-hidden">
+    <main className="min-h-dvh flex flex-col px-[38px] py-8 bg-bg">
       <p className="font-heading font-bold text-[10px] uppercase text-teal">LAST STEP</p>
       <h1 className="font-heading font-bold text-[21px] tracking-[-0.066em] text-text-primary mt-3">
         When is each exam?

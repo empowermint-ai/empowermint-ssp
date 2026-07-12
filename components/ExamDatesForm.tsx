@@ -90,8 +90,8 @@ export default function ExamDatesForm({
   }
 
   return (
-    <div className="flex flex-col flex-1 min-h-0">
-      <div className="flex-1 overflow-y-auto min-h-0">
+    <div className="flex flex-col flex-1">
+      <div>
         {subjects.map((subject) => (
           <div
             key={subject.id}
@@ -120,29 +120,29 @@ export default function ExamDatesForm({
         ))}
       </div>
 
-      <div className="flex-1" />
+      <div className="mt-6">
+        {error && <p className="text-red-600 text-xs text-center mb-2">{error}</p>}
 
-      {error && <p className="text-red-600 text-xs text-center mb-2">{error}</p>}
+        {!allDated && !error && (
+          <p className="font-body text-xs text-text-muted text-center mb-2">
+            Still need{missingSubjects.length === 1 ? 's' : ''} a date:{' '}
+            {missingSubjects.map((s) => s.subject_name).join(', ')}.
+          </p>
+        )}
 
-      {!allDated && !error && (
-        <p className="font-body text-xs text-text-muted text-center mb-2">
-          Still need{missingSubjects.length === 1 ? 's' : ''} a date:{' '}
-          {missingSubjects.map((s) => s.subject_name).join(', ')}.
+        <button
+          type="button"
+          disabled={!allDated || saving}
+          onClick={handleGenerate}
+          className="w-full bg-orange text-white font-heading font-bold text-[13.5px] rounded-[10px] py-[14px] disabled:opacity-40"
+        >
+          {saving ? 'Generating…' : 'Generate my plan'}
+        </button>
+
+        <p className="font-body text-[10px] text-text-muted text-center mt-3">
+          Your schedule builds instantly and updates every day.
         </p>
-      )}
-
-      <button
-        type="button"
-        disabled={!allDated || saving}
-        onClick={handleGenerate}
-        className="w-full bg-orange text-white font-heading font-bold text-[13.5px] rounded-[10px] py-[14px] disabled:opacity-40"
-      >
-        {saving ? 'Generating…' : 'Generate my plan'}
-      </button>
-
-      <p className="font-body text-[10px] text-text-muted text-center mt-3">
-        Your schedule builds instantly and updates every day.
-      </p>
+      </div>
     </div>
   );
 }

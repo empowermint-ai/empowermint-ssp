@@ -24,7 +24,7 @@ export default async function RankSubjectsPage() {
   }
 
   return (
-    <main className="h-screen flex flex-col px-[38px] py-8 bg-bg overflow-hidden">
+    <main className="min-h-dvh flex flex-col px-[38px] py-8 bg-bg">
       <p className="font-heading font-bold text-[10px] uppercase text-teal">
         BE HONEST — THIS DRIVES YOUR PLAN
       </p>
