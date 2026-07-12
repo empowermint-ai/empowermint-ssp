@@ -30,7 +30,7 @@ export default function ExamDatesForm({
   const [error, setError] = useState<string | null>(null);
 
   const allDated = subjects.every((s) => s.exam_date !== null);
-  const remainingCount = subjects.filter((s) => s.exam_date === null).length;
+  const missingSubjects = subjects.filter((s) => s.exam_date === null);
 
   const today = new Date();
   const todayStr = today.toISOString().slice(0, 10);
@@ -104,7 +104,7 @@ export default function ExamDatesForm({
               className={`font-body text-xs rounded-[8px] px-[10px] py-[5px] border-[1.3px] ${
                 subject.exam_date
                   ? 'text-navy dark:text-text-primary border-navy dark:border-text-primary'
-                  : 'text-text-muted border-line'
+                  : 'text-orange border-orange'
               }`}
             >
               {subject.exam_date ? formatDateChip(subject.exam_date) : 'Set date ▾'}
@@ -126,7 +126,8 @@ export default function ExamDatesForm({
 
       {!allDated && !error && (
         <p className="font-body text-xs text-text-muted text-center mb-2">
-          {remainingCount} more subject{remainingCount === 1 ? '' : 's'} need{remainingCount === 1 ? 's' : ''} a date.
+          Still need{missingSubjects.length === 1 ? 's' : ''} a date:{' '}
+          {missingSubjects.map((s) => s.subject_name).join(', ')}.
         </p>
       )}
 
