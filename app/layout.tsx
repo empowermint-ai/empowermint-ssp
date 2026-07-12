@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import ServiceWorkerRegister from "./service-worker-register";
+import AuthCodeHandler from "./auth-code-handler";
 
 export const metadata: Metadata = {
   title: "empowermint SSP",
@@ -37,6 +38,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="antialiased">
         <ServiceWorkerRegister />
+        <AuthCodeHandler />
         {children}
       </body>
     </html>
