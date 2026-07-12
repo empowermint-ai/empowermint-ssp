@@ -44,6 +44,17 @@ export default async function DashboardPage() {
     .is('archived_at', null);
 
   const subjects = activeSubjects ?? [];
+
+  if (subjects.length === 0) {
+    redirect('/subjects');
+  }
+  if (subjects.some((s) => s.confidence_score === null)) {
+    redirect('/subjects/rank');
+  }
+  if (subjects.some((s) => s.exam_date === null)) {
+    redirect('/subjects/dates');
+  }
+
   const rankedCount = subjects.filter((s) => s.confidence_score !== null).length;
 
   const upcomingExams = subjects
