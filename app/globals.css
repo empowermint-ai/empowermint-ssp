@@ -32,6 +32,11 @@
     --color-text-muted: #6B6557;
     --color-line: #3A3733;
   }
+
+  ::placeholder {
+    color: #6B6557;
+    opacity: 1;
+  }
 }
 
 * {
