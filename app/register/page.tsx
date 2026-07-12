@@ -1,10 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { supabase } from '@/lib/supabaseClient';
 import { normalizeMobileNumber } from '@/lib/normalizeMobileNumber';
 import { isValidSAMobile } from '@/lib/validateMobileNumber';
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 interface FieldErrors {
   username?: string;
@@ -20,6 +22,17 @@ export default function RegisterStep1Page() {
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const [takenError, setTakenError] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [checkingAuth, setCheckingAuth] = useState(true);
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (user) {
+        router.replace('/dashboard');
+      } else {
+        setCheckingAuth(false);
+      }
+    });
+  }, [router]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -72,6 +85,10 @@ export default function RegisterStep1Page() {
     );
 
     router.push('/register/step2');
+  }
+
+  if (checkingAuth) {
+    return <LoadingSpinner />;
   }
 
   return (

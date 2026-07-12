@@ -7,6 +7,7 @@ import { supabase } from '@/lib/supabaseClient';
 import AuthCard from '@/components/AuthCard';
 import TextField from '@/components/TextField';
 import Button from '@/components/Button';
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 export default function ResetPasswordPage() {
   const router = useRouter();
@@ -42,7 +43,7 @@ export default function ResetPasswordPage() {
   }
 
   if (checkingSession) {
-    return null;
+    return <LoadingSpinner />;
   }
 
   if (!hasSession) {

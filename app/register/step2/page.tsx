@@ -7,6 +7,7 @@ import { supabase } from '@/lib/supabaseClient';
 import AuthCard from '@/components/AuthCard';
 import TextField from '@/components/TextField';
 import Button from '@/components/Button';
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 interface Step1Data {
   username: string;
@@ -21,14 +22,24 @@ export default function RegisterStep2Page() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
+  const [checkingAuth, setCheckingAuth] = useState(true);
 
   useEffect(() => {
-    const stored = sessionStorage.getItem('registerStep1');
-    if (!stored) {
-      router.replace('/register');
-      return;
-    }
-    setStep1Data(JSON.parse(stored));
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (user) {
+        router.replace('/dashboard');
+        return;
+      }
+
+      setCheckingAuth(false);
+
+      const stored = sessionStorage.getItem('registerStep1');
+      if (!stored) {
+        router.replace('/register');
+        return;
+      }
+      setStep1Data(JSON.parse(stored));
+    });
   }, [router]);
 
   async function handleSubmit(e: React.FormEvent) {
@@ -96,8 +107,8 @@ export default function RegisterStep2Page() {
     );
   }
 
-  if (!step1Data) {
-    return null;
+  if (checkingAuth || !step1Data) {
+    return <LoadingSpinner />;
   }
 
   return (

@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { createSupabaseServerClient } from '@/lib/supabaseServerClient';
 import TodayPlanClient from '@/components/TodayPlanClient';
+import SettingsMenu from '@/components/SettingsMenu';
 
 const GREETINGS: ((name: string) => string)[] = [
   () => 'Welcome back, champ!',
@@ -94,9 +95,12 @@ export default async function DashboardPage() {
           </h1>
           <p className="font-body text-[11px] text-text-muted mt-1">{todayFormatted}</p>
         </div>
-        <span className="bg-purple text-white font-heading font-bold text-[10.5px] rounded-[20px] px-[10px] py-[5px] whitespace-nowrap">
-          {rankedCount} ranked
-        </span>
+        <div className="flex items-center gap-2">
+          <span className="bg-purple text-white font-heading font-bold text-[10.5px] rounded-[20px] px-[10px] py-[5px] whitespace-nowrap">
+            {rankedCount} ranked
+          </span>
+          <SettingsMenu />
+        </div>
       </div>
 
       {examBanner && (
