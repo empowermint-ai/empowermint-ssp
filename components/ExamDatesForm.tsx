@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabaseClient';
 import { priorityScore } from '@/lib/priorityScore';
@@ -28,7 +28,6 @@ export default function ExamDatesForm({
   const [subjects, setSubjects] = useState(initialSubjects);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const inputRefs = useRef<Record<string, HTMLInputElement | null>>({});
 
   const allDated = subjects.every((s) => s.exam_date !== null);
 
@@ -37,15 +36,6 @@ export default function ExamDatesForm({
   const tomorrow = new Date(today);
   tomorrow.setDate(tomorrow.getDate() + 1);
   const minDateStr = tomorrow.toISOString().slice(0, 10);
-
-  function openPicker(id: string) {
-    const el = inputRefs.current[id] as (HTMLInputElement & { showPicker?: () => void }) | null;
-    if (el?.showPicker) {
-      el.showPicker();
-    } else {
-      el?.focus();
-    }
-  }
 
   function handleDateChange(id: string, value: string) {
     if (!value || value < minDateStr) return;
@@ -104,8 +94,7 @@ export default function ExamDatesForm({
         {subjects.map((subject) => (
           <div
             key={subject.id}
-            onClick={() => openPicker(subject.id)}
-            className="flex items-center justify-between bg-card border-[1.5px] border-card-border rounded-[10px] px-[14px] py-[11px] mb-[10px] cursor-pointer"
+            className="relative flex items-center justify-between bg-card border-[1.5px] border-card-border rounded-[10px] px-[14px] py-[11px] mb-[10px] cursor-pointer"
           >
             <span className="font-body font-bold text-[13.5px] text-text-primary">
               {subject.subject_name}
@@ -120,16 +109,11 @@ export default function ExamDatesForm({
               {subject.exam_date ? formatDateChip(subject.exam_date) : 'Set date ▾'}
             </span>
             <input
-              ref={(el) => {
-                inputRefs.current[subject.id] = el;
-              }}
               type="date"
               min={minDateStr}
               value={subject.exam_date ?? ''}
               onChange={(e) => handleDateChange(subject.id, e.target.value)}
-              onClick={(e) => e.stopPropagation()}
-              className="sr-only"
-              tabIndex={-1}
+              className="absolute inset-0 z-10 h-full w-full cursor-pointer opacity-0"
             />
           </div>
         ))}
