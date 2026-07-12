@@ -30,6 +30,7 @@ export default function ExamDatesForm({
   const [error, setError] = useState<string | null>(null);
 
   const allDated = subjects.every((s) => s.exam_date !== null);
+  const remainingCount = subjects.filter((s) => s.exam_date === null).length;
 
   const today = new Date();
   const todayStr = today.toISOString().slice(0, 10);
@@ -122,6 +123,12 @@ export default function ExamDatesForm({
       <div className="flex-1" />
 
       {error && <p className="text-red-600 text-xs text-center mb-2">{error}</p>}
+
+      {!allDated && !error && (
+        <p className="font-body text-xs text-text-muted text-center mb-2">
+          {remainingCount} more subject{remainingCount === 1 ? '' : 's'} need{remainingCount === 1 ? 's' : ''} a date.
+        </p>
+      )}
 
       <button
         type="button"
