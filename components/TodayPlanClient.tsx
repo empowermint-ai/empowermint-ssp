@@ -23,21 +23,34 @@ interface AvailableSubject {
   exam_date: string | null;
 }
 
+interface NeedsNewDateSubject {
+  id: string;
+  subject_name: string;
+}
+
 export default function TodayPlanClient({
   userId,
   todayStr,
   initialSessions,
   initialAvailable,
+  initialNeedsNewDate,
 }: {
   userId: string;
   todayStr: string;
   initialSessions: Session[];
   initialAvailable: AvailableSubject[];
+  initialNeedsNewDate: NeedsNewDateSubject[];
 }) {
   const router = useRouter();
   const [sessions, setSessions] = useState(initialSessions);
   const [available, setAvailable] = useState(initialAvailable);
+  const [needsNewDate, setNeedsNewDate] = useState(initialNeedsNewDate);
   const [adding, setAdding] = useState(false);
+  const [addingDateId, setAddingDateId] = useState<string | null>(null);
+
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  const minDateStr = tomorrow.toISOString().slice(0, 10);
 
   async function handleAddSession() {
     if (available.length === 0 || adding) return;
@@ -82,6 +95,22 @@ export default function TodayPlanClient({
     setAvailable((prev) => prev.filter((s) => s.id !== best.id));
   }
 
+  async function handleAddDate(subjectId: string, value: string) {
+    if (!value || value < minDateStr) return;
+    setAddingDateId(subjectId);
+
+    const { error } = await supabase
+      .from('exam_dates')
+      .insert({ subject_id: subjectId, exam_date: value });
+
+    setAddingDateId(null);
+
+    if (error) return;
+
+    setNeedsNewDate((prev) => prev.filter((s) => s.id !== subjectId));
+    router.refresh();
+  }
+
   return (
     <>
       <div className="flex-1 overflow-y-auto min-h-0 mt-4">
@@ -110,6 +139,34 @@ export default function TodayPlanClient({
             </p>
           </div>
         ))}
+
+        {needsNewDate.length > 0 && (
+          <div className="mt-2">
+            <p className="font-heading font-bold text-[10.5px] uppercase text-text-muted mb-2">
+              Exam done — add your next date
+            </p>
+            {needsNewDate.map((subject) => (
+              <div
+                key={subject.id}
+                className="relative flex items-center justify-between bg-card border-[1.5px] border-card-border rounded-[10px] px-[14px] py-[11px] mb-[10px]"
+              >
+                <span className="font-body font-bold text-[13.5px] text-text-primary">
+                  {subject.subject_name}
+                </span>
+                <span className="font-body text-xs rounded-[8px] px-[10px] py-[5px] border-[1.3px] text-orange border-orange whitespace-nowrap">
+                  {addingDateId === subject.id ? 'Adding…' : '+ Add date'}
+                </span>
+                <input
+                  type="date"
+                  min={minDateStr}
+                  value=""
+                  onChange={(e) => handleAddDate(subject.id, e.target.value)}
+                  className="absolute inset-0 z-10 h-full w-full cursor-pointer opacity-0"
+                />
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       <div className="flex-1" />

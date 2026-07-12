@@ -4,17 +4,27 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabaseClient';
 import { priorityScore } from '@/lib/priorityScore';
+import { nextExamDate } from '@/lib/nextExamDate';
+
+interface ExamDate {
+  id: string;
+  exam_date: string;
+}
 
 interface Subject {
   id: string;
   subject_name: string;
   confidence_score: number | null;
-  exam_date: string | null;
+  exam_dates: ExamDate[];
 }
 
 function formatDateChip(dateStr: string): string {
   const date = new Date(`${dateStr}T00:00:00`);
   return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+}
+
+function sortDates(dates: ExamDate[]): ExamDate[] {
+  return [...dates].sort((a, b) => (a.exam_date < b.exam_date ? -1 : 1));
 }
 
 export default function ExamDatesForm({
@@ -25,12 +35,15 @@ export default function ExamDatesForm({
   userId: string;
 }) {
   const router = useRouter();
-  const [subjects, setSubjects] = useState(initialSubjects);
+  const [subjects, setSubjects] = useState(
+    initialSubjects.map((s) => ({ ...s, exam_dates: sortDates(s.exam_dates) }))
+  );
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [addingId, setAddingId] = useState<string | null>(null);
 
-  const allDated = subjects.every((s) => s.exam_date !== null);
-  const missingSubjects = subjects.filter((s) => s.exam_date === null);
+  const allDated = subjects.every((s) => s.exam_dates.length > 0);
+  const missingSubjects = subjects.filter((s) => s.exam_dates.length === 0);
 
   const today = new Date();
   const todayStr = today.toISOString().slice(0, 10);
@@ -38,9 +51,50 @@ export default function ExamDatesForm({
   tomorrow.setDate(tomorrow.getDate() + 1);
   const minDateStr = tomorrow.toISOString().slice(0, 10);
 
-  function handleDateChange(id: string, value: string) {
+  async function handleAddDate(subjectId: string, value: string) {
     if (!value || value < minDateStr) return;
-    setSubjects((prev) => prev.map((s) => (s.id === id ? { ...s, exam_date: value } : s)));
+
+    const subject = subjects.find((s) => s.id === subjectId);
+    if (subject?.exam_dates.some((d) => d.exam_date === value)) return;
+
+    setAddingId(subjectId);
+    setError(null);
+
+    const { data, error } = await supabase
+      .from('exam_dates')
+      .insert({ subject_id: subjectId, exam_date: value })
+      .select('id, exam_date')
+      .single();
+
+    setAddingId(null);
+
+    if (error || !data) {
+      setError('Could not add that date. Try again.');
+      return;
+    }
+
+    setSubjects((prev) =>
+      prev.map((s) =>
+        s.id === subjectId ? { ...s, exam_dates: sortDates([...s.exam_dates, data]) } : s
+      )
+    );
+  }
+
+  async function handleRemoveDate(subjectId: string, dateId: string) {
+    const { error } = await supabase.from('exam_dates').delete().eq('id', dateId);
+
+    if (error) {
+      setError('Could not remove that date. Try again.');
+      return;
+    }
+
+    setSubjects((prev) =>
+      prev.map((s) =>
+        s.id === subjectId
+          ? { ...s, exam_dates: s.exam_dates.filter((d) => d.id !== dateId) }
+          : s
+      )
+    );
   }
 
   async function handleGenerate() {
@@ -48,24 +102,15 @@ export default function ExamDatesForm({
     setSaving(true);
     setError(null);
 
-    const updateResults = await Promise.all(
-      subjects.map((s) =>
-        supabase.from('subjects').update({ exam_date: s.exam_date }).eq('id', s.id)
-      )
-    );
-
-    if (updateResults.some((r) => r.error)) {
-      setSaving(false);
-      setError('Could not save exam dates. Try again.');
-      return;
-    }
-
     const topThree = [...subjects]
-      .sort(
-        (a, b) =>
-          priorityScore(b.confidence_score, b.exam_date, todayStr) -
-          priorityScore(a.confidence_score, a.exam_date, todayStr)
-      )
+      .sort((a, b) => {
+        const aNext = nextExamDate(a.exam_dates, todayStr);
+        const bNext = nextExamDate(b.exam_dates, todayStr);
+        return (
+          priorityScore(b.confidence_score, bNext, todayStr) -
+          priorityScore(a.confidence_score, aNext, todayStr)
+        );
+      })
       .slice(0, 3);
 
     await supabase.from('daily_plans').delete().eq('user_id', userId).eq('plan_date', todayStr);
@@ -95,27 +140,46 @@ export default function ExamDatesForm({
         {subjects.map((subject) => (
           <div
             key={subject.id}
-            className="relative flex items-center justify-between bg-card border-[1.5px] border-card-border rounded-[10px] px-[14px] py-[11px] mb-[10px] cursor-pointer"
+            className="bg-card border-[1.5px] border-card-border rounded-[10px] px-[14px] py-[11px] mb-[10px]"
           >
-            <span className="font-body font-bold text-[13.5px] text-text-primary">
-              {subject.subject_name}
-            </span>
-            <span
-              className={`font-body text-xs rounded-[8px] px-[10px] py-[5px] border-[1.3px] ${
-                subject.exam_date
-                  ? 'text-navy dark:text-text-primary border-navy dark:border-text-primary'
-                  : 'text-orange border-orange'
-              }`}
-            >
-              {subject.exam_date ? formatDateChip(subject.exam_date) : 'Set date ▾'}
-            </span>
-            <input
-              type="date"
-              min={minDateStr}
-              value={subject.exam_date ?? ''}
-              onChange={(e) => handleDateChange(subject.id, e.target.value)}
-              className="absolute inset-0 z-10 h-full w-full cursor-pointer opacity-0"
-            />
+            <div className="flex items-center justify-between">
+              <span className="font-body font-bold text-[13.5px] text-text-primary">
+                {subject.subject_name}
+              </span>
+              <div className="relative">
+                <span className="font-body text-xs rounded-[8px] px-[10px] py-[5px] border-[1.3px] text-orange border-orange whitespace-nowrap">
+                  {addingId === subject.id ? 'Adding…' : '+ Add date'}
+                </span>
+                <input
+                  type="date"
+                  min={minDateStr}
+                  value=""
+                  onChange={(e) => handleAddDate(subject.id, e.target.value)}
+                  className="absolute inset-0 z-10 h-full w-full cursor-pointer opacity-0"
+                />
+              </div>
+            </div>
+
+            {subject.exam_dates.length > 0 && (
+              <div className="flex flex-wrap gap-[6px] mt-[10px]">
+                {subject.exam_dates.map((d) => (
+                  <span
+                    key={d.id}
+                    className="flex items-center gap-1 font-body text-xs rounded-[8px] pl-[10px] pr-[6px] py-[5px] border-[1.3px] text-navy dark:text-text-primary border-navy dark:border-text-primary"
+                  >
+                    {formatDateChip(d.exam_date)}
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveDate(subject.id, d.id)}
+                      aria-label={`Remove ${formatDateChip(d.exam_date)} for ${subject.subject_name}`}
+                      className="text-text-muted leading-none"
+                    >
+                      ✕
+                    </button>
+                  </span>
+                ))}
+              </div>
+            )}
           </div>
         ))}
       </div>

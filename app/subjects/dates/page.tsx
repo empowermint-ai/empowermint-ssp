@@ -14,7 +14,7 @@ export default async function SubjectDatesPage() {
 
   const { data: subjects } = await supabase
     .from('subjects')
-    .select('id, subject_name, confidence_score, exam_date')
+    .select('id, subject_name, confidence_score, exam_dates(id, exam_date)')
     .eq('user_id', user.id)
     .is('archived_at', null)
     .order('created_at', { ascending: true });
@@ -30,7 +30,8 @@ export default async function SubjectDatesPage() {
         When is each exam?
       </h1>
       <p className="font-body text-[14px] text-text-body mt-2 mb-6">
-        Tap a subject to set the date.
+        Tap a subject to add an exam date. You can add more than one, like a
+        term test and the final.
       </p>
       <ExamDatesForm initialSubjects={subjects} userId={user.id} />
     </main>

@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation';
 import { createSupabaseServerClient } from '@/lib/supabaseServerClient';
 import TodayPlanClient from '@/components/TodayPlanClient';
 import SettingsMenu from '@/components/SettingsMenu';
+import { nextExamDate } from '@/lib/nextExamDate';
 
 const GREETINGS: ((name: string) => string)[] = [
   () => 'Welcome back, champ!',
@@ -39,7 +40,7 @@ export default async function DashboardPage() {
 
   const { data: activeSubjects } = await supabase
     .from('subjects')
-    .select('id, subject_name, confidence_score, exam_date')
+    .select('id, subject_name, confidence_score, exam_dates(exam_date)')
     .eq('user_id', user.id)
     .is('archived_at', null);
 
@@ -51,20 +52,29 @@ export default async function DashboardPage() {
   if (subjects.some((s) => s.confidence_score === null)) {
     redirect('/subjects/rank');
   }
-  if (subjects.some((s) => s.exam_date === null)) {
+  if (subjects.some((s) => s.exam_dates.length === 0)) {
     redirect('/subjects/dates');
   }
 
   const rankedCount = subjects.filter((s) => s.confidence_score !== null).length;
 
-  const upcomingExams = subjects
-    .filter((s) => s.exam_date && s.exam_date >= todayStr)
-    .sort((a, b) => (a.exam_date! < b.exam_date! ? -1 : 1));
+  const subjectsWithNextExam = subjects.map((s) => ({
+    ...s,
+    nextExam: nextExamDate(s.exam_dates, todayStr),
+  }));
+
+  const needsNewDate = subjectsWithNextExam
+    .filter((s) => s.nextExam === null)
+    .map((s) => ({ id: s.id, subject_name: s.subject_name }));
+
+  const upcomingExams = subjectsWithNextExam
+    .filter((s) => s.nextExam !== null)
+    .sort((a, b) => (a.nextExam! < b.nextExam! ? -1 : 1));
 
   let examBanner: { subjectName: string; daysUntil: number } | null = null;
   if (upcomingExams.length > 0) {
     const closest = upcomingExams[0];
-    const examMs = new Date(`${closest.exam_date}T00:00:00Z`).getTime();
+    const examMs = new Date(`${closest.nextExam}T00:00:00Z`).getTime();
     const todayMs = new Date(`${todayStr}T00:00:00Z`).getTime();
     const daysUntil = Math.round((examMs - todayMs) / 86_400_000);
     if (daysUntil <= 14) {
@@ -93,9 +103,14 @@ export default async function DashboardPage() {
   });
 
   const plannedSubjectIds = new Set(sessions.map((s) => s.subject_id));
-  const available = subjects.filter(
-    (s) => !plannedSubjectIds.has(s.id) && s.confidence_score !== null && s.exam_date !== null
-  );
+  const available = subjectsWithNextExam
+    .filter((s) => !plannedSubjectIds.has(s.id) && s.confidence_score !== null && s.nextExam !== null)
+    .map((s) => ({
+      id: s.id,
+      subject_name: s.subject_name,
+      confidence_score: s.confidence_score,
+      exam_date: s.nextExam,
+    }));
 
   return (
     <main className="h-screen flex flex-col px-[22px] pt-[38px] pb-[18px] bg-bg overflow-hidden">
@@ -130,6 +145,7 @@ export default async function DashboardPage() {
         todayStr={todayStr}
         initialSessions={sessions}
         initialAvailable={available}
+        initialNeedsNewDate={needsNewDate}
       />
 
       <Link
