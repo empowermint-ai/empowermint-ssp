@@ -125,6 +125,13 @@ export default async function DashboardPage() {
           <span className="bg-purple text-white font-heading font-bold text-[10.5px] rounded-[20px] px-[10px] py-[5px] whitespace-nowrap">
             {rankedCount} ranked
           </span>
+          <Link
+            href="/calendar"
+            aria-label="Calendar view"
+            className="text-text-primary text-[19px] leading-none p-1"
+          >
+            📅
+          </Link>
           <SettingsMenu />
         </div>
       </div>
