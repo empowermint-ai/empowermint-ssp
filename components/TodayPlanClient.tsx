@@ -135,7 +135,7 @@ export default function TodayPlanClient({
               )}
             </div>
             <p className="font-body text-[12px] text-text-body mt-1">
-              Revision · 25 min focus block
+              Study session · 25 min focus block
             </p>
           </div>
         ))}

@@ -181,7 +181,7 @@ export default function CalendarGrid({
               <div key={`session-${i}`} className="flex items-center gap-2">
                 <span className="w-[8px] h-[8px] rounded-full bg-teal flex-shrink-0" />
                 <span className="font-body text-[13px] text-text-primary">
-                  {s.subject_name} revision{s.completed ? ' · done' : ''}
+                  {s.subject_name} study session{s.completed ? ' · done' : ''}
                 </span>
               </div>
             ))}

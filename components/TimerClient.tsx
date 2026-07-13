@@ -161,7 +161,7 @@ export default function TimerClient({
       </h1>
 
       <p className="font-body text-[14px] text-center mt-1" style={{ color: '#a89e88' }}>
-        Revision
+        Study session
       </p>
 
       <div
