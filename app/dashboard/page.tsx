@@ -141,7 +141,7 @@ export default async function DashboardPage() {
       )}
 
       <div className="mt-5">
-        <p className="font-heading font-bold text-[10px] uppercase tracking-[0.6px] text-teal">
+        <p className="font-heading font-bold text-[15px] uppercase tracking-[0.6px] text-teal">
           Today&apos;s plan
         </p>
         <p className="font-body text-[12px] text-text-muted mt-[2px]">
