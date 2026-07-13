@@ -140,6 +140,15 @@ export default async function DashboardPage() {
         </div>
       )}
 
+      <div className="mt-5">
+        <p className="font-heading font-bold text-[10px] uppercase tracking-[0.6px] text-teal">
+          Today&apos;s plan
+        </p>
+        <p className="font-body text-[12px] text-text-muted mt-[2px]">
+          Here&apos;s what to study today, in order.
+        </p>
+      </div>
+
       <TodayPlanClient
         userId={user.id}
         todayStr={todayStr}
