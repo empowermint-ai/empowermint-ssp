@@ -56,8 +56,6 @@ export default async function DashboardPage() {
     redirect('/subjects/dates');
   }
 
-  const rankedCount = subjects.filter((s) => s.confidence_score !== null).length;
-
   const subjectsWithNextExam = subjects.map((s) => ({
     ...s,
     nextExam: nextExamDate(s.exam_dates, todayStr),
@@ -122,9 +120,6 @@ export default async function DashboardPage() {
           <p className="font-body text-[11px] text-text-muted mt-1">{todayFormatted}</p>
         </div>
         <div className="flex items-center gap-2">
-          <span className="bg-purple text-white font-heading font-bold text-[10.5px] rounded-[20px] px-[10px] py-[5px] whitespace-nowrap">
-            {rankedCount} ranked
-          </span>
           <Link
             href="/calendar"
             aria-label="Calendar view"
