@@ -1,11 +1,21 @@
 import "@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
 
+interface ExamDate {
+  exam_date: string;
+}
+
 interface Subject {
   id: string;
   user_id: string;
   confidence_score: number | null;
-  exam_date: string | null;
+  exam_dates: ExamDate[];
+}
+
+function nextExamDate(examDates: ExamDate[], targetDate: string): string | null {
+  const upcoming = examDates.map((d) => d.exam_date).filter((d) => d >= targetDate);
+  if (upcoming.length === 0) return null;
+  return upcoming.sort()[0];
 }
 
 function daysWeight(examDate: string | null, targetDate: string): number {
@@ -13,15 +23,20 @@ function daysWeight(examDate: string | null, targetDate: string): number {
   const exam = new Date(`${examDate}T00:00:00Z`).getTime();
   const target = new Date(`${targetDate}T00:00:00Z`).getTime();
   const days = Math.round((exam - target) / 86_400_000);
+  if (days < 0) return 1;
   if (days > 14) return 1;
   if (days >= 8) return 2;
   if (days >= 4) return 3;
-  return 4; // 1-3 days (or overdue, though auto-archive should prevent that)
+  return 4;
 }
 
-function priorityScore(subject: Subject, targetDate: string): number {
-  const confidence = subject.confidence_score ?? 3;
-  return (6 - confidence) * daysWeight(subject.exam_date, targetDate);
+function priorityScore(
+  confidenceScore: number | null,
+  examDate: string | null,
+  targetDate: string
+): number {
+  const confidence = confidenceScore ?? 3;
+  return (6 - confidence) * daysWeight(examDate, targetDate);
 }
 
 Deno.serve(async () => {
@@ -31,30 +46,16 @@ Deno.serve(async () => {
   );
 
   const now = new Date();
-  const todayStr = now.toISOString().slice(0, 10);
-
   const tomorrow = new Date(now);
   tomorrow.setUTCDate(tomorrow.getUTCDate() + 1);
   const tomorrowStr = tomorrow.toISOString().slice(0, 10);
 
-  // Step 1: auto-archive subjects whose exam date has passed
-  const { error: archiveError } = await supabase
-    .from("subjects")
-    .update({ archived_at: now.toISOString() })
-    .lt("exam_date", todayStr)
-    .is("archived_at", null);
-
-  if (archiveError) {
-    return Response.json(
-      { ok: false, step: "archive", error: archiveError.message },
-      { status: 500 }
-    );
-  }
-
-  // Step 2: build tomorrow's plan for every user with active subjects
+  // Build tomorrow's plan for every user with active, dated subjects.
+  // Subjects whose exams have all passed are left alone here - the dashboard
+  // prompts the learner to add a new date instead of this silently archiving them.
   const { data: activeSubjects, error: subjectsError } = await supabase
     .from("subjects")
-    .select("id, user_id, confidence_score, exam_date")
+    .select("id, user_id, confidence_score, exam_dates(exam_date)")
     .is("archived_at", null)
     .returns<Subject[]>();
 
@@ -65,10 +66,11 @@ Deno.serve(async () => {
     );
   }
 
-  const byUser = new Map<string, Subject[]>();
+  const byUser = new Map<string, { subject: Subject; nextExam: string | null }[]>();
   for (const subject of activeSubjects ?? []) {
+    const nextExam = nextExamDate(subject.exam_dates, tomorrowStr);
     const list = byUser.get(subject.user_id) ?? [];
-    list.push(subject);
+    list.push({ subject, nextExam });
     byUser.set(subject.user_id, list);
   }
 
@@ -79,15 +81,23 @@ Deno.serve(async () => {
     session_order: number;
   }[] = [];
 
-  for (const [userId, subjects] of byUser) {
-    const top3 = [...subjects]
-      .sort((a, b) => priorityScore(b, tomorrowStr) - priorityScore(a, tomorrowStr))
+  for (const [userId, entries] of byUser) {
+    const eligible = entries.filter(
+      (e) => e.subject.confidence_score !== null && e.nextExam !== null
+    );
+
+    const top3 = [...eligible]
+      .sort(
+        (a, b) =>
+          priorityScore(b.subject.confidence_score, b.nextExam, tomorrowStr) -
+          priorityScore(a.subject.confidence_score, a.nextExam, tomorrowStr)
+      )
       .slice(0, 3);
 
-    top3.forEach((subject, index) => {
+    top3.forEach((entry, index) => {
       rowsToInsert.push({
         user_id: userId,
-        subject_id: subject.id,
+        subject_id: entry.subject.id,
         plan_date: tomorrowStr,
         session_order: index + 1,
       });
@@ -119,7 +129,6 @@ Deno.serve(async () => {
 
   return Response.json({
     ok: true,
-    archived_before: todayStr,
     plan_date: tomorrowStr,
     users_planned: byUser.size,
     rows_inserted: rowsToInsert.length,
