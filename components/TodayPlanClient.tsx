@@ -118,25 +118,33 @@ export default function TodayPlanClient({
           <div
             key={session.id}
             onClick={() => router.push(`/timer/${session.subject_id}`)}
-            className={`bg-card rounded-[12px] px-[14px] py-[13px] mb-[10px] cursor-pointer border-l-[5px] ${
+            className={`flex items-center justify-between gap-3 bg-card rounded-[12px] px-[14px] py-[13px] mb-[10px] cursor-pointer border-l-[5px] ${
               session.confidence_score !== null && session.confidence_score <= 2
                 ? 'border-orange'
                 : 'border-teal'
             }`}
           >
-            <div className="flex items-center justify-between">
-              <span className="font-heading font-bold text-[13.5px] text-text-primary">
-                {session.subject_name}
-              </span>
-              {session.suggested_start_time && (
-                <span className="font-body text-[11px] text-text-muted">
-                  {session.suggested_start_time}
+            <div className="min-w-0">
+              <div className="flex items-center gap-2">
+                <span className="font-heading font-bold text-[13.5px] text-text-primary">
+                  {session.subject_name}
                 </span>
-              )}
+                {session.suggested_start_time && (
+                  <span className="font-body text-[11px] text-text-muted">
+                    {session.suggested_start_time}
+                  </span>
+                )}
+              </div>
+              <p className="font-body text-[12px] text-text-body mt-1">
+                Study session · 25 min focus block
+              </p>
             </div>
-            <p className="font-body text-[12px] text-text-body mt-1">
-              Study session · 25 min focus block
-            </p>
+            <span
+              aria-hidden="true"
+              className="flex items-center justify-center w-[34px] h-[34px] rounded-full bg-orange text-white text-[11px] flex-shrink-0"
+            >
+              ▶
+            </span>
           </div>
         ))}
 
