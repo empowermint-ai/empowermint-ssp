@@ -123,6 +123,8 @@ export default function CalendarGrid({
           const entry = byDate.get(dateStr);
           const isToday = dateStr === todayStr;
           const isSelected = dateStr === selectedDate;
+          const hasMissed = entry?.sessions.some((s) => !s.completed && s.date < todayStr);
+          const hasStudy = entry?.sessions.length;
 
           return (
             <button
@@ -146,7 +148,9 @@ export default function CalendarGrid({
                 {entry?.exams.length ? (
                   <span className="w-[5px] h-[5px] rounded-full bg-orange" />
                 ) : null}
-                {entry?.sessions.length ? (
+                {hasMissed ? (
+                  <span className="w-[5px] h-[5px] rounded-full bg-red-600" />
+                ) : hasStudy ? (
                   <span className="w-[5px] h-[5px] rounded-full bg-teal" />
                 ) : null}
               </span>
@@ -155,12 +159,15 @@ export default function CalendarGrid({
         })}
       </div>
 
-      <div className="flex items-center gap-4 mt-4">
+      <div className="flex items-center gap-4 mt-4 flex-wrap">
         <span className="flex items-center gap-[6px] font-body text-[11px] text-text-muted">
           <span className="w-[7px] h-[7px] rounded-full bg-orange" /> Exam
         </span>
         <span className="flex items-center gap-[6px] font-body text-[11px] text-text-muted">
           <span className="w-[7px] h-[7px] rounded-full bg-teal" /> Study session
+        </span>
+        <span className="flex items-center gap-[6px] font-body text-[11px] text-text-muted">
+          <span className="w-[7px] h-[7px] rounded-full bg-red-600" /> Missed
         </span>
       </div>
 
@@ -177,14 +184,22 @@ export default function CalendarGrid({
                 <span className="font-body text-[13px] text-text-primary">{name} exam</span>
               </div>
             ))}
-            {selected.sessions.map((s, i) => (
-              <div key={`session-${i}`} className="flex items-center gap-2">
-                <span className="w-[8px] h-[8px] rounded-full bg-teal flex-shrink-0" />
-                <span className="font-body text-[13px] text-text-primary">
-                  {s.subject_name} study session{s.completed ? ' · done' : ''}
-                </span>
-              </div>
-            ))}
+            {selected.sessions.map((s, i) => {
+              const missed = !s.completed && s.date < todayStr;
+              return (
+                <div key={`session-${i}`} className="flex items-center gap-2">
+                  <span
+                    className={`w-[8px] h-[8px] rounded-full flex-shrink-0 ${
+                      missed ? 'bg-red-600' : 'bg-teal'
+                    }`}
+                  />
+                  <span className="font-body text-[13px] text-text-primary">
+                    {s.subject_name} study session
+                    {s.completed ? ' · done' : missed ? ' · missed' : ''}
+                  </span>
+                </div>
+              );
+            })}
           </div>
         )}
       </div>
