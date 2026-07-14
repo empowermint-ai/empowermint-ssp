@@ -119,9 +119,7 @@ export default function TodayPlanClient({
             key={session.id}
             onClick={() => router.push(`/timer/${session.subject_id}`)}
             className={`flex items-center justify-between gap-3 bg-card rounded-[12px] px-[14px] py-[13px] mb-[10px] cursor-pointer border-l-[5px] ${
-              session.confidence_score !== null && session.confidence_score <= 2
-                ? 'border-orange'
-                : 'border-teal'
+              session.completed ? 'border-teal' : 'border-orange'
             }`}
           >
             <div className="min-w-0">
@@ -141,9 +139,11 @@ export default function TodayPlanClient({
             </div>
             <span
               aria-hidden="true"
-              className="flex items-center justify-center w-[34px] h-[34px] rounded-full bg-orange text-white text-[11px] flex-shrink-0"
+              className={`flex items-center justify-center w-[34px] h-[34px] rounded-full text-white text-[11px] flex-shrink-0 ${
+                session.completed ? 'bg-teal' : 'bg-orange'
+              }`}
             >
-              ▶
+              {session.completed ? '✓' : '▶'}
             </span>
           </div>
         ))}
