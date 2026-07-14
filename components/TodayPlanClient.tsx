@@ -139,11 +139,19 @@ export default function TodayPlanClient({
             </div>
             <span
               aria-hidden="true"
-              className={`flex items-center justify-center w-[34px] h-[34px] rounded-full text-white text-[11px] flex-shrink-0 ${
+              className={`flex items-center justify-center w-[34px] h-[34px] rounded-full flex-shrink-0 ${
                 session.completed ? 'bg-teal' : 'bg-orange'
               }`}
             >
-              {session.completed ? '✓' : '▶'}
+              {session.completed ? (
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M3 7.5L5.5 10L11 3.5" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              ) : (
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M2 1.2L10.5 6L2 10.8V1.2Z" fill="white" />
+                </svg>
+              )}
             </span>
           </div>
         ))}
