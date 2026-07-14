@@ -123,6 +123,7 @@ export default function CalendarGrid({
           const entry = byDate.get(dateStr);
           const isToday = dateStr === todayStr;
           const isSelected = dateStr === selectedDate;
+          const isExam = Boolean(entry?.exams.length);
           const hasMissed = entry?.sessions.some((s) => !s.completed && s.date < todayStr);
           const hasStudy = entry?.sessions.length;
 
@@ -136,18 +137,17 @@ export default function CalendarGrid({
               <span
                 className={`flex items-center justify-center w-[26px] h-[26px] rounded-full font-body text-[12px] ${
                   isSelected
-                    ? 'bg-orange text-white'
-                    : isToday
-                      ? 'border-[1.5px] border-orange text-text-primary'
-                      : 'text-text-primary'
+                    ? 'bg-navy text-white'
+                    : isExam
+                      ? 'bg-orange text-white'
+                      : isToday
+                        ? 'border-[1.5px] border-purple text-text-primary'
+                        : 'text-text-primary'
                 }`}
               >
                 {day}
               </span>
               <span className="flex gap-[3px] mt-[3px] h-[5px]">
-                {entry?.exams.length ? (
-                  <span className="w-[5px] h-[5px] rounded-full bg-orange" />
-                ) : null}
                 {hasMissed ? (
                   <span className="w-[5px] h-[5px] rounded-full bg-red-600" />
                 ) : hasStudy ? (
@@ -161,7 +161,10 @@ export default function CalendarGrid({
 
       <div className="flex items-center gap-4 mt-4 flex-wrap">
         <span className="flex items-center gap-[6px] font-body text-[11px] text-text-muted">
-          <span className="w-[7px] h-[7px] rounded-full bg-orange" /> Exam
+          <span className="w-[7px] h-[7px] rounded-full bg-orange" /> Exam day
+        </span>
+        <span className="flex items-center gap-[6px] font-body text-[11px] text-text-muted">
+          <span className="w-[7px] h-[7px] rounded-full border-[1.5px] border-purple" /> Today
         </span>
         <span className="flex items-center gap-[6px] font-body text-[11px] text-text-muted">
           <span className="w-[7px] h-[7px] rounded-full bg-teal" /> Study session
