@@ -111,7 +111,7 @@ export default async function DashboardPage() {
     }));
 
   return (
-    <main className="h-screen flex flex-col px-[22px] pt-[38px] pb-[18px] bg-bg overflow-hidden">
+    <main className="min-h-dvh flex flex-col px-[22px] pt-[38px] pb-[18px] bg-bg">
       <div className="flex justify-between items-start">
         <div>
           <h1 className="font-heading font-bold text-[19px] tracking-[-0.066em] text-text-primary">

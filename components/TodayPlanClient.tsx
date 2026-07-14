@@ -113,7 +113,7 @@ export default function TodayPlanClient({
 
   return (
     <>
-      <div className="flex-1 overflow-y-auto min-h-0 mt-4">
+      <div className="mt-4">
         {sessions.map((session) => (
           <div
             key={session.id}
@@ -184,8 +184,6 @@ export default function TodayPlanClient({
           </div>
         )}
       </div>
-
-      <div className="flex-1" />
 
       {available.length > 0 && (
         <button
