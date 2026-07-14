@@ -67,6 +67,7 @@ export default function TimerClient({
   dailyPlanId: string;
 }) {
   const router = useRouter();
+  const [started, setStarted] = useState(false);
   const [remainingSeconds, setRemainingSeconds] = useState(TOTAL_SECONDS);
   const [isPaused, setIsPaused] = useState(false);
 
@@ -74,7 +75,7 @@ export default function TimerClient({
   const sweepHandRef = useRef<SVGGElement>(null);
   const rafRef = useRef<number>();
   const tickRef = useRef<() => void>();
-  const startTimeRef = useRef<number>(Date.now());
+  const startTimeRef = useRef<number>(0);
   const pausedAtRef = useRef<number | null>(null);
   const endedRef = useRef(false);
 
@@ -89,6 +90,8 @@ export default function TimerClient({
   }, [dailyPlanId, subjectId, router]);
 
   useEffect(() => {
+    if (!started) return;
+
     function tick() {
       if (pausedAtRef.current !== null || endedRef.current) return;
 
@@ -121,7 +124,12 @@ export default function TimerClient({
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
-  }, [finishSession]);
+  }, [started, finishSession]);
+
+  function handleStart() {
+    startTimeRef.current = Date.now();
+    setStarted(true);
+  }
 
   function togglePause() {
     if (isPaused) {
@@ -330,27 +338,40 @@ export default function TimerClient({
 
       <div className="flex-1" />
 
-      <div className="flex gap-[10px] w-full">
+      {started ? (
+        <div className="flex gap-[10px] w-full">
+          <button
+            type="button"
+            onClick={togglePause}
+            className="flex-1 font-heading font-bold text-[13.5px] rounded-[10px] py-[14px]"
+            style={{ border: '1.5px solid #f1efe7', color: '#f1efe7', backgroundColor: 'transparent' }}
+          >
+            {isPaused ? 'Resume' : 'Pause'}
+          </button>
+          <button
+            type="button"
+            onClick={finishSession}
+            className="flex-1 font-heading font-bold text-[13.5px] rounded-[10px] py-[14px] text-white"
+            style={{ backgroundColor: '#F37021' }}
+          >
+            End session
+          </button>
+        </div>
+      ) : (
         <button
           type="button"
-          onClick={togglePause}
-          className="flex-1 font-heading font-bold text-[13.5px] rounded-[10px] py-[14px]"
-          style={{ border: '1.5px solid #f1efe7', color: '#f1efe7', backgroundColor: 'transparent' }}
-        >
-          {isPaused ? 'Resume' : 'Pause'}
-        </button>
-        <button
-          type="button"
-          onClick={finishSession}
-          className="flex-1 font-heading font-bold text-[13.5px] rounded-[10px] py-[14px] text-white"
+          onClick={handleStart}
+          className="w-full font-heading font-bold text-[14px] rounded-[10px] py-[15px] text-white"
           style={{ backgroundColor: '#F37021' }}
         >
-          End session
+          Start session
         </button>
-      </div>
+      )}
 
       <p className="font-body text-[10px] text-center mt-4" style={{ color: '#6b6557' }}>
-        Session auto-logs to today&apos;s plan when it ends.
+        {started
+          ? "Session auto-logs to today's plan when it ends."
+          : "Tap Start when you're ready to focus."}
       </p>
     </main>
   );
