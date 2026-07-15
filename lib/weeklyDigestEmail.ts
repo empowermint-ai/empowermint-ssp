@@ -148,6 +148,54 @@ export function buildWeeklyDigestEmail({
 </html>`;
 }
 
+export function buildWeeklyDigestEmailText({
+  studentName,
+  rangeLabel,
+  completedCount,
+  plannedCount,
+  subjectBreakdown,
+  upcomingExams,
+  unsubscribeUrl,
+}: {
+  studentName: string;
+  rangeLabel: string;
+  completedCount: number;
+  plannedCount: number;
+  subjectBreakdown: SubjectCount[];
+  upcomingExams: UpcomingExam[];
+  unsubscribeUrl: string;
+}): string {
+  const lines = [
+    `Weekly study update - ${studentName}`,
+    rangeLabel,
+    '',
+    `${completedCount} of ${plannedCount} study sessions completed this week`,
+  ];
+
+  if (subjectBreakdown.length > 0) {
+    lines.push('', ...subjectBreakdown.map((s) => `- ${s.name}: ${s.count} session${s.count === 1 ? '' : 's'}`));
+  }
+
+  if (upcomingExams.length > 0) {
+    lines.push(
+      '',
+      'Coming up:',
+      ...upcomingExams.map(
+        (e) => `- ${e.name} ${e.daysUntil === 0 ? 'today' : e.daysUntil === 1 ? 'tomorrow' : `in ${e.daysUntil} days`}`
+      )
+    );
+  }
+
+  lines.push(
+    '',
+    `This is an automatic summary from empowermint - ${studentName} owns their own plan day to day.`,
+    '',
+    `Unsubscribe from these emails: ${unsubscribeUrl}`
+  );
+
+  return lines.join('\n');
+}
+
 function escapeHtml(value: string): string {
   return value
     .replace(/&/g, '&amp;')

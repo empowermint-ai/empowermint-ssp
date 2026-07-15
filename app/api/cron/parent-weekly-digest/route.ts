@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { createSupabaseAdminClient } from '@/lib/supabaseAdminClient';
 import { nextExamDate } from '@/lib/nextExamDate';
-import { buildWeeklyDigestEmail } from '@/lib/weeklyDigestEmail';
+import { buildWeeklyDigestEmail, buildWeeklyDigestEmailText } from '@/lib/weeklyDigestEmail';
 
 export async function GET(request: Request) {
   const authHeader = request.headers.get('authorization');
@@ -36,6 +36,7 @@ export async function GET(request: Request) {
 
   let sent = 0;
   let skipped = 0;
+  let failed = 0;
 
   for (const parent of parents ?? []) {
     const { data: subjects } = await supabase
@@ -101,8 +102,17 @@ export async function GET(request: Request) {
       unsubscribeUrl,
       logoUrl: `${origin}/brand/logo-em-power-black.png`,
     });
+    const text = buildWeeklyDigestEmailText({
+      studentName,
+      rangeLabel,
+      completedCount,
+      plannedCount,
+      subjectBreakdown,
+      upcomingExams,
+      unsubscribeUrl,
+    });
 
-    await fetch('https://api.resend.com/emails', {
+    const resendRes = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
@@ -113,13 +123,23 @@ export async function GET(request: Request) {
         to: parent.parent_notify_email,
         subject: `${studentName}'s weekly study update`,
         html,
+        text,
+        headers: {
+          'List-Unsubscribe': `<${unsubscribeUrl}>`,
+          'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
+        },
       }),
     });
+
+    if (!resendRes.ok) {
+      failed++;
+      continue;
+    }
 
     sent++;
   }
 
-  return NextResponse.json({ ok: true, sent, skipped });
+  return NextResponse.json({ ok: true, sent, skipped, failed });
 }
 
 function formatShort(d: Date): string {
