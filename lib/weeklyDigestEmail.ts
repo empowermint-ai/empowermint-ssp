@@ -5,6 +5,7 @@ interface SubjectCount {
 
 interface UpcomingExam {
   name: string;
+  dateLabel: string;
   daysUntil: number;
 }
 
@@ -52,8 +53,8 @@ export function buildWeeklyDigestEmail({
             <span style="display:inline-block; width:6px; height:6px; border-radius:3px; background:#F37021; margin-right:10px;"></span>
             ${escapeHtml(e.name)}
           </td>
-          <td align="right" style="padding:6px 0; font-family:${font}; font-size:14px; color:#4a473f;">
-            ${e.daysUntil === 0 ? 'today' : e.daysUntil === 1 ? 'tomorrow' : `in ${e.daysUntil} days`}
+          <td align="right" style="padding:6px 0; font-family:${font}; font-size:14px; color:#4a473f; white-space:nowrap;">
+            ${escapeHtml(e.dateLabel)} · ${e.daysUntil === 0 ? 'today' : e.daysUntil === 1 ? 'tomorrow' : `in ${e.daysUntil} days`}
           </td>
         </tr>`
     )
@@ -74,7 +75,7 @@ export function buildWeeklyDigestEmail({
                   Weekly study update
                 </p>
                 <h1 style="margin:6px 0 2px 0; font-family:${font}; font-size:19px; font-weight:800; color:#000000;">
-                  ${escapeHtml(studentName)}
+                  for ${escapeHtml(studentName)}
                 </h1>
                 <p style="margin:0; font-family:${font}; font-size:12px; color:#8A8579;">
                   ${escapeHtml(rangeLabel)}
@@ -166,7 +167,7 @@ export function buildWeeklyDigestEmailText({
   unsubscribeUrl: string;
 }): string {
   const lines = [
-    `Weekly study update - ${studentName}`,
+    `Weekly study update for ${studentName}`,
     rangeLabel,
     '',
     `${completedCount} of ${plannedCount} study sessions completed this week`,
@@ -181,7 +182,8 @@ export function buildWeeklyDigestEmailText({
       '',
       'Coming up:',
       ...upcomingExams.map(
-        (e) => `- ${e.name} ${e.daysUntil === 0 ? 'today' : e.daysUntil === 1 ? 'tomorrow' : `in ${e.daysUntil} days`}`
+        (e) =>
+          `- ${e.name}: ${e.dateLabel} (${e.daysUntil === 0 ? 'today' : e.daysUntil === 1 ? 'tomorrow' : `in ${e.daysUntil} days`})`
       )
     );
   }

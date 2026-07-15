@@ -83,7 +83,12 @@ export async function GET(request: Request) {
             new Date(`${todayStr}T00:00:00Z`).getTime()) /
             86_400_000
         );
-        return { name: s.name, daysUntil: days };
+        const dateLabel = new Date(`${s.nextExam}T00:00:00Z`).toLocaleDateString('en-GB', {
+          day: 'numeric',
+          month: 'long',
+          timeZone: 'UTC',
+        });
+        return { name: s.name, dateLabel, daysUntil: days };
       })
       .filter((s) => s.daysUntil <= 14)
       .sort((a, b) => a.daysUntil - b.daysUntil)
