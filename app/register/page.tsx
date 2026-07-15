@@ -93,6 +93,14 @@ export default function RegisterStep1Page() {
 
   return (
     <main className="min-h-screen bg-bg flex flex-col px-[38px] py-10">
+      <Link
+        href="/login"
+        aria-label="Back"
+        className="text-text-primary text-[19px] leading-none mb-4"
+      >
+        ←
+      </Link>
+
       <p className="font-heading font-bold text-[10px] uppercase tracking-[1.5px] text-teal">
         STEP 1 OF 2
       </p>

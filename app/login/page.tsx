@@ -64,6 +64,14 @@ function LoginForm() {
 
   return (
     <main className="min-h-screen bg-bg flex flex-col px-[38px]">
+      <Link
+        href="/"
+        aria-label="Back"
+        className="text-text-primary text-[19px] leading-none pt-6"
+      >
+        ←
+      </Link>
+
       <div className="flex-1" />
 
       <h1 className="font-heading font-bold text-[26px] tracking-[-0.066em] leading-[1.1] text-center text-text-primary">

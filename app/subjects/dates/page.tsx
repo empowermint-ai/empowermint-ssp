@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { createSupabaseServerClient } from '@/lib/supabaseServerClient';
 import ExamDatesForm from '@/components/ExamDatesForm';
@@ -25,6 +26,14 @@ export default async function SubjectDatesPage() {
 
   return (
     <main className="min-h-dvh flex flex-col px-[38px] py-8 bg-bg">
+      <Link
+        href="/subjects/rank"
+        aria-label="Back"
+        className="text-text-primary text-[19px] leading-none mb-3"
+      >
+        ←
+      </Link>
+
       <p className="font-heading font-bold text-[10px] uppercase text-teal">LAST STEP</p>
       <h1 className="font-heading font-bold text-[21px] tracking-[-0.066em] text-text-primary mt-3">
         When is each exam?

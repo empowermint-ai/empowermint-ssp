@@ -112,7 +112,11 @@ export default function RegisterStep2Page() {
   }
 
   return (
-    <AuthCard title="Almost done" subtitle="We just need an email to confirm your account.">
+    <AuthCard
+      title="Almost done"
+      subtitle="We just need an email to confirm your account."
+      backHref="/register"
+    >
       <form onSubmit={handleSubmit} className="space-y-4">
         <TextField
           id="email"
