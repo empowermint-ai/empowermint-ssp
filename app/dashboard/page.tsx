@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation';
 import { createSupabaseServerClient } from '@/lib/supabaseServerClient';
 import TodayPlanClient from '@/components/TodayPlanClient';
 import SettingsMenu from '@/components/SettingsMenu';
+import InstallAppBanner from '@/components/InstallAppBanner';
 import { nextExamDate } from '@/lib/nextExamDate';
 
 const GREETINGS: ((name: string) => string)[] = [
@@ -158,6 +159,8 @@ export default async function DashboardPage() {
         initialAvailable={available}
         initialNeedsNewDate={needsNewDate}
       />
+
+      <InstallAppBanner />
 
       <Link
         href="/account"
