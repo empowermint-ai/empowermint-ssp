@@ -113,7 +113,7 @@ export function buildWeeklyDigestEmail({
             <tr>
               <td style="padding:20px 28px 0 28px;">
                 <p style="margin:0 0 6px 0; font-family:${font}; font-size:11px; font-weight:700; letter-spacing:0.6px; text-transform:uppercase; color:#8A8579;">
-                  Coming up
+                  Upcoming exams
                 </p>
                 <table width="100%" cellpadding="0" cellspacing="0" role="presentation">
                   ${examRows}
@@ -180,7 +180,7 @@ export function buildWeeklyDigestEmailText({
   if (upcomingExams.length > 0) {
     lines.push(
       '',
-      'Coming up:',
+      'Upcoming exams:',
       ...upcomingExams.map(
         (e) =>
           `- ${e.name}: ${e.dateLabel} (${e.daysUntil === 0 ? 'today' : e.daysUntil === 1 ? 'tomorrow' : `in ${e.daysUntil} days`})`
