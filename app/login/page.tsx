@@ -7,6 +7,7 @@ import { supabase } from '@/lib/supabaseClient';
 import { normalizeMobileNumber } from '@/lib/normalizeMobileNumber';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import NavArrows from '@/components/NavArrows';
+import PhoneNumberInput from '@/components/PhoneNumberInput';
 
 function LoginForm() {
   const router = useRouter();
@@ -89,16 +90,7 @@ function LoginForm() {
           >
             Mobile number
           </label>
-          <input
-            id="mobileNumber"
-            type="tel"
-            autoComplete="tel"
-            required
-            placeholder="e.g. 082 123 4567"
-            value={mobileNumber}
-            onChange={(e) => setMobileNumber(e.target.value)}
-            className="w-full bg-card border-[1.5px] border-card-border rounded-[10px] px-[14px] py-[13px] font-body text-[14px] text-text-primary outline-none focus:border-teal"
-          />
+          <PhoneNumberInput id="mobileNumber" onChange={setMobileNumber} required />
         </div>
 
         <div>

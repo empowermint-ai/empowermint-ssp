@@ -5,9 +5,10 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabaseClient';
 import { normalizeMobileNumber } from '@/lib/normalizeMobileNumber';
-import { isValidSAMobile } from '@/lib/validateMobileNumber';
+import { isValidMobileNumber } from '@/lib/validateMobileNumber';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import NavArrows from '@/components/NavArrows';
+import PhoneNumberInput from '@/components/PhoneNumberInput';
 
 interface FieldErrors {
   username?: string;
@@ -47,8 +48,8 @@ export default function RegisterStep1Page() {
 
     if (!mobileNumber.trim()) {
       errors.mobileNumber = 'Please enter your mobile number.';
-    } else if (!isValidSAMobile(mobileNumber)) {
-      errors.mobileNumber = 'Enter a valid SA mobile number, e.g. 082 000 0000.';
+    } else if (!isValidMobileNumber(mobileNumber)) {
+      errors.mobileNumber = 'Enter a valid mobile number for the selected country.';
     }
 
     if (!password) {
@@ -127,15 +128,7 @@ export default function RegisterStep1Page() {
         </div>
 
         <div>
-          <input
-            id="mobileNumber"
-            type="tel"
-            autoComplete="tel"
-            placeholder="082 000 0000"
-            value={mobileNumber}
-            onChange={(e) => setMobileNumber(e.target.value)}
-            className="w-full bg-card border-[1.5px] border-card-border rounded-[10px] px-[14px] py-[13px] font-body text-[14px] text-text-primary outline-none focus:border-teal"
-          />
+          <PhoneNumberInput id="mobileNumber" onChange={setMobileNumber} />
           {fieldErrors.mobileNumber && (
             <p className="text-red-600 text-xs mt-1">{fieldErrors.mobileNumber}</p>
           )}

@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { supabase } from '@/lib/supabaseClient';
 import { normalizeMobileNumber } from '@/lib/normalizeMobileNumber';
 import AuthCard from '@/components/AuthCard';
-import TextField from '@/components/TextField';
+import PhoneNumberInput from '@/components/PhoneNumberInput';
 import Button from '@/components/Button';
 
 export default function ForgotPasswordPage() {
@@ -67,15 +67,7 @@ export default function ForgotPasswordPage() {
       subtitle="We'll send a reset link to the email on file for your account."
     >
       <form onSubmit={handleSubmit} className="space-y-4">
-        <TextField
-          id="mobileNumber"
-          label="Mobile number"
-          type="tel"
-          autoComplete="tel"
-          required
-          value={mobileNumber}
-          onChange={(e) => setMobileNumber(e.target.value)}
-        />
+        <PhoneNumberInput id="mobileNumber" label="Mobile number" onChange={setMobileNumber} required />
         {error && <p className="text-sm text-red-600">{error}</p>}
         <Button type="submit" loading={loading}>
           Send reset link

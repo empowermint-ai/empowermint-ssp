@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { parsePhoneNumberFromString } from 'libphonenumber-js';
 import { createSupabaseAdminClient } from '@/lib/supabaseAdminClient';
 
 export async function POST(request: Request) {
@@ -9,11 +10,12 @@ export async function POST(request: Request) {
   }
 
   const supabase = createSupabaseAdminClient();
+  const country = parsePhoneNumberFromString(mobile_number)?.country ?? null;
 
   const { error } = await supabase
     .from('users')
     .upsert(
-      { id, username, mobile_number, parent_email, institution: institution || null },
+      { id, username, mobile_number, parent_email, institution: institution || null, country },
       { onConflict: 'id' }
     );
 
