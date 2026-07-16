@@ -6,6 +6,7 @@ import { supabase } from '@/lib/supabaseClient';
 import { priorityScore } from '@/lib/priorityScore';
 import { nextExamDate } from '@/lib/nextExamDate';
 import { MAX_DAILY_SESSIONS } from '@/lib/dailyPlanLimits';
+import { allocateSessions } from '@/lib/allocateSessions';
 
 interface ExamDate {
   id: string;
@@ -103,25 +104,38 @@ export default function ExamDatesForm({
     setSaving(true);
     setError(null);
 
+    const todayMs = new Date(`${todayStr}T00:00:00Z`).getTime();
     const ranked = [...subjects]
-      .sort((a, b) => {
-        const aNext = nextExamDate(a.exam_dates, todayStr);
-        const bNext = nextExamDate(b.exam_dates, todayStr);
-        return (
-          priorityScore(b.confidence_score, bNext, todayStr) -
-          priorityScore(a.confidence_score, aNext, todayStr)
+      .map((s) => {
+        const nextExam = nextExamDate(s.exam_dates, todayStr)!;
+        const daysUntilExam = Math.round(
+          (new Date(`${nextExam}T00:00:00Z`).getTime() - todayMs) / 86_400_000
         );
+        return {
+          id: s.id,
+          confidenceScore: s.confidence_score ?? 3,
+          daysUntilExam,
+          score: priorityScore(s.confidence_score, nextExam, todayStr),
+        };
       })
-      .slice(0, MAX_DAILY_SESSIONS);
+      .sort((a, b) => b.score - a.score);
+
+    const allocations = allocateSessions(ranked, MAX_DAILY_SESSIONS);
 
     await supabase.from('daily_plans').delete().eq('user_id', userId).eq('plan_date', todayStr);
 
-    const planRows = ranked.map((s, index) => ({
-      user_id: userId,
-      subject_id: s.id,
-      plan_date: todayStr,
-      session_order: index + 1,
-    }));
+    const planRows: { user_id: string; subject_id: string; plan_date: string; session_order: number }[] = [];
+    let order = 1;
+    for (const { subject, count } of allocations) {
+      for (let i = 0; i < count; i++) {
+        planRows.push({
+          user_id: userId,
+          subject_id: subject.id,
+          plan_date: todayStr,
+          session_order: order++,
+        });
+      }
+    }
 
     const { error: insertError } = await supabase.from('daily_plans').insert(planRows);
 

@@ -89,6 +89,8 @@ export default async function DashboardPage() {
     .eq('plan_date', todayStr)
     .order('session_order', { ascending: true });
 
+  const nextExamBySubjectId = new Map(subjectsWithNextExam.map((s) => [s.id, s.nextExam]));
+
   const sessions = (planRows ?? []).map((row) => {
     const subject = Array.isArray(row.subjects) ? row.subjects[0] : row.subjects;
     return {
@@ -96,6 +98,7 @@ export default async function DashboardPage() {
       subject_id: row.subject_id,
       subject_name: subject?.subject_name ?? '',
       confidence_score: subject?.confidence_score ?? null,
+      exam_date: nextExamBySubjectId.get(row.subject_id) ?? null,
       suggested_start_time: row.suggested_start_time,
       completed: row.completed,
       session_order: row.session_order,

@@ -108,7 +108,7 @@ export default async function SessionCompletePage({
 
       {nextSession ? (
         <Link
-          href={`/timer/${nextSession.subject_id}`}
+          href={`/timer/${nextSession.id}`}
           className="w-full bg-orange text-white font-heading font-bold text-[13.5px] rounded-[10px] py-[14px] text-center"
         >
           Start next: {nextSession.subject_name}

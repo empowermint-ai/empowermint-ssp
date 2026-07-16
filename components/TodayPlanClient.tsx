@@ -11,6 +11,7 @@ interface Session {
   subject_id: string;
   subject_name: string;
   confidence_score: number | null;
+  exam_date: string | null;
   suggested_start_time: string | null;
   completed: boolean;
   session_order: number;
@@ -87,12 +88,35 @@ export default function TodayPlanClient({
         subject_id: best.id,
         subject_name: best.subject_name,
         confidence_score: best.confidence_score,
+        exam_date: best.exam_date,
         suggested_start_time: data.suggested_start_time,
         completed: data.completed,
         session_order: data.session_order,
       },
     ]);
     setAvailable((prev) => prev.filter((s) => s.id !== best.id));
+  }
+
+  async function handleRemoveSession(session: Session) {
+    const { error } = await supabase.from('daily_plans').delete().eq('id', session.id);
+    if (error) return;
+
+    setSessions((prev) => {
+      const next = prev.filter((s) => s.id !== session.id);
+      const stillPlanned = next.some((s) => s.subject_id === session.subject_id);
+      if (!stillPlanned) {
+        setAvailable((prevAvailable) => [
+          ...prevAvailable,
+          {
+            id: session.subject_id,
+            subject_name: session.subject_name,
+            confidence_score: session.confidence_score,
+            exam_date: session.exam_date,
+          },
+        ]);
+      }
+      return next;
+    });
   }
 
   async function handleAddDate(subjectId: string, value: string) {
@@ -117,7 +141,7 @@ export default function TodayPlanClient({
         {sessions.map((session) => (
           <div
             key={session.id}
-            onClick={() => router.push(`/timer/${session.subject_id}`)}
+            onClick={() => router.push(`/timer/${session.id}`)}
             className={`flex items-center justify-between gap-3 bg-card rounded-[12px] px-[14px] py-[13px] mb-[10px] cursor-pointer border-l-[5px] ${
               session.completed ? 'border-teal' : 'border-orange'
             }`}
@@ -153,6 +177,26 @@ export default function TodayPlanClient({
                 </svg>
               )}
             </span>
+            {!session.completed && (
+              <button
+                type="button"
+                aria-label={`Remove ${session.subject_name} session`}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleRemoveSession(session);
+                }}
+                className="flex items-center justify-center w-[22px] h-[22px] flex-shrink-0 text-text-muted"
+              >
+                <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M1 1L10 10M10 1L1 10"
+                    stroke="currentColor"
+                    strokeWidth="1.4"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </button>
+            )}
           </div>
         ))}
 

@@ -50,6 +50,17 @@ function priorityScore(
   return (6 - confidence) * daysWeight(examDate, targetDate);
 }
 
+// Decides how many of the day's session slots a subject should get, so a
+// learner who is weak in a subject with an exam coming up soon gets focused
+// repetition on it instead of a single scattered session like everything
+// else. Allocation still happens within the same overall daily time budget -
+// this redistributes attention, it does not add extra total study time.
+function sessionsForSubject(confidenceScore: number, daysUntilExam: number): number {
+  if (confidenceScore <= 2 && daysUntilExam <= 14) return 3;
+  if (confidenceScore <= 3 && daysUntilExam <= 7) return 2;
+  return 1;
+}
+
 Deno.serve(async () => {
   const supabase = createClient(
     Deno.env.get("SUPABASE_URL")!,
@@ -97,22 +108,34 @@ Deno.serve(async () => {
       (e) => e.subject.confidence_score !== null && e.nextExam !== null
     );
 
-    const ranked = [...eligible]
-      .sort(
-        (a, b) =>
-          priorityScore(b.subject.confidence_score, b.nextExam, tomorrowStr) -
-          priorityScore(a.subject.confidence_score, a.nextExam, tomorrowStr)
-      )
-      .slice(0, MAX_DAILY_SESSIONS);
+    const ranked = [...eligible].sort(
+      (a, b) =>
+        priorityScore(b.subject.confidence_score, b.nextExam, tomorrowStr) -
+        priorityScore(a.subject.confidence_score, a.nextExam, tomorrowStr)
+    );
 
-    ranked.forEach((entry, index) => {
-      rowsToInsert.push({
-        user_id: userId,
-        subject_id: entry.subject.id,
-        plan_date: tomorrowStr,
-        session_order: index + 1,
-      });
-    });
+    let remaining = MAX_DAILY_SESSIONS;
+    let order = 1;
+    for (const entry of ranked) {
+      if (remaining <= 0) break;
+      const daysUntilExam = Math.round(
+        (new Date(`${entry.nextExam}T00:00:00Z`).getTime() -
+          new Date(`${tomorrowStr}T00:00:00Z`).getTime()) /
+          86_400_000
+      );
+      const target = sessionsForSubject(entry.subject.confidence_score ?? 3, daysUntilExam);
+      const count = Math.min(target, remaining);
+      remaining -= count;
+
+      for (let i = 0; i < count; i++) {
+        rowsToInsert.push({
+          user_id: userId,
+          subject_id: entry.subject.id,
+          plan_date: tomorrowStr,
+          session_order: order++,
+        });
+      }
+    }
   }
 
   // Clear any existing rows for tomorrow first so re-runs stay idempotent
