@@ -6,6 +6,7 @@ import SettingsMenu from '@/components/SettingsMenu';
 import InstallAppBanner from '@/components/InstallAppBanner';
 import NavArrows from '@/components/NavArrows';
 import UpcomingExamsPanel from '@/components/UpcomingExamsPanel';
+import ExamReflectionPrompt from '@/components/ExamReflectionPrompt';
 import { nextExamDate } from '@/lib/nextExamDate';
 
 const GREETINGS: ((name: string) => string)[] = [
@@ -43,7 +44,7 @@ export default async function DashboardPage() {
 
   const { data: activeSubjects } = await supabase
     .from('subjects')
-    .select('id, subject_name, confidence_score, exam_dates(exam_date)')
+    .select('id, subject_name, confidence_score, exam_dates(id, exam_date, reflected_at)')
     .eq('user_id', user.id)
     .is('archived_at', null);
 
@@ -67,6 +68,18 @@ export default async function DashboardPage() {
   const needsNewDate = subjectsWithNextExam
     .filter((s) => s.nextExam === null)
     .map((s) => ({ id: s.id, subject_name: s.subject_name }));
+
+  const pendingReflections = subjects.flatMap((s) =>
+    s.exam_dates
+      .filter((d) => d.exam_date < todayStr && d.reflected_at === null)
+      .map((d) => ({
+        examDateId: d.id,
+        subjectId: s.id,
+        subjectName: s.subject_name,
+        examDate: d.exam_date,
+        confidenceScore: s.confidence_score ?? 3,
+      }))
+  );
 
   const upcomingExams = subjectsWithNextExam
     .filter((s) => s.nextExam !== null)
@@ -139,6 +152,8 @@ export default async function DashboardPage() {
       </div>
 
       <UpcomingExamsPanel exams={examBanners} />
+
+      <ExamReflectionPrompt initialReflections={pendingReflections} />
 
       <div className="mt-5">
         <p className="font-heading font-bold text-[15px] uppercase tracking-[0.6px] text-teal">
