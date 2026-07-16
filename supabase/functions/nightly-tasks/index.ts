@@ -1,6 +1,12 @@
 import "@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
 
+// A realistic daily study budget for a learner - roughly 3 hours, so the
+// plan stays achievable instead of listing every subject regardless of load.
+const SESSION_MINUTES = 25;
+const MAX_DAILY_STUDY_MINUTES = 180;
+const MAX_DAILY_SESSIONS = Math.floor(MAX_DAILY_STUDY_MINUTES / SESSION_MINUTES);
+
 interface ExamDate {
   exam_date: string;
 }
@@ -86,11 +92,13 @@ Deno.serve(async () => {
       (e) => e.subject.confidence_score !== null && e.nextExam !== null
     );
 
-    const ranked = [...eligible].sort(
-      (a, b) =>
-        priorityScore(b.subject.confidence_score, b.nextExam, tomorrowStr) -
-        priorityScore(a.subject.confidence_score, a.nextExam, tomorrowStr)
-    );
+    const ranked = [...eligible]
+      .sort(
+        (a, b) =>
+          priorityScore(b.subject.confidence_score, b.nextExam, tomorrowStr) -
+          priorityScore(a.subject.confidence_score, a.nextExam, tomorrowStr)
+      )
+      .slice(0, MAX_DAILY_SESSIONS);
 
     ranked.forEach((entry, index) => {
       rowsToInsert.push({

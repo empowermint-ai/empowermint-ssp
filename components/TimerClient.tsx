@@ -156,7 +156,7 @@ export default function TimerClient({
       style={{ backgroundColor: '#0d0d0d' }}
     >
       <div className="self-start mb-2">
-        <NavArrows dark />
+        <NavArrows dark showForward={false} />
       </div>
 
       <p

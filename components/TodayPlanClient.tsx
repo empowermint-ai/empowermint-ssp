@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabaseClient';
 import { priorityScore } from '@/lib/priorityScore';
+import { MAX_DAILY_SESSIONS } from '@/lib/dailyPlanLimits';
 import ProgressStrip from '@/components/ProgressStrip';
 
 interface Session {
@@ -53,7 +54,7 @@ export default function TodayPlanClient({
   const minDateStr = tomorrow.toISOString().slice(0, 10);
 
   async function handleAddSession() {
-    if (available.length === 0 || adding) return;
+    if (available.length === 0 || adding || sessions.length >= MAX_DAILY_SESSIONS) return;
     setAdding(true);
 
     const best = [...available].sort(
@@ -185,7 +186,7 @@ export default function TodayPlanClient({
         )}
       </div>
 
-      {available.length > 0 && (
+      {available.length > 0 && sessions.length < MAX_DAILY_SESSIONS && (
         <button
           type="button"
           onClick={handleAddSession}

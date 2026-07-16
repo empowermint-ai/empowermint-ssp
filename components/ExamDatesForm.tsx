@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabaseClient';
 import { priorityScore } from '@/lib/priorityScore';
 import { nextExamDate } from '@/lib/nextExamDate';
+import { MAX_DAILY_SESSIONS } from '@/lib/dailyPlanLimits';
 
 interface ExamDate {
   id: string;
@@ -102,14 +103,16 @@ export default function ExamDatesForm({
     setSaving(true);
     setError(null);
 
-    const ranked = [...subjects].sort((a, b) => {
-      const aNext = nextExamDate(a.exam_dates, todayStr);
-      const bNext = nextExamDate(b.exam_dates, todayStr);
-      return (
-        priorityScore(b.confidence_score, bNext, todayStr) -
-        priorityScore(a.confidence_score, aNext, todayStr)
-      );
-    });
+    const ranked = [...subjects]
+      .sort((a, b) => {
+        const aNext = nextExamDate(a.exam_dates, todayStr);
+        const bNext = nextExamDate(b.exam_dates, todayStr);
+        return (
+          priorityScore(b.confidence_score, bNext, todayStr) -
+          priorityScore(a.confidence_score, aNext, todayStr)
+        );
+      })
+      .slice(0, MAX_DAILY_SESSIONS);
 
     await supabase.from('daily_plans').delete().eq('user_id', userId).eq('plan_date', todayStr);
 
