@@ -55,11 +55,11 @@ export default function PhoneNumberInput({
           value={countryCode}
           onChange={handleCountryChange}
           aria-label="Country"
-          className="bg-card border border-card-border rounded-xl px-2 py-3 text-text-primary outline-none focus:border-teal focus:ring-1 focus:ring-teal"
+          className="w-[112px] truncate bg-card border border-card-border rounded-xl px-2 py-3 text-text-primary outline-none focus:border-teal focus:ring-1 focus:ring-teal"
         >
           {countries.map((c) => (
             <option key={c.code} value={c.code}>
-              {c.flag} {c.callingCode}
+              {c.flag} {c.callingCode} {c.name}
             </option>
           ))}
         </select>
