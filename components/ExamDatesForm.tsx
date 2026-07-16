@@ -122,9 +122,20 @@ export default function ExamDatesForm({
 
     const allocations = allocateSessions(ranked, MAX_DAILY_SESSIONS);
 
-    await supabase.from('daily_plans').delete().eq('user_id', userId).eq('plan_date', todayStr);
+    await supabase
+      .from('daily_plans')
+      .delete()
+      .eq('user_id', userId)
+      .eq('plan_date', todayStr)
+      .eq('is_auto_generated', true);
 
-    const planRows: { user_id: string; subject_id: string; plan_date: string; session_order: number }[] = [];
+    const planRows: {
+      user_id: string;
+      subject_id: string;
+      plan_date: string;
+      session_order: number;
+      is_auto_generated: boolean;
+    }[] = [];
     let order = 1;
     for (const { subject, count } of allocations) {
       for (let i = 0; i < count; i++) {
@@ -133,6 +144,7 @@ export default function ExamDatesForm({
           subject_id: subject.id,
           plan_date: todayStr,
           session_order: order++,
+          is_auto_generated: true,
         });
       }
     }

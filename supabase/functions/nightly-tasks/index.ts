@@ -96,11 +96,33 @@ Deno.serve(async () => {
     byUser.set(subject.user_id, list);
   }
 
+  // Rows a learner added manually for tomorrow (via Today's Plan or the
+  // calendar) before this run - these must survive the rebuild below, so
+  // only auto-generated rows for the date get cleared and replaced.
+  const { data: manualRows, error: manualError } = await supabase
+    .from("daily_plans")
+    .select("user_id")
+    .eq("plan_date", tomorrowStr)
+    .eq("is_auto_generated", false);
+
+  if (manualError) {
+    return Response.json(
+      { ok: false, step: "fetch_manual_rows", error: manualError.message },
+      { status: 500 }
+    );
+  }
+
+  const manualCountByUser = new Map<string, number>();
+  for (const row of manualRows ?? []) {
+    manualCountByUser.set(row.user_id, (manualCountByUser.get(row.user_id) ?? 0) + 1);
+  }
+
   const rowsToInsert: {
     user_id: string;
     subject_id: string;
     plan_date: string;
     session_order: number;
+    is_auto_generated: boolean;
   }[] = [];
 
   for (const [userId, entries] of byUser) {
@@ -115,7 +137,7 @@ Deno.serve(async () => {
     );
 
     let remaining = MAX_DAILY_SESSIONS;
-    let order = 1;
+    let order = (manualCountByUser.get(userId) ?? 0) + 1;
     for (const entry of ranked) {
       if (remaining <= 0) break;
       const daysUntilExam = Math.round(
@@ -133,16 +155,19 @@ Deno.serve(async () => {
           subject_id: entry.subject.id,
           plan_date: tomorrowStr,
           session_order: order++,
+          is_auto_generated: true,
         });
       }
     }
   }
 
-  // Clear any existing rows for tomorrow first so re-runs stay idempotent
+  // Clear only this job's own previous rows for tomorrow so re-runs stay
+  // idempotent - manually added rows for the date are left untouched.
   const { error: deleteError } = await supabase
     .from("daily_plans")
     .delete()
-    .eq("plan_date", tomorrowStr);
+    .eq("plan_date", tomorrowStr)
+    .eq("is_auto_generated", true);
 
   if (deleteError) {
     return Response.json(
