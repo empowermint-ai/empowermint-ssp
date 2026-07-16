@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { createSupabaseAdminClient } from '@/lib/supabaseAdminClient';
 
 export async function POST(request: Request) {
-  const { id, username, mobile_number, parent_email } = await request.json();
+  const { id, username, mobile_number, parent_email, institution } = await request.json();
 
   if (!id || !username || !mobile_number || !parent_email) {
     return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
@@ -12,7 +12,10 @@ export async function POST(request: Request) {
 
   const { error } = await supabase
     .from('users')
-    .upsert({ id, username, mobile_number, parent_email }, { onConflict: 'id' });
+    .upsert(
+      { id, username, mobile_number, parent_email, institution: institution || null },
+      { onConflict: 'id' }
+    );
 
   if (error) {
     // Roll back the orphaned auth account so the same details can be retried cleanly

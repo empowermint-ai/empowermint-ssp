@@ -19,6 +19,7 @@ export default function RegisterStep2Page() {
   const router = useRouter();
   const [step1Data, setStep1Data] = useState<Step1Data | null>(null);
   const [email, setEmail] = useState('');
+  const [institution, setInstitution] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
@@ -77,6 +78,7 @@ export default function RegisterStep2Page() {
           username,
           mobile_number: mobileNumber,
           parent_email: email,
+          institution: institution.trim(),
         }),
       });
 
@@ -129,6 +131,14 @@ export default function RegisterStep2Page() {
         <p className="text-xs text-text-muted -mt-2">
           Used once to confirm this account. You won&apos;t need it to log in.
         </p>
+        <TextField
+          id="institution"
+          label="School or university (optional)"
+          type="text"
+          autoComplete="organization"
+          value={institution}
+          onChange={(e) => setInstitution(e.target.value)}
+        />
         {error && <p className="text-sm text-red-600">{error}</p>}
         <Button type="submit" loading={loading}>
           Create account
