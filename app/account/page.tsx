@@ -1,9 +1,9 @@
-import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { createSupabaseServerClient } from '@/lib/supabaseServerClient';
 import SignOutButton from '@/components/SignOutButton';
 import ChangePasswordForm from '@/components/ChangePasswordForm';
 import ParentNotifyForm from '@/components/ParentNotifyForm';
+import NavArrows from '@/components/NavArrows';
 
 export default async function AccountPage() {
   const supabase = createSupabaseServerClient();
@@ -25,12 +25,12 @@ export default async function AccountPage() {
     <main className="min-h-screen bg-bg px-6 py-8">
       <div className="max-w-sm mx-auto">
         <div className="flex items-center justify-between mb-8">
-          <Link
-            href="/dashboard"
-            className="font-heading text-2xl text-navy dark:text-text-primary"
-          >
-            ← Account
-          </Link>
+          <div className="flex items-center gap-3">
+            <NavArrows />
+            <span className="font-heading text-2xl text-navy dark:text-text-primary">
+              Account
+            </span>
+          </div>
           <SignOutButton />
         </div>
         <div className="bg-card border border-card-border rounded-2xl p-6">

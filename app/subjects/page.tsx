@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation';
 import { createSupabaseServerClient } from '@/lib/supabaseServerClient';
 import SubjectsForm from '@/components/SubjectsForm';
+import NavArrows from '@/components/NavArrows';
 
 export default async function SubjectsPage() {
   const supabase = createSupabaseServerClient();
@@ -14,6 +15,10 @@ export default async function SubjectsPage() {
 
   return (
     <main className="min-h-dvh flex flex-col px-[38px] py-8 bg-bg">
+      <div className="mb-3">
+        <NavArrows />
+      </div>
+
       <p className="font-heading font-bold text-[10px] uppercase text-teal">
         BUILD YOUR SUBJECT LIST
       </p>

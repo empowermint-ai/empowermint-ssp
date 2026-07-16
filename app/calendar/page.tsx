@@ -1,7 +1,7 @@
-import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { createSupabaseServerClient } from '@/lib/supabaseServerClient';
 import CalendarGrid from '@/components/CalendarGrid';
+import NavArrows from '@/components/NavArrows';
 
 export default async function CalendarPage() {
   const supabase = createSupabaseServerClient();
@@ -40,13 +40,7 @@ export default async function CalendarPage() {
   return (
     <main className="min-h-dvh flex flex-col px-[22px] pt-[38px] pb-[18px] bg-bg">
       <div className="flex items-center gap-3">
-        <Link
-          href="/dashboard"
-          aria-label="Back to dashboard"
-          className="text-text-primary text-[19px] leading-none p-1"
-        >
-          ←
-        </Link>
+        <NavArrows />
         <div>
           <p className="font-heading font-bold text-[15px] uppercase tracking-[0.6px] text-teal">
             Calendar view

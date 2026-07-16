@@ -2,8 +2,8 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 import { supabase } from '@/lib/supabaseClient';
+import NavArrows from '@/components/NavArrows';
 
 const TOTAL_SECONDS = 1500;
 const SWEEP_PERIOD_MS = 25000;
@@ -155,14 +155,9 @@ export default function TimerClient({
       className="h-screen flex flex-col items-center px-[22px] pt-[38px] pb-[18px]"
       style={{ backgroundColor: '#0d0d0d' }}
     >
-      <Link
-        href="/dashboard"
-        aria-label="Back"
-        className="self-start text-[19px] leading-none mb-2"
-        style={{ color: '#a89e88' }}
-      >
-        ←
-      </Link>
+      <div className="self-start mb-2">
+        <NavArrows dark />
+      </div>
 
       <p
         className="font-heading font-bold text-[10px] uppercase tracking-wide"

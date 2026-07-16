@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { createSupabaseServerClient } from '@/lib/supabaseServerClient';
 import ProgressStrip from '@/components/ProgressStrip';
+import NavArrows from '@/components/NavArrows';
 
 const QUOTES = [
   "Effort doesn't need to be perfect to count. It just needs to be repeated.",
@@ -65,6 +66,10 @@ export default async function SessionCompletePage({
 
   return (
     <main className="min-h-screen bg-bg flex flex-col items-center px-[22px] pt-[38px] pb-[18px]">
+      <div className="w-full">
+        <NavArrows />
+      </div>
+
       <div className="w-[54px] h-[54px] rounded-full bg-teal flex items-center justify-center mt-[6px] mb-[18px]">
         <span className="font-heading font-bold text-[24px] text-white">✓</span>
       </div>

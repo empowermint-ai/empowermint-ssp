@@ -7,6 +7,7 @@ import { supabase } from '@/lib/supabaseClient';
 import { normalizeMobileNumber } from '@/lib/normalizeMobileNumber';
 import { isValidSAMobile } from '@/lib/validateMobileNumber';
 import LoadingSpinner from '@/components/LoadingSpinner';
+import NavArrows from '@/components/NavArrows';
 
 interface FieldErrors {
   username?: string;
@@ -93,13 +94,9 @@ export default function RegisterStep1Page() {
 
   return (
     <main className="min-h-screen bg-bg flex flex-col px-[38px] py-10">
-      <Link
-        href="/login"
-        aria-label="Back"
-        className="text-text-primary text-[19px] leading-none mb-4"
-      >
-        ←
-      </Link>
+      <div className="mb-4">
+        <NavArrows />
+      </div>
 
       <p className="font-heading font-bold text-[10px] uppercase tracking-[1.5px] text-teal">
         STEP 1 OF 2

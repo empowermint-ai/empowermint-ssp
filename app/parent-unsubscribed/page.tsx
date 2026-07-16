@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import NavArrows from '@/components/NavArrows';
 
 export default function ParentUnsubscribedPage({
   searchParams,
@@ -8,7 +9,11 @@ export default function ParentUnsubscribedPage({
   const ok = searchParams.status === 'ok';
 
   return (
-    <main className="min-h-screen bg-bg flex flex-col items-center justify-center px-10 text-center">
+    <main className="relative min-h-screen bg-bg flex flex-col items-center justify-center px-10 text-center">
+      <div className="absolute top-6 left-6">
+        <NavArrows />
+      </div>
+
       <div className="w-24">
         <Image
           src="/brand/logo-em-power-black.png"

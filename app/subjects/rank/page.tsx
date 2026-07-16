@@ -1,7 +1,7 @@
-import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { createSupabaseServerClient } from '@/lib/supabaseServerClient';
 import RankSubjectsForm from '@/components/RankSubjectsForm';
+import NavArrows from '@/components/NavArrows';
 
 export default async function RankSubjectsPage() {
   const supabase = createSupabaseServerClient();
@@ -26,13 +26,9 @@ export default async function RankSubjectsPage() {
 
   return (
     <main className="min-h-dvh flex flex-col px-[38px] py-8 bg-bg">
-      <Link
-        href="/subjects"
-        aria-label="Back"
-        className="text-text-primary text-[19px] leading-none mb-3"
-      >
-        ←
-      </Link>
+      <div className="mb-3">
+        <NavArrows />
+      </div>
 
       <p className="font-heading font-bold text-[10px] uppercase text-teal">
         BE HONEST — THIS DRIVES YOUR PLAN

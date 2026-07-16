@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { supabase } from '@/lib/supabaseClient';
 import { normalizeMobileNumber } from '@/lib/normalizeMobileNumber';
 import LoadingSpinner from '@/components/LoadingSpinner';
+import NavArrows from '@/components/NavArrows';
 
 function LoginForm() {
   const router = useRouter();
@@ -64,13 +65,9 @@ function LoginForm() {
 
   return (
     <main className="min-h-screen bg-bg flex flex-col px-[38px]">
-      <Link
-        href="/"
-        aria-label="Back"
-        className="text-text-primary text-[19px] leading-none pt-6"
-      >
-        ←
-      </Link>
+      <div className="pt-6">
+        <NavArrows />
+      </div>
 
       <div className="flex-1" />
 
