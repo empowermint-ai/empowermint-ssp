@@ -5,6 +5,7 @@ import TodayPlanClient from '@/components/TodayPlanClient';
 import SettingsMenu from '@/components/SettingsMenu';
 import InstallAppBanner from '@/components/InstallAppBanner';
 import NavArrows from '@/components/NavArrows';
+import UpcomingExamsPanel from '@/components/UpcomingExamsPanel';
 import { nextExamDate } from '@/lib/nextExamDate';
 
 const GREETINGS: ((name: string) => string)[] = [
@@ -134,20 +135,7 @@ export default async function DashboardPage() {
         </div>
       </div>
 
-      {examBanners.length > 0 && (
-        <div className="bg-navy rounded-[10px] px-[14px] py-[4px] mt-4 divide-y divide-white/15">
-          {examBanners.map((e) => (
-            <div key={e.subjectName} className="flex items-center justify-between gap-3 py-[8px]">
-              <span className="font-body font-bold text-[11.5px] text-white">
-                {e.subjectName} exam in
-              </span>
-              <span className="font-heading font-bold text-[16px] text-white whitespace-nowrap">
-                {e.daysUntil} days
-              </span>
-            </div>
-          ))}
-        </div>
-      )}
+      <UpcomingExamsPanel exams={examBanners} />
 
       <div className="mt-5">
         <p className="font-heading font-bold text-[15px] uppercase tracking-[0.6px] text-teal">
