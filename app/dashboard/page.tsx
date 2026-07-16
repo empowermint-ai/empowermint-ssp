@@ -7,6 +7,11 @@ import InstallAppBanner from '@/components/InstallAppBanner';
 import NavArrows from '@/components/NavArrows';
 import { nextExamDate } from '@/lib/nextExamDate';
 
+function joinNames(names: string[]): string {
+  if (names.length === 1) return names[0];
+  return `${names.slice(0, -1).join(', ')} & ${names[names.length - 1]}`;
+}
+
 const GREETINGS: ((name: string) => string)[] = [
   () => 'Welcome back, champ!',
   (name) => `Good to see you again, ${name}!`,
@@ -71,14 +76,15 @@ export default async function DashboardPage() {
     .filter((s) => s.nextExam !== null)
     .sort((a, b) => (a.nextExam! < b.nextExam! ? -1 : 1));
 
-  let examBanner: { subjectName: string; daysUntil: number } | null = null;
+  let examBanner: { subjectNames: string[]; daysUntil: number } | null = null;
   if (upcomingExams.length > 0) {
-    const closest = upcomingExams[0];
-    const examMs = new Date(`${closest.nextExam}T00:00:00Z`).getTime();
+    const nearestDate = upcomingExams[0].nextExam!;
+    const sameDay = upcomingExams.filter((s) => s.nextExam === nearestDate);
+    const examMs = new Date(`${nearestDate}T00:00:00Z`).getTime();
     const todayMs = new Date(`${todayStr}T00:00:00Z`).getTime();
     const daysUntil = Math.round((examMs - todayMs) / 86_400_000);
     if (daysUntil <= 14) {
-      examBanner = { subjectName: closest.subject_name, daysUntil };
+      examBanner = { subjectNames: sameDay.map((s) => s.subject_name), daysUntil };
     }
   }
 
@@ -136,11 +142,11 @@ export default async function DashboardPage() {
       </div>
 
       {examBanner && (
-        <div className="flex items-center justify-between bg-navy rounded-[10px] px-[14px] py-[12px] mt-4">
+        <div className="flex items-center justify-between gap-3 bg-navy rounded-[10px] px-[14px] py-[12px] mt-4">
           <span className="font-body font-bold text-[11.5px] text-white">
-            {examBanner.subjectName} exam in
+            {joinNames(examBanner.subjectNames)} exam in
           </span>
-          <span className="font-heading font-bold text-[16px] text-white">
+          <span className="font-heading font-bold text-[16px] text-white whitespace-nowrap">
             {examBanner.daysUntil} days
           </span>
         </div>
