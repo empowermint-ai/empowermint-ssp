@@ -102,20 +102,18 @@ export default function ExamDatesForm({
     setSaving(true);
     setError(null);
 
-    const topThree = [...subjects]
-      .sort((a, b) => {
-        const aNext = nextExamDate(a.exam_dates, todayStr);
-        const bNext = nextExamDate(b.exam_dates, todayStr);
-        return (
-          priorityScore(b.confidence_score, bNext, todayStr) -
-          priorityScore(a.confidence_score, aNext, todayStr)
-        );
-      })
-      .slice(0, 3);
+    const ranked = [...subjects].sort((a, b) => {
+      const aNext = nextExamDate(a.exam_dates, todayStr);
+      const bNext = nextExamDate(b.exam_dates, todayStr);
+      return (
+        priorityScore(b.confidence_score, bNext, todayStr) -
+        priorityScore(a.confidence_score, aNext, todayStr)
+      );
+    });
 
     await supabase.from('daily_plans').delete().eq('user_id', userId).eq('plan_date', todayStr);
 
-    const planRows = topThree.map((s, index) => ({
+    const planRows = ranked.map((s, index) => ({
       user_id: userId,
       subject_id: s.id,
       plan_date: todayStr,

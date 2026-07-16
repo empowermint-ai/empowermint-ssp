@@ -86,15 +86,13 @@ Deno.serve(async () => {
       (e) => e.subject.confidence_score !== null && e.nextExam !== null
     );
 
-    const top3 = [...eligible]
-      .sort(
-        (a, b) =>
-          priorityScore(b.subject.confidence_score, b.nextExam, tomorrowStr) -
-          priorityScore(a.subject.confidence_score, a.nextExam, tomorrowStr)
-      )
-      .slice(0, 3);
+    const ranked = [...eligible].sort(
+      (a, b) =>
+        priorityScore(b.subject.confidence_score, b.nextExam, tomorrowStr) -
+        priorityScore(a.subject.confidence_score, a.nextExam, tomorrowStr)
+    );
 
-    top3.forEach((entry, index) => {
+    ranked.forEach((entry, index) => {
       rowsToInsert.push({
         user_id: userId,
         subject_id: entry.subject.id,
