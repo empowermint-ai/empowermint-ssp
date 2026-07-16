@@ -23,15 +23,19 @@ export default async function CalendarPage() {
     s.exam_dates.map((d) => ({ date: d.exam_date, subject_name: s.subject_name }))
   );
 
+  const subjectOptions = (subjects ?? []).map((s) => ({ id: s.id, subject_name: s.subject_name }));
+
   const { data: planRows } = await supabase
     .from('daily_plans')
-    .select('plan_date, completed, subjects(subject_name)')
+    .select('id, plan_date, completed, subject_id, subjects(subject_name)')
     .eq('user_id', user.id);
 
   const sessions = (planRows ?? []).map((row) => {
     const subject = Array.isArray(row.subjects) ? row.subjects[0] : row.subjects;
     return {
+      id: row.id,
       date: row.plan_date,
+      subject_id: row.subject_id,
       subject_name: subject?.subject_name ?? '',
       completed: row.completed,
     };
@@ -51,7 +55,12 @@ export default async function CalendarPage() {
         </div>
       </div>
 
-      <CalendarGrid exams={exams} sessions={sessions} />
+      <CalendarGrid
+        exams={exams}
+        sessions={sessions}
+        subjects={subjectOptions}
+        userId={user.id}
+      />
     </main>
   );
 }

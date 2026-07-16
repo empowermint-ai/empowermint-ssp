@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import { supabase } from '@/lib/supabaseClient';
 
 interface ExamEntry {
   date: string;
@@ -8,19 +9,30 @@ interface ExamEntry {
 }
 
 interface SessionEntry {
+  id: string;
   date: string;
+  subject_id: string;
   subject_name: string;
   completed: boolean;
+}
+
+interface SubjectOption {
+  id: string;
+  subject_name: string;
 }
 
 const WEEKDAY_LABELS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
 export default function CalendarGrid({
   exams,
-  sessions,
+  sessions: initialSessions,
+  subjects,
+  userId,
 }: {
   exams: ExamEntry[];
   sessions: SessionEntry[];
+  subjects: SubjectOption[];
+  userId: string;
 }) {
   const todayStr = new Date().toISOString().slice(0, 10);
   const today = new Date(`${todayStr}T00:00:00`);
@@ -28,6 +40,9 @@ export default function CalendarGrid({
   const [viewYear, setViewYear] = useState(today.getFullYear());
   const [viewMonth, setViewMonth] = useState(today.getMonth());
   const [selectedDate, setSelectedDate] = useState(todayStr);
+  const [sessions, setSessions] = useState(initialSessions);
+  const [picking, setPicking] = useState(false);
+  const [adding, setAdding] = useState(false);
 
   const byDate = useMemo(() => {
     const map = new Map<string, { exams: string[]; sessions: SessionEntry[] }>();
@@ -78,12 +93,52 @@ export default function CalendarGrid({
     }
   }
 
+  function selectDate(dateStr: string) {
+    setSelectedDate(dateStr);
+    setPicking(false);
+  }
+
+  async function handleAddSession(subject: SubjectOption) {
+    if (adding) return;
+    setAdding(true);
+
+    const sessionOrder = sessions.filter((s) => s.date === selectedDate).length + 1;
+
+    const { data, error } = await supabase
+      .from('daily_plans')
+      .insert({
+        user_id: userId,
+        subject_id: subject.id,
+        plan_date: selectedDate,
+        session_order: sessionOrder,
+      })
+      .select('id, completed')
+      .single();
+
+    setAdding(false);
+
+    if (error || !data) return;
+
+    setSessions((prev) => [
+      ...prev,
+      {
+        id: data.id,
+        date: selectedDate,
+        subject_id: subject.id,
+        subject_name: subject.subject_name,
+        completed: data.completed,
+      },
+    ]);
+    setPicking(false);
+  }
+
   const selected = byDate.get(selectedDate);
   const selectedLabel = new Date(`${selectedDate}T00:00:00`).toLocaleDateString('en-GB', {
     weekday: 'long',
     day: 'numeric',
     month: 'long',
   });
+  const canAddSession = selectedDate >= todayStr;
 
   return (
     <div className="flex flex-col flex-1">
@@ -131,7 +186,7 @@ export default function CalendarGrid({
             <button
               key={dateStr}
               type="button"
-              onClick={() => setSelectedDate(dateStr)}
+              onClick={() => selectDate(dateStr)}
               className="flex flex-col items-center justify-center py-[4px]"
             >
               <span
@@ -178,9 +233,9 @@ export default function CalendarGrid({
         <p className="font-heading font-bold text-[13px] text-text-primary mb-2">{selectedLabel}</p>
 
         {!selected || (selected.exams.length === 0 && selected.sessions.length === 0) ? (
-          <p className="font-body text-[12px] text-text-muted">Nothing on file for this day.</p>
+          <p className="font-body text-[12px] text-text-muted mb-2">Nothing on file for this day.</p>
         ) : (
-          <div className="space-y-2">
+          <div className="space-y-2 mb-2">
             {selected.exams.map((name, i) => (
               <div key={`exam-${i}`} className="flex items-center gap-2">
                 <span className="w-[8px] h-[8px] rounded-full bg-orange flex-shrink-0" />
@@ -204,6 +259,34 @@ export default function CalendarGrid({
               );
             })}
           </div>
+        )}
+
+        {canAddSession && (
+          <>
+            {picking ? (
+              <div className="flex flex-wrap gap-[8px] mt-1">
+                {subjects.map((s) => (
+                  <button
+                    key={s.id}
+                    type="button"
+                    disabled={adding}
+                    onClick={() => handleAddSession(s)}
+                    className="font-body text-xs rounded-[8px] px-[10px] py-[6px] border-[1.3px] text-teal border-teal disabled:opacity-50"
+                  >
+                    {s.subject_name}
+                  </button>
+                ))}
+              </div>
+            ) : (
+              <button
+                type="button"
+                onClick={() => setPicking(true)}
+                className="font-body text-[12.5px] font-medium text-teal"
+              >
+                + Add a study session
+              </button>
+            )}
+          </>
         )}
       </div>
     </div>
