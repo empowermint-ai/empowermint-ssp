@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabaseClient';
-import { priorityScore } from '@/lib/priorityScore';
 import ProgressStrip from '@/components/ProgressStrip';
 
 interface Session {
@@ -47,21 +46,16 @@ export default function TodayPlanClient({
   const [available, setAvailable] = useState(initialAvailable);
   const [needsNewDate, setNeedsNewDate] = useState(initialNeedsNewDate);
   const [adding, setAdding] = useState(false);
+  const [picking, setPicking] = useState(false);
   const [addingDateId, setAddingDateId] = useState<string | null>(null);
 
   const tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
   const minDateStr = tomorrow.toISOString().slice(0, 10);
 
-  async function handleAddSession() {
-    if (available.length === 0 || adding) return;
+  async function handleAddSession(subject: AvailableSubject) {
+    if (adding) return;
     setAdding(true);
-
-    const best = [...available].sort(
-      (a, b) =>
-        priorityScore(b.confidence_score, b.exam_date, todayStr) -
-        priorityScore(a.confidence_score, a.exam_date, todayStr)
-    )[0];
 
     const nextOrder =
       sessions.length > 0 ? Math.max(...sessions.map((s) => s.session_order)) + 1 : 1;
@@ -70,7 +64,7 @@ export default function TodayPlanClient({
       .from('daily_plans')
       .insert({
         user_id: userId,
-        subject_id: best.id,
+        subject_id: subject.id,
         plan_date: todayStr,
         session_order: nextOrder,
       })
@@ -85,16 +79,17 @@ export default function TodayPlanClient({
       ...prev,
       {
         id: data.id,
-        subject_id: best.id,
-        subject_name: best.subject_name,
-        confidence_score: best.confidence_score,
-        exam_date: best.exam_date,
+        subject_id: subject.id,
+        subject_name: subject.subject_name,
+        confidence_score: subject.confidence_score,
+        exam_date: subject.exam_date,
         suggested_start_time: data.suggested_start_time,
         completed: data.completed,
         session_order: data.session_order,
       },
     ]);
-    setAvailable((prev) => prev.filter((s) => s.id !== best.id));
+    setAvailable((prev) => prev.filter((s) => s.id !== subject.id));
+    setPicking(false);
   }
 
   async function handleRemoveSession(session: Session) {
@@ -230,14 +225,31 @@ export default function TodayPlanClient({
       </div>
 
       {available.length > 0 && (
-        <button
-          type="button"
-          onClick={handleAddSession}
-          disabled={adding}
-          className="font-body text-sm text-teal font-medium text-center mb-4 disabled:opacity-60"
-        >
-          {adding ? 'Adding…' : '+ Add another session'}
-        </button>
+        <>
+          {picking ? (
+            <div className="flex flex-wrap gap-[8px] mb-4">
+              {available.map((subject) => (
+                <button
+                  key={subject.id}
+                  type="button"
+                  disabled={adding}
+                  onClick={() => handleAddSession(subject)}
+                  className="font-body text-xs rounded-[8px] px-[10px] py-[7px] border-[1.3px] text-teal border-teal disabled:opacity-50"
+                >
+                  {subject.subject_name}
+                </button>
+              ))}
+            </div>
+          ) : (
+            <button
+              type="button"
+              onClick={() => setPicking(true)}
+              className="font-body text-sm text-teal font-medium text-center mb-4"
+            >
+              + Add another session
+            </button>
+          )}
+        </>
       )}
 
       <ProgressStrip completedFlags={sessions.map((s) => s.completed)} />

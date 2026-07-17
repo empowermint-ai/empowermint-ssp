@@ -4,7 +4,6 @@ import { createSupabaseServerClient } from '@/lib/supabaseServerClient';
 import TodayPlanClient from '@/components/TodayPlanClient';
 import SettingsMenu from '@/components/SettingsMenu';
 import InstallAppBanner from '@/components/InstallAppBanner';
-import NavArrows from '@/components/NavArrows';
 import UpcomingExamsPanel from '@/components/UpcomingExamsPanel';
 import ExamReflectionPrompt from '@/components/ExamReflectionPrompt';
 import { nextExamDate } from '@/lib/nextExamDate';
@@ -130,9 +129,7 @@ export default async function DashboardPage() {
 
   return (
     <main className="min-h-dvh flex flex-col px-[22px] pt-[38px] pb-[18px] bg-bg">
-      <NavArrows />
-
-      <div className="flex justify-between items-start mt-3">
+      <div className="flex justify-between items-start">
         <div>
           <h1 className="font-heading font-bold text-[19px] tracking-[-0.066em] text-text-primary">
             {greeting}
