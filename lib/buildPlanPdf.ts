@@ -132,6 +132,17 @@ export async function buildPlanPdf({
     align: 'center',
     maxWidth: contentWidth,
   });
+  y += 20;
+
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(11);
+  doc.setTextColor(...TEAL);
+  const linkText = 'Get your own plan at plan.empowermint.co.za';
+  const linkWidth = doc.getTextWidth(linkText);
+  const linkX = (pageWidth - linkWidth) / 2;
+  doc.textWithLink(linkText, linkX, y, { url: 'https://plan.empowermint.co.za' });
+  doc.setDrawColor(...TEAL);
+  doc.line(linkX, y + 2, linkX + linkWidth, y + 2);
 
   return doc.output('blob');
 }

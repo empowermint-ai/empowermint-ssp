@@ -69,7 +69,7 @@ export default function SharePlanButton({
             strokeLinejoin="round"
           />
         </svg>
-        {sharing ? 'Preparing…' : 'Share with parent'}
+        {sharing ? 'Preparing…' : 'Share'}
       </button>
       {error && <p className="font-body text-xs text-red-600 mt-1">{error}</p>}
     </div>

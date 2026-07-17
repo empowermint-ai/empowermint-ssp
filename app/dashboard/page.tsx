@@ -86,14 +86,15 @@ export default async function DashboardPage() {
     .sort((a, b) => (a.nextExam! < b.nextExam! ? -1 : 1));
 
   const todayMs = new Date(`${todayStr}T00:00:00Z`).getTime();
-  const examBanners = upcomingExams
+  const allUpcomingExams = upcomingExams
     .map((s) => {
       const examMs = new Date(`${s.nextExam}T00:00:00Z`).getTime();
       const daysUntil = Math.round((examMs - todayMs) / 86_400_000);
       return { subjectName: s.subject_name, examDate: s.nextExam!, daysUntil };
     })
-    .filter((e) => e.daysUntil <= 14)
     .sort((a, b) => a.daysUntil - b.daysUntil);
+
+  const examBanners = allUpcomingExams.filter((e) => e.daysUntil <= 14);
 
   const { data: planRows } = await supabase
     .from('daily_plans')
@@ -164,7 +165,7 @@ export default async function DashboardPage() {
           studentName={username}
           dateLabel={todayFormatted}
           sessions={sessions.map((s) => ({ subject_name: s.subject_name, completed: s.completed }))}
-          exams={examBanners}
+          exams={allUpcomingExams}
         />
       </div>
 
