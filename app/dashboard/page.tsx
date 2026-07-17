@@ -6,6 +6,7 @@ import SettingsMenu from '@/components/SettingsMenu';
 import InstallAppBanner from '@/components/InstallAppBanner';
 import UpcomingExamsPanel from '@/components/UpcomingExamsPanel';
 import ExamReflectionPrompt from '@/components/ExamReflectionPrompt';
+import SharePlanButton from '@/components/SharePlanButton';
 import { nextExamDate } from '@/lib/nextExamDate';
 
 const GREETINGS: ((name: string) => string)[] = [
@@ -89,7 +90,7 @@ export default async function DashboardPage() {
     .map((s) => {
       const examMs = new Date(`${s.nextExam}T00:00:00Z`).getTime();
       const daysUntil = Math.round((examMs - todayMs) / 86_400_000);
-      return { subjectName: s.subject_name, daysUntil };
+      return { subjectName: s.subject_name, examDate: s.nextExam!, daysUntil };
     })
     .filter((e) => e.daysUntil <= 14)
     .sort((a, b) => a.daysUntil - b.daysUntil);
@@ -159,6 +160,12 @@ export default async function DashboardPage() {
         <p className="font-body text-[12px] text-text-muted mt-[2px]">
           Here&apos;s what we recommend for today — feel free to amend it to suit you.
         </p>
+        <SharePlanButton
+          studentName={username}
+          dateLabel={todayFormatted}
+          sessions={sessions.map((s) => ({ subject_name: s.subject_name, completed: s.completed }))}
+          exams={examBanners}
+        />
       </div>
 
       <TodayPlanClient
