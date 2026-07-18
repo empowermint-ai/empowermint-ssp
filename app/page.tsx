@@ -2,7 +2,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { createSupabaseServerClient } from '@/lib/supabaseServerClient';
-import NavArrows from '@/components/NavArrows';
 
 export default async function Home() {
   const supabase = createSupabaseServerClient();
@@ -16,10 +15,6 @@ export default async function Home() {
 
   return (
     <main className="min-h-dvh bg-bg flex flex-col items-center px-10 text-center">
-      <div className="w-full pt-6">
-        <NavArrows />
-      </div>
-
       <div className="flex-1" />
 
       <div className="w-full max-w-sm flex flex-col items-center">
