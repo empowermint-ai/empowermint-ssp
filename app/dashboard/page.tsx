@@ -146,6 +146,8 @@ export default async function DashboardPage() {
         </div>
       </div>
 
+      <InstallAppBanner />
+
       <UpcomingExamsPanel exams={examBanners} />
 
       <ExamReflectionPrompt initialReflections={pendingReflections} />
@@ -169,8 +171,6 @@ export default async function DashboardPage() {
         initialNeedsNewDate={needsNewDate}
         exams={allUpcomingExams}
       />
-
-      <InstallAppBanner />
 
       <Link
         href="/account"
