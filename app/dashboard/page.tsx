@@ -6,7 +6,6 @@ import SettingsMenu from '@/components/SettingsMenu';
 import InstallAppBanner from '@/components/InstallAppBanner';
 import UpcomingExamsPanel from '@/components/UpcomingExamsPanel';
 import ExamReflectionPrompt from '@/components/ExamReflectionPrompt';
-import SharePlanButton from '@/components/SharePlanButton';
 import { nextExamDate } from '@/lib/nextExamDate';
 
 const GREETINGS: ((name: string) => string)[] = [
@@ -119,15 +118,12 @@ export default async function DashboardPage() {
     };
   });
 
-  const plannedSubjectIds = new Set(sessions.map((s) => s.subject_id));
-  const available = subjectsWithNextExam
-    .filter((s) => !plannedSubjectIds.has(s.id) && s.confidence_score !== null && s.nextExam !== null)
-    .map((s) => ({
-      id: s.id,
-      subject_name: s.subject_name,
-      confidence_score: s.confidence_score,
-      exam_date: s.nextExam,
-    }));
+  const available = subjectsWithNextExam.map((s) => ({
+    id: s.id,
+    subject_name: s.subject_name,
+    confidence_score: s.confidence_score,
+    exam_date: s.nextExam,
+  }));
 
   return (
     <main className="min-h-dvh flex flex-col px-[22px] pt-[38px] pb-[18px] bg-bg">
@@ -161,20 +157,17 @@ export default async function DashboardPage() {
         <p className="font-body text-[12px] text-text-muted mt-[2px]">
           Here&apos;s what we recommend for today — feel free to amend it to suit you.
         </p>
-        <SharePlanButton
-          studentName={username}
-          dateLabel={todayFormatted}
-          sessions={sessions.map((s) => ({ subject_name: s.subject_name, completed: s.completed }))}
-          exams={allUpcomingExams}
-        />
       </div>
 
       <TodayPlanClient
         userId={user.id}
         todayStr={todayStr}
+        studentName={username}
+        dateLabel={todayFormatted}
         initialSessions={sessions}
         initialAvailable={available}
         initialNeedsNewDate={needsNewDate}
+        exams={allUpcomingExams}
       />
 
       <InstallAppBanner />

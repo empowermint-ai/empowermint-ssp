@@ -259,7 +259,7 @@ export default function TimerClient({
             className="font-heading font-bold"
             style={{ fill: '#e3c878', fontSize: 9.5, letterSpacing: '2.5px' }}
           >
-            EMPOWERMINT
+            empowermint
           </text>
           <text
             x={CENTER}

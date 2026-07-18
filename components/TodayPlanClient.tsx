@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabaseClient';
 import ProgressStrip from '@/components/ProgressStrip';
+import SharePlanButton from '@/components/SharePlanButton';
+import type { PlanPdfExam } from '@/lib/buildPlanPdf';
 
 interface Session {
   id: string;
@@ -31,19 +33,24 @@ interface NeedsNewDateSubject {
 export default function TodayPlanClient({
   userId,
   todayStr,
+  studentName,
+  dateLabel,
   initialSessions,
   initialAvailable,
   initialNeedsNewDate,
+  exams,
 }: {
   userId: string;
   todayStr: string;
+  studentName: string;
+  dateLabel: string;
   initialSessions: Session[];
   initialAvailable: AvailableSubject[];
   initialNeedsNewDate: NeedsNewDateSubject[];
+  exams: PlanPdfExam[];
 }) {
   const router = useRouter();
   const [sessions, setSessions] = useState(initialSessions);
-  const [available, setAvailable] = useState(initialAvailable);
   const [needsNewDate, setNeedsNewDate] = useState(initialNeedsNewDate);
   const [adding, setAdding] = useState(false);
   const [picking, setPicking] = useState(false);
@@ -88,7 +95,6 @@ export default function TodayPlanClient({
         session_order: data.session_order,
       },
     ]);
-    setAvailable((prev) => prev.filter((s) => s.id !== subject.id));
     setPicking(false);
   }
 
@@ -96,22 +102,7 @@ export default function TodayPlanClient({
     const { error } = await supabase.from('daily_plans').delete().eq('id', session.id);
     if (error) return;
 
-    setSessions((prev) => {
-      const next = prev.filter((s) => s.id !== session.id);
-      const stillPlanned = next.some((s) => s.subject_id === session.subject_id);
-      if (!stillPlanned) {
-        setAvailable((prevAvailable) => [
-          ...prevAvailable,
-          {
-            id: session.subject_id,
-            subject_name: session.subject_name,
-            confidence_score: session.confidence_score,
-            exam_date: session.exam_date,
-          },
-        ]);
-      }
-      return next;
-    });
+    setSessions((prev) => prev.filter((s) => s.id !== session.id));
   }
 
   async function handleAddDate(subjectId: string, value: string) {
@@ -132,6 +123,13 @@ export default function TodayPlanClient({
 
   return (
     <>
+      <SharePlanButton
+        studentName={studentName}
+        dateLabel={dateLabel}
+        sessions={sessions.map((s) => ({ subject_name: s.subject_name, completed: s.completed }))}
+        exams={exams}
+      />
+
       <div className="mt-4">
         {sessions.map((session) => (
           <div
@@ -224,11 +222,11 @@ export default function TodayPlanClient({
         )}
       </div>
 
-      {available.length > 0 && (
+      {initialAvailable.length > 0 && (
         <>
           {picking ? (
             <div className="flex flex-wrap gap-[8px] mb-4">
-              {available.map((subject) => (
+              {initialAvailable.map((subject) => (
                 <button
                   key={subject.id}
                   type="button"
