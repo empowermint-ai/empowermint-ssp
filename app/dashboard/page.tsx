@@ -7,6 +7,9 @@ import InstallAppBanner from '@/components/InstallAppBanner';
 import UpcomingExamsPanel from '@/components/UpcomingExamsPanel';
 import ExamReflectionPrompt from '@/components/ExamReflectionPrompt';
 import { nextExamDate } from '@/lib/nextExamDate';
+import { priorityScore } from '@/lib/priorityScore';
+import { allocateSessions } from '@/lib/allocateSessions';
+import { MAX_DAILY_SESSIONS } from '@/lib/dailyPlanLimits';
 
 const GREETINGS: ((name: string) => string)[] = [
   () => 'Welcome back, champ!',
@@ -95,12 +98,63 @@ export default async function DashboardPage() {
 
   const examBanners = allUpcomingExams.filter((e) => e.daysUntil <= 14);
 
-  const { data: planRows } = await supabase
+  let { data: planRows } = await supabase
     .from('daily_plans')
     .select('id, subject_id, session_order, completed, suggested_start_time, subjects(subject_name, confidence_score)')
     .eq('user_id', user.id)
     .eq('plan_date', todayStr)
     .order('session_order', { ascending: true });
+
+  // Safety net: if the nightly job ever misses a run (or this is a brand new
+  // day for an existing account), a learner should never land on a silently
+  // blank plan - generate today's sessions on the spot using the same
+  // ranking/allocation the nightly job itself uses.
+  if ((planRows ?? []).length === 0) {
+    const eligible = subjectsWithNextExam.filter((s) => s.nextExam !== null);
+
+    if (eligible.length > 0) {
+      const ranked = eligible
+        .map((s) => ({
+          id: s.id,
+          confidenceScore: s.confidence_score ?? 3,
+          daysUntilExam: Math.round(
+            (new Date(`${s.nextExam}T00:00:00Z`).getTime() - todayMs) / 86_400_000
+          ),
+          score: priorityScore(s.confidence_score, s.nextExam, todayStr),
+        }))
+        .sort((a, b) => b.score - a.score);
+
+      const allocations = allocateSessions(ranked, MAX_DAILY_SESSIONS);
+
+      const rowsToInsert: {
+        user_id: string;
+        subject_id: string;
+        plan_date: string;
+        session_order: number;
+        is_auto_generated: boolean;
+      }[] = [];
+      let order = 1;
+      for (const { subject, count } of allocations) {
+        for (let i = 0; i < count; i++) {
+          rowsToInsert.push({
+            user_id: user.id,
+            subject_id: subject.id,
+            plan_date: todayStr,
+            session_order: order++,
+            is_auto_generated: true,
+          });
+        }
+      }
+
+      if (rowsToInsert.length > 0) {
+        const { data: inserted } = await supabase
+          .from('daily_plans')
+          .insert(rowsToInsert)
+          .select('id, subject_id, session_order, completed, suggested_start_time, subjects(subject_name, confidence_score)');
+        planRows = inserted ?? [];
+      }
+    }
+  }
 
   const nextExamBySubjectId = new Map(subjectsWithNextExam.map((s) => [s.id, s.nextExam]));
 
