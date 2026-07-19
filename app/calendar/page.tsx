@@ -44,7 +44,7 @@ export default async function CalendarPage() {
   return (
     <main className="min-h-dvh flex flex-col px-[22px] pt-[38px] pb-[18px] bg-bg">
       <div className="flex items-center gap-3">
-        <NavArrows />
+        <NavArrows showForward={false} />
         <div>
           <p className="font-heading font-bold text-[15px] uppercase tracking-[0.6px] text-teal">
             Calendar view

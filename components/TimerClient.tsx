@@ -152,7 +152,7 @@ export default function TimerClient({
 
   return (
     <main
-      className="h-dvh flex flex-col items-center px-[22px] pt-[38px]"
+      className="min-h-dvh flex flex-col items-center px-[22px] pt-[38px]"
       style={{ backgroundColor: '#0d0d0d', paddingBottom: 'calc(18px + env(safe-area-inset-bottom))' }}
     >
       <div className="self-start mb-2">
