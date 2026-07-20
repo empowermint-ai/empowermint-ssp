@@ -64,7 +64,7 @@ export async function buildPlanPdf({
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(18);
   doc.setTextColor(0, 0, 0);
-  doc.text(`${studentName}'s plan`, pageWidth / 2, y, { align: 'center' });
+  doc.text(`for ${studentName}`, pageWidth / 2, y, { align: 'center' });
   y += 18;
 
   doc.setFont('helvetica', 'normal');

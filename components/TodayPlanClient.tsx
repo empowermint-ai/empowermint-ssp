@@ -165,8 +165,8 @@ export default function TodayPlanClient({
               onClick={() => router.push(`/timer/${session.id}`)}
               className="flex items-center justify-between gap-3 cursor-pointer"
             >
-              <div className="min-w-0 flex items-center gap-2">
-                <span className="font-heading font-bold text-[13.5px] text-text-primary">
+              <div className="min-w-0 flex-1 flex items-center gap-2">
+                <span className="font-heading font-bold text-[13.5px] text-text-primary truncate">
                   {session.subject_name}
                 </span>
                 {session.suggested_start_time && (
