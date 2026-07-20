@@ -16,6 +16,8 @@ interface Session {
   suggested_start_time: string | null;
   completed: boolean;
   session_order: number;
+  topic: string | null;
+  topic_completed: boolean;
 }
 
 interface AvailableSubject {
@@ -93,6 +95,8 @@ export default function TodayPlanClient({
         suggested_start_time: data.suggested_start_time,
         completed: data.completed,
         session_order: data.session_order,
+        topic: null,
+        topic_completed: false,
       },
     ]);
     setPicking(false);
@@ -103,6 +107,25 @@ export default function TodayPlanClient({
     if (error) return;
 
     setSessions((prev) => prev.filter((s) => s.id !== session.id));
+  }
+
+  function handleTopicChange(sessionId: string, value: string) {
+    setSessions((prev) => prev.map((s) => (s.id === sessionId ? { ...s, topic: value } : s)));
+  }
+
+  async function handleTopicBlur(sessionId: string, value: string) {
+    await supabase
+      .from('daily_plans')
+      .update({ topic: value.trim() || null })
+      .eq('id', sessionId);
+  }
+
+  async function handleToggleTopicCompleted(session: Session) {
+    const next = !session.topic_completed;
+    setSessions((prev) =>
+      prev.map((s) => (s.id === session.id ? { ...s, topic_completed: next } : s))
+    );
+    await supabase.from('daily_plans').update({ topic_completed: next }).eq('id', session.id);
   }
 
   async function handleAddDate(subjectId: string, value: string) {
@@ -134,62 +157,99 @@ export default function TodayPlanClient({
         {sessions.map((session) => (
           <div
             key={session.id}
-            onClick={() => router.push(`/timer/${session.id}`)}
-            className={`flex items-center justify-between gap-3 bg-card rounded-[12px] px-[14px] py-[13px] mb-[10px] cursor-pointer border-l-[5px] ${
+            className={`bg-card rounded-[12px] px-[14px] py-[13px] mb-[10px] border-l-[5px] ${
               session.completed ? 'border-teal' : 'border-orange'
             }`}
           >
-            <div className="min-w-0">
-              <div className="flex items-center gap-2">
-                <span className="font-heading font-bold text-[13.5px] text-text-primary">
-                  {session.subject_name}
-                </span>
-                {session.suggested_start_time && (
-                  <span className="font-body text-[11px] text-text-muted">
-                    {session.suggested_start_time}
-                  </span>
-                )}
-              </div>
-              <p className="font-body text-[12px] text-text-body mt-1">
-                Study session · 25 min focus block
-              </p>
-            </div>
-            <span
-              aria-hidden="true"
-              className={`flex items-center justify-center w-[34px] h-[34px] rounded-full flex-shrink-0 ${
-                session.completed ? 'bg-teal' : 'bg-orange'
-              }`}
+            <div
+              onClick={() => router.push(`/timer/${session.id}`)}
+              className="flex items-center justify-between gap-3 cursor-pointer"
             >
-              {session.completed ? (
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M3 7.5L5.5 10L11 3.5" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              ) : (
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M2 1.2L10.5 6L2 10.8V1.2Z" fill="white" />
-                </svg>
+              <div className="min-w-0">
+                <div className="flex items-center gap-2">
+                  <span className="font-heading font-bold text-[13.5px] text-text-primary">
+                    {session.subject_name}
+                  </span>
+                  {session.suggested_start_time && (
+                    <span className="font-body text-[11px] text-text-muted">
+                      {session.suggested_start_time}
+                    </span>
+                  )}
+                </div>
+                <p className="font-body text-[12px] text-text-body mt-1">
+                  Study session · 25 min focus block
+                </p>
+              </div>
+              <span
+                aria-hidden="true"
+                className={`flex items-center justify-center w-[34px] h-[34px] rounded-full flex-shrink-0 ${
+                  session.completed ? 'bg-teal' : 'bg-orange'
+                }`}
+              >
+                {session.completed ? (
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3 7.5L5.5 10L11 3.5" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                ) : (
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M2 1.2L10.5 6L2 10.8V1.2Z" fill="white" />
+                  </svg>
+                )}
+              </span>
+              {!session.completed && (
+                <button
+                  type="button"
+                  aria-label={`Remove ${session.subject_name} session`}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleRemoveSession(session);
+                  }}
+                  className="flex items-center justify-center w-[22px] h-[22px] flex-shrink-0 text-text-muted"
+                >
+                  <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M1 1L10 10M10 1L1 10"
+                      stroke="currentColor"
+                      strokeWidth="1.4"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                </button>
               )}
-            </span>
-            {!session.completed && (
+            </div>
+
+            <div className="flex items-center gap-2 mt-[10px]">
               <button
                 type="button"
-                aria-label={`Remove ${session.subject_name} session`}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleRemoveSession(session);
-                }}
-                className="flex items-center justify-center w-[22px] h-[22px] flex-shrink-0 text-text-muted"
+                onClick={() => handleToggleTopicCompleted(session)}
+                aria-label={session.topic_completed ? 'Mark topic not done' : 'Mark topic done'}
+                className={`flex items-center justify-center w-[20px] h-[20px] rounded-[5px] border-[1.5px] flex-shrink-0 ${
+                  session.topic_completed ? 'bg-teal border-teal' : 'border-card-border'
+                }`}
               >
-                <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M1 1L10 10M10 1L1 10"
-                    stroke="currentColor"
-                    strokeWidth="1.4"
-                    strokeLinecap="round"
-                  />
-                </svg>
+                {session.topic_completed && (
+                  <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M2 5.5L4.2 7.7L9 3"
+                      stroke="white"
+                      strokeWidth="1.6"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                )}
               </button>
-            )}
+              <input
+                type="text"
+                value={session.topic ?? ''}
+                onChange={(e) => handleTopicChange(session.id, e.target.value)}
+                onBlur={(e) => handleTopicBlur(session.id, e.target.value)}
+                placeholder="What are you studying?"
+                className={`flex-1 min-w-0 rounded-[8px] border-[1.3px] border-card-border bg-bg px-[10px] py-[7px] font-body text-[12px] outline-none focus:border-teal ${
+                  session.topic_completed ? 'line-through text-text-muted' : 'text-text-primary'
+                }`}
+              />
+            </div>
           </div>
         ))}
 

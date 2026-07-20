@@ -100,7 +100,7 @@ export default async function DashboardPage() {
 
   let { data: planRows } = await supabase
     .from('daily_plans')
-    .select('id, subject_id, session_order, completed, suggested_start_time, subjects(subject_name, confidence_score)')
+    .select('id, subject_id, session_order, completed, suggested_start_time, topic, topic_completed, subjects(subject_name, confidence_score)')
     .eq('user_id', user.id)
     .eq('plan_date', todayStr)
     .order('session_order', { ascending: true });
@@ -150,7 +150,7 @@ export default async function DashboardPage() {
         const { data: inserted } = await supabase
           .from('daily_plans')
           .insert(rowsToInsert)
-          .select('id, subject_id, session_order, completed, suggested_start_time, subjects(subject_name, confidence_score)');
+          .select('id, subject_id, session_order, completed, suggested_start_time, topic, topic_completed, subjects(subject_name, confidence_score)');
         planRows = inserted ?? [];
       }
     }
@@ -169,6 +169,8 @@ export default async function DashboardPage() {
       suggested_start_time: row.suggested_start_time,
       completed: row.completed,
       session_order: row.session_order,
+      topic: row.topic,
+      topic_completed: row.topic_completed,
     };
   });
 
