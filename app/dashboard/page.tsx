@@ -96,8 +96,6 @@ export default async function DashboardPage() {
     })
     .sort((a, b) => a.daysUntil - b.daysUntil);
 
-  const examBanners = allUpcomingExams.filter((e) => e.daysUntil <= 14);
-
   let { data: planRows } = await supabase
     .from('daily_plans')
     .select('id, subject_id, session_order, completed, suggested_start_time, topic, topic_completed, subjects(subject_name, confidence_score)')
@@ -204,7 +202,7 @@ export default async function DashboardPage() {
 
       <InstallAppBanner />
 
-      <UpcomingExamsPanel exams={examBanners} />
+      <UpcomingExamsPanel exams={allUpcomingExams} />
 
       <ExamReflectionPrompt initialReflections={pendingReflections} />
 

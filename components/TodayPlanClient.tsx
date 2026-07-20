@@ -157,7 +157,7 @@ export default function TodayPlanClient({
         {sessions.map((session) => (
           <div
             key={session.id}
-            className={`bg-card rounded-[12px] px-[14px] py-[13px] mb-[10px] border-l-[5px] ${
+            className={`bg-card rounded-[12px] px-[14px] py-[10px] mb-[8px] border-l-[5px] ${
               session.completed ? 'border-teal' : 'border-orange'
             }`}
           >
@@ -165,24 +165,19 @@ export default function TodayPlanClient({
               onClick={() => router.push(`/timer/${session.id}`)}
               className="flex items-center justify-between gap-3 cursor-pointer"
             >
-              <div className="min-w-0">
-                <div className="flex items-center gap-2">
-                  <span className="font-heading font-bold text-[13.5px] text-text-primary">
-                    {session.subject_name}
+              <div className="min-w-0 flex items-center gap-2">
+                <span className="font-heading font-bold text-[13.5px] text-text-primary">
+                  {session.subject_name}
+                </span>
+                {session.suggested_start_time && (
+                  <span className="font-body text-[11px] text-text-muted">
+                    {session.suggested_start_time}
                   </span>
-                  {session.suggested_start_time && (
-                    <span className="font-body text-[11px] text-text-muted">
-                      {session.suggested_start_time}
-                    </span>
-                  )}
-                </div>
-                <p className="font-body text-[12px] text-text-body mt-1">
-                  Study session · 25 min focus block
-                </p>
+                )}
               </div>
               <span
                 aria-hidden="true"
-                className={`flex items-center justify-center w-[34px] h-[34px] rounded-full flex-shrink-0 ${
+                className={`flex items-center justify-center w-[30px] h-[30px] rounded-full flex-shrink-0 ${
                   session.completed ? 'bg-teal' : 'bg-orange'
                 }`}
               >
@@ -218,12 +213,12 @@ export default function TodayPlanClient({
               )}
             </div>
 
-            <div className="flex items-center gap-2 mt-[10px]">
+            <div className="flex items-center gap-2 mt-[8px]">
               <button
                 type="button"
                 onClick={() => handleToggleTopicCompleted(session)}
                 aria-label={session.topic_completed ? 'Mark topic not done' : 'Mark topic done'}
-                className={`flex items-center justify-center w-[20px] h-[20px] rounded-[5px] border-[1.5px] flex-shrink-0 ${
+                className={`flex items-center justify-center w-[18px] h-[18px] rounded-[5px] border-[1.5px] flex-shrink-0 ${
                   session.topic_completed ? 'bg-teal border-teal' : 'border-card-border'
                 }`}
               >
@@ -245,7 +240,7 @@ export default function TodayPlanClient({
                 onChange={(e) => handleTopicChange(session.id, e.target.value)}
                 onBlur={(e) => handleTopicBlur(session.id, e.target.value)}
                 placeholder="What are you studying?"
-                className={`flex-1 min-w-0 rounded-[8px] border-[1.3px] border-card-border bg-bg px-[10px] py-[7px] font-body text-[12px] outline-none focus:border-teal ${
+                className={`flex-1 min-w-0 rounded-[8px] border-[1.3px] border-card-border bg-bg px-[10px] py-[5px] font-body text-[12px] outline-none focus:border-teal ${
                   session.topic_completed ? 'line-through text-text-muted' : 'text-text-primary'
                 }`}
               />
