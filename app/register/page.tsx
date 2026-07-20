@@ -9,6 +9,7 @@ import { isValidMobileNumber } from '@/lib/validateMobileNumber';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import NavArrows from '@/components/NavArrows';
 import PhoneNumberInput from '@/components/PhoneNumberInput';
+import PasswordInput from '@/components/PasswordInput';
 
 interface FieldErrors {
   username?: string;
@@ -146,9 +147,8 @@ export default function RegisterStep1Page() {
         </div>
 
         <div>
-          <input
+          <PasswordInput
             id="password"
-            type="password"
             autoComplete="new-password"
             placeholder="Min 6 characters"
             value={password}

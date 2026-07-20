@@ -8,6 +8,7 @@ import { normalizeMobileNumber } from '@/lib/normalizeMobileNumber';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import NavArrows from '@/components/NavArrows';
 import PhoneNumberInput from '@/components/PhoneNumberInput';
+import PasswordInput from '@/components/PasswordInput';
 
 function LoginForm() {
   const router = useRouter();
@@ -100,9 +101,8 @@ function LoginForm() {
           >
             Password
           </label>
-          <input
+          <PasswordInput
             id="password"
-            type="password"
             autoComplete="current-password"
             required
             placeholder="Enter your password"
