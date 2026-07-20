@@ -94,7 +94,10 @@ export default function RegisterStep1Page() {
   }
 
   return (
-    <main className="min-h-screen bg-bg flex flex-col px-[38px] py-10">
+    <main
+      className="min-h-dvh bg-bg flex flex-col px-[38px] pt-10"
+      style={{ paddingBottom: 'calc(2.5rem + env(safe-area-inset-bottom))' }}
+    >
       <div className="mb-4">
         <NavArrows />
       </div>

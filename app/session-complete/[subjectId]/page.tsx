@@ -65,7 +65,10 @@ export default async function SessionCompletePage({
   const quote = QUOTES[Math.floor(Math.random() * QUOTES.length)];
 
   return (
-    <main className="min-h-screen bg-bg flex flex-col items-center px-[22px] pt-[38px] pb-[18px]">
+    <main
+      className="min-h-dvh bg-bg flex flex-col items-center px-[22px] pt-[38px]"
+      style={{ paddingBottom: 'calc(18px + env(safe-area-inset-bottom))' }}
+    >
       <div className="w-full">
         <NavArrows />
       </div>
