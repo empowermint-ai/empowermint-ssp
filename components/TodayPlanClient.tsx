@@ -191,7 +191,9 @@ export default function TodayPlanClient({
                   </svg>
                 )}
               </span>
-              {!session.completed && (
+              {session.completed ? (
+                <span className="w-[22px] h-[22px] flex-shrink-0" aria-hidden="true" />
+              ) : (
                 <button
                   type="button"
                   aria-label={`Remove ${session.subject_name} session`}
