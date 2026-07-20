@@ -49,8 +49,8 @@ export async function buildPlanPdf({
   const contentWidth = pageWidth - marginX * 2;
   let y = 64;
 
-  const logo = await loadImage('/brand/logo-empowermint-black.png');
-  const logoWidth = 130;
+  const logo = await loadImage('/brand/logo-em-power-black.png');
+  const logoWidth = 90;
   const logoHeight = (logo.height / logo.width) * logoWidth;
   doc.addImage(logo, 'PNG', (pageWidth - logoWidth) / 2, y, logoWidth, logoHeight);
   y += logoHeight + 26;
