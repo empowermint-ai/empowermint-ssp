@@ -52,6 +52,17 @@ export default async function AccountPage() {
             initialConfirmed={!!profile?.parent_notify_confirmed_at}
           />
         </div>
+        <div className="bg-card border border-card-border rounded-2xl p-6 mt-4">
+          <h2 className="font-heading text-lg text-navy dark:text-text-primary mb-2">
+            Contact us
+          </h2>
+          <p className="text-text-body text-sm">
+            Questions or feedback? Email{' '}
+            <a href="mailto:ebrahim@empowermint.co.za" className="text-teal font-medium">
+              ebrahim@empowermint.co.za
+            </a>
+          </p>
+        </div>
       </div>
     </main>
   );
