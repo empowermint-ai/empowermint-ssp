@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
 import ServiceWorkerRegister from "./service-worker-register";
 import AuthCodeHandler from "./auth-code-handler";
@@ -43,6 +44,7 @@ export default function RootLayout({
         <InstallPromptCapture />
         {children}
       </body>
+      <GoogleAnalytics gaId="G-NKGQK1RGCW" />
     </html>
   );
 }
