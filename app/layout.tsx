@@ -44,7 +44,9 @@ export default function RootLayout({
         <InstallPromptCapture />
         {children}
       </body>
-      <GoogleAnalytics gaId="G-NKGQK1RGCW" />
+      {process.env.NODE_ENV === "production" && (
+        <GoogleAnalytics gaId="G-NKGQK1RGCW" />
+      )}
     </html>
   );
 }
