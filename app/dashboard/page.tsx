@@ -6,6 +6,7 @@ import SettingsMenu from '@/components/SettingsMenu';
 import InstallAppBanner from '@/components/InstallAppBanner';
 import UpcomingExamsPanel from '@/components/UpcomingExamsPanel';
 import ExamReflectionPrompt from '@/components/ExamReflectionPrompt';
+import AppReviewPrompt from '@/components/AppReviewPrompt';
 import { nextExamDate } from '@/lib/nextExamDate';
 import { priorityScore } from '@/lib/priorityScore';
 import { allocateSessions } from '@/lib/allocateSessions';
@@ -31,7 +32,7 @@ export default async function DashboardPage() {
 
   const { data: profile } = await supabase
     .from('users')
-    .select('username')
+    .select('username, review_prompt_dismissed_at')
     .eq('id', user.id)
     .maybeSingle();
 
@@ -179,6 +180,25 @@ export default async function DashboardPage() {
     exam_date: s.nextExam,
   }));
 
+  const { count: completedSessionsCount } = await supabase
+    .from('daily_plans')
+    .select('id', { count: 'exact', head: true })
+    .eq('user_id', user.id)
+    .eq('completed', true);
+
+  const { data: existingReview } = await supabase
+    .from('app_reviews')
+    .select('id')
+    .eq('user_id', user.id)
+    .maybeSingle();
+
+  const dismissedAt = profile?.review_prompt_dismissed_at
+    ? new Date(profile.review_prompt_dismissed_at).getTime()
+    : null;
+  const dismissedRecently = dismissedAt !== null && Date.now() - dismissedAt < 30 * 24 * 60 * 60 * 1000;
+
+  const showReviewPrompt = (completedSessionsCount ?? 0) >= 5 && !existingReview && !dismissedRecently;
+
   return (
     <main className="min-h-dvh flex flex-col px-[22px] pt-[38px] pb-[18px] bg-bg">
       <div className="flex justify-between items-start">
@@ -225,6 +245,8 @@ export default async function DashboardPage() {
         initialNeedsNewDate={needsNewDate}
         exams={allUpcomingExams}
       />
+
+      {showReviewPrompt && <AppReviewPrompt userId={user.id} />}
 
       <Link
         href="/account"
