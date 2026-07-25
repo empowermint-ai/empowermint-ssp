@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation';
 import { createSupabaseServerClient } from '@/lib/supabaseServerClient';
 import SubjectsForm from '@/components/SubjectsForm';
 import NavArrows from '@/components/NavArrows';
+import InstallAppBanner from '@/components/InstallAppBanner';
 
 export default async function SubjectsPage() {
   const supabase = createSupabaseServerClient();
@@ -25,6 +26,9 @@ export default async function SubjectsPage() {
       <h1 className="font-heading font-bold text-[21px] tracking-[-0.066em] text-text-primary mt-3">
         What are you studying?
       </h1>
+
+      <InstallAppBanner />
+
       <SubjectsForm userId={user.id} />
     </main>
   );
