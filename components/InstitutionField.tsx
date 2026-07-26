@@ -28,9 +28,9 @@ export default function InstitutionField({
 
   return (
     <div className="text-left">
-      <label className="block text-sm text-text-body mb-1.5">Institution (optional)</label>
+      <label className="block text-sm text-text-body mb-1.5">Institution</label>
 
-      <div className="flex gap-6 mb-1">
+      <div className="flex justify-between mb-1">
         {(['school', 'uni'] as const).map((option) => (
           <label
             key={option}
@@ -40,6 +40,7 @@ export default function InstitutionField({
               type="radio"
               name="institutionType"
               className="sr-only"
+              required
               checked={type === option}
               onChange={() => handleTypeChange(option)}
             />
@@ -65,6 +66,7 @@ export default function InstitutionField({
               id="institutionName"
               type="text"
               autoComplete="organization"
+              required
               value={institution}
               onChange={(e) => onInstitutionChange(e.target.value)}
               className="w-full rounded-xl border border-card-border bg-card px-4 py-3 text-text-primary outline-none focus:border-teal focus:ring-1 focus:ring-teal"
@@ -77,10 +79,13 @@ export default function InstitutionField({
             <select
               id="gradeOrYear"
               value={grade}
+              required
               onChange={(e) => onGradeChange(e.target.value)}
               className="w-full rounded-xl border border-card-border bg-card px-4 py-3 text-text-primary outline-none focus:border-teal focus:ring-1 focus:ring-teal"
             >
-              <option value="">Prefer not to say</option>
+              <option value="" disabled>
+                Select…
+              </option>
               {(type === 'school' ? GRADES : STUDY_YEARS).map((value) => (
                 <option key={value} value={value}>
                   {value}
