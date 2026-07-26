@@ -49,7 +49,7 @@ export default function SettingsMenu() {
               }}
               className="w-full text-left font-body text-[13px] text-text-primary px-4 py-3 border-b border-card-border"
             >
-              Manage subjects
+              Manage my planner
             </button>
             {!isStandalone && (
               <button

@@ -33,6 +33,20 @@ interface NeedsNewDateSubject {
   subject_name: string;
 }
 
+function NoteIcon() {
+  return (
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M4 20h4l10.5-10.5a2.121 2.121 0 00-3-3L5 17v3z"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 export default function TodayPlanClient({
   userId,
   todayStr,
@@ -60,6 +74,21 @@ export default function TodayPlanClient({
   const [adding, setAdding] = useState(false);
   const [picking, setPicking] = useState(false);
   const [addingDateId, setAddingDateId] = useState<string | null>(null);
+  const [expandedTopics, setExpandedTopics] = useState<Set<string>>(
+    () => new Set(initialSessions.filter((s) => s.topic || s.topic_completed).map((s) => s.id))
+  );
+
+  function toggleTopicExpanded(sessionId: string) {
+    setExpandedTopics((prev) => {
+      const next = new Set(prev);
+      if (next.has(sessionId)) {
+        next.delete(sessionId);
+      } else {
+        next.add(sessionId);
+      }
+      return next;
+    });
+  }
 
   const tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
@@ -157,16 +186,19 @@ export default function TodayPlanClient({
       />
 
       <div className="mt-4">
-        {sessions.map((session) => (
+        {sessions.map((session) => {
+          const topicOpen = expandedTopics.has(session.id);
+          const hasTopicContent = !!session.topic || session.topic_completed;
+          return (
           <div
             key={session.id}
-            className={`bg-card rounded-[12px] px-[14px] py-[10px] mb-[8px] border-l-[5px] ${
+            className={`bg-card rounded-[12px] px-[12px] py-[9px] mb-[8px] border-l-[5px] ${
               session.completed ? 'border-teal' : 'border-orange'
             }`}
           >
             <div
               onClick={() => router.push(`/timer/${session.id}`)}
-              className="flex items-center justify-between gap-3 cursor-pointer"
+              className="flex items-center justify-between gap-2 cursor-pointer"
             >
               <div className="min-w-0 flex-1 flex items-center gap-2">
                 <span className="font-heading font-bold text-[13.5px] text-text-primary truncate">
@@ -178,6 +210,19 @@ export default function TodayPlanClient({
                   </span>
                 )}
               </div>
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleTopicExpanded(session.id);
+                }}
+                aria-label={topicOpen ? 'Hide topic notes' : 'Add topic notes'}
+                className={`flex items-center justify-center w-[24px] h-[24px] rounded-full flex-shrink-0 ${
+                  topicOpen || hasTopicContent ? 'text-teal' : 'text-text-muted'
+                }`}
+              >
+                <NoteIcon />
+              </button>
               <span
                 aria-hidden="true"
                 className={`flex items-center justify-center w-[30px] h-[30px] rounded-full flex-shrink-0 ${
@@ -218,40 +263,45 @@ export default function TodayPlanClient({
               )}
             </div>
 
-            <div className="flex items-center gap-2 mt-[8px]">
-              <button
-                type="button"
-                onClick={() => handleToggleTopicCompleted(session)}
-                aria-label={session.topic_completed ? 'Mark topic not done' : 'Mark topic done'}
-                className={`flex items-center justify-center w-[18px] h-[18px] rounded-[5px] border-[1.5px] flex-shrink-0 ${
-                  session.topic_completed ? 'bg-teal border-teal' : 'border-card-border'
-                }`}
-              >
-                {session.topic_completed && (
-                  <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path
-                      d="M2 5.5L4.2 7.7L9 3"
-                      stroke="white"
-                      strokeWidth="1.6"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                )}
-              </button>
-              <input
-                type="text"
-                value={session.topic ?? ''}
-                onChange={(e) => handleTopicChange(session.id, e.target.value)}
-                onBlur={(e) => handleTopicBlur(session.id, e.target.value)}
-                placeholder="What are you studying?"
-                className={`flex-1 min-w-0 rounded-[8px] border-[1.3px] border-card-border bg-bg px-[10px] py-[5px] font-body text-[12px] outline-none focus:border-teal ${
-                  session.topic_completed ? 'line-through text-text-muted' : 'text-text-primary'
-                }`}
-              />
-            </div>
+            {topicOpen && (
+              <div className="mt-[8px] rounded-[8px] border-[1.3px] border-card-border bg-bg px-[10px] py-[9px]">
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => handleToggleTopicCompleted(session)}
+                    aria-label={session.topic_completed ? 'Mark topic not done' : 'Mark topic done'}
+                    className={`flex items-center justify-center w-[18px] h-[18px] rounded-[5px] border-[1.5px] flex-shrink-0 ${
+                      session.topic_completed ? 'bg-teal border-teal' : 'border-card-border'
+                    }`}
+                  >
+                    {session.topic_completed && (
+                      <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          d="M2 5.5L4.2 7.7L9 3"
+                          stroke="white"
+                          strokeWidth="1.6"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    )}
+                  </button>
+                  <input
+                    type="text"
+                    value={session.topic ?? ''}
+                    onChange={(e) => handleTopicChange(session.id, e.target.value)}
+                    onBlur={(e) => handleTopicBlur(session.id, e.target.value)}
+                    placeholder="What are you studying?"
+                    className={`flex-1 min-w-0 rounded-[8px] border-[1.3px] border-card-border bg-card px-[10px] py-[6px] font-body text-[12px] outline-none focus:border-teal ${
+                      session.topic_completed ? 'line-through text-text-muted' : 'text-text-primary'
+                    }`}
+                  />
+                </div>
+              </div>
+            )}
           </div>
-        ))}
+          );
+        })}
 
         {needsNewDate.length > 0 && (
           <div className="mt-2">
@@ -294,7 +344,7 @@ export default function TodayPlanClient({
                 href="/subjects/manage"
                 className="block font-body text-xs text-teal text-center underline mt-2"
               >
-                Want to update your subject ranking too? Manage subjects
+                Want to update your subject ranking too? Manage my planner
               </Link>
             )}
           </div>

@@ -30,7 +30,7 @@ export default async function ManageSubjectsPage() {
         <NavArrows showForward={false} />
       </div>
 
-      <p className="font-heading font-bold text-[10px] uppercase text-teal">MANAGE SUBJECTS</p>
+      <p className="font-heading font-bold text-[10px] uppercase text-teal">MANAGE MY PLANNER</p>
       <h1 className="font-heading font-bold text-[21px] tracking-[-0.066em] text-text-primary mt-3">
         Update your ranking or exam dates
       </h1>

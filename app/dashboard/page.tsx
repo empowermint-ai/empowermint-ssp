@@ -233,23 +233,22 @@ export default async function DashboardPage() {
 
       <UpcomingExamsPanel exams={allUpcomingExams} />
 
+      <Link
+        href="/subjects/manage"
+        className="block w-full text-center bg-black text-white font-heading font-bold text-[13px] rounded-[10px] py-[12px] mt-3"
+      >
+        Manage my planner
+      </Link>
+
       <ExamReflectionPrompt initialReflections={pendingReflections} />
 
-      <div className="mt-5 flex items-start justify-between gap-3">
-        <div>
-          <p className="font-heading font-bold text-[15px] uppercase tracking-[0.6px] text-teal">
-            Today&apos;s plan (recommended)
-          </p>
-          <p className="font-body text-[12px] text-text-muted mt-[2px]">
-            Here&apos;s what we recommend for today — feel free to amend it to suit you.
-          </p>
-        </div>
-        <Link
-          href="/subjects/manage"
-          className="font-body text-[11px] text-teal font-bold whitespace-nowrap mt-[2px]"
-        >
-          Manage subjects
-        </Link>
+      <div className="mt-5">
+        <p className="font-heading font-bold text-[15px] uppercase tracking-[0.6px] text-teal">
+          Today&apos;s plan (recommended)
+        </p>
+        <p className="font-body text-[12px] text-text-muted mt-[2px]">
+          Here&apos;s what we recommend for today — feel free to amend it to suit you.
+        </p>
       </div>
 
       <TodayPlanClient
