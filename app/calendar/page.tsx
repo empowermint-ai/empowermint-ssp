@@ -13,22 +13,23 @@ export default async function CalendarPage() {
     redirect('/login');
   }
 
-  const { data: subjects } = await supabase
-    .from('subjects')
-    .select('id, subject_name, exam_dates(exam_date)')
-    .eq('user_id', user.id)
-    .is('archived_at', null);
+  const [{ data: subjects }, { data: planRows }] = await Promise.all([
+    supabase
+      .from('subjects')
+      .select('id, subject_name, exam_dates(exam_date)')
+      .eq('user_id', user.id)
+      .is('archived_at', null),
+    supabase
+      .from('daily_plans')
+      .select('id, plan_date, completed, subject_id, subjects(subject_name)')
+      .eq('user_id', user.id),
+  ]);
 
   const exams = (subjects ?? []).flatMap((s) =>
     s.exam_dates.map((d) => ({ date: d.exam_date, subject_name: s.subject_name }))
   );
 
   const subjectOptions = (subjects ?? []).map((s) => ({ id: s.id, subject_name: s.subject_name }));
-
-  const { data: planRows } = await supabase
-    .from('daily_plans')
-    .select('id, plan_date, completed, subject_id, subjects(subject_name)')
-    .eq('user_id', user.id);
 
   const sessions = (planRows ?? []).map((row) => {
     const subject = Array.isArray(row.subjects) ? row.subjects[0] : row.subjects;

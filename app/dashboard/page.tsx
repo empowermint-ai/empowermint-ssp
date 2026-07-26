@@ -30,26 +30,50 @@ export default async function DashboardPage() {
     redirect('/login');
   }
 
-  const { data: profile } = await supabase
-    .from('users')
-    .select('username, review_prompt_dismissed_at')
-    .eq('id', user.id)
-    .maybeSingle();
-
-  const username = profile?.username ?? 'there';
-  const greeting = GREETINGS[Math.floor(Math.random() * GREETINGS.length)](username);
-
   const today = new Date();
   const todayStr = today.toISOString().slice(0, 10);
   const weekday = today.toLocaleDateString('en-GB', { weekday: 'long' });
   const dayMonth = today.toLocaleDateString('en-GB', { day: 'numeric', month: 'long' });
   const todayFormatted = `${weekday}, ${dayMonth}`;
 
-  const { data: activeSubjects } = await supabase
-    .from('subjects')
-    .select('id, subject_name, confidence_score, exam_dates(id, exam_date, reflected_at)')
-    .eq('user_id', user.id)
-    .is('archived_at', null);
+  // These queries are all independent of each other, so fire them together
+  // instead of one round trip at a time - this is the single biggest lever
+  // on how long the dashboard takes to load.
+  const [
+    { data: profile },
+    { data: activeSubjects },
+    { data: initialPlanRows },
+    { count: completedSessionsCount },
+    { data: existingReview },
+  ] = await Promise.all([
+    supabase
+      .from('users')
+      .select('username, review_prompt_dismissed_at')
+      .eq('id', user.id)
+      .maybeSingle(),
+    supabase
+      .from('subjects')
+      .select('id, subject_name, confidence_score, exam_dates(id, exam_date, reflected_at)')
+      .eq('user_id', user.id)
+      .is('archived_at', null),
+    supabase
+      .from('daily_plans')
+      .select(
+        'id, subject_id, session_order, completed, suggested_start_time, topic, topic_completed, subjects(subject_name, confidence_score)'
+      )
+      .eq('user_id', user.id)
+      .eq('plan_date', todayStr)
+      .order('session_order', { ascending: true }),
+    supabase
+      .from('daily_plans')
+      .select('id', { count: 'exact', head: true })
+      .eq('user_id', user.id)
+      .eq('completed', true),
+    supabase.from('app_reviews').select('id').eq('user_id', user.id).maybeSingle(),
+  ]);
+
+  const username = profile?.username ?? 'there';
+  const greeting = GREETINGS[Math.floor(Math.random() * GREETINGS.length)](username);
 
   const subjects = activeSubjects ?? [];
 
@@ -97,12 +121,7 @@ export default async function DashboardPage() {
     })
     .sort((a, b) => a.daysUntil - b.daysUntil);
 
-  let { data: planRows } = await supabase
-    .from('daily_plans')
-    .select('id, subject_id, session_order, completed, suggested_start_time, topic, topic_completed, subjects(subject_name, confidence_score)')
-    .eq('user_id', user.id)
-    .eq('plan_date', todayStr)
-    .order('session_order', { ascending: true });
+  let planRows = initialPlanRows;
 
   // Safety net: if the nightly job ever misses a run (or this is a brand new
   // day for an existing account), a learner should never land on a silently
@@ -180,17 +199,7 @@ export default async function DashboardPage() {
     exam_date: s.nextExam,
   }));
 
-  const { count: completedSessionsCount } = await supabase
-    .from('daily_plans')
-    .select('id', { count: 'exact', head: true })
-    .eq('user_id', user.id)
-    .eq('completed', true);
-
-  const { data: existingReview } = await supabase
-    .from('app_reviews')
-    .select('id')
-    .eq('user_id', user.id)
-    .maybeSingle();
+  const allExamsDone = subjects.length > 0 && needsNewDate.length === subjects.length;
 
   const dismissedAt = profile?.review_prompt_dismissed_at
     ? new Date(profile.review_prompt_dismissed_at).getTime()
@@ -226,13 +235,21 @@ export default async function DashboardPage() {
 
       <ExamReflectionPrompt initialReflections={pendingReflections} />
 
-      <div className="mt-5">
-        <p className="font-heading font-bold text-[15px] uppercase tracking-[0.6px] text-teal">
-          Today&apos;s plan (recommended)
-        </p>
-        <p className="font-body text-[12px] text-text-muted mt-[2px]">
-          Here&apos;s what we recommend for today — feel free to amend it to suit you.
-        </p>
+      <div className="mt-5 flex items-start justify-between gap-3">
+        <div>
+          <p className="font-heading font-bold text-[15px] uppercase tracking-[0.6px] text-teal">
+            Today&apos;s plan (recommended)
+          </p>
+          <p className="font-body text-[12px] text-text-muted mt-[2px]">
+            Here&apos;s what we recommend for today — feel free to amend it to suit you.
+          </p>
+        </div>
+        <Link
+          href="/subjects/manage"
+          className="font-body text-[11px] text-teal font-bold whitespace-nowrap mt-[2px]"
+        >
+          Manage subjects
+        </Link>
       </div>
 
       <TodayPlanClient
@@ -243,6 +260,7 @@ export default async function DashboardPage() {
         initialSessions={sessions}
         initialAvailable={available}
         initialNeedsNewDate={needsNewDate}
+        allExamsDone={allExamsDone}
         exams={allUpcomingExams}
       />
 

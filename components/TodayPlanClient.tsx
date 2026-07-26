@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { supabase } from '@/lib/supabaseClient';
 import ProgressStrip from '@/components/ProgressStrip';
 import SharePlanButton from '@/components/SharePlanButton';
@@ -40,6 +41,7 @@ export default function TodayPlanClient({
   initialSessions,
   initialAvailable,
   initialNeedsNewDate,
+  allExamsDone,
   exams,
 }: {
   userId: string;
@@ -49,6 +51,7 @@ export default function TodayPlanClient({
   initialSessions: Session[];
   initialAvailable: AvailableSubject[];
   initialNeedsNewDate: NeedsNewDateSubject[];
+  allExamsDone: boolean;
   exams: PlanPdfExam[];
 }) {
   const router = useRouter();
@@ -252,9 +255,20 @@ export default function TodayPlanClient({
 
         {needsNewDate.length > 0 && (
           <div className="mt-2">
-            <p className="font-heading font-bold text-[10.5px] uppercase text-text-muted mb-2">
-              Exam done — add your next date
-            </p>
+            {allExamsDone ? (
+              <div className="bg-teal/10 border-[1.5px] border-teal rounded-[10px] px-[14px] py-[13px] mb-[10px]">
+                <p className="font-heading font-bold text-[14px] text-text-primary">
+                  You have finished all your current exams! 🎉
+                </p>
+                <p className="font-body text-[12px] text-text-muted mt-[4px]">
+                  Add your next exam dates below to keep your study plan going.
+                </p>
+              </div>
+            ) : (
+              <p className="font-heading font-bold text-[10.5px] uppercase text-text-muted mb-2">
+                Exam done — add your next date
+              </p>
+            )}
             {needsNewDate.map((subject) => (
               <div
                 key={subject.id}
@@ -275,6 +289,14 @@ export default function TodayPlanClient({
                 />
               </div>
             ))}
+            {allExamsDone && (
+              <Link
+                href="/subjects/manage"
+                className="block font-body text-xs text-teal text-center underline mt-2"
+              >
+                Want to update your subject ranking too? Manage subjects
+              </Link>
+            )}
           </div>
         )}
       </div>
