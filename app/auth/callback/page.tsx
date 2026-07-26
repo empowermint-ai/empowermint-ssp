@@ -1,14 +1,13 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { supabase } from '@/lib/supabaseClient';
 import AuthCard from '@/components/AuthCard';
 import Button from '@/components/Button';
 
 export default function AuthCallbackPage() {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -67,7 +66,11 @@ export default function AuthCallbackPage() {
       return;
     }
 
-    router.replace(next);
+    // A client-side router.replace() here can serve a page the app already
+    // had cached from before this session existed, landing back on the
+    // login screen despite a valid session having just been set. A full
+    // navigation guarantees the server sees the fresh cookie.
+    window.location.href = next;
   }
 
   if (!ready) {
