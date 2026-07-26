@@ -2,7 +2,6 @@ import type { Metadata, Viewport } from "next";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
 import ServiceWorkerRegister from "./service-worker-register";
-import AuthCodeHandler from "./auth-code-handler";
 import InstallPromptCapture from "./install-prompt-capture";
 
 export const metadata: Metadata = {
@@ -40,7 +39,6 @@ export default function RootLayout({
     <html lang="en">
       <body className="antialiased">
         <ServiceWorkerRegister />
-        <AuthCodeHandler />
         <InstallPromptCapture />
         {children}
       </body>
