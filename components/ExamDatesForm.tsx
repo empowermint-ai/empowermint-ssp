@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabaseClient';
 import { priorityScore } from '@/lib/priorityScore';
@@ -43,6 +43,34 @@ export default function ExamDatesForm({
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [addingId, setAddingId] = useState<string | null>(null);
+  const submittingRef = useRef(false);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadCurrentSubjects() {
+      const { data } = await supabase
+        .from('subjects')
+        .select('id, subject_name, confidence_score, exam_dates(id, exam_date)')
+        .eq('user_id', userId)
+        .is('archived_at', null)
+        .order('created_at', { ascending: true });
+
+      if (!cancelled && data) {
+        setSubjects(data.map((s) => ({ ...s, exam_dates: sortDates(s.exam_dates) })));
+      }
+    }
+
+    // Next.js can restore this page from a stale cached snapshot on browser
+    // back navigation, which would otherwise show exam dates as missing even
+    // though they were already saved. Re-checking the database on mount keeps
+    // this screen honest no matter how it was reached.
+    loadCurrentSubjects();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [userId]);
 
   const allDated = subjects.every((s) => s.exam_dates.length > 0);
   const missingSubjects = subjects.filter((s) => s.exam_dates.length === 0);
@@ -100,7 +128,8 @@ export default function ExamDatesForm({
   }
 
   async function handleGenerate() {
-    if (!allDated) return;
+    if (!allDated || submittingRef.current) return;
+    submittingRef.current = true;
     setSaving(true);
     setError(null);
 
@@ -154,6 +183,7 @@ export default function ExamDatesForm({
     setSaving(false);
 
     if (insertError) {
+      submittingRef.current = false;
       setError('Could not generate your plan. Try again.');
       return;
     }

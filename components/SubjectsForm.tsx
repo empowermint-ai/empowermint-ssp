@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabaseClient';
 
@@ -37,19 +37,56 @@ const PREDEFINED_SUBJECTS = [
 ];
 
 interface SubjectItem {
+  id: string | null;
   name: string;
   isCustom: boolean;
 }
 
-export default function SubjectsForm({ userId }: { userId: string }) {
+export default function SubjectsForm({
+  userId,
+  initialSubjects,
+}: {
+  userId: string;
+  initialSubjects: { id: string; subject_name: string; is_custom: boolean }[];
+}) {
   const router = useRouter();
-  const [subjects, setSubjects] = useState<SubjectItem[]>([]);
+  const [subjects, setSubjects] = useState<SubjectItem[]>(
+    initialSubjects.map((s) => ({ id: s.id, name: s.subject_name, isCustom: s.is_custom }))
+  );
   const [query, setQuery] = useState('');
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [showCustomInput, setShowCustomInput] = useState(false);
   const [customValue, setCustomValue] = useState('');
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const submittingRef = useRef(false);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadCurrentSubjects() {
+      const { data } = await supabase
+        .from('subjects')
+        .select('id, subject_name, is_custom')
+        .eq('user_id', userId)
+        .is('archived_at', null)
+        .order('created_at', { ascending: true });
+
+      if (!cancelled && data) {
+        setSubjects(data.map((s) => ({ id: s.id, name: s.subject_name, isCustom: s.is_custom })));
+      }
+    }
+
+    // Next.js can restore this page from a stale cached snapshot on browser
+    // back navigation (e.g. from /subjects/rank), which would otherwise show
+    // an empty list even though subjects were already saved. Re-checking the
+    // database on mount keeps this screen honest no matter how it was reached.
+    loadCurrentSubjects();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [userId]);
 
   const filteredOptions = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -63,7 +100,7 @@ export default function SubjectsForm({ userId }: { userId: string }) {
     const trimmed = name.trim();
     if (!trimmed) return;
     if (subjects.some((s) => s.name.toLowerCase() === trimmed.toLowerCase())) return;
-    setSubjects((prev) => [...prev, { name: trimmed, isCustom }]);
+    setSubjects((prev) => [...prev, { id: null, name: trimmed, isCustom }]);
   }
 
   function handleSelectOption(name: string) {
@@ -72,8 +109,11 @@ export default function SubjectsForm({ userId }: { userId: string }) {
     setDropdownOpen(false);
   }
 
-  function removeSubject(name: string) {
-    setSubjects((prev) => prev.filter((s) => s.name !== name));
+  async function removeSubject(subject: SubjectItem) {
+    setSubjects((prev) => prev.filter((s) => s.name !== subject.name));
+    if (subject.id) {
+      await supabase.from('subjects').delete().eq('id', subject.id);
+    }
   }
 
   function handleAddCustom() {
@@ -83,23 +123,28 @@ export default function SubjectsForm({ userId }: { userId: string }) {
   }
 
   async function handleNext() {
-    if (subjects.length === 0) return;
+    if (subjects.length === 0 || submittingRef.current) return;
+    submittingRef.current = true;
     setSaving(true);
     setError(null);
 
-    const rows = subjects.map((s) => ({
-      user_id: userId,
-      subject_name: s.name,
-      is_custom: s.isCustom,
-    }));
+    const newRows = subjects
+      .filter((s) => s.id === null)
+      .map((s) => ({
+        user_id: userId,
+        subject_name: s.name,
+        is_custom: s.isCustom,
+      }));
 
-    const { error } = await supabase.from('subjects').insert(rows);
+    if (newRows.length > 0) {
+      const { error } = await supabase.from('subjects').insert(newRows);
 
-    setSaving(false);
-
-    if (error) {
-      setError('Could not save your subjects. Try again.');
-      return;
+      if (error) {
+        submittingRef.current = false;
+        setSaving(false);
+        setError('Could not save your subjects. Try again.');
+        return;
+      }
     }
 
     router.push('/subjects/rank');
@@ -149,7 +194,7 @@ export default function SubjectsForm({ userId }: { userId: string }) {
             </span>
             <button
               type="button"
-              onClick={() => removeSubject(subject.name)}
+              onClick={() => removeSubject(subject)}
               className="text-text-muted text-lg leading-none px-2"
               aria-label={`Remove ${subject.name}`}
             >

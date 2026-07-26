@@ -14,6 +14,13 @@ export default async function SubjectsPage() {
     redirect('/login');
   }
 
+  const { data: existingSubjects } = await supabase
+    .from('subjects')
+    .select('id, subject_name, is_custom')
+    .eq('user_id', user.id)
+    .is('archived_at', null)
+    .order('created_at', { ascending: true });
+
   return (
     <main className="min-h-dvh flex flex-col px-[38px] py-8 bg-bg">
       <div className="mb-3">
@@ -29,7 +36,7 @@ export default async function SubjectsPage() {
 
       <InstallAppBanner />
 
-      <SubjectsForm userId={user.id} />
+      <SubjectsForm userId={user.id} initialSubjects={existingSubjects ?? []} />
     </main>
   );
 }
