@@ -68,6 +68,17 @@ export default function RegisterStep2Page() {
       return;
     }
 
+    // Supabase does not return an error for an email that is already
+    // registered - to avoid leaking which emails exist, it instead returns a
+    // user object with an empty identities array and never actually sends a
+    // new confirmation email. Catch that here so nobody is left waiting on
+    // an email that will never arrive.
+    if (data.user && data.user.identities?.length === 0) {
+      setLoading(false);
+      setError('That email is already registered. Try logging in, or use a different email.');
+      return;
+    }
+
     const userId = data.user?.id;
 
     if (userId) {
