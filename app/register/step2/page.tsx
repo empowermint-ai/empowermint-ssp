@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabaseClient';
 import AuthCard from '@/components/AuthCard';
 import TextField from '@/components/TextField';
+import InstitutionField from '@/components/InstitutionField';
 import Button from '@/components/Button';
 import LoadingSpinner from '@/components/LoadingSpinner';
 
@@ -144,32 +145,12 @@ export default function RegisterStep2Page() {
         <p className="text-xs text-text-muted -mt-2">
           Used once to confirm this account. You won&apos;t need it to log in.
         </p>
-        <TextField
-          id="institution"
-          label="School or university (optional)"
-          type="text"
-          autoComplete="organization"
-          value={institution}
-          onChange={(e) => setInstitution(e.target.value)}
+        <InstitutionField
+          institution={institution}
+          grade={grade}
+          onInstitutionChange={setInstitution}
+          onGradeChange={setGrade}
         />
-        <div className="text-left">
-          <label htmlFor="grade" className="block text-sm text-text-body mb-1.5">
-            Grade (optional)
-          </label>
-          <select
-            id="grade"
-            value={grade}
-            onChange={(e) => setGrade(e.target.value)}
-            className="w-full rounded-xl border border-card-border bg-card px-4 py-3 text-text-primary outline-none focus:border-teal focus:ring-1 focus:ring-teal"
-          >
-            <option value="">Prefer not to say</option>
-            <option value="Grade 8">Grade 8</option>
-            <option value="Grade 9">Grade 9</option>
-            <option value="Grade 10">Grade 10</option>
-            <option value="Grade 11">Grade 11</option>
-            <option value="Grade 12">Grade 12</option>
-          </select>
-        </div>
         {error && <p className="text-sm text-red-600">{error}</p>}
         <Button type="submit" loading={loading}>
           Create account
