@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { supabase } from '@/lib/supabaseClient';
@@ -16,6 +16,7 @@ export default function AuthCallbackPage() {
   const [hashTokens, setHashTokens] = useState<{ access_token: string; refresh_token: string } | null>(
     null
   );
+  const submittingRef = useRef(false);
 
   const code = searchParams.get('code');
   const nextParam = searchParams.get('next');
@@ -47,6 +48,8 @@ export default function AuthCallbackPage() {
   }, []);
 
   async function handleContinue() {
+    if (submittingRef.current) return;
+    submittingRef.current = true;
     setLoading(true);
     setError(null);
 
@@ -59,6 +62,7 @@ export default function AuthCallbackPage() {
     setLoading(false);
 
     if (authError) {
+      submittingRef.current = false;
       setError('This link has expired or already been used.');
       return;
     }
