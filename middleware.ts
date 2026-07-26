@@ -24,7 +24,26 @@ export async function middleware(request: NextRequest) {
     }
   );
 
-  await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (user) {
+    // A deleted (or never fully registered) account can still carry a
+    // technically valid, not-yet-expired session token. A missing profile
+    // row is proof the account no longer exists, so clear the stale session
+    // here - on every request - rather than letting a dead login route
+    // someone into a blank onboarding flow instead of the real homepage.
+    const { data: profile } = await supabase
+      .from('users')
+      .select('id')
+      .eq('id', user.id)
+      .maybeSingle();
+
+    if (!profile) {
+      await supabase.auth.signOut();
+    }
+  }
 
   return response;
 }
