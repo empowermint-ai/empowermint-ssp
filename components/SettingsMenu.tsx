@@ -41,6 +41,16 @@ export default function SettingsMenu() {
         <>
           <div className="fixed inset-0 z-10" onClick={() => setOpen(false)} />
           <div className="absolute right-0 top-full mt-2 z-20 bg-card border border-card-border rounded-[10px] shadow-lg overflow-hidden min-w-[160px]">
+            <button
+              type="button"
+              onClick={() => {
+                setOpen(false);
+                router.push('/subjects/manage');
+              }}
+              className="w-full text-left font-body text-[13px] text-text-primary px-4 py-3 border-b border-card-border"
+            >
+              Manage subjects
+            </button>
             {!isStandalone && (
               <button
                 type="button"
