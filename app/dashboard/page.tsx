@@ -233,13 +233,6 @@ export default async function DashboardPage() {
 
       <UpcomingExamsPanel exams={allUpcomingExams} />
 
-      <Link
-        href="/subjects/manage"
-        className="block w-full text-center bg-black text-white font-heading font-bold text-[13px] rounded-[10px] py-[12px] mt-3"
-      >
-        Manage my planner
-      </Link>
-
       <ExamReflectionPrompt initialReflections={pendingReflections} />
 
       <div className="mt-5">

@@ -178,12 +178,20 @@ export default function TodayPlanClient({
 
   return (
     <>
-      <SharePlanButton
-        studentName={studentName}
-        dateLabel={dateLabel}
-        sessions={sessions.map((s) => ({ subject_name: s.subject_name, completed: s.completed }))}
-        exams={exams}
-      />
+      <div className="flex items-center justify-between gap-3 mt-3">
+        <SharePlanButton
+          studentName={studentName}
+          dateLabel={dateLabel}
+          sessions={sessions.map((s) => ({ subject_name: s.subject_name, completed: s.completed }))}
+          exams={exams}
+        />
+        <Link
+          href="/subjects/manage"
+          className="font-heading font-bold text-[12px] text-white bg-black rounded-[8px] px-[14px] py-[8px] whitespace-nowrap"
+        >
+          Manage my planner
+        </Link>
+      </div>
 
       <div className="mt-4">
         {sessions.map((session) => {

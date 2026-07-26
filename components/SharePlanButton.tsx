@@ -53,7 +53,7 @@ export default function SharePlanButton({
   }
 
   return (
-    <div className="mt-3">
+    <div>
       <button
         type="button"
         onClick={handleShare}
