@@ -193,6 +193,15 @@ export default function TodayPlanClient({
         </Link>
       </div>
 
+      <div className="mt-5">
+        <p className="font-heading font-bold text-[15px] uppercase tracking-[0.6px] text-teal">
+          Today&apos;s plan (recommended)
+        </p>
+        <p className="font-body text-[12px] text-text-muted mt-[2px]">
+          Here&apos;s what we recommend for today — feel free to amend it to suit you.
+        </p>
+      </div>
+
       <div className="mt-4">
         {sessions.map((session) => {
           const topicOpen = expandedTopics.has(session.id);
