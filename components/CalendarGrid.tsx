@@ -229,7 +229,7 @@ export default function CalendarGrid({
         </span>
       </div>
 
-      <div className="mt-5 bg-card border-[1.5px] border-card-border rounded-[10px] px-[14px] py-[14px] flex-1">
+      <div className="neu-raised mt-5 rounded-neu-sm px-[14px] py-[14px] flex-1">
         <p className="font-heading font-bold text-[13px] text-text-primary mb-2">{selectedLabel}</p>
 
         {!selected || (selected.exams.length === 0 && selected.sessions.length === 0) ? (

@@ -197,7 +197,7 @@ export default function ExamDatesForm({
         {subjects.map((subject) => (
           <div
             key={subject.id}
-            className="bg-card border-[1.5px] border-card-border rounded-[10px] px-[14px] py-[11px] mb-[10px]"
+            className="neu-raised rounded-neu-sm px-[14px] py-[11px] mb-[10px]"
           >
             <div className="flex items-center justify-between">
               <span className="font-body font-bold text-[13.5px] text-text-primary">
@@ -255,7 +255,7 @@ export default function ExamDatesForm({
           type="button"
           disabled={!allDated || saving}
           onClick={handleGenerate}
-          className="w-full bg-orange text-white font-heading font-bold text-[13.5px] rounded-[10px] py-[14px] disabled:opacity-40"
+          className="neu-raised-accent w-full text-text-primary font-heading font-bold text-[13.5px] rounded-neu-lg py-[14px] disabled:opacity-40"
         >
           {saving ? 'Generating…' : 'Generate my plan'}
         </button>

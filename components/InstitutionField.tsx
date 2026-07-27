@@ -28,7 +28,9 @@ export default function InstitutionField({
 
   return (
     <div className="text-left">
-      <label className="block text-sm text-text-body mb-1.5">Institution</label>
+      <label className="block font-heading font-bold text-[10.5px] uppercase tracking-[0.6px] text-text-muted mb-1.5">
+        Institution
+      </label>
 
       <div className="flex justify-between mb-1">
         {(['school', 'uni'] as const).map((option) => (
@@ -45,11 +47,9 @@ export default function InstitutionField({
               onChange={() => handleTypeChange(option)}
             />
             <span
-              className={`w-[18px] h-[18px] rounded-full border-[1.5px] flex items-center justify-center flex-shrink-0 ${
-                type === option ? 'border-teal' : 'border-card-border'
-              }`}
+              className={`neu-pressed w-[18px] h-[18px] rounded-full flex items-center justify-center flex-shrink-0`}
             >
-              {type === option && <span className="w-[9px] h-[9px] rounded-full bg-teal" />}
+              {type === option && <span className="w-[9px] h-[9px] rounded-full bg-orange" />}
             </span>
             {option === 'school' ? 'School' : 'Uni / Other'}
           </label>
@@ -59,7 +59,10 @@ export default function InstitutionField({
       {type && (
         <div className="space-y-4 mt-3">
           <div>
-            <label htmlFor="institutionName" className="block text-sm text-text-body mb-1.5">
+            <label
+              htmlFor="institutionName"
+              className="block font-heading font-bold text-[10.5px] uppercase tracking-[0.6px] text-text-muted mb-1.5"
+            >
               {type === 'school' ? 'Name of school' : 'Name of uni / other'}
             </label>
             <input
@@ -69,11 +72,14 @@ export default function InstitutionField({
               required
               value={institution}
               onChange={(e) => onInstitutionChange(e.target.value)}
-              className="w-full rounded-xl border border-card-border bg-card px-4 py-3 text-text-primary outline-none focus:border-teal focus:ring-1 focus:ring-teal"
+              className="neu-pressed w-full rounded-neu-md px-4 py-3.5 text-text-primary outline-none focus:ring-1 focus:ring-teal/40"
             />
           </div>
           <div>
-            <label htmlFor="gradeOrYear" className="block text-sm text-text-body mb-1.5">
+            <label
+              htmlFor="gradeOrYear"
+              className="block font-heading font-bold text-[10.5px] uppercase tracking-[0.6px] text-text-muted mb-1.5"
+            >
               {type === 'school' ? 'Grade' : 'Year of study'}
             </label>
             <select
@@ -81,7 +87,7 @@ export default function InstitutionField({
               value={grade}
               required
               onChange={(e) => onGradeChange(e.target.value)}
-              className="w-full rounded-xl border border-card-border bg-card px-4 py-3 text-text-primary outline-none focus:border-teal focus:ring-1 focus:ring-teal"
+              className="neu-pressed w-full rounded-neu-md px-4 py-3.5 text-text-primary outline-none focus:ring-1 focus:ring-teal/40"
             >
               <option value="" disabled>
                 Select…

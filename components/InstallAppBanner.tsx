@@ -40,7 +40,7 @@ export default function InstallAppBanner() {
 
   return (
     <>
-      <div className="bg-card border-[1.5px] border-card-border rounded-[12px] px-[14px] py-[13px] mt-4">
+      <div className="neu-raised rounded-neu-md px-[14px] py-[13px] mt-4">
         <div className="flex items-start gap-3">
           <span
             aria-hidden="true"
@@ -68,7 +68,7 @@ export default function InstallAppBanner() {
         <button
           type="button"
           onClick={canInstall ? handleAndroidInstall : () => setShowModal(true)}
-          className="w-full font-heading font-bold text-[12.5px] text-white bg-orange rounded-[8px] py-[9px] mt-[10px]"
+          className="neu-raised-accent w-full font-heading font-bold text-[12.5px] text-text-primary rounded-neu-sm py-[9px] mt-[10px]"
         >
           Add to home screen
         </button>

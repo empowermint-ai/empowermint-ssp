@@ -24,7 +24,7 @@ export default function InstallInstructionsModal({
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/50 px-[22px] pb-[22px] sm:pb-0">
       <div
-        className="w-full max-w-[360px] bg-card border-[1.5px] border-card-border rounded-[14px] px-[20px] py-[22px]"
+        className="neu-raised w-full max-w-[360px] rounded-neu-lg px-[20px] py-[22px]"
         onClick={(e) => e.stopPropagation()}
       >
         <p className="font-heading font-bold text-[16px] text-text-primary">
@@ -53,7 +53,7 @@ export default function InstallInstructionsModal({
         <button
           type="button"
           onClick={onClose}
-          className="w-full font-heading font-bold text-[13.5px] text-white bg-orange rounded-[10px] py-[13px] mt-5"
+          className="neu-raised-accent w-full font-heading font-bold text-[13.5px] text-text-primary rounded-neu-lg py-[13px] mt-5"
         >
           Got it
         </button>

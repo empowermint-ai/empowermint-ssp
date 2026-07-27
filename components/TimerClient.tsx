@@ -17,10 +17,10 @@ function getColorState(remainingSeconds: number): ColorState {
   return 'red';
 }
 
-const STATE_META: Record<ColorState, { hex: string; label: string; labelColor: string }> = {
-  green: { hex: '#0A7968', label: 'REMAINING · PLENTY OF TIME', labelColor: '#5e9e8d' },
-  amber: { hex: '#F37021', label: 'REMAINING · STEADY PACE', labelColor: '#e08c3e' },
-  red: { hex: '#C0392B', label: 'REMAINING · ALMOST THERE', labelColor: '#d9756a' },
+const STATE_META: Record<ColorState, { glow: string; label: string }> = {
+  green: { glow: 'var(--glow-green)', label: 'REMAINING · PLENTY OF TIME' },
+  amber: { glow: 'var(--glow-amber)', label: 'REMAINING · STEADY PACE' },
+  red: { glow: 'var(--glow-red)', label: 'REMAINING · ALMOST THERE' },
 };
 
 function formatMMSS(totalSeconds: number): string {
@@ -33,26 +33,6 @@ function formatMMSS(totalSeconds: number): string {
     .padStart(2, '0');
   return `${mm}:${ss}`;
 }
-
-function round2(n: number): number {
-  return Math.round(n * 100) / 100;
-}
-
-function polar(angleDeg: number, radius: number) {
-  const rad = (angleDeg * Math.PI) / 180;
-  return {
-    x: round2(CENTER + radius * Math.sin(rad)),
-    y: round2(CENTER - radius * Math.cos(rad)),
-  };
-}
-
-const MAJOR_NUMERALS = [
-  { angle: 0, label: '25' },
-  { angle: 72, label: '20' },
-  { angle: 144, label: '15' },
-  { angle: 216, label: '10' },
-  { angle: 288, label: '5' },
-];
 
 export default function TimerClient({
   subjectId,
@@ -148,195 +128,123 @@ export default function TimerClient({
     }
   }
 
-  const dateWindowText = subjectName.slice(0, 3).toUpperCase();
-
   return (
     <main
-      className="min-h-dvh flex flex-col items-center px-[22px] pt-[38px]"
-      style={{ backgroundColor: '#0d0d0d', paddingBottom: 'calc(18px + env(safe-area-inset-bottom))' }}
+      className="min-h-dvh bg-bg flex flex-col items-center px-[22px] pt-[38px]"
+      style={{ paddingBottom: 'calc(18px + env(safe-area-inset-bottom))' }}
     >
       <div className="self-start mb-2">
-        <NavArrows dark showForward={false} />
+        <NavArrows showForward={false} />
       </div>
 
       <p
-        className="font-heading font-bold text-[10px] uppercase tracking-wide"
-        style={{ color: meta.hex }}
+        className="font-heading font-bold text-[10px] uppercase tracking-wide transition-colors duration-700"
+        style={{ color: meta.glow }}
       >
         FOCUS SESSION · {sessionNumber} OF {totalSessions} TODAY
       </p>
 
       <h1
-        className="font-heading font-bold text-[21px] text-center mt-3"
-        style={{ color: '#f1efe7', letterSpacing: '-0.066em' }}
+        className="font-heading font-bold text-[21px] text-center mt-3 text-text-primary"
+        style={{ letterSpacing: '-0.066em' }}
       >
         {subjectName}
       </h1>
 
-      <p className="font-body text-[14px] text-center mt-1" style={{ color: '#a89e88' }}>
-        Study session
-      </p>
+      <p className="font-body text-[14px] text-center mt-1 text-orange">Study session</p>
 
-      <div
-        className="mt-8"
-        style={
-          colorState === 'red'
-            ? { filter: 'drop-shadow(0 0 14px rgba(192, 57, 43, 0.65))' }
-            : undefined
-        }
-      >
-        <svg width={230} height={230} viewBox="0 0 230 230">
-          <defs>
-            <linearGradient id="bezelGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#f6e7b4" />
-              <stop offset="25%" stopColor="#caa44a" />
-              <stop offset="50%" stopColor="#8a6b2c" />
-              <stop offset="75%" stopColor="#e7cd86" />
-              <stop offset="100%" stopColor="#a9842f" />
-            </linearGradient>
-            <radialGradient id="dialGradient" cx="50%" cy="45%" r="65%">
-              <stop offset="0%" stopColor="#232323" />
-              <stop offset="100%" stopColor="#000000" />
-            </radialGradient>
-            <linearGradient id="handGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="#f6e7b4" />
-              <stop offset="100%" stopColor="#8a6b2c" />
-            </linearGradient>
-          </defs>
+      <div className="relative mt-8" style={{ width: 230, height: 230 }}>
+        {/* Ambient background lighting - a soft colored blur bleeding onto the
+            white page behind the disc; color/intensity track the state. */}
+        <div
+          className="absolute rounded-full transition-[background-color,opacity] duration-700"
+          style={{
+            inset: '-32px',
+            backgroundColor: meta.glow,
+            filter: colorState === 'red' ? 'blur(48px)' : 'blur(38px)',
+            opacity: colorState === 'red' ? 0.55 : colorState === 'amber' ? 0.4 : 0.3,
+          }}
+        />
 
-          {/* Bezel */}
-          <circle cx={CENTER} cy={CENTER} r={112} fill="url(#bezelGradient)" />
-          {/* Crown */}
-          <rect x={222} y={104} width={10} height={20} rx={2} fill="#c9a646" />
-          {/* Inner ring border */}
-          <circle cx={CENTER} cy={CENTER} r={100} fill="#0a0a0a" />
-          {/* Dial */}
-          <circle cx={CENTER} cy={CENTER} r={96} fill="url(#dialGradient)" />
+        <div className="neu-raised relative rounded-full w-full h-full flex items-center justify-center">
+          <svg width={230} height={230} viewBox="0 0 230 230">
+            {/* Colored state ring */}
+            <circle
+              cx={CENTER}
+              cy={CENTER}
+              r={104}
+              fill="none"
+              style={{ stroke: meta.glow, transition: 'stroke 0.7s' }}
+              strokeWidth={5}
+            />
 
-          {/* Tick marks */}
-          {Array.from({ length: 25 }).map((_, i) => {
-            const angle = i * 14.4;
-            const isMajor = i % 5 === 0;
-            const outer = polar(angle, 90);
-            const inner = polar(angle, isMajor ? 80 : 84);
-            return (
+            {/* Recessed inner face */}
+            <circle cx={CENTER} cy={CENTER} r={95} style={{ fill: 'var(--neu-shadow-dark)' }} />
+            <circle cx={CENTER} cy={CENTER} r={92} style={{ fill: 'var(--color-bg)' }} />
+
+            {/* Dial wordmark */}
+            <text
+              x={CENTER}
+              y={CENTER + 24}
+              textAnchor="middle"
+              className="font-heading font-bold"
+              style={{ fill: 'var(--color-text-muted)', fontSize: 8, letterSpacing: '2px' }}
+            >
+              empowermint
+            </text>
+            <text
+              x={CENTER}
+              y={CENTER + 35}
+              textAnchor="middle"
+              className="font-body"
+              style={{ fill: 'var(--color-text-muted)', fontSize: 7.5 }}
+            >
+              {subjectName}
+            </text>
+
+            {/* Sweep hand (continuous rotation) */}
+            <g ref={sweepHandRef}>
               <line
-                key={i}
-                x1={inner.x}
-                y1={inner.y}
-                x2={outer.x}
-                y2={outer.y}
-                stroke={isMajor ? '#c9a646' : '#7d6a3c'}
-                strokeWidth={isMajor ? 3.5 : 1.6}
-                strokeLinecap="round"
+                x1={CENTER}
+                y1={CENTER}
+                x2={CENTER}
+                y2={CENTER - 70}
+                style={{ stroke: meta.glow }}
+                strokeWidth={1.4}
               />
-            );
-          })}
+              <line
+                x1={CENTER}
+                y1={CENTER}
+                x2={CENTER}
+                y2={CENTER + 14}
+                style={{ stroke: meta.glow }}
+                strokeWidth={1.4}
+              />
+              <circle cx={CENTER} cy={CENTER + 14} r={3.5} style={{ fill: meta.glow }} />
+            </g>
 
-          {/* Numerals */}
-          {MAJOR_NUMERALS.map(({ angle, label }) => {
-            const pos = polar(angle, 66);
-            return (
-              <text
-                key={label}
-                x={pos.x}
-                y={pos.y}
-                textAnchor="middle"
-                dominantBaseline="middle"
-                className="font-heading font-bold"
-                style={{ fill: '#d9b65a', fontSize: 15 }}
-              >
-                {label}
-              </text>
-            );
-          })}
+            {/* Minute hand (tracks remaining time) */}
+            <g ref={minuteHandRef}>
+              <polygon
+                points={`${CENTER - 3.5},${CENTER} ${CENTER + 3.5},${CENTER} ${CENTER + 1.3},${
+                  CENTER - 66
+                } ${CENTER},${CENTER - 72} ${CENTER - 1.3},${CENTER - 66}`}
+                style={{ fill: 'var(--color-text-primary)' }}
+              />
+            </g>
 
-          {/* Dial text */}
-          <text
-            x={CENTER}
-            y={CENTER - 32}
-            textAnchor="middle"
-            className="font-heading font-bold"
-            style={{ fill: '#e3c878', fontSize: 9.5, letterSpacing: '2.5px' }}
-          >
-            empowermint
-          </text>
-          <text
-            x={CENTER}
-            y={CENTER - 20}
-            textAnchor="middle"
-            className="font-body"
-            style={{ fill: '#8d7a45', fontSize: 8 }}
-          >
-            FOCUS · AUTOMATIC
-          </text>
-
-          {/* Date window */}
-          <rect
-            x={CENTER + 26}
-            y={CENTER - 8}
-            width={26}
-            height={16}
-            rx={2}
-            fill="#0a0a0a"
-            stroke="#c9a646"
-            strokeWidth={1.2}
-          />
-          <text
-            x={CENTER + 39}
-            y={CENTER + 3.5}
-            textAnchor="middle"
-            className="font-heading font-bold"
-            style={{ fill: '#d9b65a', fontSize: 8.5 }}
-          >
-            {dateWindowText}
-          </text>
-
-          {/* Sweep hand (continuous rotation) */}
-          <g ref={sweepHandRef}>
-            <line
-              x1={CENTER}
-              y1={CENTER}
-              x2={CENTER}
-              y2={CENTER - 88}
-              stroke={meta.hex}
-              strokeWidth={1.4}
-            />
-            <line
-              x1={CENTER}
-              y1={CENTER}
-              x2={CENTER}
-              y2={CENTER + 16}
-              stroke={meta.hex}
-              strokeWidth={1.4}
-            />
-            <circle cx={CENTER} cy={CENTER + 16} r={4} fill={meta.hex} />
-          </g>
-
-          {/* Minute hand (tracks remaining time) */}
-          <g ref={minuteHandRef}>
-            <polygon
-              points={`${CENTER - 4},${CENTER} ${CENTER + 4},${CENTER} ${CENTER + 1.5},${
-                CENTER - 74
-              } ${CENTER},${CENTER - 80} ${CENTER - 1.5},${CENTER - 74}`}
-              fill="url(#handGradient)"
-            />
-          </g>
-
-          {/* Center pin */}
-          <circle cx={CENTER} cy={CENTER} r={4.5} fill="#c9a646" />
-        </svg>
+            {/* Center pin */}
+            <circle cx={CENTER} cy={CENTER} r={4} style={{ fill: 'var(--color-text-primary)' }} />
+          </svg>
+        </div>
       </div>
 
-      <p
-        className="font-heading font-bold text-[22px] mt-6"
-        style={{ color: '#f1efe7' }}
-      >
+      <p className="font-heading font-bold text-[22px] mt-6 text-text-primary">
         {formatMMSS(remainingSeconds)}
       </p>
       <p
-        className="font-body text-[10px] uppercase mt-1"
-        style={{ color: meta.labelColor, letterSpacing: '1.5px' }}
+        className="font-body text-[10px] uppercase mt-1 transition-colors duration-700"
+        style={{ color: meta.glow, letterSpacing: '1.5px' }}
       >
         {meta.label}
       </p>
@@ -348,16 +256,14 @@ export default function TimerClient({
           <button
             type="button"
             onClick={togglePause}
-            className="flex-1 font-heading font-bold text-[13.5px] rounded-[10px] py-[14px]"
-            style={{ border: '1.5px solid #f1efe7', color: '#f1efe7', backgroundColor: 'transparent' }}
+            className="neu-raised flex-1 font-heading font-bold text-[13.5px] text-text-primary rounded-neu-md py-[14px] transition-all active:scale-[0.97]"
           >
             {isPaused ? 'Resume' : 'Pause'}
           </button>
           <button
             type="button"
             onClick={finishSession}
-            className="flex-1 font-heading font-bold text-[13.5px] rounded-[10px] py-[14px] text-white"
-            style={{ backgroundColor: '#F37021' }}
+            className="neu-raised neu-outline-accent flex-1 font-heading font-bold text-[13.5px] text-text-primary rounded-neu-md py-[14px] transition-all active:scale-[0.97]"
           >
             End session
           </button>
@@ -366,14 +272,13 @@ export default function TimerClient({
         <button
           type="button"
           onClick={handleStart}
-          className="w-full font-heading font-bold text-[14px] rounded-[10px] py-[15px] text-white"
-          style={{ backgroundColor: '#F37021' }}
+          className="neu-raised-accent w-full font-heading font-bold text-[14px] text-text-primary rounded-neu-lg py-[15px] transition-all active:scale-[0.97]"
         >
           Start session
         </button>
       )}
 
-      <p className="font-body text-[10px] text-center mt-4" style={{ color: '#6b6557' }}>
+      <p className="font-body text-[10px] text-center mt-4 text-text-muted">
         {started
           ? "Session auto-logs to today's plan when it ends."
           : "Tap Start when you're ready to focus."}

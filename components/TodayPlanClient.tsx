@@ -187,7 +187,7 @@ export default function TodayPlanClient({
         />
         <Link
           href="/subjects/manage"
-          className="font-heading font-bold text-[12px] text-white bg-black rounded-[8px] px-[14px] py-[8px] whitespace-nowrap"
+          className="neu-raised font-heading font-bold text-[12px] text-text-primary rounded-neu-sm px-[14px] py-[8px] whitespace-nowrap"
         >
           Manage my planner
         </Link>
@@ -209,7 +209,7 @@ export default function TodayPlanClient({
           return (
           <div
             key={session.id}
-            className={`bg-card rounded-[12px] px-[12px] py-[9px] mb-[8px] border-l-[5px] ${
+            className={`neu-raised rounded-neu-sm px-[12px] py-[9px] mb-[8px] border-l-[5px] ${
               session.completed ? 'border-teal' : 'border-orange'
             }`}
           >
@@ -281,7 +281,7 @@ export default function TodayPlanClient({
             </div>
 
             {topicOpen && (
-              <div className="mt-[8px] rounded-[8px] border-[1.3px] border-card-border bg-bg px-[10px] py-[9px]">
+              <div className="neu-pressed mt-[8px] rounded-neu-sm px-[10px] py-[9px]">
                 <div className="flex items-center gap-2">
                   <button
                     type="button"
@@ -309,7 +309,7 @@ export default function TodayPlanClient({
                     onChange={(e) => handleTopicChange(session.id, e.target.value)}
                     onBlur={(e) => handleTopicBlur(session.id, e.target.value)}
                     placeholder="What are you studying?"
-                    className={`flex-1 min-w-0 rounded-[8px] border-[1.3px] border-card-border bg-card px-[10px] py-[6px] font-body text-[12px] outline-none focus:border-teal ${
+                    className={`flex-1 min-w-0 bg-transparent px-[10px] py-[6px] font-body text-[12px] outline-none ${
                       session.topic_completed ? 'line-through text-text-muted' : 'text-text-primary'
                     }`}
                   />
@@ -339,7 +339,7 @@ export default function TodayPlanClient({
             {needsNewDate.map((subject) => (
               <div
                 key={subject.id}
-                className="relative flex items-center justify-between bg-card border-[1.5px] border-card-border rounded-[10px] px-[14px] py-[11px] mb-[10px]"
+                className="neu-raised relative flex items-center justify-between rounded-neu-sm px-[14px] py-[11px] mb-[10px]"
               >
                 <span className="font-body font-bold text-[13.5px] text-text-primary">
                   {subject.subject_name}

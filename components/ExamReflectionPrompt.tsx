@@ -81,7 +81,7 @@ export default function ExamReflectionPrompt({
       {reflections.map((r) => (
         <div
           key={r.examDateId}
-          className="bg-card border-[1.5px] border-card-border rounded-[10px] px-[14px] py-[13px] mb-[10px]"
+          className="neu-raised rounded-neu-sm px-[14px] py-[13px] mb-[10px]"
         >
           <p className="font-heading font-bold text-[13.5px] text-text-primary">
             How did your {r.subjectName} exam go?

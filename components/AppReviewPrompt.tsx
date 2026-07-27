@@ -63,7 +63,7 @@ export default function AppReviewPrompt({ userId }: { userId: string }) {
   }
 
   return (
-    <div className="bg-card border-[1.5px] border-card-border rounded-[10px] px-[14px] py-[13px] mt-5">
+    <div className="neu-raised rounded-neu-sm px-[14px] py-[13px] mt-5">
       <p className="font-heading font-bold text-[13.5px] text-text-primary">
         How is the SSP working for you so far?
       </p>
@@ -91,14 +91,14 @@ export default function AppReviewPrompt({ userId }: { userId: string }) {
             onChange={(e) => setComment(e.target.value)}
             placeholder="Anything you would like to share? (optional)"
             rows={3}
-            className="w-full rounded-[8px] border-[1.3px] border-card-border bg-bg px-[10px] py-[7px] font-body text-[12px] text-text-primary outline-none focus:border-teal resize-none mb-[10px]"
+            className="neu-pressed w-full rounded-neu-sm px-[10px] py-[7px] font-body text-[12px] text-text-primary outline-none focus:ring-1 focus:ring-teal/40 resize-none mb-[10px]"
           />
           {error && <p className="text-red-600 text-xs mb-2">{error}</p>}
           <button
             type="button"
             disabled={submitting}
             onClick={handleSubmit}
-            className="font-body text-xs rounded-[8px] px-[14px] py-[8px] bg-teal text-white font-bold disabled:opacity-50"
+            className="neu-raised font-body text-xs rounded-neu-sm px-[14px] py-[8px] text-teal font-bold disabled:opacity-50"
           >
             {submitting ? 'Submitting…' : 'Submit review'}
           </button>

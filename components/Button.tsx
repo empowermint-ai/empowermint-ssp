@@ -1,22 +1,29 @@
 'use client';
-
 import { ButtonHTMLAttributes } from 'react';
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   loading?: boolean;
+  variant?: 'primary' | 'secondary' | 'destructive';
+};
+
+const VARIANT_CLASSES: Record<NonNullable<ButtonProps['variant']>, string> = {
+  primary: 'neu-raised-accent',
+  secondary: 'neu-raised',
+  destructive: 'neu-raised neu-outline-accent',
 };
 
 export default function Button({
   children,
   loading,
   disabled,
+  variant = 'primary',
   className = '',
   ...props
 }: ButtonProps) {
   return (
     <button
       disabled={disabled || loading}
-      className={`w-full rounded-xl bg-orange text-white font-medium py-3.5 transition-opacity disabled:opacity-60 active:opacity-80 ${className}`}
+      className={`w-full rounded-neu-lg text-text-primary font-heading font-bold text-[14px] py-4 transition-all active:scale-[0.97] disabled:opacity-60 ${VARIANT_CLASSES[variant]} ${className}`}
       {...props}
     >
       {loading ? 'Please wait…' : children}

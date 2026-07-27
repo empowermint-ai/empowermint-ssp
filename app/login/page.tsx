@@ -108,14 +108,14 @@ function LoginForm() {
             placeholder="Enter your password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full bg-card border-[1.5px] border-card-border rounded-[10px] px-[14px] py-[13px] font-body text-[14px] text-text-primary outline-none focus:border-teal"
+            className="neu-pressed w-full rounded-neu-md px-4 py-3.5 font-body text-[14px] text-text-primary outline-none focus:ring-1 focus:ring-teal/40"
           />
         </div>
 
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-orange text-white font-heading font-bold text-[13.5px] rounded-[10px] py-[14px] disabled:opacity-60"
+          className="neu-raised-accent w-full text-text-primary font-heading font-bold text-[14px] rounded-neu-lg py-4 transition-all active:scale-[0.97] disabled:opacity-60"
         >
           {loading ? 'Please wait…' : 'Log in'}
         </button>

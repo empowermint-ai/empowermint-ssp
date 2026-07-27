@@ -51,7 +51,7 @@ export default function RankSubjectsForm({ initialSubjects }: { initialSubjects:
         {subjects.map((subject) => (
           <div
             key={subject.id}
-            className="flex items-center justify-between bg-card border-[1.5px] border-card-border rounded-[10px] px-[14px] py-[11px] mb-[10px]"
+            className="neu-raised flex items-center justify-between rounded-neu-sm px-[14px] py-[11px] mb-[10px]"
           >
             <span className="font-body font-bold text-[13.5px] text-text-primary">
               {subject.subject_name}
@@ -65,9 +65,7 @@ export default function RankSubjectsForm({ initialSubjects }: { initialSubjects:
                     type="button"
                     onClick={() => selectScore(subject.id, score)}
                     className={`w-5 h-5 rounded-full flex items-center justify-center font-heading font-bold text-[10px] ${
-                      selected
-                        ? 'bg-orange text-white border-0'
-                        : 'bg-transparent text-text-primary border-[1.5px] border-text-primary'
+                      selected ? 'neu-pressed-accent text-text-primary' : 'neu-raised text-text-primary'
                     }`}
                     aria-label={`${subject.subject_name}: confidence ${score}`}
                   >
@@ -87,7 +85,7 @@ export default function RankSubjectsForm({ initialSubjects }: { initialSubjects:
           type="button"
           disabled={!allRanked || saving}
           onClick={handleNext}
-          className="w-full bg-orange text-white font-heading font-bold text-[13.5px] rounded-[10px] py-[14px] disabled:opacity-40"
+          className="neu-raised-accent w-full text-text-primary font-heading font-bold text-[13.5px] rounded-neu-lg py-[14px] disabled:opacity-40"
         >
           {saving ? 'Saving…' : 'Next: exam dates'}
         </button>

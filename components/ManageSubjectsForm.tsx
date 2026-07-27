@@ -126,12 +126,12 @@ export default function ManageSubjectsForm({
 
   return (
     <div className="flex flex-col flex-1 mt-6">
-      <div className="flex bg-card border-[1.5px] border-card-border rounded-[10px] p-[4px] mb-5">
+      <div className="neu-pressed flex rounded-neu-sm p-[4px] mb-5">
         <button
           type="button"
           onClick={() => setTab('ranking')}
-          className={`flex-1 font-heading font-bold text-[12.5px] rounded-[7px] py-[9px] ${
-            tab === 'ranking' ? 'bg-orange text-white' : 'text-text-muted'
+          className={`flex-1 font-heading font-bold text-[12.5px] rounded-neu-sm py-[9px] transition-all ${
+            tab === 'ranking' ? 'neu-raised-accent text-text-primary' : 'text-text-muted'
           }`}
         >
           Your ranking
@@ -139,8 +139,8 @@ export default function ManageSubjectsForm({
         <button
           type="button"
           onClick={() => setTab('dates')}
-          className={`flex-1 font-heading font-bold text-[12.5px] rounded-[7px] py-[9px] ${
-            tab === 'dates' ? 'bg-orange text-white' : 'text-text-muted'
+          className={`flex-1 font-heading font-bold text-[12.5px] rounded-neu-sm py-[9px] transition-all ${
+            tab === 'dates' ? 'neu-raised-accent text-text-primary' : 'text-text-muted'
           }`}
         >
           Exam dates
@@ -157,7 +157,7 @@ export default function ManageSubjectsForm({
           {subjects.map((subject) => (
             <div
               key={subject.id}
-              className="flex items-center justify-between bg-card border-[1.5px] border-card-border rounded-[10px] px-[14px] py-[11px] mb-[10px]"
+              className="neu-raised flex items-center justify-between rounded-neu-sm px-[14px] py-[11px] mb-[10px]"
             >
               <span className="font-body font-bold text-[13.5px] text-text-primary">
                 {subject.subject_name}
@@ -172,9 +172,7 @@ export default function ManageSubjectsForm({
                       disabled={savingId === subject.id}
                       onClick={() => handleRankChange(subject.id, score)}
                       className={`w-5 h-5 rounded-full flex items-center justify-center font-heading font-bold text-[10px] disabled:opacity-50 ${
-                        selected
-                          ? 'bg-orange text-white border-0'
-                          : 'bg-transparent text-text-primary border-[1.5px] border-text-primary'
+                        selected ? 'neu-pressed-accent text-text-primary' : 'neu-raised text-text-primary'
                       }`}
                       aria-label={`${subject.subject_name}: confidence ${score}`}
                     >
@@ -193,7 +191,7 @@ export default function ManageSubjectsForm({
           {subjects.map((subject) => (
             <div
               key={subject.id}
-              className="bg-card border-[1.5px] border-card-border rounded-[10px] px-[14px] py-[11px] mb-[10px]"
+              className="neu-raised rounded-neu-sm px-[14px] py-[11px] mb-[10px]"
             >
               <div className="flex items-center justify-between">
                 <span className="font-body font-bold text-[13.5px] text-text-primary">

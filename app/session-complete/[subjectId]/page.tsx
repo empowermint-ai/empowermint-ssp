@@ -92,7 +92,7 @@ export default async function SessionCompletePage({
       </div>
 
       {allCompleted && (
-        <div className="bg-card border-[1.5px] border-card-border rounded-[12px] px-[16px] py-[18px] w-full">
+        <div className="neu-raised rounded-neu-md px-[16px] py-[18px] w-full">
           <span className="font-heading font-bold text-[34px] text-purple leading-none">
             &quot;
           </span>
@@ -112,7 +112,7 @@ export default async function SessionCompletePage({
       {nextSession ? (
         <Link
           href={`/timer/${nextSession.id}`}
-          className="w-full bg-orange text-white font-heading font-bold text-[13.5px] rounded-[10px] py-[14px] text-center"
+          className="neu-raised-accent w-full text-text-primary font-heading font-bold text-[13.5px] rounded-neu-lg py-[14px] text-center"
         >
           Start next: {nextSession.subject_name}
         </Link>
@@ -124,7 +124,7 @@ export default async function SessionCompletePage({
 
       <Link
         href="/dashboard"
-        className="w-full border-[1.5px] border-text-primary text-text-primary font-heading font-bold text-[13.5px] rounded-[10px] py-[13px] text-center mt-[10px]"
+        className="neu-raised w-full text-text-primary font-heading font-bold text-[13.5px] rounded-neu-lg py-[13px] text-center mt-[10px]"
       >
         Back to Today&apos;s Plan
       </Link>

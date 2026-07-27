@@ -16,11 +16,9 @@ export default function AuthCard({
         <div className="mb-4">
           <NavArrows />
         </div>
-        <h1 className="font-heading text-2xl text-navy dark:text-text-primary mb-1">{title}</h1>
+        <h1 className="font-heading font-bold text-2xl text-text-primary mb-1">{title}</h1>
         {subtitle && <p className="text-text-body text-sm mb-6">{subtitle}</p>}
-        <div className="bg-card border border-card-border rounded-2xl p-6 mt-4">
-          {children}
-        </div>
+        <div className="mt-4">{children}</div>
       </div>
     </main>
   );

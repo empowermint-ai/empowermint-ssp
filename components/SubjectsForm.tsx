@@ -165,16 +165,16 @@ export default function SubjectsForm({
             setDropdownOpen(true);
           }}
           onFocus={() => setDropdownOpen(true)}
-          className="w-full bg-card border-[1.5px] border-card-border rounded-[10px] px-[14px] py-[13px] font-body text-[14px] text-text-primary outline-none focus:border-teal"
+          className="neu-pressed w-full rounded-neu-md px-[14px] py-[13px] font-body text-[14px] text-text-primary outline-none focus:ring-1 focus:ring-teal/40"
         />
         {dropdownOpen && filteredOptions.length > 0 && (
-          <div className="absolute z-10 mt-1 w-full max-h-56 overflow-y-auto bg-card border-[1.5px] border-card-border rounded-[10px] shadow-lg">
+          <div className="neu-raised absolute z-10 mt-1 w-full max-h-56 overflow-y-auto rounded-neu-md">
             {filteredOptions.map((opt) => (
               <button
                 key={opt}
                 type="button"
                 onClick={() => handleSelectOption(opt)}
-                className="w-full text-left px-[14px] py-[10px] font-body text-[14px] text-text-primary hover:bg-bg"
+                className="w-full text-left px-[14px] py-[10px] font-body text-[14px] text-text-primary"
               >
                 {opt}
               </button>
@@ -187,7 +187,7 @@ export default function SubjectsForm({
         {subjects.map((subject) => (
           <div
             key={subject.name}
-            className="flex items-center justify-between bg-card border-[1.5px] border-card-border rounded-[10px] px-[14px] py-[11px] mb-[9px]"
+            className="neu-raised flex items-center justify-between rounded-neu-sm px-[14px] py-[11px] mb-[9px]"
           >
             <span className="font-body font-bold text-[13.5px] text-text-primary">
               {subject.name}
@@ -218,12 +218,12 @@ export default function SubjectsForm({
                 handleAddCustom();
               }
             }}
-            className="flex-1 bg-card border-[1.5px] border-card-border rounded-[10px] px-[14px] py-[13px] font-body text-[14px] text-text-primary outline-none focus:border-teal"
+            className="neu-pressed flex-1 rounded-neu-md px-[14px] py-[13px] font-body text-[14px] text-text-primary outline-none focus:ring-1 focus:ring-teal/40"
           />
           <button
             type="button"
             onClick={handleAddCustom}
-            className="bg-orange text-white font-heading font-bold text-[13.5px] rounded-[10px] px-4"
+            className="neu-raised-accent text-text-primary font-heading font-bold text-[13.5px] rounded-neu-sm px-4"
           >
             Add
           </button>
@@ -233,7 +233,7 @@ export default function SubjectsForm({
       <button
         type="button"
         onClick={() => setShowCustomInput((v) => !v)}
-        className="w-full border-[1.5px] border-text-primary text-text-primary font-heading font-bold text-[13.5px] rounded-[10px] py-[13px] mt-3"
+        className="neu-raised w-full text-text-primary font-heading font-bold text-[13.5px] rounded-neu-lg py-[13px] mt-3"
       >
         + Add my own subject
       </button>
@@ -244,7 +244,7 @@ export default function SubjectsForm({
         type="button"
         disabled={subjects.length === 0 || saving}
         onClick={handleNext}
-        className="w-full bg-orange text-white font-heading font-bold text-[13.5px] rounded-[10px] py-[14px] mt-3 disabled:opacity-40"
+        className="neu-raised-accent w-full text-text-primary font-heading font-bold text-[13.5px] rounded-neu-lg py-[14px] mt-3 disabled:opacity-40"
       >
         {saving ? 'Saving…' : 'Next: rank these'}
       </button>

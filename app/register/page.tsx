@@ -117,6 +117,12 @@ export default function RegisterStep1Page() {
 
       <form onSubmit={handleSubmit} className="mt-8 flex flex-col flex-1 space-y-4">
         <div>
+          <label
+            htmlFor="username"
+            className="block font-heading font-bold text-[10.5px] uppercase tracking-[0.6px] text-text-muted mb-1.5"
+          >
+            Username
+          </label>
           <input
             id="username"
             type="text"
@@ -124,7 +130,7 @@ export default function RegisterStep1Page() {
             placeholder="e.g. thabo_m"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            className="w-full bg-card border-[1.5px] border-card-border rounded-[10px] px-[14px] py-[13px] font-body text-[14px] text-text-primary outline-none focus:border-teal"
+            className="neu-pressed w-full rounded-neu-md px-4 py-3.5 font-body text-[14px] text-text-primary outline-none focus:ring-1 focus:ring-teal/40"
           />
           {fieldErrors.username && (
             <p className="text-red-600 text-xs mt-1">{fieldErrors.username}</p>
@@ -132,7 +138,7 @@ export default function RegisterStep1Page() {
         </div>
 
         <div>
-          <PhoneNumberInput id="mobileNumber" onChange={setMobileNumber} />
+          <PhoneNumberInput id="mobileNumber" label="Mobile number" onChange={setMobileNumber} />
           {fieldErrors.mobileNumber && (
             <p className="text-red-600 text-xs mt-1">{fieldErrors.mobileNumber}</p>
           )}
@@ -147,13 +153,19 @@ export default function RegisterStep1Page() {
         </div>
 
         <div>
+          <label
+            htmlFor="password"
+            className="block font-heading font-bold text-[10.5px] uppercase tracking-[0.6px] text-text-muted mb-1.5"
+          >
+            Password
+          </label>
           <PasswordInput
             id="password"
             autoComplete="new-password"
             placeholder="Min 6 characters"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full bg-card border-[1.5px] border-card-border rounded-[10px] px-[14px] py-[13px] font-body text-[14px] text-text-primary outline-none focus:border-teal"
+            className="neu-pressed w-full rounded-neu-md px-4 py-3.5 font-body text-[14px] text-text-primary outline-none focus:ring-1 focus:ring-teal/40"
           />
           {fieldErrors.password && (
             <p className="text-red-600 text-xs mt-1">{fieldErrors.password}</p>
@@ -165,7 +177,7 @@ export default function RegisterStep1Page() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-orange text-white font-heading font-bold text-[13.5px] rounded-[10px] py-[14px] disabled:opacity-60"
+          className="neu-raised-accent w-full text-text-primary font-heading font-bold text-[14px] rounded-neu-lg py-4 transition-all active:scale-[0.97] disabled:opacity-60"
         >
           {loading ? 'Please wait…' : 'Continue'}
         </button>

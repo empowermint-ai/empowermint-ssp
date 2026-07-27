@@ -40,7 +40,7 @@ export default function SettingsMenu() {
       {open && (
         <>
           <div className="fixed inset-0 z-10" onClick={() => setOpen(false)} />
-          <div className="absolute right-0 top-full mt-2 z-20 bg-card border border-card-border rounded-[10px] shadow-lg overflow-hidden min-w-[160px]">
+          <div className="neu-raised absolute right-0 top-full mt-2 z-20 rounded-neu-sm overflow-hidden min-w-[160px]">
             <button
               type="button"
               onClick={() => {

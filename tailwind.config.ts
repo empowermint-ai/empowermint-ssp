@@ -20,6 +20,15 @@ const config: Config = {
         teal: "var(--color-teal)",
         navy: "var(--color-navy)",
         purple: "var(--color-purple)",
+        cream: "var(--color-cream)",
+        "glow-green": "var(--glow-green)",
+        "glow-amber": "var(--glow-amber)",
+        "glow-red": "var(--glow-red)",
+      },
+      borderRadius: {
+        "neu-lg": "var(--neu-radius-lg)",
+        "neu-md": "var(--neu-radius-md)",
+        "neu-sm": "var(--neu-radius-sm)",
       },
       fontFamily: {
         heading: ["var(--font-heading)"],

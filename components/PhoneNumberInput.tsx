@@ -46,7 +46,10 @@ export default function PhoneNumberInput({
   return (
     <div className="text-left">
       {label && (
-        <label htmlFor={id} className="block text-sm text-text-body mb-1.5">
+        <label
+          htmlFor={id}
+          className="block font-heading font-bold text-[10.5px] uppercase tracking-[0.6px] text-text-muted mb-1.5"
+        >
           {label}
         </label>
       )}
@@ -55,7 +58,7 @@ export default function PhoneNumberInput({
           value={countryCode}
           onChange={handleCountryChange}
           aria-label="Country"
-          className="w-[112px] truncate bg-card border border-card-border rounded-xl px-2 py-3 text-text-primary outline-none focus:border-teal focus:ring-1 focus:ring-teal"
+          className="neu-pressed w-[112px] truncate rounded-neu-md px-2 py-3.5 text-text-primary outline-none focus:ring-1 focus:ring-teal/40"
         >
           {countries.map((c) => (
             <option key={c.code} value={c.code}>
@@ -72,7 +75,7 @@ export default function PhoneNumberInput({
           required={required}
           value={nationalNumber}
           onChange={handleNumberChange}
-          className="flex-1 min-w-0 rounded-xl border border-card-border bg-card px-4 py-3 text-text-primary outline-none focus:border-teal focus:ring-1 focus:ring-teal"
+          className="neu-pressed flex-1 min-w-0 rounded-neu-md px-4 py-3.5 text-text-primary outline-none focus:ring-1 focus:ring-teal/40"
         />
       </div>
     </div>

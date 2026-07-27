@@ -43,7 +43,7 @@ export default function ParentNotifyForm({
 
   return (
     <div>
-      <h2 className="font-heading text-lg text-navy dark:text-text-primary mb-1">
+      <h2 className="font-heading text-lg text-text-primary mb-1">
         Keep your parent in the loop
       </h2>
       <p className="text-text-body text-sm mb-4">
@@ -70,7 +70,7 @@ export default function ParentNotifyForm({
           placeholder="parent@email.com"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full bg-card border-[1.5px] border-card-border rounded-[10px] px-[14px] py-[13px] font-body text-[14px] text-text-primary outline-none focus:border-teal"
+          className="neu-pressed w-full rounded-neu-md px-[14px] py-[13px] font-body text-[14px] text-text-primary outline-none focus:ring-1 focus:ring-teal/40"
         />
         {error && <p className="text-sm text-red-600">{error}</p>}
         {success && (
@@ -81,7 +81,7 @@ export default function ParentNotifyForm({
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-orange text-white font-heading font-bold text-[13.5px] rounded-[10px] py-[14px] disabled:opacity-60"
+          className="neu-raised-accent w-full text-text-primary font-heading font-bold text-[13.5px] rounded-neu-lg py-[14px] disabled:opacity-60"
         >
           {loading ? 'Please wait…' : savedEmail ? 'Update email' : 'Add my parent'}
         </button>

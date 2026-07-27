@@ -5,7 +5,7 @@
 @tailwind utilities;
 
 :root {
-  --color-bg: #F1EFE7;
+  --color-bg: #FFFFFF;
   --color-card: #FFFFFF;
   --color-card-border: #E2DDD0;
   --color-text-primary: #000000;
@@ -17,9 +17,23 @@
   --color-teal: #0A7968;
   --color-navy: #163460;
   --color-purple: #60427D;
+  --color-cream: #E8DFC8;
 
   --font-heading: 'Mont', 'Montserrat', sans-serif;
   --font-body: 'Inter', sans-serif;
+
+  /* Neumorphic shadow + radius tokens - surfaces reuse --color-bg so
+     elements emboss out of the page instead of sitting on a bordered card. */
+  --neu-shadow-light: #FFFFFF;
+  --neu-shadow-dark: #E3DFD3;
+  --neu-radius-lg: 32px;
+  --neu-radius-md: 20px;
+  --neu-radius-sm: 12px;
+
+  /* Pomodoro timer state glow colors */
+  --glow-green: #0A7968;
+  --glow-amber: #F37021;
+  --glow-red: #C0392B;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -31,6 +45,12 @@
     --color-text-body: #C5BFB5;
     --color-text-muted: #6B6557;
     --color-line: #3A3733;
+
+    --neu-shadow-light: #2E2B27;
+    --neu-shadow-dark: #0A0908;
+    --glow-green: #12A88E;
+    --glow-amber: #FF8A4C;
+    --glow-red: #E05A4A;
   }
 
   ::placeholder {
@@ -69,5 +89,47 @@ h6 {
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+
+  /* Neumorphic surfaces - single source of truth for the raised/pressed
+     shadow pair. Every component should use these classes rather than
+     hand-rolling its own box-shadow values. */
+  .neu-raised {
+    background: var(--color-bg);
+    box-shadow:
+      8px 8px 16px var(--neu-shadow-dark),
+      -8px -8px 16px var(--neu-shadow-light);
+  }
+
+  .neu-pressed {
+    background: var(--color-bg);
+    box-shadow:
+      inset 6px 6px 12px var(--neu-shadow-dark),
+      inset -6px -6px 12px var(--neu-shadow-light);
+  }
+
+  /* Accent (orange) raised/pressed pair - primary buttons only.
+     Surface stays white like every other neu element; the orange reads as a
+     soft glow around the pill, not a fill - matches the reference screens. */
+  .neu-raised-accent {
+    background: var(--color-bg);
+    box-shadow:
+      0 6px 18px rgba(243, 112, 33, 0.28),
+      8px 8px 16px var(--neu-shadow-dark),
+      -8px -8px 16px var(--neu-shadow-light);
+  }
+
+  .neu-pressed-accent {
+    background: var(--color-bg);
+    box-shadow:
+      0 3px 10px rgba(243, 112, 33, 0.22),
+      inset 6px 6px 12px var(--neu-shadow-dark),
+      inset -6px -6px 12px var(--neu-shadow-light);
+  }
+
+  /* Faint orange outline for the calm-destructive button variant (e.g. End
+     session) - sits on top of .neu-raised rather than replacing it. */
+  .neu-outline-accent {
+    border: 1.5px solid rgba(243, 112, 33, 0.35);
   }
 }
