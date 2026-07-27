@@ -81,7 +81,7 @@ export default function ParentNotifyForm({
         <button
           type="submit"
           disabled={loading}
-          className="neu-raised-accent w-full text-text-primary font-heading font-bold text-[13.5px] rounded-neu-lg py-[14px] disabled:opacity-60"
+          className="neu-raised-accent w-full text-white font-heading font-bold text-[13.5px] rounded-neu-lg py-[14px] disabled:opacity-60"
         >
           {loading ? 'Please wait…' : savedEmail ? 'Update email' : 'Add my parent'}
         </button>

@@ -25,7 +25,7 @@
   /* Neumorphic shadow + radius tokens - surfaces reuse --color-bg so
      elements emboss out of the page instead of sitting on a bordered card. */
   --neu-shadow-light: #FFFFFF;
-  --neu-shadow-dark: #E3DFD3;
+  --neu-shadow-dark: #EBE7DD;
   --neu-radius-lg: 32px;
   --neu-radius-md: 20px;
   --neu-radius-sm: 12px;
@@ -104,27 +104,25 @@ h6 {
   .neu-pressed {
     background: var(--color-bg);
     box-shadow:
-      inset 6px 6px 12px var(--neu-shadow-dark),
-      inset -6px -6px 12px var(--neu-shadow-light);
+      inset 4px 4px 10px var(--neu-shadow-dark),
+      inset -4px -4px 10px var(--neu-shadow-light);
   }
 
-  /* Accent (orange) raised/pressed pair - primary buttons only.
-     Surface stays white like every other neu element; the orange reads as a
-     soft glow around the pill, not a fill - matches the reference screens. */
+  /* Accent (orange) raised/pressed pair - primary buttons and any selected/
+     active control. A deep, solid Hermes-orange fill embossed with its own
+     light/dark bezel shadow, rather than a white surface with a faint glow. */
   .neu-raised-accent {
-    background: var(--color-bg);
+    background: var(--color-orange);
     box-shadow:
-      0 6px 18px rgba(243, 112, 33, 0.28),
-      8px 8px 16px var(--neu-shadow-dark),
-      -8px -8px 16px var(--neu-shadow-light);
+      6px 6px 14px rgba(166, 66, 8, 0.4),
+      -6px -6px 14px rgba(255, 175, 115, 0.55);
   }
 
   .neu-pressed-accent {
-    background: var(--color-bg);
+    background: var(--color-orange);
     box-shadow:
-      0 3px 10px rgba(243, 112, 33, 0.22),
-      inset 6px 6px 12px var(--neu-shadow-dark),
-      inset -6px -6px 12px var(--neu-shadow-light);
+      inset 5px 5px 10px rgba(166, 66, 8, 0.4),
+      inset -5px -5px 10px rgba(255, 175, 115, 0.55);
   }
 
   /* Faint orange outline for the calm-destructive button variant (e.g. End

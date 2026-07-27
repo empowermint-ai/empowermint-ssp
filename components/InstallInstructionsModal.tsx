@@ -53,7 +53,7 @@ export default function InstallInstructionsModal({
         <button
           type="button"
           onClick={onClose}
-          className="neu-raised-accent w-full font-heading font-bold text-[13.5px] text-text-primary rounded-neu-lg py-[13px] mt-5"
+          className="neu-raised-accent w-full font-heading font-bold text-[13.5px] text-white rounded-neu-lg py-[13px] mt-5"
         >
           Got it
         </button>

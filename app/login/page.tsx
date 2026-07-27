@@ -115,7 +115,7 @@ function LoginForm() {
         <button
           type="submit"
           disabled={loading}
-          className="neu-raised-accent w-full text-text-primary font-heading font-bold text-[14px] rounded-neu-lg py-4 transition-all active:scale-[0.97] disabled:opacity-60"
+          className="neu-raised-accent w-full text-white font-heading font-bold text-[14px] rounded-neu-lg py-4 transition-all active:scale-[0.97] disabled:opacity-60"
         >
           {loading ? 'Please wait…' : 'Log in'}
         </button>

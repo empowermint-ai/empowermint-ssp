@@ -68,7 +68,7 @@ export default function InstallAppBanner() {
         <button
           type="button"
           onClick={canInstall ? handleAndroidInstall : () => setShowModal(true)}
-          className="neu-raised-accent w-full font-heading font-bold text-[12.5px] text-text-primary rounded-neu-sm py-[9px] mt-[10px]"
+          className="neu-raised-accent w-full font-heading font-bold text-[12.5px] text-white rounded-neu-sm py-[9px] mt-[10px]"
         >
           Add to home screen
         </button>

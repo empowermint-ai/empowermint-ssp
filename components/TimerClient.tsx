@@ -272,7 +272,7 @@ export default function TimerClient({
         <button
           type="button"
           onClick={handleStart}
-          className="neu-raised-accent w-full font-heading font-bold text-[14px] text-text-primary rounded-neu-lg py-[15px] transition-all active:scale-[0.97]"
+          className="neu-raised-accent w-full font-heading font-bold text-[14px] text-white rounded-neu-lg py-[15px] transition-all active:scale-[0.97]"
         >
           Start session
         </button>

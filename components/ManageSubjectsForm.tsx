@@ -131,7 +131,7 @@ export default function ManageSubjectsForm({
           type="button"
           onClick={() => setTab('ranking')}
           className={`flex-1 font-heading font-bold text-[12.5px] rounded-neu-sm py-[9px] transition-all ${
-            tab === 'ranking' ? 'neu-raised-accent text-text-primary' : 'text-text-muted'
+            tab === 'ranking' ? 'neu-raised-accent text-white' : 'text-text-muted'
           }`}
         >
           Your ranking
@@ -140,7 +140,7 @@ export default function ManageSubjectsForm({
           type="button"
           onClick={() => setTab('dates')}
           className={`flex-1 font-heading font-bold text-[12.5px] rounded-neu-sm py-[9px] transition-all ${
-            tab === 'dates' ? 'neu-raised-accent text-text-primary' : 'text-text-muted'
+            tab === 'dates' ? 'neu-raised-accent text-white' : 'text-text-muted'
           }`}
         >
           Exam dates
@@ -172,7 +172,7 @@ export default function ManageSubjectsForm({
                       disabled={savingId === subject.id}
                       onClick={() => handleRankChange(subject.id, score)}
                       className={`w-5 h-5 rounded-full flex items-center justify-center font-heading font-bold text-[10px] disabled:opacity-50 ${
-                        selected ? 'neu-pressed-accent text-text-primary' : 'neu-raised text-text-primary'
+                        selected ? 'neu-pressed-accent text-white' : 'neu-raised text-text-primary'
                       }`}
                       aria-label={`${subject.subject_name}: confidence ${score}`}
                     >
@@ -206,7 +206,7 @@ export default function ManageSubjectsForm({
                     min={minDateStr}
                     value=""
                     onChange={(e) => handleAddDate(subject.id, e.target.value)}
-                    className="absolute inset-0 z-10 h-full w-full cursor-pointer opacity-0"
+                    className="accent-orange absolute inset-0 z-10 h-full w-full cursor-pointer opacity-0"
                   />
                 </div>
               </div>

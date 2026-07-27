@@ -212,7 +212,7 @@ export default function ExamDatesForm({
                   min={minDateStr}
                   value=""
                   onChange={(e) => handleAddDate(subject.id, e.target.value)}
-                  className="absolute inset-0 z-10 h-full w-full cursor-pointer opacity-0"
+                  className="accent-orange absolute inset-0 z-10 h-full w-full cursor-pointer opacity-0"
                 />
               </div>
             </div>
@@ -255,7 +255,7 @@ export default function ExamDatesForm({
           type="button"
           disabled={!allDated || saving}
           onClick={handleGenerate}
-          className="neu-raised-accent w-full text-text-primary font-heading font-bold text-[13.5px] rounded-neu-lg py-[14px] disabled:opacity-40"
+          className="neu-raised-accent w-full text-white font-heading font-bold text-[13.5px] rounded-neu-lg py-[14px] disabled:opacity-40"
         >
           {saving ? 'Generating…' : 'Generate my plan'}
         </button>

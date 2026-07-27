@@ -9,7 +9,7 @@ export default function Error({ reset }: { error: Error & { digest?: string }; r
       <button
         type="button"
         onClick={() => reset()}
-        className="neu-raised-accent mt-4 text-text-primary font-heading font-bold text-[13.5px] rounded-neu-lg px-6 py-3"
+        className="neu-raised-accent mt-4 text-white font-heading font-bold text-[13.5px] rounded-neu-lg px-6 py-3"
       >
         Retry
       </button>

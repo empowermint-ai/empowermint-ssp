@@ -142,35 +142,36 @@ export default function CalendarGrid({
 
   return (
     <div className="flex flex-col flex-1">
-      <div className="flex items-center justify-between mt-4">
-        <button
-          type="button"
-          onClick={goPrevMonth}
-          aria-label="Previous month"
-          className="text-text-primary text-[19px] leading-none p-2"
-        >
-          ‹
-        </button>
-        <p className="font-heading font-bold text-[15px] text-text-primary">{monthLabel}</p>
-        <button
-          type="button"
-          onClick={goNextMonth}
-          aria-label="Next month"
-          className="text-text-primary text-[19px] leading-none p-2"
-        >
-          ›
-        </button>
-      </div>
+      <div className="neu-raised rounded-neu-md mt-4 px-[14px] py-[14px]">
+        <div className="flex items-center justify-between">
+          <button
+            type="button"
+            onClick={goPrevMonth}
+            aria-label="Previous month"
+            className="text-text-primary text-[19px] leading-none p-2"
+          >
+            ‹
+          </button>
+          <p className="font-heading font-bold text-[15px] text-text-primary">{monthLabel}</p>
+          <button
+            type="button"
+            onClick={goNextMonth}
+            aria-label="Next month"
+            className="text-text-primary text-[19px] leading-none p-2"
+          >
+            ›
+          </button>
+        </div>
 
-      <div className="grid grid-cols-7 mt-3 text-center">
-        {WEEKDAY_LABELS.map((d) => (
-          <span key={d} className="font-body text-[10px] text-text-muted uppercase">
-            {d}
-          </span>
-        ))}
-      </div>
+        <div className="grid grid-cols-7 mt-3 text-center">
+          {WEEKDAY_LABELS.map((d) => (
+            <span key={d} className="font-body text-[10px] text-text-muted uppercase">
+              {d}
+            </span>
+          ))}
+        </div>
 
-      <div className="grid grid-cols-7 gap-y-1 mt-1">
+        <div className="grid grid-cols-7 gap-y-1 mt-1">
         {cells.map((dateStr, i) => {
           if (!dateStr) return <div key={i} />;
 
@@ -212,6 +213,7 @@ export default function CalendarGrid({
             </button>
           );
         })}
+        </div>
       </div>
 
       <div className="flex items-center gap-4 mt-4 flex-wrap">

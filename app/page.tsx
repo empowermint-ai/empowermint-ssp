@@ -47,7 +47,7 @@ export default async function Home() {
 
         <Link
           href="/register"
-          className="neu-raised-accent w-full mt-10 text-text-primary font-heading font-bold text-[14px] rounded-neu-lg py-[16px] text-center"
+          className="neu-raised-accent w-full mt-10 text-white font-heading font-bold text-[14px] rounded-neu-lg py-[16px] text-center"
         >
           start my planner
         </Link>
@@ -58,19 +58,21 @@ export default async function Home() {
         >
           Already have an account? Log in here
         </Link>
+      </div>
 
-        <div className="flex mt-9">
-          <span className="w-8 h-8 rounded-full bg-purple -mr-2 ring-2 ring-bg" />
-          <span className="w-8 h-8 rounded-full bg-navy -mr-2 ring-2 ring-bg" />
-          <span className="w-8 h-8 rounded-full bg-teal -mr-2 ring-2 ring-bg" />
-          <span className="w-8 h-8 rounded-full bg-cream ring-2 ring-bg" />
-        </div>
+      <div className="flex-1" />
+
+      <div className="flex justify-center">
+        <span className="w-8 h-8 rounded-full bg-purple -mr-2 ring-2 ring-bg" />
+        <span className="w-8 h-8 rounded-full bg-navy -mr-2 ring-2 ring-bg" />
+        <span className="w-8 h-8 rounded-full bg-teal -mr-2 ring-2 ring-bg" />
+        <span className="w-8 h-8 rounded-full bg-cream ring-2 ring-bg" />
       </div>
 
       <div className="flex-1" />
 
       <div className="pb-10 w-full flex justify-center">
-        <div className="w-24 h-[2px] bg-orange" />
+        <div className="w-40 h-[2px] bg-orange" />
       </div>
     </main>
   );
