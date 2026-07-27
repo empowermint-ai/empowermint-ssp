@@ -172,7 +172,7 @@ export default function ManageSubjectsForm({
                       disabled={savingId === subject.id}
                       onClick={() => handleRankChange(subject.id, score)}
                       className={`w-5 h-5 rounded-full flex items-center justify-center font-heading font-bold text-[10px] disabled:opacity-50 ${
-                        selected ? 'neu-pressed-accent text-white' : 'neu-raised text-text-primary'
+                        selected ? 'neu-pressed-accent-sm text-white' : 'neu-raised text-text-primary'
                       }`}
                       aria-label={`${subject.subject_name}: confidence ${score}`}
                     >

@@ -187,7 +187,7 @@ export default function TodayPlanClient({
         />
         <Link
           href="/subjects/manage"
-          className="neu-raised font-heading font-bold text-[12px] text-text-primary rounded-neu-sm px-[14px] py-[8px] whitespace-nowrap"
+          className="neu-raised-accent font-heading font-bold text-[12px] text-white rounded-neu-sm px-[14px] py-[8px] whitespace-nowrap"
         >
           Manage my planner
         </Link>

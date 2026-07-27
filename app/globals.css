@@ -109,20 +109,31 @@ h6 {
   }
 
   /* Accent (orange) raised/pressed pair - primary buttons and any selected/
-     active control. A deep, solid Hermes-orange fill embossed with its own
-     light/dark bezel shadow, rather than a white surface with a faint glow. */
+     active control. A deep, solid Hermes-orange fill embossed with the same
+     neutral page-relative bezel as every other neu surface - no colored glow. */
   .neu-raised-accent {
     background: var(--color-orange);
     box-shadow:
-      6px 6px 14px rgba(166, 66, 8, 0.4),
-      -6px -6px 14px rgba(255, 175, 115, 0.55);
+      8px 8px 16px var(--neu-shadow-dark),
+      -8px -8px 16px var(--neu-shadow-light);
   }
 
   .neu-pressed-accent {
     background: var(--color-orange);
     box-shadow:
-      inset 5px 5px 10px rgba(166, 66, 8, 0.4),
-      inset -5px -5px 10px rgba(255, 175, 115, 0.55);
+      inset 6px 6px 12px var(--neu-shadow-dark),
+      inset -6px -6px 12px var(--neu-shadow-light);
+  }
+
+  /* Same accent pair, scaled down for small badges (e.g. the confidence-score
+     circles) - the full-size inset shadow is wide enough to wash out a ~20px
+     element, so this uses a tighter offset/blur to keep the fill reading as
+     solid orange. */
+  .neu-pressed-accent-sm {
+    background: var(--color-orange);
+    box-shadow:
+      inset 2px 2px 3px var(--neu-shadow-dark),
+      inset -2px -2px 3px var(--neu-shadow-light);
   }
 
   /* Faint orange outline for the calm-destructive button variant (e.g. End

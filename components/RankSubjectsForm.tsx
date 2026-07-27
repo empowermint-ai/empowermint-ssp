@@ -65,7 +65,7 @@ export default function RankSubjectsForm({ initialSubjects }: { initialSubjects:
                     type="button"
                     onClick={() => selectScore(subject.id, score)}
                     className={`w-5 h-5 rounded-full flex items-center justify-center font-heading font-bold text-[10px] ${
-                      selected ? 'neu-pressed-accent text-white' : 'neu-raised text-text-primary'
+                      selected ? 'neu-pressed-accent-sm text-white' : 'neu-raised text-text-primary'
                     }`}
                     aria-label={`${subject.subject_name}: confidence ${score}`}
                   >
