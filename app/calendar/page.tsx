@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation';
 import { createSupabaseServerClient } from '@/lib/supabaseServerClient';
 import CalendarGrid from '@/components/CalendarGrid';
 import NavArrows from '@/components/NavArrows';
+import BottomNav, { NAV_HEIGHT } from '@/components/BottomNav';
 
 export default async function CalendarPage() {
   const supabase = createSupabaseServerClient();
@@ -43,7 +44,10 @@ export default async function CalendarPage() {
   });
 
   return (
-    <main className="min-h-dvh flex flex-col px-[22px] pt-[38px] pb-[18px] bg-bg">
+    <main
+      className="min-h-dvh flex flex-col px-[22px] pt-[38px] bg-bg"
+      style={{ paddingBottom: `calc(${NAV_HEIGHT}px + 18px + env(safe-area-inset-bottom))` }}
+    >
       <div className="flex items-center gap-3">
         <NavArrows showForward={false} />
         <div>
@@ -62,6 +66,8 @@ export default async function CalendarPage() {
         subjects={subjectOptions}
         userId={user.id}
       />
+
+      <BottomNav userId={user.id} />
     </main>
   );
 }

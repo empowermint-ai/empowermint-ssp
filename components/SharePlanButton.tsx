@@ -8,11 +8,13 @@ export default function SharePlanButton({
   dateLabel,
   sessions,
   exams,
+  iconOnly = false,
 }: {
   studentName: string;
   dateLabel: string;
   sessions: PlanPdfSession[];
   exams: PlanPdfExam[];
+  iconOnly?: boolean;
 }) {
   const [sharing, setSharing] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -58,7 +60,12 @@ export default function SharePlanButton({
         type="button"
         onClick={handleShare}
         disabled={sharing}
-        className="flex items-center gap-[6px] font-body text-[12.5px] font-medium text-teal disabled:opacity-60"
+        aria-label={sharing ? 'Preparing share' : 'Share plan'}
+        className={
+          iconOnly
+            ? 'flex items-center justify-center text-teal disabled:opacity-60'
+            : 'flex items-center gap-[6px] font-body text-[12.5px] font-medium text-teal disabled:opacity-60'
+        }
       >
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
@@ -69,7 +76,7 @@ export default function SharePlanButton({
             strokeLinejoin="round"
           />
         </svg>
-        {sharing ? 'Preparing…' : 'Share'}
+        {!iconOnly && (sharing ? 'Preparing…' : 'Share')}
       </button>
       {error && <p className="font-body text-xs text-red-600 mt-1">{error}</p>}
     </div>

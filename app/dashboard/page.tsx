@@ -1,12 +1,11 @@
-import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { createSupabaseServerClient } from '@/lib/supabaseServerClient';
 import TodayPlanClient from '@/components/TodayPlanClient';
 import SettingsMenu from '@/components/SettingsMenu';
 import InstallAppBanner from '@/components/InstallAppBanner';
-import UpcomingExamsPanel from '@/components/UpcomingExamsPanel';
 import ExamReflectionPrompt from '@/components/ExamReflectionPrompt';
 import AppReviewPrompt from '@/components/AppReviewPrompt';
+import BottomNav, { NAV_HEIGHT } from '@/components/BottomNav';
 import { nextExamDate } from '@/lib/nextExamDate';
 import { priorityScore } from '@/lib/priorityScore';
 import { allocateSessions } from '@/lib/allocateSessions';
@@ -209,7 +208,10 @@ export default async function DashboardPage() {
   const showReviewPrompt = (completedSessionsCount ?? 0) >= 5 && !existingReview && !dismissedRecently;
 
   return (
-    <main className="min-h-dvh flex flex-col px-[22px] pt-[38px] pb-[18px] bg-bg">
+    <main
+      className="min-h-dvh flex flex-col px-[22px] pt-[38px] bg-bg"
+      style={{ paddingBottom: `calc(${NAV_HEIGHT}px + 18px + env(safe-area-inset-bottom))` }}
+    >
       <div className="flex justify-between items-start">
         <div>
           <h1 className="font-heading font-bold text-[19px] tracking-[-0.066em] text-text-primary">
@@ -217,21 +219,10 @@ export default async function DashboardPage() {
           </h1>
           <p className="font-body text-[11px] text-text-muted mt-1">{todayFormatted}</p>
         </div>
-        <div className="flex items-center gap-2">
-          <Link
-            href="/calendar"
-            aria-label="Calendar view"
-            className="text-text-primary text-[19px] leading-none p-1"
-          >
-            📅
-          </Link>
-          <SettingsMenu />
-        </div>
+        <SettingsMenu />
       </div>
 
       <InstallAppBanner />
-
-      <UpcomingExamsPanel exams={allUpcomingExams} />
 
       <ExamReflectionPrompt initialReflections={pendingReflections} />
 
@@ -249,12 +240,7 @@ export default async function DashboardPage() {
 
       {showReviewPrompt && <AppReviewPrompt userId={user.id} />}
 
-      <Link
-        href="/account"
-        className="font-body text-xs text-text-muted text-center underline mt-4"
-      >
-        Account settings
-      </Link>
+      <BottomNav userId={user.id} />
     </main>
   );
 }

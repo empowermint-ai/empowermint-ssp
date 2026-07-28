@@ -219,25 +219,20 @@ export default function TodayPlanClient({
 
   return (
     <>
-      <div className="flex items-center justify-between gap-3 mt-3">
+      <div className="mt-3 flex items-center gap-2">
+        <p className="font-heading font-bold text-[15px] uppercase tracking-[0.6px] text-teal">
+          Today&apos;s plan (recommended)
+        </p>
         <SharePlanButton
           studentName={studentName}
           dateLabel={dateLabel}
           sessions={sessions.map((s) => ({ subject_name: s.subject_name, completed: s.completed }))}
           exams={exams}
+          iconOnly
         />
-        <Link
-          href="/subjects/manage"
-          className="neu-raised-accent font-heading font-bold text-[12px] text-white rounded-neu-sm px-[14px] py-[8px] whitespace-nowrap"
-        >
-          Manage my planner
-        </Link>
       </div>
 
-      <div className="mt-5">
-        <p className="font-heading font-bold text-[15px] uppercase tracking-[0.6px] text-teal">
-          Today&apos;s plan (recommended)
-        </p>
+      <div className="mt-1">
         <p className="font-body text-[12px] text-text-muted mt-[2px]">
           Here&apos;s what we recommend for today — feel free to amend it to suit you.
         </p>

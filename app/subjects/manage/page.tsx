@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation';
 import { createSupabaseServerClient } from '@/lib/supabaseServerClient';
 import NavArrows from '@/components/NavArrows';
 import ManageSubjectsForm from '@/components/ManageSubjectsForm';
+import BottomNav, { NAV_HEIGHT } from '@/components/BottomNav';
 
 export default async function ManageSubjectsPage() {
   const supabase = createSupabaseServerClient();
@@ -25,7 +26,10 @@ export default async function ManageSubjectsPage() {
   }
 
   return (
-    <main className="min-h-dvh flex flex-col px-[38px] py-8 bg-bg">
+    <main
+      className="min-h-dvh flex flex-col px-[38px] pt-8 bg-bg"
+      style={{ paddingBottom: `calc(${NAV_HEIGHT}px + 32px + env(safe-area-inset-bottom))` }}
+    >
       <div className="mb-3">
         <NavArrows showForward={false} />
       </div>
@@ -36,6 +40,8 @@ export default async function ManageSubjectsPage() {
       </h1>
 
       <ManageSubjectsForm userId={user.id} initialSubjects={subjects} />
+
+      <BottomNav userId={user.id} />
     </main>
   );
 }
