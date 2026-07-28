@@ -262,6 +262,9 @@ export default function TodayPlanClient({
                 <span className="font-heading font-bold text-[13.5px] text-text-primary truncate">
                   {session.subject_name}
                 </span>
+                <span className="font-body text-[11px] text-text-muted whitespace-nowrap">
+                  25 min
+                </span>
                 {session.suggested_start_time && (
                   <span className="font-body text-[11px] text-text-muted">
                     {session.suggested_start_time}
