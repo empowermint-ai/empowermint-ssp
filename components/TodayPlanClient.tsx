@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { supabase } from '@/lib/supabaseClient';
@@ -77,6 +77,47 @@ export default function TodayPlanClient({
   const [expandedTopics, setExpandedTopics] = useState<Set<string>>(
     () => new Set(initialSessions.filter((s) => s.topic || s.topic_completed).map((s) => s.id))
   );
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function reloadTopics() {
+      const { data } = await supabase
+        .from('daily_plans')
+        .select('id, topic, topic_completed, completed')
+        .eq('user_id', userId)
+        .eq('plan_date', todayStr);
+
+      if (cancelled || !data) return;
+
+      setSessions((prev) =>
+        prev.map((s) => {
+          const fresh = data.find((d) => d.id === s.id);
+          return fresh
+            ? { ...s, topic: fresh.topic, topic_completed: fresh.topic_completed, completed: fresh.completed }
+            : s;
+        })
+      );
+      setExpandedTopics((prev) => {
+        const next = new Set(prev);
+        for (const d of data) {
+          if (d.topic || d.topic_completed) next.add(d.id);
+        }
+        return next;
+      });
+    }
+
+    // Next.js can restore this page from a stale cached snapshot when
+    // navigating back from the timer, which would otherwise show a topic
+    // note as blank even though it was already saved on blur. Re-checking
+    // the database on mount keeps this screen honest no matter how it was
+    // reached.
+    reloadTopics();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [userId, todayStr]);
 
   function toggleTopicExpanded(sessionId: string) {
     setExpandedTopics((prev) => {
