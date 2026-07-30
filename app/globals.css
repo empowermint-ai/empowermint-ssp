@@ -87,6 +87,13 @@
 
     --neu-shadow-light: #2E2B27;
     --neu-shadow-dark: #0A0908;
+
+    /* A dark page absorbs no light itself, so the same accent-shadow alpha
+       used in light mode reads as a much stronger halo here - dial both
+       down so the button still embosses without glowing. */
+    --neu-accent-shadow-light: rgba(255, 176, 122, 0.16);
+    --neu-accent-shadow-dark: rgba(0, 0, 0, 0.35);
+
     --glow-green: #12A88E;
     --glow-amber: #FF8A4C;
     --glow-red: #E05A4A;
