@@ -1,4 +1,33 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&display=swap');
+
+@font-face {
+  font-family: 'General Sans';
+  src: url('/fonts/GeneralSans-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'General Sans';
+  src: url('/fonts/GeneralSans-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'General Sans';
+  src: url('/fonts/GeneralSans-Semibold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'General Sans';
+  src: url('/fonts/GeneralSans-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
 
 @tailwind base;
 @tailwind components;
@@ -21,7 +50,15 @@
   --color-cream: #E8DFC8;
 
   --font-heading: 'Mont', 'Montserrat', sans-serif;
-  --font-body: 'Inter', sans-serif;
+  --font-body: 'General Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Orange-tinted dual-tone shadow pair for accent buttons - lighter/darker
+     shades of the same Hermes orange, not the neutral page-relative tokens
+     used elsewhere. Kept semi-transparent and tight (small offset/blur in
+     the utility classes below) so it reads as embossed depth on the orange
+     surface itself, not a glow bleeding onto the page. */
+  --neu-accent-shadow-light: rgba(255, 176, 122, 0.32);
+  --neu-accent-shadow-dark: rgba(178, 76, 8, 0.24);
 
   /* Neumorphic shadow + radius tokens - surfaces reuse --color-bg so
      elements emboss out of the page instead of sitting on a bordered card. */
@@ -111,20 +148,21 @@ h6 {
   }
 
   /* Accent (orange) raised/pressed pair - primary buttons and any selected/
-     active control. A deep, solid Hermes-orange fill embossed with the same
-     neutral page-relative bezel as every other neu surface - no colored glow. */
+     active control. A deep, solid Hermes-orange fill embossed with its own
+     lighter/darker orange shadow pair (not the neutral page-relative tokens)
+     so it reads as a raised orange surface, not a glow on the page. */
   .neu-raised-accent {
     background: var(--color-orange);
     box-shadow:
-      8px 8px 16px var(--neu-shadow-dark),
-      -8px -8px 16px var(--neu-shadow-light);
+      4px 4px 8px var(--neu-accent-shadow-dark),
+      -4px -4px 8px var(--neu-accent-shadow-light);
   }
 
   .neu-pressed-accent {
     background: var(--color-orange);
     box-shadow:
-      inset 6px 6px 12px var(--neu-shadow-dark),
-      inset -6px -6px 12px var(--neu-shadow-light);
+      inset 4px 4px 8px var(--neu-accent-shadow-dark),
+      inset -4px -4px 8px var(--neu-accent-shadow-light);
   }
 
   /* Same accent pair, scaled down for small badges (e.g. the confidence-score
@@ -134,8 +172,8 @@ h6 {
   .neu-pressed-accent-sm {
     background: var(--color-orange);
     box-shadow:
-      inset 2px 2px 3px var(--neu-shadow-dark),
-      inset -2px -2px 3px var(--neu-shadow-light);
+      inset 2px 2px 3px var(--neu-accent-shadow-dark),
+      inset -2px -2px 3px var(--neu-accent-shadow-light);
   }
 
   /* Faint orange outline for the calm-destructive button variant (e.g. End
