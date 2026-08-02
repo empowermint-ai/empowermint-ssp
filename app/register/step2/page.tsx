@@ -22,6 +22,7 @@ export default function RegisterStep2Page() {
   const [email, setEmail] = useState('');
   const [institution, setInstitution] = useState('');
   const [grade, setGrade] = useState('');
+  const [institutionType, setInstitutionType] = useState<'school' | 'uni' | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
@@ -93,6 +94,7 @@ export default function RegisterStep2Page() {
           parent_email: email,
           institution: institution.trim(),
           grade,
+          student_type: institutionType,
         }),
       });
 
@@ -150,6 +152,7 @@ export default function RegisterStep2Page() {
           grade={grade}
           onInstitutionChange={setInstitution}
           onGradeChange={setGrade}
+          onTypeChange={setInstitutionType}
         />
         {error && <p className="text-sm text-red-600">{error}</p>}
         <Button type="submit" loading={loading}>

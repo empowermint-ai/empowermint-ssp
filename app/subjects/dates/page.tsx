@@ -13,12 +13,15 @@ export default async function SubjectDatesPage() {
     redirect('/login');
   }
 
-  const { data: subjects } = await supabase
-    .from('subjects')
-    .select('id, subject_name, confidence_score, exam_dates(id, exam_date)')
-    .eq('user_id', user.id)
-    .is('archived_at', null)
-    .order('created_at', { ascending: true });
+  const [{ data: subjects }, { data: profile }] = await Promise.all([
+    supabase
+      .from('subjects')
+      .select('id, subject_name, confidence_score, exam_dates(id, exam_date)')
+      .eq('user_id', user.id)
+      .is('archived_at', null)
+      .order('created_at', { ascending: true }),
+    supabase.from('users').select('grade, student_type').eq('id', user.id).maybeSingle(),
+  ]);
 
   if (!subjects || subjects.length === 0) {
     redirect('/subjects');
@@ -38,7 +41,12 @@ export default async function SubjectDatesPage() {
         Tap a subject to add an exam date. You can add more than one, like a
         term test and the final.
       </p>
-      <ExamDatesForm initialSubjects={subjects} userId={user.id} />
+      <ExamDatesForm
+        initialSubjects={subjects}
+        userId={user.id}
+        studentType={profile?.student_type ?? null}
+        grade={profile?.grade ?? null}
+      />
     </main>
   );
 }

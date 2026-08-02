@@ -5,11 +5,12 @@ import SettingsMenu from '@/components/SettingsMenu';
 import InstallAppBanner from '@/components/InstallAppBanner';
 import ExamReflectionPrompt from '@/components/ExamReflectionPrompt';
 import AppReviewPrompt from '@/components/AppReviewPrompt';
-import BottomNav, { NAV_HEIGHT } from '@/components/BottomNav';
+import BottomNav from '@/components/BottomNav';
+import { NAV_HEIGHT } from '@/lib/layout';
 import { nextExamDate } from '@/lib/nextExamDate';
 import { priorityScore } from '@/lib/priorityScore';
 import { allocateSessions } from '@/lib/allocateSessions';
-import { MAX_DAILY_SESSIONS } from '@/lib/dailyPlanLimits';
+import { getMaxDailySessions } from '@/lib/dailyPlanLimits';
 
 const GREETINGS: ((name: string) => string)[] = [
   () => 'Welcome back, champ!',
@@ -47,7 +48,7 @@ export default async function DashboardPage() {
   ] = await Promise.all([
     supabase
       .from('users')
-      .select('username, review_prompt_dismissed_at')
+      .select('username, review_prompt_dismissed_at, grade, student_type')
       .eq('id', user.id)
       .maybeSingle(),
     supabase
@@ -141,7 +142,8 @@ export default async function DashboardPage() {
         }))
         .sort((a, b) => b.score - a.score);
 
-      const allocations = allocateSessions(ranked, MAX_DAILY_SESSIONS);
+      const maxDailySessions = getMaxDailySessions(profile?.student_type, profile?.grade);
+      const allocations = allocateSessions(ranked, maxDailySessions);
 
       const rowsToInsert: {
         user_id: string;

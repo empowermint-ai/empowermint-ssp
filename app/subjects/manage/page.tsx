@@ -2,7 +2,8 @@ import { redirect } from 'next/navigation';
 import { createSupabaseServerClient } from '@/lib/supabaseServerClient';
 import NavArrows from '@/components/NavArrows';
 import ManageSubjectsForm from '@/components/ManageSubjectsForm';
-import BottomNav, { NAV_HEIGHT } from '@/components/BottomNav';
+import BottomNav from '@/components/BottomNav';
+import { NAV_HEIGHT } from '@/lib/layout';
 
 export default async function ManageSubjectsPage() {
   const supabase = createSupabaseServerClient();

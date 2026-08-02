@@ -12,11 +12,13 @@ export default function InstitutionField({
   grade,
   onInstitutionChange,
   onGradeChange,
+  onTypeChange,
 }: {
   institution: string;
   grade: string;
   onInstitutionChange: (value: string) => void;
   onGradeChange: (value: string) => void;
+  onTypeChange: (value: InstitutionType) => void;
 }) {
   const [type, setType] = useState<InstitutionType | null>(null);
 
@@ -24,6 +26,7 @@ export default function InstitutionField({
     setType(next);
     onInstitutionChange('');
     onGradeChange('');
+    onTypeChange(next);
   }
 
   return (

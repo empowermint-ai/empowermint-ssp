@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { supabase } from '@/lib/supabaseClient';
 import { recalculateTodayPlan } from '@/lib/recalculateTodayPlan';
 import { nextExamDate } from '@/lib/nextExamDate';
-import { NAV_HEIGHT } from '@/components/BottomNav';
+import { NAV_HEIGHT } from '@/lib/layout';
 
 interface ExamDate {
   id: string;

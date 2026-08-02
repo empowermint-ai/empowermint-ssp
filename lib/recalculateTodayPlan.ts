@@ -2,7 +2,7 @@ import { supabase } from '@/lib/supabaseClient';
 import { nextExamDate } from '@/lib/nextExamDate';
 import { priorityScore } from '@/lib/priorityScore';
 import { allocateSessions } from '@/lib/allocateSessions';
-import { MAX_DAILY_SESSIONS } from '@/lib/dailyPlanLimits';
+import { getMaxDailySessions } from '@/lib/dailyPlanLimits';
 
 // Recomputes today's remaining sessions whenever a learner updates their
 // ranking or exam dates mid-day. Only incomplete, auto-generated rows are
@@ -12,11 +12,14 @@ export async function recalculateTodayPlan(userId: string): Promise<void> {
   const todayStr = new Date().toISOString().slice(0, 10);
   const todayMs = new Date(`${todayStr}T00:00:00Z`).getTime();
 
-  const { data: activeSubjects } = await supabase
-    .from('subjects')
-    .select('id, confidence_score, exam_dates(exam_date)')
-    .eq('user_id', userId)
-    .is('archived_at', null);
+  const [{ data: activeSubjects }, { data: profile }] = await Promise.all([
+    supabase
+      .from('subjects')
+      .select('id, confidence_score, exam_dates(exam_date)')
+      .eq('user_id', userId)
+      .is('archived_at', null),
+    supabase.from('users').select('grade, student_type').eq('id', userId).maybeSingle(),
+  ]);
 
   const eligible = (activeSubjects ?? [])
     .map((s) => ({ ...s, nextExam: nextExamDate(s.exam_dates, todayStr) }))
@@ -42,7 +45,8 @@ export async function recalculateTodayPlan(userId: string): Promise<void> {
   const rows = todayRows ?? [];
   const toDelete = rows.filter((r) => !r.completed && r.is_auto_generated).map((r) => r.id);
   const completedAutoCount = rows.filter((r) => r.completed && r.is_auto_generated).length;
-  const remainingBudget = Math.max(0, MAX_DAILY_SESSIONS - completedAutoCount);
+  const maxDailySessions = getMaxDailySessions(profile?.student_type, profile?.grade);
+  const remainingBudget = Math.max(0, maxDailySessions - completedAutoCount);
   const maxOrder = rows.reduce((max, r) => Math.max(max, r.session_order), 0);
 
   if (toDelete.length > 0) {

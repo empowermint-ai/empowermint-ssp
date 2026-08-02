@@ -3,7 +3,8 @@ import { parsePhoneNumberFromString } from 'libphonenumber-js';
 import { createSupabaseAdminClient } from '@/lib/supabaseAdminClient';
 
 export async function POST(request: Request) {
-  const { id, username, mobile_number, parent_email, institution, grade } = await request.json();
+  const { id, username, mobile_number, parent_email, institution, grade, student_type } =
+    await request.json();
 
   if (!id || !username || !mobile_number || !parent_email) {
     return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
@@ -15,7 +16,16 @@ export async function POST(request: Request) {
   const { error } = await supabase
     .from('users')
     .upsert(
-      { id, username, mobile_number, parent_email, institution: institution || null, grade: grade || null, country },
+      {
+        id,
+        username,
+        mobile_number,
+        parent_email,
+        institution: institution || null,
+        grade: grade || null,
+        student_type: student_type || null,
+        country,
+      },
       { onConflict: 'id' }
     );
 

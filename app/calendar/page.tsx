@@ -2,7 +2,8 @@ import { redirect } from 'next/navigation';
 import { createSupabaseServerClient } from '@/lib/supabaseServerClient';
 import CalendarGrid from '@/components/CalendarGrid';
 import NavArrows from '@/components/NavArrows';
-import BottomNav, { NAV_HEIGHT } from '@/components/BottomNav';
+import BottomNav from '@/components/BottomNav';
+import { NAV_HEIGHT } from '@/lib/layout';
 
 export default async function CalendarPage() {
   const supabase = createSupabaseServerClient();

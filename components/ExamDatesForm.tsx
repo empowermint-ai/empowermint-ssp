@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabaseClient';
 import { priorityScore } from '@/lib/priorityScore';
 import { nextExamDate } from '@/lib/nextExamDate';
-import { MAX_DAILY_SESSIONS } from '@/lib/dailyPlanLimits';
+import { getMaxDailySessions } from '@/lib/dailyPlanLimits';
 import { allocateSessions } from '@/lib/allocateSessions';
 
 interface ExamDate {
@@ -32,9 +32,13 @@ function sortDates(dates: ExamDate[]): ExamDate[] {
 export default function ExamDatesForm({
   initialSubjects,
   userId,
+  studentType,
+  grade,
 }: {
   initialSubjects: Subject[];
   userId: string;
+  studentType: string | null;
+  grade: string | null;
 }) {
   const router = useRouter();
   const [subjects, setSubjects] = useState(
@@ -149,7 +153,7 @@ export default function ExamDatesForm({
       })
       .sort((a, b) => b.score - a.score);
 
-    const allocations = allocateSessions(ranked, MAX_DAILY_SESSIONS);
+    const allocations = allocateSessions(ranked, getMaxDailySessions(studentType, grade));
 
     await supabase
       .from('daily_plans')
