@@ -8,6 +8,11 @@ import ProgressStrip from '@/components/ProgressStrip';
 import SharePlanButton from '@/components/SharePlanButton';
 import type { PlanPdfExam } from '@/lib/buildPlanPdf';
 
+function formatDateChip(dateStr: string): string {
+  const date = new Date(`${dateStr}T00:00:00`);
+  return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+}
+
 interface Session {
   id: string;
   subject_id: string;
@@ -74,6 +79,7 @@ export default function TodayPlanClient({
   const [adding, setAdding] = useState(false);
   const [picking, setPicking] = useState(false);
   const [addingDateId, setAddingDateId] = useState<string | null>(null);
+  const [pendingDates, setPendingDates] = useState<Record<string, string>>({});
   const [expandedTopics, setExpandedTopics] = useState<Set<string>>(
     () => new Set(initialSessions.filter((s) => s.topic || s.topic_completed).map((s) => s.id))
   );
@@ -199,6 +205,30 @@ export default function TodayPlanClient({
       prev.map((s) => (s.id === session.id ? { ...s, topic_completed: next } : s))
     );
     await supabase.from('daily_plans').update({ topic_completed: next }).eq('id', session.id);
+  }
+
+  // Some mobile browsers pre-highlight the min date when today is disabled
+  // and can commit it on a stray tap. Staging the pick and requiring an
+  // explicit confirm tap ensures an exam date is only saved when the
+  // learner actually chooses to add it.
+  function handlePickDate(subjectId: string, value: string) {
+    if (!value || value < minDateStr) return;
+    setPendingDates((prev) => ({ ...prev, [subjectId]: value }));
+  }
+
+  function handleCancelPending(subjectId: string) {
+    setPendingDates((prev) => {
+      const next = { ...prev };
+      delete next[subjectId];
+      return next;
+    });
+  }
+
+  async function handleConfirmDate(subjectId: string) {
+    const value = pendingDates[subjectId];
+    if (!value) return;
+    handleCancelPending(subjectId);
+    await handleAddDate(subjectId, value);
   }
 
   async function handleAddDate(subjectId: string, value: string) {
@@ -378,21 +408,47 @@ export default function TodayPlanClient({
             {needsNewDate.map((subject) => (
               <div
                 key={subject.id}
-                className="neu-raised relative flex items-center justify-between rounded-neu-sm px-[14px] py-[11px] mb-[10px]"
+                className="neu-raised flex items-center justify-between rounded-neu-sm px-[14px] py-[11px] mb-[10px]"
               >
                 <span className="font-body font-bold text-[13.5px] text-text-primary">
                   {subject.subject_name}
                 </span>
-                <span className="font-body text-xs rounded-[8px] px-[10px] py-[5px] border-[1.3px] text-orange border-orange whitespace-nowrap">
-                  {addingDateId === subject.id ? 'Adding…' : '+ Add date'}
-                </span>
-                <input
-                  type="date"
-                  min={minDateStr}
-                  value=""
-                  onChange={(e) => handleAddDate(subject.id, e.target.value)}
-                  className="accent-orange absolute inset-0 z-10 h-full w-full cursor-pointer opacity-0"
-                />
+                {pendingDates[subject.id] ? (
+                  <div className="flex items-center gap-1.5 flex-shrink-0">
+                    <span className="font-body text-xs text-text-primary whitespace-nowrap">
+                      Add {formatDateChip(pendingDates[subject.id])}?
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => handleConfirmDate(subject.id)}
+                      aria-label={`Confirm ${formatDateChip(pendingDates[subject.id])} for ${subject.subject_name}`}
+                      className="text-teal font-bold leading-none"
+                    >
+                      ✓
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleCancelPending(subject.id)}
+                      aria-label="Cancel"
+                      className="text-text-muted leading-none"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                ) : (
+                  <div className="relative flex-shrink-0">
+                    <span className="font-body text-xs rounded-[8px] px-[10px] py-[5px] border-[1.3px] text-orange border-orange whitespace-nowrap">
+                      {addingDateId === subject.id ? 'Adding…' : '+ Add date'}
+                    </span>
+                    <input
+                      type="date"
+                      min={minDateStr}
+                      value=""
+                      onChange={(e) => handlePickDate(subject.id, e.target.value)}
+                      className="accent-orange absolute inset-0 z-10 h-full w-full cursor-pointer opacity-0"
+                    />
+                  </div>
+                )}
               </div>
             ))}
             {allExamsDone && (
