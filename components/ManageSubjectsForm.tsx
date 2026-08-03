@@ -70,7 +70,6 @@ export default function ManageSubjectsForm({
   );
   const [savingId, setSavingId] = useState<string | null>(null);
   const [addingId, setAddingId] = useState<string | null>(null);
-  const [pendingDates, setPendingDates] = useState<Record<string, string>>({});
   const [error, setError] = useState<string | null>(null);
   const [recalculating, setRecalculating] = useState(false);
 
@@ -203,32 +202,12 @@ export default function ManageSubjectsForm({
     setSavingId(null);
   }
 
-  // Some mobile browsers pre-highlight the min date when today is disabled
-  // and can commit it on a stray tap. Staging the pick and requiring an
-  // explicit confirm tap ensures an exam date is only saved when the
-  // learner actually chooses to add it.
-  function handlePickDate(subjectId: string, value: string) {
-    if (!value || value < minDateStr) return;
-    setPendingDates((prev) => ({ ...prev, [subjectId]: value }));
-  }
-
-  function handleCancelPending(subjectId: string) {
-    setPendingDates((prev) => {
-      const next = { ...prev };
-      delete next[subjectId];
-      return next;
-    });
-  }
-
-  async function handleConfirmDate(subjectId: string) {
-    const value = pendingDates[subjectId];
-    if (!value) return;
-    handleCancelPending(subjectId);
-    await handleAddDate(subjectId, value);
-  }
-
   async function handleAddDate(subjectId: string, value: string) {
-    if (!value || value < minDateStr) return;
+    if (!value) return;
+    if (value < minDateStr) {
+      setError('Exam dates must be at least tomorrow - please pick a later date.');
+      return;
+    }
     const subject = subjects.find((s) => s.id === subjectId);
     if (subject?.exam_dates.some((d) => d.exam_date === value)) return;
 
@@ -459,42 +438,17 @@ export default function ManageSubjectsForm({
                 <span className="font-body font-bold text-[13.5px] text-text-primary">
                   {subject.subject_name}
                 </span>
-                {pendingDates[subject.id] ? (
-                  <div className="flex items-center gap-1.5 flex-shrink-0">
-                    <span className="font-body text-xs text-text-primary whitespace-nowrap">
-                      Add {formatDateChip(pendingDates[subject.id])}?
-                    </span>
-                    <button
-                      type="button"
-                      onClick={() => handleConfirmDate(subject.id)}
-                      aria-label={`Confirm ${formatDateChip(pendingDates[subject.id])} for ${subject.subject_name}`}
-                      className="text-teal font-bold leading-none"
-                    >
-                      ✓
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => handleCancelPending(subject.id)}
-                      aria-label="Cancel"
-                      className="text-text-muted leading-none"
-                    >
-                      ✕
-                    </button>
-                  </div>
-                ) : (
-                  <div className="relative">
-                    <span className="font-body text-xs rounded-[8px] px-[10px] py-[5px] border-[1.3px] text-orange border-orange whitespace-nowrap">
-                      {addingId === subject.id ? 'Adding…' : '+ Add date'}
-                    </span>
-                    <input
-                      type="date"
-                      min={minDateStr}
-                      value=""
-                      onChange={(e) => handlePickDate(subject.id, e.target.value)}
-                      className="accent-orange absolute inset-0 z-10 h-full w-full cursor-pointer opacity-0"
-                    />
-                  </div>
-                )}
+                <div className="relative">
+                  <span className="font-body text-xs rounded-[8px] px-[10px] py-[5px] border-[1.3px] text-orange border-orange whitespace-nowrap">
+                    {addingId === subject.id ? 'Adding…' : '+ Add date'}
+                  </span>
+                  <input
+                    type="date"
+                    value=""
+                    onChange={(e) => handleAddDate(subject.id, e.target.value)}
+                    className="accent-orange absolute inset-0 z-10 h-full w-full cursor-pointer opacity-0"
+                  />
+                </div>
               </div>
 
               {subject.exam_dates.length > 0 && (
