@@ -26,6 +26,11 @@ export default function AuthCallbackPage() {
     startedRef.current = true;
 
     async function run() {
+      if (searchParams.get('error')) {
+        setError('This link has expired or already been used.');
+        return;
+      }
+
       const hash = window.location.hash;
 
       if (hash.includes('error=')) {
