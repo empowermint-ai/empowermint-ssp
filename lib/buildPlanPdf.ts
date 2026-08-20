@@ -189,7 +189,7 @@ export async function buildPlanPdf({
 
   // --- Shared-from-empowermint footer card ---
   const firstName = studentName.split(' ')[0];
-  const headline = `${firstName} is staying on top of their studies with this smart study planner. Give it a go.`;
+  const headline = `${firstName} is using the Smart Study Planner to stay on top of their studying. Give it a go.`;
   // "→" (U+2192) isn't in jsPDF's standard Helvetica encoding - it renders as
   // a broken glyph and throws off width measurement, so the arrow is drawn
   // as a small triangle instead of relying on the character.
