@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { supabase } from '@/lib/supabaseClient';
 import ProgressStrip from '@/components/ProgressStrip';
 import SharePlanButton from '@/components/SharePlanButton';
+import ExamTimerEntryCard from '@/components/ExamTimerEntryCard';
 import type { PlanPdfExam } from '@/lib/buildPlanPdf';
 
 interface Session {
@@ -444,6 +445,10 @@ export default function TodayPlanClient({
       )}
 
       <ProgressStrip completedFlags={sessions.map((s) => s.completed)} />
+
+      <div className="mt-4">
+        <ExamTimerEntryCard />
+      </div>
     </>
   );
 }
