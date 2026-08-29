@@ -238,6 +238,7 @@ export default async function DashboardPage() {
         initialNeedsNewDate={needsNewDate}
         allExamsDone={allExamsDone}
         exams={allUpcomingExams}
+        grade={profile?.grade ?? null}
       />
 
       {showReviewPrompt && <AppReviewPrompt userId={user.id} />}

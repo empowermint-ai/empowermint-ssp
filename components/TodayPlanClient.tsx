@@ -7,6 +7,7 @@ import { supabase } from '@/lib/supabaseClient';
 import ProgressStrip from '@/components/ProgressStrip';
 import SharePlanButton from '@/components/SharePlanButton';
 import ExamTimerEntryCard from '@/components/ExamTimerEntryCard';
+import PastExamPapersCard from '@/components/PastExamPapersCard';
 import type { PlanPdfExam } from '@/lib/buildPlanPdf';
 
 interface Session {
@@ -58,6 +59,7 @@ export default function TodayPlanClient({
   initialNeedsNewDate,
   allExamsDone,
   exams,
+  grade,
 }: {
   userId: string;
   todayStr: string;
@@ -68,6 +70,7 @@ export default function TodayPlanClient({
   initialNeedsNewDate: NeedsNewDateSubject[];
   allExamsDone: boolean;
   exams: PlanPdfExam[];
+  grade: string | null;
 }) {
   const router = useRouter();
   const [sessions, setSessions] = useState(initialSessions);
@@ -448,6 +451,7 @@ export default function TodayPlanClient({
 
       <div className="mt-4">
         <ExamTimerEntryCard />
+        <PastExamPapersCard learnerId={userId} grade={grade} />
       </div>
     </>
   );

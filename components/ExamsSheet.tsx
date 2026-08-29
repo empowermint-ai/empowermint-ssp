@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabaseClient';
 import { recalculateTodayPlan } from '@/lib/recalculateTodayPlan';
 import { nextExamDate } from '@/lib/nextExamDate';
@@ -27,7 +28,9 @@ function formatDateChip(dateStr: string): string {
 }
 
 export default function ExamsSheet({ userId, onClose }: { userId: string; onClose: () => void }) {
+  const router = useRouter();
   const [subjects, setSubjects] = useState<Subject[] | null>(null);
+  const [isGrade12, setIsGrade12] = useState(false);
   const [addingId, setAddingId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [entered, setEntered] = useState(false);
@@ -60,6 +63,20 @@ export default function ExamsSheet({ userId, onClose }: { userId: string; onClos
       }
     }
     load();
+    return () => {
+      cancelled = true;
+    };
+  }, [userId]);
+
+  useEffect(() => {
+    let cancelled = false;
+    async function loadGrade() {
+      const { data } = await supabase.from('users').select('grade').eq('id', userId).maybeSingle();
+      if (!cancelled) {
+        setIsGrade12(data?.grade === 'Grade 12');
+      }
+    }
+    loadGrade();
     return () => {
       cancelled = true;
     };
@@ -262,6 +279,16 @@ export default function ExamsSheet({ userId, onClose }: { userId: string; onClos
                         </span>
                       ))}
                     </div>
+                  )}
+
+                  {isGrade12 && (
+                    <button
+                      type="button"
+                      onClick={() => router.push('/past-papers')}
+                      className="font-body text-[11px] text-orange mt-[8px]"
+                    >
+                      Past papers →
+                    </button>
                   )}
                 </div>
               );
