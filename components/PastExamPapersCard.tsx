@@ -100,7 +100,7 @@ export default function PastExamPapersCard({
             )}
           </span>
           <span className="block font-body text-[11px] text-text-muted mt-[2px] truncate">
-            {isGrade12 ? 'NSC & IEB papers and memos, straight from the source.' : 'Unlocks in Grade 12'}
+            {isGrade12 ? 'Official NSC & IEB papers and memos.' : 'Unlocks in Grade 12'}
           </span>
         </span>
         {isGrade12 && (
