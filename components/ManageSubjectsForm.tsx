@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { supabase } from '@/lib/supabaseClient';
 import { recalculateTodayPlan } from '@/lib/recalculateTodayPlan';
 
@@ -79,6 +79,7 @@ export default function ManageSubjectsForm({
   const [customValue, setCustomValue] = useState('');
   const [addingSubject, setAddingSubject] = useState(false);
   const [removingId, setRemovingId] = useState<string | null>(null);
+  const addingRef = useRef<Set<string>>(new Set());
 
   useEffect(() => {
     let cancelled = false;
@@ -208,34 +209,47 @@ export default function ManageSubjectsForm({
       setError('Exam dates must be at least tomorrow - please pick a later date.');
       return;
     }
+
+    // Some mobile browsers fire a native date input's change event twice for
+    // a single selection. Without this guard, two near-simultaneous calls
+    // would both read the same stale subjects state before either finishes,
+    // both pass the "not already added" check below, and both insert -
+    // producing a duplicate exam date. The ref check is synchronous, unlike
+    // React state, so it closes that race regardless of what double-fires it.
+    if (addingRef.current.has(subjectId)) return;
+
     const subject = subjects.find((s) => s.id === subjectId);
     if (subject?.exam_dates.some((d) => d.exam_date === value)) return;
 
+    addingRef.current.add(subjectId);
     setAddingId(subjectId);
     setError(null);
 
-    const { data, error: insertError } = await supabase
-      .from('exam_dates')
-      .insert({ subject_id: subjectId, exam_date: value })
-      .select('id, exam_date')
-      .single();
+    try {
+      const { data, error: insertError } = await supabase
+        .from('exam_dates')
+        .insert({ subject_id: subjectId, exam_date: value })
+        .select('id, exam_date')
+        .single();
 
-    if (insertError || !data) {
+      if (insertError || !data) {
+        setError('Could not add that date. Try again.');
+        return;
+      }
+
+      setSubjects((prev) =>
+        prev.map((s) =>
+          s.id === subjectId ? { ...s, exam_dates: sortDates([...s.exam_dates, data]) } : s
+        )
+      );
+
+      setRecalculating(true);
+      await recalculateTodayPlan(userId);
+      setRecalculating(false);
+    } finally {
+      addingRef.current.delete(subjectId);
       setAddingId(null);
-      setError('Could not add that date. Try again.');
-      return;
     }
-
-    setSubjects((prev) =>
-      prev.map((s) =>
-        s.id === subjectId ? { ...s, exam_dates: sortDates([...s.exam_dates, data]) } : s
-      )
-    );
-
-    setRecalculating(true);
-    await recalculateTodayPlan(userId);
-    setRecalculating(false);
-    setAddingId(null);
   }
 
   async function handleRemoveDate(subjectId: string, dateId: string) {

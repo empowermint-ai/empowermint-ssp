@@ -48,6 +48,7 @@ export default function ExamDatesForm({
   const [error, setError] = useState<string | null>(null);
   const [addingId, setAddingId] = useState<string | null>(null);
   const submittingRef = useRef(false);
+  const addingRef = useRef<Set<string>>(new Set());
 
   useEffect(() => {
     let cancelled = false;
@@ -92,30 +93,42 @@ export default function ExamDatesForm({
       return;
     }
 
+    // Some mobile browsers fire a native date input's change event twice for
+    // a single selection. Without this guard, two near-simultaneous calls
+    // would both read the same stale subjects state before either finishes,
+    // both pass the "not already added" check below, and both insert -
+    // producing a duplicate exam date. The ref check is synchronous, unlike
+    // React state, so it closes that race regardless of what double-fires it.
+    if (addingRef.current.has(subjectId)) return;
+
     const subject = subjects.find((s) => s.id === subjectId);
     if (subject?.exam_dates.some((d) => d.exam_date === value)) return;
 
+    addingRef.current.add(subjectId);
     setAddingId(subjectId);
     setError(null);
 
-    const { data, error } = await supabase
-      .from('exam_dates')
-      .insert({ subject_id: subjectId, exam_date: value })
-      .select('id, exam_date')
-      .single();
+    try {
+      const { data, error } = await supabase
+        .from('exam_dates')
+        .insert({ subject_id: subjectId, exam_date: value })
+        .select('id, exam_date')
+        .single();
 
-    setAddingId(null);
+      if (error || !data) {
+        setError('Could not add that date. Try again.');
+        return;
+      }
 
-    if (error || !data) {
-      setError('Could not add that date. Try again.');
-      return;
+      setSubjects((prev) =>
+        prev.map((s) =>
+          s.id === subjectId ? { ...s, exam_dates: sortDates([...s.exam_dates, data]) } : s
+        )
+      );
+    } finally {
+      addingRef.current.delete(subjectId);
+      setAddingId(null);
     }
-
-    setSubjects((prev) =>
-      prev.map((s) =>
-        s.id === subjectId ? { ...s, exam_dates: sortDates([...s.exam_dates, data]) } : s
-      )
-    );
   }
 
   async function handleRemoveDate(subjectId: string, dateId: string) {
