@@ -64,15 +64,6 @@ export default async function Home() {
 
       <div className="flex-1" />
 
-      <div className="flex justify-center">
-        <span className="w-8 h-8 rounded-full bg-purple -mr-2 ring-2 ring-bg" />
-        <span className="w-8 h-8 rounded-full bg-navy -mr-2 ring-2 ring-bg" />
-        <span className="w-8 h-8 rounded-full bg-teal -mr-2 ring-2 ring-bg" />
-        <span className="w-8 h-8 rounded-full bg-cream ring-2 ring-bg" />
-      </div>
-
-      <div className="flex-1" />
-
       <div
         className="w-full flex justify-center"
         style={{ paddingBottom: 'max(16px, env(safe-area-inset-bottom))' }}
