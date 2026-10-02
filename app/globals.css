@@ -1,30 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&display=swap');
-
+/* Inter (variable, wght 100-900 + opsz 14-32), self-hosted, subset to Latin.
+   Source: official rsms/inter v4.1 release (https://github.com/rsms/inter/releases/tag/v4.1),
+   SIL OFL 1.1 - full license text at public/fonts/Inter-OFL.txt. Subsetting via fonttools
+   pyftsubset, keeping kern/liga/calt/case/tnum. See DESIGN.md for the exact command and the
+   size comparison against the static-weight alternative.
+   Headings/large numbers use font-variation-settings: "opsz" 32 (Inter Display shapes) from
+   this same file rather than shipping a second family - see the .font-heading rule below. */
 @font-face {
-  font-family: 'General Sans';
-  src: url('/fonts/GeneralSans-Regular.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'General Sans';
-  src: url('/fonts/GeneralSans-Medium.woff2') format('woff2');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'General Sans';
-  src: url('/fonts/GeneralSans-Semibold.woff2') format('woff2');
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'General Sans';
-  src: url('/fonts/GeneralSans-Bold.woff2') format('woff2');
-  font-weight: 700;
+  font-family: 'Inter';
+  src: url('/fonts/InterVariable.woff2') format('woff2-variations');
+  font-weight: 100 900;
   font-style: normal;
   font-display: swap;
 }
@@ -35,72 +19,83 @@
 
 :root {
   color-scheme: light;
+
+  /* Page vs. surface - bg is the page itself (white everywhere), card is the
+     cream fill used only inside cards/panels/inputs, never as a full-width
+     page band. */
   --color-bg: #FFFFFF;
-  --color-card: #FFFFFF;
-  --color-card-border: #E2DDD0;
+  --color-card: #F1EFE7;
+  --color-card-border: #E6E2D8;
+  --color-input-border: #D9D5CB;
+  --color-line: #E6E2D8;
+
   --color-text-primary: #000000;
-  --color-text-body: #4a473f;
-  --color-text-muted: #8A8579;
-  --color-line: #E2DDD0;
+  --color-text-body: #1A1A1A;
+  --color-text-muted: #5A5A5A;
 
   --color-orange: #F37021;
+  /* Orange on white is ~3:1 - fine for fills/borders/icons/large text, but
+     not for small text. Use this darker shade for small orange text instead. */
+  --color-orange-text: #C2540A;
+
   --color-teal: #0A7968;
+  --color-teal-tint: #E7F2F0;
   --color-navy: #163460;
   --color-purple: #60427D;
-  --color-cream: #E8DFC8;
+  --color-cream: #F1EFE7;
+  --color-error: #B3261E;
 
-  --font-heading: 'Mont', 'Montserrat', sans-serif;
-  --font-body: 'General Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-heading: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
 
-  /* Orange-tinted dual-tone shadow pair for accent buttons - lighter/darker
-     shades of the same Hermes orange, not the neutral page-relative tokens
-     used elsewhere. Kept semi-transparent and tight (small offset/blur in
-     the utility classes below) so it reads as embossed depth on the orange
-     surface itself, not a glow bleeding onto the page. */
-  --neu-accent-shadow-light: rgba(255, 176, 122, 0.32);
-  --neu-accent-shadow-dark: rgba(178, 76, 8, 0.24);
-
-  /* Neumorphic shadow + radius tokens - surfaces reuse --color-bg so
-     elements emboss out of the page instead of sitting on a bordered card. */
-  --neu-shadow-light: #FFFFFF;
-  --neu-shadow-dark: #EBE7DD;
-  --neu-radius-lg: 32px;
+  /* Card/panel radius (brief: 20px). Buttons override to rounded-full directly
+     in markup rather than through this token, since a handful of lg-radius
+     panels (not buttons) share this value and must stay rectangular. */
+  --neu-radius-lg: 20px;
   --neu-radius-md: 20px;
   --neu-radius-sm: 12px;
 
-  /* Pomodoro timer state glow colors */
+  /* Exam/focus timer status colours - green maps to teal (on track), amber to
+     orange (keep moving), red to the error colour (final stretch). */
   --glow-green: #0A7968;
   --glow-amber: #F37021;
-  --glow-red: #C0392B;
+  --glow-red: #B3261E;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     color-scheme: dark;
-    --color-bg: #1A1917;
-    --color-card: #252320;
-    --color-card-border: #3A3733;
-    --color-text-primary: #F1EFE7;
-    --color-text-body: #C5BFB5;
-    --color-text-muted: #6B6557;
-    --color-line: #3A3733;
 
-    --neu-shadow-light: #2E2B27;
-    --neu-shadow-dark: #0A0908;
+    --color-bg: #000000;
+    /* Two dark surface tones: a neutral near-black for plain hairline-bordered
+       panels, and a warmer dark tone (this session's --color-card) for the
+       cream-equivalent card fill, so dark mode keeps the same page/card
+       distinction light mode has instead of collapsing both to pure black. */
+    --color-surface: #121212;
+    --color-card: #1C1B18;
+    --color-card-border: #2A2925;
+    --color-input-border: #2A2925;
+    --color-line: #2A2925;
 
-    /* A dark page absorbs no light itself, so the same accent-shadow alpha
-       used in light mode reads as a much stronger halo here - dial both
-       down so the button still embosses without glowing. */
-    --neu-accent-shadow-light: rgba(255, 176, 122, 0.16);
-    --neu-accent-shadow-dark: rgba(0, 0, 0, 0.35);
+    --color-text-primary: #FFFFFF;
+    --color-text-body: #E6E6E6;
+    --color-text-muted: #A3A3A3;
 
-    --glow-green: #12A88E;
-    --glow-amber: #FF8A4C;
-    --glow-red: #E05A4A;
+    --color-orange: #F37021;
+    --color-orange-text: #F37021;
+
+    --color-teal: #1FA58F;
+    --color-teal-tint: #13332D;
+
+    --color-error: #E5564A;
+
+    --glow-green: #1FA58F;
+    --glow-amber: #F37021;
+    --glow-red: #E5564A;
   }
 
   ::placeholder {
-    color: #6B6557;
+    color: #A3A3A3;
     opacity: 1;
   }
 }
@@ -128,7 +123,9 @@ h4,
 h5,
 h6 {
   font-family: var(--font-heading);
-  letter-spacing: -0.066em;
+  font-variation-settings: 'opsz' 32;
+  font-weight: 600;
+  letter-spacing: -0.025em;
   color: var(--color-text-primary);
 }
 
@@ -137,55 +134,56 @@ h6 {
     text-wrap: balance;
   }
 
-  /* Neumorphic surfaces - single source of truth for the raised/pressed
-     shadow pair. Every component should use these classes rather than
-     hand-rolling its own box-shadow values. */
-  .neu-raised {
-    background: var(--color-bg);
-    box-shadow:
-      8px 8px 16px var(--neu-shadow-dark),
-      -8px -8px 16px var(--neu-shadow-light);
+  /* Large/heading-scale text drawn from the same variable file as body text -
+     bumps the opsz axis to 32 to get the Inter Display letterforms without a
+     second font family. Apply alongside font-heading wherever a non-h1-h6
+     element needs the display treatment (buttons, card titles, etc). */
+  .font-heading {
+    font-variation-settings: 'opsz' 32;
   }
 
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum' 1;
+  }
+
+  /* Card/panel surface - flat cream fill, no shadow. Used for every card,
+     sheet and panel in place of the old dual-tone neumorphic shadow pair.
+     A couple of session-style cards additionally need a left-side accent
+     stripe (completed/to-do colour) - those set border-left via an inline
+     style instead of a border-l-* Tailwind class, since an inline style
+     reliably wins over this shorthand regardless of utility-layer ordering. */
+  .neu-raised {
+    background: var(--color-card);
+    border: 1px solid var(--color-card-border);
+  }
+
+  /* Pressed/inset surfaces (inputs, search fields) - flat white fill with a
+     visible border rather than an inset shadow. */
   .neu-pressed {
     background: var(--color-bg);
-    box-shadow:
-      inset 4px 4px 10px var(--neu-shadow-dark),
-      inset -4px -4px 10px var(--neu-shadow-light);
+    border: 1px solid var(--color-input-border);
   }
 
-  /* Accent (orange) raised/pressed pair - primary buttons and any selected/
-     active control. A deep, solid Hermes-orange fill embossed with its own
-     lighter/darker orange shadow pair (not the neutral page-relative tokens)
-     so it reads as a raised orange surface, not a glow on the page. */
+  /* Accent (orange) fill - primary buttons and any selected/active control.
+     Flat Hermes-orange fill, black text per the brief (text colour is set by
+     the consuming component, not here). */
   .neu-raised-accent {
     background: var(--color-orange);
-    box-shadow:
-      4px 4px 8px var(--neu-accent-shadow-dark),
-      -4px -4px 8px var(--neu-accent-shadow-light);
   }
 
   .neu-pressed-accent {
     background: var(--color-orange);
-    box-shadow:
-      inset 4px 4px 8px var(--neu-accent-shadow-dark),
-      inset -4px -4px 8px var(--neu-accent-shadow-light);
   }
 
-  /* Same accent pair, scaled down for small badges (e.g. the confidence-score
-     circles) - the full-size inset shadow is wide enough to wash out a ~20px
-     element, so this uses a tighter offset/blur to keep the fill reading as
-     solid orange. */
   .neu-pressed-accent-sm {
     background: var(--color-orange);
-    box-shadow:
-      inset 2px 2px 3px var(--neu-accent-shadow-dark),
-      inset -2px -2px 3px var(--neu-accent-shadow-light);
   }
 
-  /* Faint orange outline for the calm-destructive button variant (e.g. End
-     session) - sits on top of .neu-raised rather than replacing it. */
+  /* Secondary button / calm-destructive outline - orange border on a white
+     fill, sits on top of .neu-raised rather than replacing it. */
   .neu-outline-accent {
-    border: 1.5px solid rgba(243, 112, 33, 0.35);
+    background: var(--color-bg);
+    border: 1.5px solid var(--color-orange);
   }
 }
