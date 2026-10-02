@@ -2,7 +2,7 @@
   "name": "empowermint SSP",
   "short_name": "empower",
   "description": "empowermint Smart Study Planner",
-  "theme_color": "#F37021",
+  "theme_color": "#FFFFFF",
   "background_color": "#FFFFFF",
   "display": "standalone",
   "orientation": "portrait",
