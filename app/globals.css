@@ -187,3 +187,71 @@ h6 {
     border: 1.5px solid var(--color-orange);
   }
 }
+
+/* --- Accessibility + interaction layer (brand brief) --- */
+
+/* Visible focus for keyboard users without drawing a ring on every tap. */
+:focus-visible {
+  outline: 2px solid var(--color-orange);
+  outline-offset: 2px;
+}
+
+/* 16px minimum on form controls stops iOS Safari zooming the page on focus
+   (the viewport no longer blocks zoom, so this is what prevents it now).
+   !important because component utilities like text-[14px] out-rank an
+   element selector. */
+input,
+select,
+textarea {
+  font-size: 16px !important;
+}
+
+/* Inputs: orange border on focus, per the brief. */
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--color-orange);
+}
+
+/* Primary full-width CTAs: 48px minimum tap target. Scoped to .w-full so the
+   small orange badges that share the accent class are not stretched. */
+.neu-raised-accent.w-full {
+  min-height: 48px;
+}
+
+/* Hover/active: black fill + white text (white fill + black text in dark mode,
+   where a black button would vanish into the black page). Hover only on
+   devices that actually hover so it never sticks after a tap. */
+@media (hover: hover) {
+  .neu-raised-accent.w-full:hover:not(:disabled) {
+    background: #000000;
+    color: #FFFFFF;
+  }
+}
+.neu-raised-accent.w-full:active:not(:disabled) {
+  background: #000000;
+  color: #FFFFFF;
+}
+@media (prefers-color-scheme: dark) {
+  @media (hover: hover) {
+    .neu-raised-accent.w-full:hover:not(:disabled) {
+      background: #FFFFFF;
+      color: #000000;
+    }
+  }
+  .neu-raised-accent.w-full:active:not(:disabled) {
+    background: #FFFFFF;
+    color: #000000;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
