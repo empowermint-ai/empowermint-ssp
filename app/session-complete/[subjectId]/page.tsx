@@ -77,7 +77,7 @@ export default async function SessionCompletePage({
         <span className="font-heading font-bold text-[24px] text-white">✓</span>
       </div>
 
-      <h1 className="font-heading font-bold text-[21px] tracking-[-0.066em] text-text-primary text-center">
+      <h1 className="font-heading font-bold text-[21px] tracking-[-0.025em] text-text-primary text-center">
         Nice work.
         <br />
         Session complete.
@@ -112,7 +112,7 @@ export default async function SessionCompletePage({
       {nextSession ? (
         <Link
           href={`/timer/${nextSession.id}`}
-          className="neu-raised-accent w-full text-white font-heading font-bold text-[13.5px] rounded-neu-lg py-[14px] text-center"
+          className="neu-raised-accent w-full text-black font-heading font-bold text-[13.5px] rounded-full py-[14px] text-center"
         >
           Start next: {nextSession.subject_name}
         </Link>
@@ -124,7 +124,7 @@ export default async function SessionCompletePage({
 
       <Link
         href="/dashboard"
-        className="neu-raised w-full text-text-primary font-heading font-bold text-[13.5px] rounded-neu-lg py-[13px] text-center mt-[10px]"
+        className="neu-raised w-full text-text-primary font-heading font-bold text-[13.5px] rounded-full py-[13px] text-center mt-[10px]"
       >
         Back to Today&apos;s Plan
       </Link>

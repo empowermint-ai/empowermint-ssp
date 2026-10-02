@@ -34,7 +34,7 @@ export default function PastExamPapersLinkOut({
     >
       <NavArrows showForward={false} />
 
-      <h1 className="font-heading font-bold text-[21px] tracking-[-0.066em] text-text-primary mt-4">
+      <h1 className="font-heading font-bold text-[21px] tracking-[-0.025em] text-text-primary mt-4">
         Past Exam Papers
       </h1>
       <p className="font-body text-[13px] text-text-muted mt-2">
@@ -49,7 +49,8 @@ export default function PastExamPapersLinkOut({
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => logActivity(learnerId, 'past_papers_link_opened', { grade, board: board.id })}
-            className="neu-raised w-full flex items-center justify-between gap-3 rounded-neu-sm border-l-[4px] border-orange px-[14px] py-[13px] mb-[10px] text-left"
+            className="neu-raised w-full flex items-center justify-between gap-3 rounded-neu-sm px-[14px] py-[13px] mb-[10px] text-left"
+            style={{ borderLeftWidth: '4px', borderLeftColor: 'var(--color-orange)' }}
           >
             <span className="min-w-0 flex-1">
               <span className="block font-heading font-bold text-[14px] text-text-primary">

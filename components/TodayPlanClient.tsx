@@ -255,9 +255,11 @@ export default function TodayPlanClient({
           return (
           <div
             key={session.id}
-            className={`neu-raised rounded-neu-sm px-[12px] py-[9px] mb-[8px] border-l-[5px] ${
-              session.completed ? 'border-teal' : 'border-orange'
-            }`}
+            className="neu-raised rounded-neu-sm px-[12px] py-[9px] mb-[8px]"
+            style={{
+              borderLeftWidth: '5px',
+              borderLeftColor: session.completed ? 'var(--color-teal)' : 'var(--color-orange)',
+            }}
           >
             <div
               onClick={() => router.push(`/timer/${session.id}`)}
@@ -301,7 +303,7 @@ export default function TodayPlanClient({
                   </svg>
                 ) : (
                   <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M2 1.2L10.5 6L2 10.8V1.2Z" fill="white" />
+                    <path d="M2 1.2L10.5 6L2 10.8V1.2Z" fill="black" />
                   </svg>
                 )}
               </span>
@@ -396,7 +398,7 @@ export default function TodayPlanClient({
                 <span className="font-body font-bold text-[13.5px] text-text-primary">
                   {subject.subject_name}
                 </span>
-                <span className="font-body text-xs rounded-[8px] px-[10px] py-[5px] border-[1.3px] text-orange border-orange whitespace-nowrap">
+                <span className="font-body text-xs rounded-[8px] px-[10px] py-[5px] border-[1.3px] text-orange-text border-orange whitespace-nowrap">
                   {addingDateId === subject.id ? 'Adding…' : '+ Add date'}
                 </span>
                 <input

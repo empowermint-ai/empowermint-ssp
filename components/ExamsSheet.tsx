@@ -256,13 +256,13 @@ export default function ExamsSheet({ userId, onClose }: { userId: string; onClos
                         {subject.subject_name}
                       </span>
                       {isSoonest && days !== undefined && (
-                        <span className="neu-raised-accent text-white font-heading font-bold text-[9.5px] rounded-full px-[8px] py-[2px] whitespace-nowrap">
+                        <span className="neu-raised-accent text-black font-heading font-bold text-[9.5px] rounded-full px-[8px] py-[2px] whitespace-nowrap">
                           {days === 0 ? 'Today' : days === 1 ? '1 day' : `${days} days`}
                         </span>
                       )}
                     </div>
                     <div className="relative flex-shrink-0">
-                      <span className="font-body text-xs rounded-[8px] px-[10px] py-[5px] border-[1.3px] text-orange border-orange whitespace-nowrap">
+                      <span className="font-body text-xs rounded-[8px] px-[10px] py-[5px] border-[1.3px] text-orange-text border-orange whitespace-nowrap">
                         {addingId === subject.id ? 'Adding…' : '+ Add date'}
                       </span>
                       <input
@@ -299,7 +299,7 @@ export default function ExamsSheet({ userId, onClose }: { userId: string; onClos
                     <button
                       type="button"
                       onClick={() => router.push('/past-papers')}
-                      className="font-body text-[11px] text-orange mt-[8px]"
+                      className="font-body text-[11px] text-orange-text mt-[8px]"
                     >
                       Past papers →
                     </button>

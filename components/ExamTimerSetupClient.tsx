@@ -93,7 +93,7 @@ export default function ExamTimerSetupClient({
         type="button"
         disabled={!canProceed}
         onClick={handleGo}
-        className="neu-raised-accent w-full font-heading font-bold text-[14px] text-white rounded-neu-lg py-[15px] transition-all active:scale-[0.97] disabled:opacity-40"
+        className="neu-raised-accent w-full font-heading font-bold text-[14px] text-black rounded-full py-[15px] transition-all active:scale-[0.97] disabled:opacity-40"
       >
         Go to exam session
       </button>

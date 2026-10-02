@@ -73,7 +73,7 @@ function LoginForm() {
 
       <div className="flex-1" />
 
-      <h1 className="font-heading font-bold text-[26px] tracking-[-0.066em] leading-[1.1] text-center text-text-primary">
+      <h1 className="font-heading font-bold text-[26px] tracking-[-0.025em] leading-[1.1] text-center text-text-primary">
         Welcome
         <br />
         back.
@@ -115,7 +115,7 @@ function LoginForm() {
         <button
           type="submit"
           disabled={loading}
-          className="neu-raised-accent w-full text-white font-heading font-bold text-[14px] rounded-neu-lg py-4 transition-all active:scale-[0.97] disabled:opacity-60"
+          className="neu-raised-accent w-full text-black font-heading font-bold text-[14px] rounded-full py-4 transition-all active:scale-[0.97] disabled:opacity-60"
         >
           {loading ? 'Please wait…' : 'Log in'}
         </button>

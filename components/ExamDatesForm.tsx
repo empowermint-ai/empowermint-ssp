@@ -225,7 +225,7 @@ export default function ExamDatesForm({
                 {subject.subject_name}
               </span>
               <div className="relative">
-                <span className="font-body text-xs rounded-[8px] px-[10px] py-[5px] border-[1.3px] text-orange border-orange whitespace-nowrap">
+                <span className="font-body text-xs rounded-[8px] px-[10px] py-[5px] border-[1.3px] text-orange-text border-orange whitespace-nowrap">
                   {addingId === subject.id ? 'Adding…' : '+ Add date'}
                 </span>
                 <input
@@ -275,7 +275,7 @@ export default function ExamDatesForm({
           type="button"
           disabled={!allDated || saving}
           onClick={handleGenerate}
-          className="neu-raised-accent w-full text-white font-heading font-bold text-[13.5px] rounded-neu-lg py-[14px] disabled:opacity-40"
+          className="neu-raised-accent w-full text-black font-heading font-bold text-[13.5px] rounded-full py-[14px] disabled:opacity-40"
         >
           {saving ? 'Generating…' : 'Generate my plan'}
         </button>

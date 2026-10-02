@@ -146,12 +146,12 @@ export default function TimerClient({
 
       <h1
         className="font-heading font-bold text-[21px] text-center mt-3 text-text-primary"
-        style={{ letterSpacing: '-0.066em' }}
+        style={{ letterSpacing: '-0.025em' }}
       >
         {subjectName}
       </h1>
 
-      <p className="font-body text-[14px] text-center mt-1 text-orange">Study session</p>
+      <p className="font-body text-[14px] text-center mt-1 text-orange-text">Study session</p>
 
       <div className="relative mt-8" style={{ width: 230, height: 230 }}>
         {/* Ambient background lighting - a soft colored blur bleeding onto the
@@ -178,9 +178,10 @@ export default function TimerClient({
               strokeWidth={5}
             />
 
-            {/* Recessed inner face */}
-            <circle cx={CENTER} cy={CENTER} r={95} style={{ fill: 'var(--neu-shadow-dark)' }} />
-            <circle cx={CENTER} cy={CENTER} r={92} style={{ fill: 'var(--color-bg)' }} />
+            {/* Dial face - flat white per the brief's "white background,
+                subtler glow" direction for the timer (the old recessed
+                shadow ring is gone along with the neumorphic surfaces). */}
+            <circle cx={CENTER} cy={CENTER} r={95} style={{ fill: 'var(--color-bg)' }} />
 
             {/* Dial wordmark */}
             <text
@@ -272,7 +273,7 @@ export default function TimerClient({
         <button
           type="button"
           onClick={handleStart}
-          className="neu-raised-accent w-full font-heading font-bold text-[14px] text-white rounded-neu-lg py-[15px] transition-all active:scale-[0.97]"
+          className="neu-raised-accent w-full font-heading font-bold text-[14px] text-black rounded-full py-[15px] transition-all active:scale-[0.97]"
         >
           Start session
         </button>

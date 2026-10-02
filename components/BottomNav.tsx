@@ -80,7 +80,7 @@ export default function BottomNav({ userId }: { userId: string }) {
 
   function tabClass(active: boolean) {
     return `flex flex-col items-center justify-center gap-[3px] flex-1 py-[11px] ${
-      active ? 'text-orange' : 'text-text-muted'
+      active ? 'text-orange-text' : 'text-text-muted'
     }`;
   }
 

@@ -79,7 +79,7 @@ export default function PastExamPapersCard({
       >
         <span
           className={`flex items-center justify-center w-[36px] h-[36px] rounded-full flex-shrink-0 ${
-            isGrade12 ? 'bg-orange text-white' : 'neu-pressed text-text-muted'
+            isGrade12 ? 'bg-orange text-black' : 'neu-pressed text-text-muted'
           }`}
         >
           <PaperIcon />

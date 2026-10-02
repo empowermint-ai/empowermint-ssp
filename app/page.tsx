@@ -37,17 +37,17 @@ export default async function Home() {
           />
         </div>
 
-        <h1 className="font-heading font-bold text-[19px] tracking-[-0.02em] text-center mt-8 text-text-primary uppercase">
+        <h1 className="font-heading font-bold text-[19px] tracking-[-0.03em] text-center mt-8 text-text-primary uppercase">
           The smart study planner
         </h1>
 
-        <p className="font-heading font-bold text-[14px] text-orange text-center mt-2">
+        <p className="font-heading font-bold text-[14px] text-orange-text text-center mt-2">
           Believe you can, plan how you will
         </p>
 
         <Link
           href="/register"
-          className="neu-raised-accent w-full mt-10 text-white font-heading font-bold text-[14px] rounded-neu-lg py-[16px] text-center"
+          className="neu-raised-accent w-full mt-10 text-black font-heading font-bold text-[14px] rounded-full py-[16px] text-center"
         >
           start my planner
         </Link>

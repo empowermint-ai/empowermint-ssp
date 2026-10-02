@@ -36,9 +36,7 @@ export default function UpcomingExamsPanel({ exams }: { exams: ExamEntry[] }) {
   return (
     <div
       className="bg-navy rounded-neu-md mt-4 overflow-hidden"
-      style={{
-        boxShadow: '6px 6px 14px var(--neu-shadow-dark), -6px -6px 14px var(--neu-shadow-light)',
-      }}
+      style={{ boxShadow: '0 8px 30px rgba(0, 0, 0, 0.07)' }}
     >
       <button
         type="button"

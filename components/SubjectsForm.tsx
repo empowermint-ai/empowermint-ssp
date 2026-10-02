@@ -223,7 +223,7 @@ export default function SubjectsForm({
           <button
             type="button"
             onClick={handleAddCustom}
-            className="neu-raised-accent text-white font-heading font-bold text-[13.5px] rounded-neu-sm px-4"
+            className="neu-raised-accent text-black font-heading font-bold text-[13.5px] rounded-neu-sm px-4"
           >
             Add
           </button>
@@ -233,7 +233,7 @@ export default function SubjectsForm({
       <button
         type="button"
         onClick={() => setShowCustomInput((v) => !v)}
-        className="neu-raised w-full text-text-primary font-heading font-bold text-[13.5px] rounded-neu-lg py-[13px] mt-3"
+        className="neu-raised w-full text-text-primary font-heading font-bold text-[13.5px] rounded-full py-[13px] mt-3"
       >
         + Add my own subject
       </button>
@@ -244,7 +244,7 @@ export default function SubjectsForm({
         type="button"
         disabled={subjects.length === 0 || saving}
         onClick={handleNext}
-        className="neu-raised-accent w-full text-white font-heading font-bold text-[13.5px] rounded-neu-lg py-[14px] mt-3 disabled:opacity-40"
+        className="neu-raised-accent w-full text-black font-heading font-bold text-[13.5px] rounded-full py-[14px] mt-3 disabled:opacity-40"
       >
         {saving ? 'Saving…' : 'Next: rank these'}
       </button>

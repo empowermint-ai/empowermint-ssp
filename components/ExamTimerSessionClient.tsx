@@ -204,11 +204,11 @@ export default function ExamTimerSessionClient({
 
       <h1
         className="font-heading font-bold text-[21px] text-center mt-4 text-text-primary"
-        style={{ letterSpacing: '-0.066em' }}
+        style={{ letterSpacing: '-0.025em' }}
       >
         {subjectName}
       </h1>
-      <p className="font-body text-[14px] text-center mt-1 text-orange">Study session</p>
+      <p className="font-body text-[14px] text-center mt-1 text-orange-text">Study session</p>
 
       <div className="relative mt-6" style={{ width: 230, height: 230 }}>
         <div
@@ -232,8 +232,7 @@ export default function ExamTimerSessionClient({
               strokeWidth={5}
             />
 
-            <circle cx={CENTER} cy={CENTER} r={95} style={{ fill: 'var(--neu-shadow-dark)' }} />
-            <circle cx={CENTER} cy={CENTER} r={92} style={{ fill: 'var(--color-bg)' }} />
+            <circle cx={CENTER} cy={CENTER} r={95} style={{ fill: 'var(--color-bg)' }} />
 
             <text
               x={CENTER}
@@ -306,7 +305,7 @@ export default function ExamTimerSessionClient({
             <button
               type="button"
               onClick={handleStart}
-              className="neu-raised-accent w-full font-heading font-bold text-[14px] text-white rounded-neu-lg py-[15px] transition-all active:scale-[0.97]"
+              className="neu-raised-accent w-full font-heading font-bold text-[14px] text-black rounded-full py-[15px] transition-all active:scale-[0.97]"
             >
               Start, All The Best.
             </button>
@@ -348,7 +347,7 @@ export default function ExamTimerSessionClient({
               onClick={() => handleFeedback('up')}
               aria-label="Thumbs up"
               className={`flex items-center justify-center w-[60px] h-[60px] rounded-full transition-all disabled:opacity-40 ${
-                feedback === 'up' ? 'neu-pressed-accent text-white' : 'neu-raised text-text-primary'
+                feedback === 'up' ? 'neu-pressed-accent text-black' : 'neu-raised text-text-primary'
               }`}
             >
               <ThumbsUpIcon />
@@ -359,7 +358,7 @@ export default function ExamTimerSessionClient({
               onClick={() => handleFeedback('down')}
               aria-label="Thumbs down"
               className={`flex items-center justify-center w-[60px] h-[60px] rounded-full transition-all disabled:opacity-40 ${
-                feedback === 'down' ? 'neu-pressed-accent text-white' : 'neu-raised text-text-primary'
+                feedback === 'down' ? 'neu-pressed-accent text-black' : 'neu-raised text-text-primary'
               }`}
             >
               <ThumbsDownIcon />
@@ -375,7 +374,7 @@ export default function ExamTimerSessionClient({
           <button
             type="button"
             onClick={() => router.push('/dashboard')}
-            className="neu-raised-accent w-full font-heading font-bold text-[14px] text-white rounded-neu-lg py-[15px] transition-all active:scale-[0.97]"
+            className="neu-raised-accent w-full font-heading font-bold text-[14px] text-black rounded-full py-[15px] transition-all active:scale-[0.97]"
           >
             Back to planner
           </button>

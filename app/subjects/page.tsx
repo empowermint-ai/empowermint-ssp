@@ -30,7 +30,7 @@ export default async function SubjectsPage() {
       <p className="font-heading font-bold text-[10px] uppercase text-teal">
         BUILD YOUR SUBJECT LIST
       </p>
-      <h1 className="font-heading font-bold text-[21px] tracking-[-0.066em] text-text-primary mt-3">
+      <h1 className="font-heading font-bold text-[21px] tracking-[-0.025em] text-text-primary mt-3">
         What are you studying?
       </h1>
 

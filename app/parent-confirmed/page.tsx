@@ -31,7 +31,7 @@ export default function ParentConfirmedPage({
         />
       </div>
 
-      <h1 className="font-heading font-bold text-[22px] tracking-[-0.066em] text-text-primary mt-8">
+      <h1 className="font-heading font-bold text-[22px] tracking-[-0.025em] text-text-primary mt-8">
         {ok ? "You're all set." : 'Link expired'}
       </h1>
 

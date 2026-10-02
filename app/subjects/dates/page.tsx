@@ -34,7 +34,7 @@ export default async function SubjectDatesPage() {
       </div>
 
       <p className="font-heading font-bold text-[10px] uppercase text-teal">LAST STEP</p>
-      <h1 className="font-heading font-bold text-[21px] tracking-[-0.066em] text-text-primary mt-3">
+      <h1 className="font-heading font-bold text-[21px] tracking-[-0.025em] text-text-primary mt-3">
         When is each exam?
       </h1>
       <p className="font-body text-[14px] text-text-body mt-2 mb-6">

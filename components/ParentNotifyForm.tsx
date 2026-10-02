@@ -59,7 +59,7 @@ export default function ParentNotifyForm({
           {confirmed ? (
             <span className="text-teal font-medium">confirmed</span>
           ) : (
-            <span className="text-orange font-medium">waiting on confirmation</span>
+            <span className="text-orange-text font-medium">waiting on confirmation</span>
           )}
         </p>
       )}
@@ -81,7 +81,7 @@ export default function ParentNotifyForm({
         <button
           type="submit"
           disabled={loading}
-          className="neu-raised-accent w-full text-white font-heading font-bold text-[13.5px] rounded-neu-lg py-[14px] disabled:opacity-60"
+          className="neu-raised-accent w-full text-black font-heading font-bold text-[13.5px] rounded-full py-[14px] disabled:opacity-60"
         >
           {loading ? 'Please wait…' : savedEmail ? 'Update email' : 'Add my parent'}
         </button>

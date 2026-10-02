@@ -281,7 +281,7 @@ export default function ManageSubjectsForm({
           type="button"
           onClick={() => setTab('subjects')}
           className={`flex-1 font-heading font-bold text-[11.5px] rounded-neu-sm py-[9px] transition-all ${
-            tab === 'subjects' ? 'neu-raised-accent text-white' : 'text-text-muted'
+            tab === 'subjects' ? 'neu-raised-accent text-black' : 'text-text-muted'
           }`}
         >
           Subjects
@@ -290,7 +290,7 @@ export default function ManageSubjectsForm({
           type="button"
           onClick={() => setTab('ranking')}
           className={`flex-1 font-heading font-bold text-[11.5px] rounded-neu-sm py-[9px] transition-all ${
-            tab === 'ranking' ? 'neu-raised-accent text-white' : 'text-text-muted'
+            tab === 'ranking' ? 'neu-raised-accent text-black' : 'text-text-muted'
           }`}
         >
           Ranking
@@ -299,7 +299,7 @@ export default function ManageSubjectsForm({
           type="button"
           onClick={() => setTab('dates')}
           className={`flex-1 font-heading font-bold text-[11.5px] rounded-neu-sm py-[9px] transition-all ${
-            tab === 'dates' ? 'neu-raised-accent text-white' : 'text-text-muted'
+            tab === 'dates' ? 'neu-raised-accent text-black' : 'text-text-muted'
           }`}
         >
           Exam dates
@@ -360,7 +360,7 @@ export default function ManageSubjectsForm({
               <button
                 type="button"
                 onClick={handleAddCustom}
-                className="neu-raised-accent text-white font-heading font-bold text-[13.5px] rounded-neu-sm px-4"
+                className="neu-raised-accent text-black font-heading font-bold text-[13.5px] rounded-neu-sm px-4"
               >
                 Add
               </button>
@@ -427,7 +427,7 @@ export default function ManageSubjectsForm({
                       disabled={savingId === subject.id}
                       onClick={() => handleRankChange(subject.id, score)}
                       className={`w-5 h-5 rounded-full flex items-center justify-center font-heading font-bold text-[10px] disabled:opacity-50 ${
-                        selected ? 'neu-pressed-accent-sm text-white' : 'neu-raised text-text-primary'
+                        selected ? 'neu-pressed-accent-sm text-black' : 'neu-raised text-text-primary'
                       }`}
                       aria-label={`${subject.subject_name}: confidence ${score}`}
                     >
@@ -453,7 +453,7 @@ export default function ManageSubjectsForm({
                   {subject.subject_name}
                 </span>
                 <div className="relative">
-                  <span className="font-body text-xs rounded-[8px] px-[10px] py-[5px] border-[1.3px] text-orange border-orange whitespace-nowrap">
+                  <span className="font-body text-xs rounded-[8px] px-[10px] py-[5px] border-[1.3px] text-orange-text border-orange whitespace-nowrap">
                     {addingId === subject.id ? 'Adding…' : '+ Add date'}
                   </span>
                   <input

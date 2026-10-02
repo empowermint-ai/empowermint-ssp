@@ -195,7 +195,7 @@ export default function CalendarGrid({
                   isSelected
                     ? 'bg-navy text-white'
                     : isExam
-                      ? 'bg-orange text-white'
+                      ? 'bg-orange text-black'
                       : isToday
                         ? 'border-[1.5px] border-purple text-text-primary'
                         : 'text-text-primary'
@@ -205,7 +205,7 @@ export default function CalendarGrid({
               </span>
               <span className="flex gap-[3px] mt-[3px] h-[5px]">
                 {hasMissed ? (
-                  <span className="w-[5px] h-[5px] rounded-full bg-red-600" />
+                  <span className="w-[5px] h-[5px] rounded-full bg-error" />
                 ) : hasStudy ? (
                   <span className="w-[5px] h-[5px] rounded-full bg-teal" />
                 ) : null}

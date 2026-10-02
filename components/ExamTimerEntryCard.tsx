@@ -5,8 +5,8 @@ import { useRouter } from 'next/navigation';
 function ClockIcon() {
   return (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="12" cy="12" r="9" stroke="white" strokeWidth="1.8" />
-      <path d="M12 7v5l3.5 2" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+      <circle cx="12" cy="12" r="9" stroke="black" strokeWidth="1.8" />
+      <path d="M12 7v5l3.5 2" stroke="black" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
@@ -42,7 +42,7 @@ export default function ExamTimerEntryCard() {
           <span className="font-heading font-bold text-[13.5px] text-text-primary">
             Practice your exam timing
           </span>
-          <span className="font-heading font-bold text-[8.5px] uppercase tracking-wide text-white bg-orange rounded-full px-[6px] py-[1.5px] flex-shrink-0">
+          <span className="font-heading font-bold text-[8.5px] uppercase tracking-wide text-black bg-orange rounded-full px-[6px] py-[1.5px] flex-shrink-0">
             New
           </span>
         </span>

@@ -33,7 +33,7 @@ export default async function RankSubjectsPage() {
       <p className="font-heading font-bold text-[10px] uppercase text-teal">
         BE HONEST — THIS DRIVES YOUR PLAN
       </p>
-      <h1 className="font-heading font-bold text-[21px] tracking-[-0.066em] text-text-primary mt-3">
+      <h1 className="font-heading font-bold text-[21px] tracking-[-0.025em] text-text-primary mt-3">
         How confident are you in each?
       </h1>
       <p className="font-body text-[10px] text-text-muted mb-[18px] mt-1">

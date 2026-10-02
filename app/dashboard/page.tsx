@@ -216,7 +216,7 @@ export default async function DashboardPage() {
     >
       <div className="flex justify-between items-start">
         <div>
-          <h1 className="font-heading font-bold text-[19px] tracking-[-0.066em] text-text-primary">
+          <h1 className="font-heading font-bold text-[19px] tracking-[-0.025em] text-text-primary">
             {greeting}
           </h1>
           <p className="font-body text-[11px] text-text-muted mt-1">{todayFormatted}</p>
