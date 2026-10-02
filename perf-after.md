@@ -3,6 +3,16 @@
 Captured 2026-10-02, same pages and same test account as `perf-baseline.md`, after all commits
 on `design/brand-refresh`.
 
+**Update (welcome screen follow-up commit):** the welcome screen's logo tile and footer lockup
+were revised after this file was first written (white tile instead of cream, wordmark + line
+footer instead of a bare line). Re-ran Lighthouse on `/` only: **Perf 99, A11y 100, BP 96**
+(previously 98/100/100), LCP 2.0s, CLS 0, transfer 492 KiB. The BP dip is a `400` response on a
+`_next/static/css/[hash].css` request, reproduced on two consecutive runs - a known artifact of
+testing against local `next start` rather than real Vercel edge infrastructure (same caveat as
+below), not something introduced by the two new `<Image>` wordmark elements or the shadow.
+Accessibility stayed perfect; font/image payload moved from 2 requests to 4 (added the two
+wordmark PNGs, ~1-2 KB each), well within budget.
+
 ## A note on environment (read before the numbers)
 
 The "before" numbers were measured against **live production** (`plan.empowermint.co.za`) on

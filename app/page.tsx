@@ -18,7 +18,9 @@ export default async function Home() {
       <div className="flex-1" />
 
       <div className="w-full max-w-sm flex flex-col items-center">
-        <div className="neu-raised rounded-full w-[132px] h-[132px] flex items-center justify-center">
+        <div
+          className="bg-white dark:bg-transparent rounded-full w-[132px] h-[132px] flex items-center justify-center shadow-[0_8px_30px_rgba(0,0,0,0.07)] dark:shadow-none"
+        >
           <Image
             src="/brand/logo-em-power-black.png"
             alt="empower"
@@ -71,8 +73,27 @@ export default async function Home() {
 
       <div className="flex-1" />
 
-      <div className="pb-10 w-full flex justify-center">
-        <div className="w-40 h-[2px] bg-orange" />
+      <div
+        className="w-full flex justify-center"
+        style={{ paddingBottom: 'max(16px, env(safe-area-inset-bottom))' }}
+      >
+        <div className="flex items-center gap-[12px]">
+          <span className="w-10 h-[3px] rounded-full bg-orange flex-shrink-0" aria-hidden="true" />
+          <Image
+            src="/brand/wordmark-empowermint-black.png"
+            alt="empowermint"
+            width={96}
+            height={22}
+            className="block dark:hidden h-[22px] w-auto"
+          />
+          <Image
+            src="/brand/wordmark-empowermint-white.png"
+            alt="empowermint"
+            width={96}
+            height={22}
+            className="hidden dark:block h-[22px] w-auto"
+          />
+        </div>
       </div>
     </main>
   );

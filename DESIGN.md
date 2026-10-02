@@ -130,6 +130,25 @@ one file via the browser cache.
   `public/sw.js` (cache bumped to `ssp-offline-v2`, old caches cleared on activate so an
   already-installed PWA picks up the change on its next open).
 
+## Welcome screen assets
+
+- The `em/power` logo tile (`public/brand/logo-em-power-{black,white}.png`) has a fully
+  transparent background — the cream fill seen before this follow-up came entirely from the
+  `.neu-raised` wrapper class, not the PNG. The tile now uses a plain white fill with a soft
+  shadow (`shadow-[0_8px_30px_rgba(0,0,0,0.07)]`) in light mode, and no fill/shadow at all in
+  dark mode (`dark:bg-transparent dark:shadow-none`) so the white logo floats directly on the
+  dark page background, per the brief.
+- `public/brand/wordmark-empowermint-{black,white}.png` are new assets: the existing
+  `logo-empowermint-{black,white}.png` files (used nowhere else in the app) cropped to drop
+  their baked-in orange underline, so the welcome screen's footer lockup can supply its own
+  line without doubling up. Cropped at the pixel row where the underline's alpha channel starts
+  (row 100 of 105 in both source files, confirmed identical in both colour variants), then
+  bounding-box-trimmed - not resized or re-exported from source art, since no vector/source file
+  was available, only the two rasters already in the repo.
+- The footer lockup (orange line + wordmark) is specific to the welcome screen (`app/page.tsx`)
+  only, not a reusable component - it wasn't needed anywhere else in the app at the time of
+  writing.
+
 ## What wasn't done (flagged, not silently skipped)
 
 - **Full literal type scale** (Welcome 36/40, Screen 28/32, Section 22/26, Card 18/22, Lead
