@@ -1,12 +1,14 @@
 import Image from 'next/image';
+import { getTranslations } from 'next-intl/server';
 import NavArrows from '@/components/NavArrows';
 
-export default function ParentConfirmedPage({
+export default async function ParentConfirmedPage({
   searchParams,
 }: {
   searchParams: { status?: string };
 }) {
   const ok = searchParams.status === 'ok';
+  const t = await getTranslations('auth.parentConfirmed');
 
   return (
     <main className="relative min-h-screen bg-bg flex flex-col items-center justify-center px-10 text-center">
@@ -32,13 +34,11 @@ export default function ParentConfirmedPage({
       </div>
 
       <h1 className="font-heading font-bold text-[22px] tracking-[-0.025em] text-text-primary mt-8">
-        {ok ? "You're all set." : 'Link expired'}
+        {ok ? t('okTitle') : t('expiredTitle')}
       </h1>
 
       <p className="font-body text-[14px] text-text-body mt-2 max-w-xs">
-        {ok
-          ? "You'll get a short weekly summary of their studying — nothing more."
-          : 'This confirmation link is invalid or has already been used.'}
+        {ok ? t('okBody') : t('expiredBody')}
       </p>
     </main>
   );

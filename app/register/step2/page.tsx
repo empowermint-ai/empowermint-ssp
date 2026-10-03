@@ -3,6 +3,8 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useLocale, useTranslations } from 'next-intl';
+import { useAuthError } from '@/lib/i18n/authErrors';
 import { supabase } from '@/lib/supabaseClient';
 import AuthCard from '@/components/AuthCard';
 import TextField from '@/components/TextField';
@@ -18,6 +20,9 @@ interface Step1Data {
 
 export default function RegisterStep2Page() {
   const router = useRouter();
+  const t = useTranslations('auth.step2');
+  const authError = useAuthError();
+  const locale = useLocale();
   const [step1Data, setStep1Data] = useState<Step1Data | null>(null);
   const [email, setEmail] = useState('');
   const [institution, setInstitution] = useState('');
@@ -66,7 +71,7 @@ export default function RegisterStep2Page() {
 
     if (error) {
       setLoading(false);
-      setError(error.message);
+      setError(authError(error.message));
       return;
     }
 
@@ -77,7 +82,7 @@ export default function RegisterStep2Page() {
     // an email that will never arrive.
     if (data.user && data.user.identities?.length === 0) {
       setLoading(false);
-      setError('That email is already registered. Try logging in, or use a different email.');
+      setError(t('emailTaken'));
       return;
     }
 
@@ -95,13 +100,15 @@ export default function RegisterStep2Page() {
           institution: institution.trim(),
           grade,
           student_type: institutionType,
+          // Saved best-effort by the route; ignored until the column exists.
+          preferred_language: locale,
         }),
       });
 
       if (!profileRes.ok) {
         setLoading(false);
         const body = await profileRes.json().catch(() => null);
-        setError(body?.error ?? 'That mobile number is already registered.');
+        setError(body?.error ? authError(body.error) : t('numberTaken'));
         return;
       }
     }
@@ -113,13 +120,10 @@ export default function RegisterStep2Page() {
 
   if (submitted) {
     return (
-      <AuthCard title="Check your email" subtitle="We've sent you a confirmation link.">
-        <p className="text-text-body text-sm">
-          Click the link in the email to confirm your account. After that, log in using
-          your mobile number and password.
-        </p>
+      <AuthCard title={t('checkTitle')} subtitle={t('checkSubtitle')}>
+        <p className="text-text-body text-sm">{t('checkBody')}</p>
         <Link href="/login" className="block mt-6 text-teal text-sm font-medium">
-          Back to log in
+          {t('backToLogin')}
         </Link>
       </AuthCard>
     );
@@ -130,14 +134,11 @@ export default function RegisterStep2Page() {
   }
 
   return (
-    <AuthCard
-      title="Almost done"
-      subtitle="We just need an email to confirm your account."
-    >
+    <AuthCard title={t('title')} subtitle={t('subtitle')}>
       <form onSubmit={handleSubmit} className="space-y-4">
         <TextField
           id="email"
-          label="Parent&apos;s email"
+          label={t('emailLabel')}
           type="email"
           autoComplete="email"
           required
@@ -145,7 +146,7 @@ export default function RegisterStep2Page() {
           onChange={(e) => setEmail(e.target.value)}
         />
         <p className="text-xs text-text-muted -mt-2">
-          Used once to confirm this account. You won&apos;t need it to log in.
+          {t('emailHelp')}
         </p>
         <InstitutionField
           institution={institution}
@@ -156,7 +157,7 @@ export default function RegisterStep2Page() {
         />
         {error && <p className="text-sm text-red-600">{error}</p>}
         <Button type="submit" loading={loading}>
-          Create account
+          {t('submit')}
         </Button>
       </form>
     </AuthCard>

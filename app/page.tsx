@@ -1,9 +1,23 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
+import { getTranslations } from 'next-intl/server';
+import { hasMultipleLanguages, isEnabledLocale } from '@/config/locales';
+import LanguageControl from '@/components/i18n/LanguageControl';
 import { createSupabaseServerClient } from '@/lib/supabaseServerClient';
 
-export default async function Home() {
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: { lang?: string };
+}) {
+  // ?lang=af deep link (WhatsApp etc): hand off to /lang, which sets the cookie
+  // and redirects back here without the parameter. Ignored unless enabled.
+  if (isEnabledLocale(searchParams.lang)) {
+    redirect(`/lang?lang=${searchParams.lang}&next=/`);
+  }
+
+  const t = await getTranslations('welcome');
   const supabase = createSupabaseServerClient();
   const {
     data: { user },
@@ -15,6 +29,12 @@ export default async function Home() {
 
   return (
     <main className="min-h-dvh bg-bg flex flex-col items-center px-10 text-center">
+      {hasMultipleLanguages() && (
+        <div className="w-full pt-[max(16px,env(safe-area-inset-top))]">
+          <LanguageControl source="welcome" />
+        </div>
+      )}
+
       <div className="flex-1" />
 
       <div className="w-full max-w-sm flex flex-col items-center">
@@ -40,25 +60,25 @@ export default async function Home() {
         </div>
 
         <h1 className="font-heading font-bold text-[19px] tracking-[-0.03em] text-center mt-8 text-text-primary uppercase">
-          The smart study planner
+          {t('title')}
         </h1>
 
         <p className="font-heading font-bold text-[14px] text-orange-text text-center mt-2">
-          Believe you can, plan how you will
+          {t('tagline')}
         </p>
 
         <Link
           href="/register"
           className="neu-raised-accent w-full mt-10 text-black font-heading font-bold text-[14px] rounded-full py-[16px] text-center"
         >
-          start my planner
+          {t('start')}
         </Link>
 
         <Link
           href="/login"
           className="mt-6 font-body text-[13px] text-text-muted underline underline-offset-2"
         >
-          Already have an account? Log in here
+          {t('haveAccount')}
         </Link>
       </div>
 

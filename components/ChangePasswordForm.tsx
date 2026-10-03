@@ -1,11 +1,15 @@
 'use client';
 
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
+import { useAuthError } from '@/lib/i18n/authErrors';
 import { supabase } from '@/lib/supabaseClient';
 import TextField from '@/components/TextField';
 import Button from '@/components/Button';
 
 export default function ChangePasswordForm() {
+  const t = useTranslations('auth.changePassword');
+  const authError = useAuthError();
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -22,7 +26,7 @@ export default function ChangePasswordForm() {
     setLoading(false);
 
     if (error) {
-      setError(error.message);
+      setError(authError(error.message));
       return;
     }
 
@@ -34,7 +38,7 @@ export default function ChangePasswordForm() {
     <form onSubmit={handleSubmit} className="space-y-4">
       <TextField
         id="newPassword"
-        label="New password"
+        label={t('newPassword')}
         type="password"
         autoComplete="new-password"
         minLength={6}
@@ -43,9 +47,9 @@ export default function ChangePasswordForm() {
         onChange={(e) => setPassword(e.target.value)}
       />
       {error && <p className="text-sm text-red-600">{error}</p>}
-      {success && <p className="text-sm text-teal">Password updated.</p>}
+      {success && <p className="text-sm text-teal">{t('success')}</p>}
       <Button type="submit" loading={loading}>
-        Update password
+        {t('update')}
       </Button>
     </form>
   );

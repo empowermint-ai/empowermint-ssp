@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import { useLocale, useTranslations } from 'next-intl';
 import { getCountryOptions } from '@/lib/countryList';
 
 export default function PhoneNumberInput({
@@ -14,7 +15,9 @@ export default function PhoneNumberInput({
   onChange: (e164: string) => void;
   required?: boolean;
 }) {
-  const countries = useMemo(() => getCountryOptions(), []);
+  const locale = useLocale();
+  const t = useTranslations('auth.phone');
+  const countries = useMemo(() => getCountryOptions(locale), [locale]);
   const [countryCode, setCountryCode] = useState('ZA');
   const [nationalNumber, setNationalNumber] = useState('');
 
@@ -57,7 +60,7 @@ export default function PhoneNumberInput({
         <select
           value={countryCode}
           onChange={handleCountryChange}
-          aria-label="Country"
+          aria-label={t('country')}
           className="neu-pressed w-[112px] truncate rounded-neu-md px-2 py-3.5 text-text-primary outline-none focus:ring-1 focus:ring-teal/40"
         >
           {countries.map((c) => (
@@ -71,7 +74,7 @@ export default function PhoneNumberInput({
           type="tel"
           inputMode="numeric"
           autoComplete="tel-national"
-          placeholder="83 123 4567"
+          placeholder={t('placeholder')}
           required={required}
           value={nationalNumber}
           onChange={handleNumberChange}

@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { supabase } from '@/lib/supabaseClient';
 import { normalizeMobileNumber } from '@/lib/normalizeMobileNumber';
 import { isValidMobileNumber } from '@/lib/validateMobileNumber';
@@ -19,6 +20,8 @@ interface FieldErrors {
 
 export default function RegisterStep1Page() {
   const router = useRouter();
+  const t = useTranslations('auth.register');
+  const tc = useTranslations('common');
   const [username, setUsername] = useState('');
   const [mobileNumber, setMobileNumber] = useState('');
   const [password, setPassword] = useState('');
@@ -44,19 +47,19 @@ export default function RegisterStep1Page() {
     const errors: FieldErrors = {};
 
     if (!username.trim()) {
-      errors.username = 'Please enter a username.';
+      errors.username = t('usernameRequired');
     }
 
     if (!mobileNumber.trim()) {
-      errors.mobileNumber = 'Please enter your mobile number.';
+      errors.mobileNumber = t('mobileRequired');
     } else if (!isValidMobileNumber(mobileNumber)) {
-      errors.mobileNumber = 'Enter a valid mobile number for the selected country.';
+      errors.mobileNumber = t('mobileInvalid');
     }
 
     if (!password) {
-      errors.password = 'Please enter a password.';
+      errors.password = t('passwordRequired');
     } else if (password.length < 6) {
-      errors.password = 'Password must be at least 6 characters.';
+      errors.password = t('passwordShort');
     }
 
     setFieldErrors(errors);
@@ -104,15 +107,15 @@ export default function RegisterStep1Page() {
       </div>
 
       <p className="font-heading font-bold text-[10px] uppercase tracking-[1.5px] text-teal">
-        STEP 1 OF 2
+        {t('step')}
       </p>
 
       <h1 className="font-heading font-bold text-[26px] tracking-[-0.025em] text-text-primary mt-3">
-        Let&apos;s set you up.
+        {t('title')}
       </h1>
 
       <p className="font-body text-[14px] text-text-body mt-2">
-        This is yours. Just the basics to get started.
+        {t('intro')}
       </p>
 
       <form onSubmit={handleSubmit} className="mt-8 flex flex-col flex-1 space-y-4">
@@ -121,13 +124,13 @@ export default function RegisterStep1Page() {
             htmlFor="username"
             className="block font-heading font-bold text-[10.5px] uppercase tracking-[0.6px] text-text-muted mb-1.5"
           >
-            Username
+            {t('usernameLabel')}
           </label>
           <input
             id="username"
             type="text"
             autoComplete="name"
-            placeholder="e.g. thabo_m"
+            placeholder={t('usernamePlaceholder')}
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             className="neu-pressed w-full rounded-neu-md px-4 py-3.5 font-body text-[14px] text-text-primary outline-none focus:ring-1 focus:ring-teal/40"
@@ -138,15 +141,15 @@ export default function RegisterStep1Page() {
         </div>
 
         <div>
-          <PhoneNumberInput id="mobileNumber" label="Mobile number" onChange={setMobileNumber} />
+          <PhoneNumberInput id="mobileNumber" label={t('mobileLabel')} onChange={setMobileNumber} />
           {fieldErrors.mobileNumber && (
             <p className="text-red-600 text-xs mt-1">{fieldErrors.mobileNumber}</p>
           )}
           {takenError && (
             <p className="text-red-600 text-xs mt-1">
-              This number is already registered.{' '}
+              {t('mobileTaken')}{' '}
               <Link href="/login" className="underline font-medium">
-                Log in instead
+                {t('loginInstead')}
               </Link>
             </p>
           )}
@@ -157,12 +160,12 @@ export default function RegisterStep1Page() {
             htmlFor="password"
             className="block font-heading font-bold text-[10.5px] uppercase tracking-[0.6px] text-text-muted mb-1.5"
           >
-            Password
+            {t('passwordLabel')}
           </label>
           <PasswordInput
             id="password"
             autoComplete="new-password"
-            placeholder="Min 6 characters"
+            placeholder={t('passwordPlaceholder')}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className="neu-pressed w-full rounded-neu-md px-4 py-3.5 font-body text-[14px] text-text-primary outline-none focus:ring-1 focus:ring-teal/40"
@@ -179,12 +182,12 @@ export default function RegisterStep1Page() {
           disabled={loading}
           className="neu-raised-accent w-full text-black font-heading font-bold text-[14px] rounded-full py-4 transition-all active:scale-[0.97] disabled:opacity-60"
         >
-          {loading ? 'Please wait…' : 'Continue'}
+          {loading ? tc('pleaseWait') : t('continue')}
         </button>
       </form>
 
       <p className="font-body text-[10px] text-text-muted text-center mt-6">
-        Your mobile number is how you&apos;ll log in from now on.
+        {t('footnote')}
       </p>
     </main>
   );

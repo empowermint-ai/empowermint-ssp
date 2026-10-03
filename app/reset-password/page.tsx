@@ -3,6 +3,8 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
+import { useAuthError } from '@/lib/i18n/authErrors';
 import { supabase } from '@/lib/supabaseClient';
 import AuthCard from '@/components/AuthCard';
 import TextField from '@/components/TextField';
@@ -11,6 +13,8 @@ import LoadingSpinner from '@/components/LoadingSpinner';
 
 export default function ResetPasswordPage() {
   const router = useRouter();
+  const t = useTranslations('auth.reset');
+  const authError = useAuthError();
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -34,7 +38,7 @@ export default function ResetPasswordPage() {
     setLoading(false);
 
     if (error) {
-      setError(error.message);
+      setError(authError(error.message));
       return;
     }
 
@@ -48,23 +52,20 @@ export default function ResetPasswordPage() {
 
   if (!hasSession) {
     return (
-      <AuthCard
-        title="Link expired"
-        subtitle="This reset link is invalid or has already been used."
-      >
+      <AuthCard title={t('expiredTitle')} subtitle={t('expiredSubtitle')}>
         <Link href="/forgot-password" className="block text-teal text-sm font-medium">
-          Request a new reset link
+          {t('requestNew')}
         </Link>
       </AuthCard>
     );
   }
 
   return (
-    <AuthCard title="Choose a new password" subtitle="Enter a new password for your account.">
+    <AuthCard title={t('title')} subtitle={t('subtitle')}>
       <form onSubmit={handleSubmit} className="space-y-4">
         <TextField
           id="password"
-          label="New password"
+          label={t('newPassword')}
           type="password"
           autoComplete="new-password"
           minLength={6}
@@ -74,7 +75,7 @@ export default function ResetPasswordPage() {
         />
         {error && <p className="text-sm text-red-600">{error}</p>}
         <Button type="submit" loading={loading}>
-          Update password
+          {t('submit')}
         </Button>
       </form>
     </AuthCard>

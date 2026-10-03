@@ -1,11 +1,26 @@
 'use client';
 
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 type InstitutionType = 'school' | 'uni';
 
-const GRADES = ['Grade 8', 'Grade 9', 'Grade 10', 'Grade 11', 'Grade 12'];
-const STUDY_YEARS = ['1st year', '2nd year', '3rd year', '4th year', 'Postgraduate'];
+// The stored value stays the English text below (other code compares against
+// e.g. 'Grade 12'); only the label shown is translated.
+const GRADES = [
+  { value: 'Grade 8', key: 'g8' },
+  { value: 'Grade 9', key: 'g9' },
+  { value: 'Grade 10', key: 'g10' },
+  { value: 'Grade 11', key: 'g11' },
+  { value: 'Grade 12', key: 'g12' },
+];
+const STUDY_YEARS = [
+  { value: '1st year', key: 'y1' },
+  { value: '2nd year', key: 'y2' },
+  { value: '3rd year', key: 'y3' },
+  { value: '4th year', key: 'y4' },
+  { value: 'Postgraduate', key: 'postgrad' },
+];
 
 export default function InstitutionField({
   institution,
@@ -20,6 +35,7 @@ export default function InstitutionField({
   onGradeChange: (value: string) => void;
   onTypeChange: (value: InstitutionType) => void;
 }) {
+  const t = useTranslations('auth.institution');
   const [type, setType] = useState<InstitutionType | null>(null);
 
   function handleTypeChange(next: InstitutionType) {
@@ -32,7 +48,7 @@ export default function InstitutionField({
   return (
     <div className="text-left">
       <label className="block font-heading font-bold text-[10.5px] uppercase tracking-[0.6px] text-text-muted mb-1.5">
-        Institution
+        {t('label')}
       </label>
 
       <div className="flex justify-between mb-1">
@@ -54,7 +70,7 @@ export default function InstitutionField({
             >
               {type === option && <span className="w-[9px] h-[9px] rounded-full bg-orange" />}
             </span>
-            {option === 'school' ? 'School' : 'Uni / Other'}
+            {option === 'school' ? t('school') : t('uni')}
           </label>
         ))}
       </div>
@@ -66,7 +82,7 @@ export default function InstitutionField({
               htmlFor="institutionName"
               className="block font-heading font-bold text-[10.5px] uppercase tracking-[0.6px] text-text-muted mb-1.5"
             >
-              {type === 'school' ? 'Name of school' : 'Name of uni / other'}
+              {type === 'school' ? t('schoolName') : t('uniName')}
             </label>
             <input
               id="institutionName"
@@ -83,7 +99,7 @@ export default function InstitutionField({
               htmlFor="gradeOrYear"
               className="block font-heading font-bold text-[10.5px] uppercase tracking-[0.6px] text-text-muted mb-1.5"
             >
-              {type === 'school' ? 'Grade' : 'Year of study'}
+              {type === 'school' ? t('grade') : t('year')}
             </label>
             <select
               id="gradeOrYear"
@@ -93,11 +109,11 @@ export default function InstitutionField({
               className="neu-pressed w-full rounded-neu-md px-4 py-3.5 text-text-primary outline-none focus:ring-1 focus:ring-teal/40"
             >
               <option value="" disabled>
-                Select…
+                {t('select')}
               </option>
-              {(type === 'school' ? GRADES : STUDY_YEARS).map((value) => (
-                <option key={value} value={value}>
-                  {value}
+              {(type === 'school' ? GRADES : STUDY_YEARS).map((item) => (
+                <option key={item.value} value={item.value}>
+                  {t(`options.${item.key}`)}
                 </option>
               ))}
             </select>

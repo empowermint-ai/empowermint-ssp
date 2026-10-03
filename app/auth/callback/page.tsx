@@ -3,12 +3,14 @@
 import { useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { supabase } from '@/lib/supabaseClient';
 import AuthCard from '@/components/AuthCard';
 import LoadingSpinner from '@/components/LoadingSpinner';
 
 export default function AuthCallbackPage() {
   const searchParams = useSearchParams();
+  const t = useTranslations('auth.callback');
   const [error, setError] = useState<string | null>(null);
   const startedRef = useRef(false);
 
@@ -27,14 +29,14 @@ export default function AuthCallbackPage() {
 
     async function run() {
       if (searchParams.get('error')) {
-        setError('This link has expired or already been used.');
+        setError('expired');
         return;
       }
 
       const hash = window.location.hash;
 
       if (hash.includes('error=')) {
-        setError('This link has expired or already been used.');
+        setError('expired');
         return;
       }
 
@@ -67,7 +69,7 @@ export default function AuthCallbackPage() {
           window.location.href = next;
           return;
         }
-        setError('This link has expired or already been used.');
+        setError('expired');
         return;
       }
 
@@ -79,9 +81,9 @@ export default function AuthCallbackPage() {
 
   if (error) {
     return (
-      <AuthCard title="Link expired" subtitle="This link is invalid or has already been used.">
+      <AuthCard title={t('expiredTitle')} subtitle={t('expiredSubtitle')}>
         <Link href="/forgot-password" className="block text-teal text-sm font-medium">
-          Request a new reset link
+          {t('requestNew')}
         </Link>
       </AuthCard>
     );

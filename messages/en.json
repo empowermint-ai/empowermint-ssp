@@ -1,0 +1,162 @@
+{
+  "metadata": {
+    "title": "empowermint SSP",
+    "description": "empowermint Smart Study Planner"
+  },
+  "common": {
+    "pleaseWait": "Please wait…",
+    "back": "Back",
+    "forward": "Forward",
+    "close": "Close"
+  },
+  "language": {
+    "label": "Language · Taal",
+    "title": "Language / Taal",
+    "open": "Language / Taal",
+    "settingsRow": "Language / Taal",
+    "changed": "Language changed to {language}"
+  },
+  "notice": {
+    "aria": "New language available",
+    "headline": "New: the planner is now available in {language}.",
+    "switch": "Switch to {language}",
+    "notNow": "Not now"
+  },
+  "welcome": {
+    "title": "The smart study planner",
+    "tagline": "Believe you can, plan how you will",
+    "start": "start my planner",
+    "haveAccount": "Already have an account? Log in here"
+  },
+  "auth": {
+    "signOut": "Sign out",
+    "phone": {
+      "country": "Country",
+      "placeholder": "83 123 4567"
+    },
+    "password": {
+      "show": "Show password",
+      "hide": "Hide password"
+    },
+    "changePassword": {
+      "newPassword": "New password",
+      "update": "Update password",
+      "success": "Password updated."
+    },
+    "login": {
+      "title": "Welcome\nback.",
+      "subtitle": "Good to see you again.",
+      "mobileLabel": "Mobile number",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "Enter your password",
+      "submit": "Log in",
+      "forgot": "Forgot password?",
+      "newHere": "New here? Start my planner",
+      "invalid": "Username or password incorrect. Try again."
+    },
+    "register": {
+      "step": "STEP 1 OF 2",
+      "title": "Let's set you up.",
+      "intro": "This is yours. Just the basics to get started.",
+      "usernameLabel": "Username",
+      "usernamePlaceholder": "e.g. thabo_m",
+      "mobileLabel": "Mobile number",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "Min 6 characters",
+      "continue": "Continue",
+      "footnote": "Your mobile number is how you'll log in from now on.",
+      "usernameRequired": "Please enter a username.",
+      "mobileRequired": "Please enter your mobile number.",
+      "mobileInvalid": "Enter a valid mobile number for the selected country.",
+      "passwordRequired": "Please enter a password.",
+      "passwordShort": "Password must be at least 6 characters.",
+      "mobileTaken": "This number is already registered.",
+      "loginInstead": "Log in instead"
+    },
+    "step2": {
+      "title": "Almost done",
+      "subtitle": "We just need an email to confirm your account.",
+      "emailLabel": "Parent's email",
+      "emailHelp": "Used once to confirm this account. You won't need it to log in.",
+      "submit": "Create account",
+      "emailTaken": "That email is already registered. Try logging in, or use a different email.",
+      "numberTaken": "That mobile number is already registered.",
+      "checkTitle": "Check your email",
+      "checkSubtitle": "We've sent you a confirmation link.",
+      "checkBody": "Click the link in the email to confirm your account. After that, log in using your mobile number and password.",
+      "backToLogin": "Back to log in"
+    },
+    "institution": {
+      "label": "Institution",
+      "school": "School",
+      "uni": "Uni / Other",
+      "schoolName": "Name of school",
+      "uniName": "Name of uni / other",
+      "grade": "Grade",
+      "year": "Year of study",
+      "select": "Select…",
+      "options": {
+        "g8": "Grade 8",
+        "g9": "Grade 9",
+        "g10": "Grade 10",
+        "g11": "Grade 11",
+        "g12": "Grade 12",
+        "y1": "1st year",
+        "y2": "2nd year",
+        "y3": "3rd year",
+        "y4": "4th year",
+        "postgrad": "Postgraduate"
+      }
+    },
+    "forgot": {
+      "title": "Forgot password?",
+      "subtitle": "We'll send a reset link to the email on file for your account.",
+      "mobileLabel": "Mobile number",
+      "submit": "Send reset link",
+      "noAccount": "No account found with that mobile number",
+      "checkTitle": "Check your email",
+      "checkSubtitle": "We've sent a password reset link.",
+      "checkBody": "Click the link in the email to choose a new password.",
+      "back": "Back to log in"
+    },
+    "reset": {
+      "title": "Choose a new password",
+      "subtitle": "Enter a new password for your account.",
+      "newPassword": "New password",
+      "submit": "Update password",
+      "expiredTitle": "Link expired",
+      "expiredSubtitle": "This reset link is invalid or has already been used.",
+      "requestNew": "Request a new reset link"
+    },
+    "callback": {
+      "expiredTitle": "Link expired",
+      "expiredSubtitle": "This link is invalid or has already been used.",
+      "requestNew": "Request a new reset link"
+    },
+    "parentConfirmed": {
+      "okTitle": "You're all set.",
+      "okBody": "You'll get a short weekly summary of their studying — nothing more.",
+      "expiredTitle": "Link expired",
+      "expiredBody": "This confirmation link is invalid or has already been used."
+    },
+    "parentUnsubscribed": {
+      "okTitle": "You're unsubscribed",
+      "okBody": "You won't get any more weekly updates. Your child can re-add you from their account settings any time.",
+      "expiredTitle": "Link expired",
+      "expiredBody": "This link is invalid or has already been used."
+    }
+  },
+  "errors": {
+    "generic": "Something went wrong. Please try again.",
+    "auth": {
+      "invalidCredentials": "Username or password incorrect. Try again.",
+      "alreadyRegistered": "That email is already registered. Try logging in, or use a different email.",
+      "rateLimited": "Too many attempts. Please wait a moment and try again.",
+      "passwordShort": "Password must be at least 6 characters.",
+      "samePassword": "Your new password must be different from your old one.",
+      "invalidEmail": "Please enter a valid email address.",
+      "emailNotConfirmed": "Please confirm your email first, then log in.",
+      "network": "Couldn't connect. Check your internet and try again."
+    }
+  }
+}

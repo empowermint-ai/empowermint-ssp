@@ -3,16 +3,22 @@
 import { Suspense, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { useLocale, useTranslations } from 'next-intl';
 import { supabase } from '@/lib/supabaseClient';
 import { normalizeMobileNumber } from '@/lib/normalizeMobileNumber';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import NavArrows from '@/components/NavArrows';
 import PhoneNumberInput from '@/components/PhoneNumberInput';
 import PasswordInput from '@/components/PasswordInput';
+import LanguageGlobeButton from '@/components/i18n/LanguageGlobeButton';
+import { syncLanguageAfterLogin } from '@/lib/i18n/client';
 
 function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const t = useTranslations('auth.login');
+  const tc = useTranslations('common');
+  const locale = useLocale();
   const [mobileNumber, setMobileNumber] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -42,7 +48,7 @@ function LoginForm() {
 
     if (!resolveRes.ok) {
       setLoading(false);
-      setError('Username or password incorrect. Try again.');
+      setError(t('invalid'));
       return;
     }
 
@@ -53,9 +59,13 @@ function LoginForm() {
     setLoading(false);
 
     if (error) {
-      setError('Username or password incorrect. Try again.');
+      setError(t('invalid'));
       return;
     }
+
+    // A saved profile language follows the learner to this device (unless they
+    // just picked one here, in which case that choice is saved instead).
+    await syncLanguageAfterLogin(locale);
 
     router.push('/dashboard');
     router.refresh();
@@ -67,20 +77,19 @@ function LoginForm() {
 
   return (
     <main className="min-h-screen bg-bg flex flex-col px-[38px]">
-      <div className="pt-6">
+      <div className="flex items-center justify-between pt-6">
         <NavArrows />
+        <LanguageGlobeButton />
       </div>
 
       <div className="flex-1" />
 
-      <h1 className="font-heading font-bold text-[26px] tracking-[-0.025em] leading-[1.1] text-center text-text-primary">
-        Welcome
-        <br />
-        back.
+      <h1 className="font-heading font-bold text-[26px] tracking-[-0.025em] leading-[1.1] text-center text-text-primary whitespace-pre-line text-balance">
+        {t('title')}
       </h1>
 
       <p className="font-body text-[14px] text-text-body text-center mt-2">
-        Good to see you again.
+        {t('subtitle')}
       </p>
 
       <form onSubmit={handleSubmit} className="mt-8 space-y-4">
@@ -89,7 +98,7 @@ function LoginForm() {
             htmlFor="mobileNumber"
             className="block font-heading font-bold text-[10.5px] uppercase tracking-[0.6px] text-text-muted mb-1.5"
           >
-            Mobile number
+            {t('mobileLabel')}
           </label>
           <PhoneNumberInput id="mobileNumber" onChange={setMobileNumber} required />
         </div>
@@ -99,13 +108,13 @@ function LoginForm() {
             htmlFor="password"
             className="block font-heading font-bold text-[10.5px] uppercase tracking-[0.6px] text-text-muted mb-1.5"
           >
-            Password
+            {t('passwordLabel')}
           </label>
           <PasswordInput
             id="password"
             autoComplete="current-password"
             required
-            placeholder="Enter your password"
+            placeholder={t('passwordPlaceholder')}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className="neu-pressed w-full rounded-neu-md px-4 py-3.5 font-body text-[14px] text-text-primary outline-none focus:ring-1 focus:ring-teal/40"
@@ -117,7 +126,7 @@ function LoginForm() {
           disabled={loading}
           className="neu-raised-accent w-full text-black font-heading font-bold text-[14px] rounded-full py-4 transition-all active:scale-[0.97] disabled:opacity-60"
         >
-          {loading ? 'Please wait…' : 'Log in'}
+          {loading ? tc('pleaseWait') : t('submit')}
         </button>
 
         {error && (
@@ -127,13 +136,13 @@ function LoginForm() {
 
       <div className="mt-6 text-center space-y-2">
         <Link href="/forgot-password" className="block text-teal text-sm font-medium">
-          Forgot password?
+          {t('forgot')}
         </Link>
         <Link
           href="/register"
           className="block text-text-muted text-sm underline underline-offset-2"
         >
-          New here? Start my planner
+          {t('newHere')}
         </Link>
       </div>
 

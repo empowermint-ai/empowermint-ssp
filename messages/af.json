@@ -1,0 +1,162 @@
+{
+  "metadata": {
+    "title": "empowermint SSP",
+    "description": "empowermint Smart Study Planner"
+  },
+  "common": {
+    "pleaseWait": "Wag net…",
+    "back": "Terug",
+    "forward": "Vorentoe",
+    "close": "Maak toe"
+  },
+  "language": {
+    "label": "Language · Taal",
+    "title": "Language / Taal",
+    "open": "Language / Taal",
+    "settingsRow": "Language / Taal",
+    "changed": "Taal verander na {language}"
+  },
+  "notice": {
+    "aria": "Nuwe taal beskikbaar",
+    "headline": "Nuut: die planner is nou in {language} beskikbaar.",
+    "switch": "Skakel oor na {language}",
+    "notNow": "Nie nou nie"
+  },
+  "welcome": {
+    "title": "Die slim studieplanner",
+    "tagline": "Glo jy kan, beplan hoe jy sal",
+    "start": "begin my planner",
+    "haveAccount": "Het jy al 'n rekening? Teken hier in"
+  },
+  "auth": {
+    "signOut": "Teken uit",
+    "phone": {
+      "country": "Land",
+      "placeholder": "83 123 4567"
+    },
+    "password": {
+      "show": "Wys wagwoord",
+      "hide": "Versteek wagwoord"
+    },
+    "changePassword": {
+      "newPassword": "Nuwe wagwoord",
+      "update": "Verander wagwoord",
+      "success": "Wagwoord verander."
+    },
+    "login": {
+      "title": "Welkom\nterug.",
+      "subtitle": "Lekker om jou weer te sien.",
+      "mobileLabel": "Selfoonnommer",
+      "passwordLabel": "Wagwoord",
+      "passwordPlaceholder": "Tik jou wagwoord in",
+      "submit": "Teken in",
+      "forgot": "Wagwoord vergeet?",
+      "newHere": "Nuut hier? Begin my planner",
+      "invalid": "Gebruikersnaam of wagwoord is verkeerd. Probeer weer."
+    },
+    "register": {
+      "step": "STAP 1 VAN 2",
+      "title": "Kom ons stel jou op.",
+      "intro": "Dit is joune. Net die basiese goed om te begin.",
+      "usernameLabel": "Gebruikersnaam",
+      "usernamePlaceholder": "bv. thabo_m",
+      "mobileLabel": "Selfoonnommer",
+      "passwordLabel": "Wagwoord",
+      "passwordPlaceholder": "Minstens 6 karakters",
+      "continue": "Gaan voort",
+      "footnote": "Jy teken voortaan met jou selfoonnommer in.",
+      "usernameRequired": "Tik asseblief 'n gebruikersnaam in.",
+      "mobileRequired": "Tik asseblief jou selfoonnommer in.",
+      "mobileInvalid": "Tik 'n geldige selfoonnommer in vir die gekose land.",
+      "passwordRequired": "Tik asseblief 'n wagwoord in.",
+      "passwordShort": "Die wagwoord moet minstens 6 karakters lank wees.",
+      "mobileTaken": "Hierdie nommer is reeds geregistreer.",
+      "loginInstead": "Teken eerder in"
+    },
+    "step2": {
+      "title": "Amper klaar",
+      "subtitle": "Ons het net 'n e-pos nodig om jou rekening te bevestig.",
+      "emailLabel": "Ouer se e-pos",
+      "emailHelp": "Word een keer gebruik om hierdie rekening te bevestig. Jy het dit nie nodig om in te teken nie.",
+      "submit": "Skep rekening",
+      "emailTaken": "Daardie e-pos is reeds geregistreer. Probeer inteken, of gebruik 'n ander e-pos.",
+      "numberTaken": "Daardie selfoonnommer is reeds geregistreer.",
+      "checkTitle": "Kyk in jou e-pos",
+      "checkSubtitle": "Ons het 'n bevestigingskakel aan jou gestuur.",
+      "checkBody": "Klik op die skakel in die e-pos om jou rekening te bevestig. Daarna teken jy in met jou selfoonnommer en wagwoord.",
+      "backToLogin": "Terug na inteken"
+    },
+    "institution": {
+      "label": "Instansie",
+      "school": "Skool",
+      "uni": "Universiteit / Ander",
+      "schoolName": "Naam van skool",
+      "uniName": "Naam van universiteit / ander",
+      "grade": "Graad",
+      "year": "Studiejaar",
+      "select": "Kies…",
+      "options": {
+        "g8": "Graad 8",
+        "g9": "Graad 9",
+        "g10": "Graad 10",
+        "g11": "Graad 11",
+        "g12": "Graad 12",
+        "y1": "1ste jaar",
+        "y2": "2de jaar",
+        "y3": "3de jaar",
+        "y4": "4de jaar",
+        "postgrad": "Nagraads"
+      }
+    },
+    "forgot": {
+      "title": "Wagwoord vergeet?",
+      "subtitle": "Ons stuur 'n herstelskakel na die e-pos wat vir jou rekening aangeteken is.",
+      "mobileLabel": "Selfoonnommer",
+      "submit": "Stuur herstelskakel",
+      "noAccount": "Geen rekening gevind met daardie selfoonnommer nie",
+      "checkTitle": "Kyk in jou e-pos",
+      "checkSubtitle": "Ons het 'n wagwoordherstelskakel gestuur.",
+      "checkBody": "Klik op die skakel in die e-pos om 'n nuwe wagwoord te kies.",
+      "back": "Terug na inteken"
+    },
+    "reset": {
+      "title": "Kies 'n nuwe wagwoord",
+      "subtitle": "Tik 'n nuwe wagwoord vir jou rekening in.",
+      "newPassword": "Nuwe wagwoord",
+      "submit": "Verander wagwoord",
+      "expiredTitle": "Skakel het verval",
+      "expiredSubtitle": "Hierdie herstelskakel is ongeldig of is reeds gebruik.",
+      "requestNew": "Vra 'n nuwe herstelskakel aan"
+    },
+    "callback": {
+      "expiredTitle": "Skakel het verval",
+      "expiredSubtitle": "Hierdie skakel is ongeldig of is reeds gebruik.",
+      "requestNew": "Vra 'n nuwe herstelskakel aan"
+    },
+    "parentConfirmed": {
+      "okTitle": "Alles is reg.",
+      "okBody": "Jy sal 'n kort weeklikse opsomming van hul studies kry – niks meer nie.",
+      "expiredTitle": "Skakel het verval",
+      "expiredBody": "Hierdie bevestigingskakel is ongeldig of is reeds gebruik."
+    },
+    "parentUnsubscribed": {
+      "okTitle": "Jy is uitgeteken",
+      "okBody": "Jy sal nie meer weeklikse opdaterings kry nie. Jou kind kan jou enige tyd weer byvoeg onder hul rekeninginstellings.",
+      "expiredTitle": "Skakel het verval",
+      "expiredBody": "Hierdie skakel is ongeldig of is reeds gebruik."
+    }
+  },
+  "errors": {
+    "generic": "Iets het skeefgeloop. Probeer asseblief weer.",
+    "auth": {
+      "invalidCredentials": "Gebruikersnaam of wagwoord is verkeerd. Probeer weer.",
+      "alreadyRegistered": "Daardie e-pos is reeds geregistreer. Probeer inteken, of gebruik 'n ander e-pos.",
+      "rateLimited": "Te veel pogings. Wag 'n oomblik en probeer weer.",
+      "passwordShort": "Die wagwoord moet minstens 6 karakters lank wees.",
+      "samePassword": "Jou nuwe wagwoord moet anders wees as jou ou een.",
+      "invalidEmail": "Tik asseblief 'n geldige e-posadres in.",
+      "emailNotConfirmed": "Bevestig asseblief eers jou e-pos, en teken dan in.",
+      "network": "Kon nie koppel nie. Kyk na jou internet en probeer weer."
+    }
+  }
+}

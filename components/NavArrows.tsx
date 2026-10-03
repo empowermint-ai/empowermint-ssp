@@ -1,6 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
 export default function NavArrows({
   dark,
@@ -10,13 +11,14 @@ export default function NavArrows({
   showForward?: boolean;
 }) {
   const router = useRouter();
+  const t = useTranslations('common');
   const color = dark ? '#a89e88' : undefined;
 
   return (
     <div className="flex items-center gap-3">
       <button
         type="button"
-        aria-label="Back"
+        aria-label={t('back')}
         onClick={() => router.back()}
         className={`text-[19px] leading-none p-1 ${dark ? '' : 'text-text-primary'}`}
         style={color ? { color } : undefined}
@@ -26,7 +28,7 @@ export default function NavArrows({
       {showForward && (
         <button
           type="button"
-          aria-label="Forward"
+          aria-label={t('forward')}
           onClick={() => router.forward()}
           className={`text-[19px] leading-none p-1 ${dark ? '' : 'text-text-primary'}`}
           style={color ? { color } : undefined}

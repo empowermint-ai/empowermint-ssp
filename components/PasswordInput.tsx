@@ -1,6 +1,7 @@
 'use client';
 
 import { InputHTMLAttributes, useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 type PasswordInputProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'type'>;
 
@@ -34,6 +35,7 @@ function EyeOffIcon() {
 }
 
 export default function PasswordInput({ className = '', id, ...props }: PasswordInputProps) {
+  const t = useTranslations('auth.password');
   const [visible, setVisible] = useState(false);
 
   return (
@@ -48,7 +50,7 @@ export default function PasswordInput({ className = '', id, ...props }: Password
       <button
         type="button"
         onClick={() => setVisible((v) => !v)}
-        aria-label={visible ? 'Hide password' : 'Show password'}
+        aria-label={visible ? t('hide') : t('show')}
         className="absolute right-[12px] top-1/2 -translate-y-1/2 text-text-muted"
       >
         {visible ? <EyeOffIcon /> : <EyeIcon />}

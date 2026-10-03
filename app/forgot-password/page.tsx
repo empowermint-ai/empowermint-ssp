@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
+import { useAuthError } from '@/lib/i18n/authErrors';
 import { supabase } from '@/lib/supabaseClient';
 import { normalizeMobileNumber } from '@/lib/normalizeMobileNumber';
 import AuthCard from '@/components/AuthCard';
@@ -9,6 +11,8 @@ import PhoneNumberInput from '@/components/PhoneNumberInput';
 import Button from '@/components/Button';
 
 export default function ForgotPasswordPage() {
+  const t = useTranslations('auth.forgot');
+  const authError = useAuthError();
   const [mobileNumber, setMobileNumber] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -28,7 +32,7 @@ export default function ForgotPasswordPage() {
     if (!resolveRes.ok) {
       setLoading(false);
       const body = await resolveRes.json().catch(() => null);
-      setError(body?.error ?? 'No account found with that mobile number');
+      setError(t('noAccount'));
       return;
     }
 
@@ -41,7 +45,7 @@ export default function ForgotPasswordPage() {
     setLoading(false);
 
     if (error) {
-      setError(error.message);
+      setError(authError(error.message));
       return;
     }
 
@@ -50,32 +54,27 @@ export default function ForgotPasswordPage() {
 
   if (submitted) {
     return (
-      <AuthCard title="Check your email" subtitle="We've sent a password reset link.">
-        <p className="text-text-body text-sm">
-          Click the link in the email to choose a new password.
-        </p>
+      <AuthCard title={t('checkTitle')} subtitle={t('checkSubtitle')}>
+        <p className="text-text-body text-sm">{t('checkBody')}</p>
         <Link href="/login" className="block mt-6 text-teal text-sm font-medium">
-          Back to log in
+          {t('back')}
         </Link>
       </AuthCard>
     );
   }
 
   return (
-    <AuthCard
-      title="Forgot password?"
-      subtitle="We'll send a reset link to the email on file for your account."
-    >
+    <AuthCard title={t('title')} subtitle={t('subtitle')}>
       <form onSubmit={handleSubmit} className="space-y-4">
-        <PhoneNumberInput id="mobileNumber" label="Mobile number" onChange={setMobileNumber} required />
+        <PhoneNumberInput id="mobileNumber" label={t('mobileLabel')} onChange={setMobileNumber} required />
         {error && <p className="text-sm text-red-600">{error}</p>}
         <Button type="submit" loading={loading}>
-          Send reset link
+          {t('submit')}
         </Button>
       </form>
       <p className="text-center text-sm text-text-muted mt-5">
         <Link href="/login" className="text-teal font-medium">
-          Back to log in
+          {t('back')}
         </Link>
       </p>
     </AuthCard>
