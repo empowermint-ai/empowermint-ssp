@@ -34,7 +34,6 @@ export default function SharePlanButton({
       const { buildPlanPdf } = await import('@/lib/buildPlanPdf');
       const firstName = studentName.split(' ')[0];
       const blob = await buildPlanPdf({
-        studentName,
         dateLabel,
         sessions: sessions.map((s) => ({ ...s, subject_name: subjectLabel(s.subject_name) })),
         exams: exams.map((e) => ({ ...e, subjectName: subjectLabel(e.subjectName) })),

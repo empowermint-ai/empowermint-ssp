@@ -6,20 +6,7 @@ import {
   isEnabledLocale,
   pickFromAcceptLanguage,
 } from '@/config/locales';
-
-type Messages = { [key: string]: string | Messages };
-
-function deepMerge(base: Messages, override: Messages): Messages {
-  const out: Messages = { ...base };
-  for (const [key, value] of Object.entries(override)) {
-    const existing = out[key];
-    out[key] =
-      typeof value === 'object' && value !== null && typeof existing === 'object' && existing !== null
-        ? deepMerge(existing as Messages, value as Messages)
-        : value;
-  }
-  return out;
-}
+import { loadMessages } from '@/lib/i18n/loadMessages';
 
 // Locale order on the server: NEXT_LOCALE cookie (which already reflects an
 // explicit choice, a ?lang= link, or a saved profile language synced on login),
@@ -34,12 +21,7 @@ export default getRequestConfig(async () => {
     if (fromBrowser) locale = fromBrowser;
   }
 
-  const english = (await import('../messages/en.json')).default as Messages;
-  // Anything missing from another language falls back to the English string.
-  const messages =
-    locale === DEFAULT_LOCALE
-      ? english
-      : deepMerge(english, (await import(`../messages/${locale}.json`)).default as Messages);
+  const messages = await loadMessages(locale);
 
   return {
     locale,

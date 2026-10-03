@@ -14,6 +14,7 @@ export type LanguageSource = 'welcome' | 'login' | 'settings' | 'link' | 'notice
 const EXPLICIT_KEY = 'ssp_lang_explicit';
 const PENDING_KEY = 'ssp_lang_pending';
 const SYNCED_KEY = 'ssp_lang_synced';
+const NO_COLUMN_KEY = 'ssp_lang_nocolumn';
 
 function safeStorage(kind: 'session' | 'local'): Storage | null {
   try {
@@ -56,6 +57,12 @@ function isMissingColumn(error: { code?: string; message?: string }): boolean {
   );
 }
 
+// Once the database has told us the column does not exist, stop asking for the
+// rest of this browser session (keeps the console quiet until the migration runs).
+function columnKnownMissing(): boolean {
+  return safeStorage('session')?.getItem(NO_COLUMN_KEY) === '1';
+}
+
 async function currentUserId(): Promise<string | null> {
   const {
     data: { session },
@@ -76,15 +83,20 @@ export async function persistPreferredLanguage(
     const userId = await currentUserId();
     if (!userId) return;
 
-    const { error } = await supabase
-      .from('users')
-      .update({ preferred_language: code })
-      .eq('id', userId);
+    if (!columnKnownMissing()) {
+      const { error } = await supabase
+        .from('users')
+        .update({ preferred_language: code })
+        .eq('id', userId);
 
-    if (error && !isMissingColumn(error)) {
-      local?.setItem(PENDING_KEY, code);
-    } else {
-      local?.removeItem(PENDING_KEY);
+      if (error && isMissingColumn(error)) {
+        safeStorage('session')?.setItem(NO_COLUMN_KEY, '1');
+        local?.removeItem(PENDING_KEY);
+      } else if (error) {
+        local?.setItem(PENDING_KEY, code);
+      } else {
+        local?.removeItem(PENDING_KEY);
+      }
     }
 
     if (log) {
@@ -101,6 +113,7 @@ export async function persistPreferredLanguage(
 
 export async function readSavedLanguage(): Promise<string | null> {
   try {
+    if (columnKnownMissing()) return null;
     const userId = await currentUserId();
     if (!userId) return null;
     const { data, error } = await supabase
@@ -108,6 +121,7 @@ export async function readSavedLanguage(): Promise<string | null> {
       .select('preferred_language')
       .eq('id', userId)
       .maybeSingle();
+    if (error && isMissingColumn(error)) safeStorage('session')?.setItem(NO_COLUMN_KEY, '1');
     if (error || !data) return null;
     const value = (data as { preferred_language?: string }).preferred_language;
     return isEnabledLocale(value) ? value : null;
@@ -122,11 +136,14 @@ export function takePendingLanguage(): string | null {
   return isEnabledLocale(pending) ? pending : null;
 }
 
-/** Returns the language the learner was on before following a ?lang= link, or null. */
-export function takeLinkMarker(): string | null {
+/** The language the learner was on before following a ?lang= link, or null. Does not consume the marker. */
+export function peekLinkMarker(): string | null {
   const marker = readCookie(LOCALE_SRC_COOKIE);
-  if (marker) clearCookie(LOCALE_SRC_COOKIE);
   return marker && marker.startsWith('link.') ? marker.slice(5) : null;
+}
+
+export function clearLinkMarker() {
+  clearCookie(LOCALE_SRC_COOKIE);
 }
 
 export function wasSyncedThisSession(): boolean {

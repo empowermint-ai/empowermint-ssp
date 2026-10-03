@@ -110,14 +110,12 @@ function loadImage(src: string): Promise<HTMLImageElement> {
 }
 
 export async function buildPlanPdf({
-  studentName,
   dateLabel,
   sessions,
   exams,
   labels,
   intlTag,
 }: {
-  studentName: string;
   dateLabel: string;
   sessions: PlanPdfSession[];
   exams: PlanPdfExam[];

@@ -32,7 +32,7 @@ export default function ForgotPasswordPage() {
     if (!resolveRes.ok) {
       setLoading(false);
       const body = await resolveRes.json().catch(() => null);
-      setError(t('noAccount'));
+      setError(body?.error ? authError(body.error) : t('noAccount'));
       return;
     }
 

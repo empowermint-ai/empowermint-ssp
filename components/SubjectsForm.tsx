@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { supabase } from '@/lib/supabaseClient';
 import { PRESET_SUBJECTS, foldForSearch } from '@/lib/i18n/subjects';
+import { useOtherLanguageLabels } from '@/lib/i18n/useOtherLanguageLabels';
 import { useSubjectLabel } from '@/lib/i18n/useSubjectLabel';
 
 interface SubjectItem {
@@ -61,16 +62,22 @@ export default function SubjectsForm({
     };
   }, [userId]);
 
+  const otherLabels = useOtherLanguageLabels(query.trim() !== '');
+
   const filteredOptions = useMemo(() => {
-    // Search matches the stored (English) name AND the label in the active language.
+    // Search matches the stored (English) name, the label in the active language and the
+    // labels in the other enabled languages.
     const q = foldForSearch(query.trim());
     const already = new Set(subjects.map((s) => s.name.toLowerCase()));
     return PRESET_SUBJECTS.map((p) => p.name).filter(
       (subj) =>
         !already.has(subj.toLowerCase()) &&
-        (q === '' || foldForSearch(subj).includes(q) || foldForSearch(subjectLabel(subj)).includes(q))
+        (q === '' ||
+          foldForSearch(subj).includes(q) ||
+          foldForSearch(subjectLabel(subj)).includes(q) ||
+          (otherLabels[subj] ?? []).some((l) => foldForSearch(l).includes(q)))
     );
-  }, [query, subjects, subjectLabel]);
+  }, [query, subjects, subjectLabel, otherLabels]);
 
   function addSubject(name: string, isCustom: boolean) {
     const trimmed = name.trim();

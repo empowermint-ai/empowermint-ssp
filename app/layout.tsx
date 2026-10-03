@@ -1,13 +1,14 @@
 import type { Metadata, Viewport } from "next";
 import { GoogleAnalytics } from "@next/third-parties/google";
-import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages, getTranslations } from "next-intl/server";
 import "./globals.css";
 import ServiceWorkerRegister from "./service-worker-register";
 import InstallPromptCapture from "./install-prompt-capture";
+import IntlProvider from "@/components/i18n/IntlProvider";
 import ToastProvider from "@/components/i18n/ToastProvider";
 import LanguageProvider from "@/components/i18n/LanguageProvider";
 import LanguageSync from "@/components/i18n/LanguageSync";
+import type { Messages } from "@/lib/i18n/loadMessages";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("metadata");
@@ -60,7 +61,7 @@ export default async function RootLayout({
         />
       </head>
       <body className="antialiased">
-        <NextIntlClientProvider locale={locale} messages={messages}>
+        <IntlProvider locale={locale} messages={messages as Messages}>
           <ToastProvider>
             <LanguageProvider>
               <ServiceWorkerRegister />
@@ -69,7 +70,7 @@ export default async function RootLayout({
               {children}
             </LanguageProvider>
           </ToastProvider>
-        </NextIntlClientProvider>
+        </IntlProvider>
       </body>
       {process.env.NODE_ENV === "production" && (
         <GoogleAnalytics gaId="G-NKGQK1RGCW" />

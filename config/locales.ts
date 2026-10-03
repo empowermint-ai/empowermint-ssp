@@ -36,6 +36,27 @@ export const LANGUAGE_ANNOUNCEMENT = {
 
 // English is always enabled. With only "en" enabled the picker, the notice card
 // and ?lang= all switch off and the app behaves exactly as before.
+// Screens whose visible text is rendered entirely in the browser. Switching
+// language there swaps the messages in place and skips the server refresh, which
+// Next.js 14 implements by re-mounting the page (it would wipe a half-typed form
+// or reset a running timer). Any screen NOT listed here gets a refresh so its
+// server-rendered headings follow too. Add a route only if its page.tsx never
+// calls getTranslations().
+export const CLIENT_RENDERED_ROUTES = [
+  '/login',
+  '/register',
+  '/forgot-password',
+  '/reset-password',
+  '/timer',
+  '/exam-timer',
+  '/past-papers',
+];
+
+export function isClientRenderedRoute(pathname: string | null | undefined): boolean {
+  if (!pathname) return false;
+  return CLIENT_RENDERED_ROUTES.some((r) => pathname === r || pathname.startsWith(`${r}/`));
+}
+
 export function getEnabledLocales(): LocaleConfig[] {
   const raw = process.env.NEXT_PUBLIC_ENABLED_LOCALES ?? DEFAULT_LOCALE;
   const wanted = new Set(

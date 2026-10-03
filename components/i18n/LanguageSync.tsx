@@ -2,7 +2,6 @@
 
 import { useEffect } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
-import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabaseClient';
 import { getEnabledLocales, getLocaleConfig, hasMultipleLanguages } from '@/config/locales';
 import {
@@ -11,11 +10,12 @@ import {
   markSyncedThisSession,
   persistPreferredLanguage,
   readSavedLanguage,
-  setLocaleCookie,
-  takeLinkMarker,
+  peekLinkMarker,
+  clearLinkMarker,
   takePendingLanguage,
   wasSyncedThisSession,
 } from '@/lib/i18n/client';
+import { useLanguage } from '@/components/i18n/LanguageProvider';
 import { useToast } from '@/components/i18n/ToastProvider';
 
 /**
@@ -26,7 +26,7 @@ import { useToast } from '@/components/i18n/ToastProvider';
  */
 export default function LanguageSync() {
   const locale = useLocale();
-  const router = useRouter();
+  const { applyLocale } = useLanguage();
   const t = useTranslations('language');
   const toast = useToast();
 
@@ -47,13 +47,17 @@ export default function LanguageSync() {
         const pendingSave = takePendingLanguage();
         if (pendingSave) await persistPreferredLanguage(pendingSave);
 
-        const fromLink = takeLinkMarker();
         const {
           data: { session },
         } = await supabase.auth.getSession();
         if (cancelled || !session) return;
 
+        // The marker is only consumed once we are sure this page load will finish the
+        // job - the welcome page redirects logged-in learners on, and that unmount must
+        // not swallow the toast.
+        const fromLink = peekLinkMarker();
         if (fromLink) {
+          clearLinkMarker();
           markExplicitChoice();
           markSyncedThisSession();
           await persistPreferredLanguage(locale, { from: fromLink, source: 'link' });
@@ -69,8 +73,7 @@ export default function LanguageSync() {
         }
         const saved = await readSavedLanguage();
         if (!cancelled && saved && saved !== locale) {
-          setLocaleCookie(saved);
-          router.refresh();
+          applyLocale(saved);
         }
       } catch {
         // Cookie-only mode: nothing to do.
