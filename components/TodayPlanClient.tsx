@@ -2,6 +2,10 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
+import { useSubjectLabel } from '@/lib/i18n/useSubjectLabel';
+import LanguageNotice from '@/components/i18n/LanguageNotice';
+import { hasMultipleLanguages } from '@/config/locales';
 import Link from 'next/link';
 import { supabase } from '@/lib/supabaseClient';
 import ProgressStrip from '@/components/ProgressStrip';
@@ -73,6 +77,8 @@ export default function TodayPlanClient({
   grade: string | null;
 }) {
   const router = useRouter();
+  const t = useTranslations('plan');
+  const subjectLabel = useSubjectLabel();
   const [sessions, setSessions] = useState(initialSessions);
   const [needsNewDate, setNeedsNewDate] = useState(initialNeedsNewDate);
   const [adding, setAdding] = useState(false);
@@ -209,7 +215,7 @@ export default function TodayPlanClient({
   async function handleAddDate(subjectId: string, value: string) {
     if (!value) return;
     if (value < minDateStr) {
-      setDateError('Exam dates must be at least tomorrow - please pick a later date.');
+      setDateError(t('minDate'));
       return;
     }
     setDateError(null);
@@ -229,9 +235,11 @@ export default function TodayPlanClient({
 
   return (
     <>
+      {hasMultipleLanguages() && <LanguageNotice />}
+
       <div className="mt-3 flex items-center gap-2">
         <p className="font-heading font-bold text-[15px] uppercase tracking-[0.6px] text-teal">
-          Today&apos;s plan (recommended)
+          {t('heading')}
         </p>
         <SharePlanButton
           studentName={studentName}
@@ -244,7 +252,7 @@ export default function TodayPlanClient({
 
       <div className="mt-1">
         <p className="font-body text-[12px] text-text-muted mt-[2px]">
-          Here&apos;s what we recommend for today — feel free to amend it to suit you.
+          {t('subheading')}
         </p>
       </div>
 
@@ -267,10 +275,10 @@ export default function TodayPlanClient({
             >
               <div className="min-w-0 flex-1 flex items-center gap-2">
                 <span className="font-heading font-bold text-[13.5px] text-text-primary truncate">
-                  {session.subject_name}
+                  {subjectLabel(session.subject_name)}
                 </span>
                 <span className="font-body text-[11px] text-text-muted whitespace-nowrap">
-                  25 min
+                  {t('sessionMinutes', { minutes: 25 })}
                 </span>
                 {session.suggested_start_time && (
                   <span className="font-body text-[11px] text-text-muted">
@@ -284,7 +292,7 @@ export default function TodayPlanClient({
                   e.stopPropagation();
                   toggleTopicExpanded(session.id);
                 }}
-                aria-label={topicOpen ? 'Hide topic notes' : 'Add topic notes'}
+                aria-label={topicOpen ? t('hideNotes') : t('addNotes')}
                 className={`flex items-center justify-center w-[24px] h-[24px] rounded-full flex-shrink-0 ${
                   topicOpen || hasTopicContent ? 'text-teal' : 'text-text-muted'
                 }`}
@@ -312,7 +320,7 @@ export default function TodayPlanClient({
               ) : (
                 <button
                   type="button"
-                  aria-label={`Remove ${session.subject_name} session`}
+                  aria-label={t('removeSession', { subject: subjectLabel(session.subject_name) })}
                   onClick={(e) => {
                     e.stopPropagation();
                     handleRemoveSession(session);
@@ -337,7 +345,7 @@ export default function TodayPlanClient({
                   <button
                     type="button"
                     onClick={() => handleToggleTopicCompleted(session)}
-                    aria-label={session.topic_completed ? 'Mark topic not done' : 'Mark topic done'}
+                    aria-label={session.topic_completed ? t('markNotDone') : t('markDone')}
                     className={`flex items-center justify-center w-[18px] h-[18px] rounded-[5px] border-[1.5px] flex-shrink-0 ${
                       session.topic_completed ? 'bg-teal border-teal' : 'border-card-border'
                     }`}
@@ -359,7 +367,7 @@ export default function TodayPlanClient({
                     value={session.topic ?? ''}
                     onChange={(e) => handleTopicChange(session.id, e.target.value)}
                     onBlur={(e) => handleTopicBlur(session.id, e.target.value)}
-                    placeholder="What are you studying?"
+                    placeholder={t('topicPlaceholder')}
                     className={`flex-1 min-w-0 bg-transparent px-[10px] py-[6px] font-body text-[12px] outline-none ${
                       session.topic_completed ? 'line-through text-text-muted' : 'text-text-primary'
                     }`}
@@ -376,15 +384,15 @@ export default function TodayPlanClient({
             {allExamsDone ? (
               <div className="bg-teal/10 border-[1.5px] border-teal rounded-[10px] px-[14px] py-[13px] mb-[10px]">
                 <p className="font-heading font-bold text-[14px] text-text-primary">
-                  You have finished all your current exams! 🎉
+                  {t('allDoneTitle')}
                 </p>
                 <p className="font-body text-[12px] text-text-muted mt-[4px]">
-                  Add your next exam dates below to keep your study plan going.
+                  {t('allDoneBody')}
                 </p>
               </div>
             ) : (
               <p className="font-heading font-bold text-[10.5px] uppercase text-text-muted mb-2">
-                Exam done — add your next date
+                {t('examDone')}
               </p>
             )}
             {dateError && (
@@ -396,10 +404,10 @@ export default function TodayPlanClient({
                 className="neu-raised relative flex items-center justify-between rounded-neu-sm px-[14px] py-[11px] mb-[10px]"
               >
                 <span className="font-body font-bold text-[13.5px] text-text-primary">
-                  {subject.subject_name}
+                  {subjectLabel(subject.subject_name)}
                 </span>
                 <span className="font-body text-xs rounded-[8px] px-[10px] py-[5px] border-[1.3px] text-orange-text border-orange whitespace-nowrap">
-                  {addingDateId === subject.id ? 'Adding…' : '+ Add date'}
+                  {addingDateId === subject.id ? t('adding') : t('addDate')}
                 </span>
                 <input
                   type="date"
@@ -414,7 +422,7 @@ export default function TodayPlanClient({
                 href="/subjects/manage"
                 className="block font-body text-xs text-teal text-center underline mt-2"
               >
-                Want to update your subject ranking too? Manage my planner
+                {t('updateRanking')}
               </Link>
             )}
           </div>
@@ -433,7 +441,7 @@ export default function TodayPlanClient({
                   onClick={() => handleAddSession(subject)}
                   className="font-body text-xs rounded-[8px] px-[10px] py-[7px] border-[1.3px] text-teal border-teal disabled:opacity-50"
                 >
-                  {subject.subject_name}
+                  {subjectLabel(subject.subject_name)}
                 </button>
               ))}
             </div>
@@ -443,7 +451,7 @@ export default function TodayPlanClient({
               onClick={() => setPicking(true)}
               className="font-body text-sm text-teal font-medium text-center mb-4"
             >
-              + Add another session
+              {t('addAnother')}
             </button>
           )}
         </>

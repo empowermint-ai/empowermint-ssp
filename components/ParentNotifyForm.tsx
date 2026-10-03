@@ -1,6 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
+import { useAuthError } from '@/lib/i18n/authErrors';
 
 export default function ParentNotifyForm({
   initialEmail,
@@ -9,6 +11,9 @@ export default function ParentNotifyForm({
   initialEmail: string | null;
   initialConfirmed: boolean;
 }) {
+  const t = useTranslations('parentNotify');
+  const tc = useTranslations('common');
+  const authError = useAuthError();
   const [email, setEmail] = useState(initialEmail ?? '');
   const [savedEmail, setSavedEmail] = useState(initialEmail);
   const [confirmed, setConfirmed] = useState(initialConfirmed);
@@ -32,7 +37,7 @@ export default function ParentNotifyForm({
 
     if (!res.ok) {
       const body = await res.json().catch(() => null);
-      setError(body?.error ?? 'Something went wrong. Try again.');
+      setError(body?.error ? authError(body.error) : t('error'));
       return;
     }
 
@@ -44,22 +49,21 @@ export default function ParentNotifyForm({
   return (
     <div>
       <h2 className="font-heading text-lg text-text-primary mb-1">
-        Keep your parent in the loop
+        {t('title')}
       </h2>
       <p className="text-text-body text-sm mb-4">
-        Add their email and we&apos;ll send a short weekly update on how studying&apos;s
-        going — so you don&apos;t have to keep explaining yourself every night at dinner.
+        {t('intro')}
       </p>
 
       {savedEmail && (
         <p className="text-sm mb-4">
-          <span className="text-text-body">Current contact: </span>
+          <span className="text-text-body">{t('currentContact')} </span>
           <span className="text-text-primary font-medium">{savedEmail}</span>
           {' — '}
           {confirmed ? (
-            <span className="text-teal font-medium">confirmed</span>
+            <span className="text-teal font-medium">{t('confirmed')}</span>
           ) : (
-            <span className="text-orange-text font-medium">waiting on confirmation</span>
+            <span className="text-orange-text font-medium">{t('waiting')}</span>
           )}
         </p>
       )}
@@ -67,7 +71,7 @@ export default function ParentNotifyForm({
       <form onSubmit={handleSubmit} className="space-y-3">
         <input
           type="email"
-          placeholder="parent@email.com"
+          placeholder={t('placeholder')}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           className="neu-pressed w-full rounded-neu-md px-[14px] py-[13px] font-body text-[14px] text-text-primary outline-none focus:ring-1 focus:ring-teal/40"
@@ -75,7 +79,7 @@ export default function ParentNotifyForm({
         {error && <p className="text-sm text-red-600">{error}</p>}
         {success && (
           <p className="text-sm text-teal">
-            Sent! They&apos;ll get an email to confirm before anything goes out.
+            {t('sent')}
           </p>
         )}
         <button
@@ -83,7 +87,7 @@ export default function ParentNotifyForm({
           disabled={loading}
           className="neu-raised-accent w-full text-black font-heading font-bold text-[13.5px] rounded-full py-[14px] disabled:opacity-60"
         >
-          {loading ? 'Please wait…' : savedEmail ? 'Update email' : 'Add my parent'}
+          {loading ? tc('pleaseWait') : savedEmail ? t('update') : t('add')}
         </button>
       </form>
     </div>

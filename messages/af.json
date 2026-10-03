@@ -13,7 +13,6 @@
     "label": "Language · Taal",
     "title": "Language / Taal",
     "open": "Language / Taal",
-    "settingsRow": "Language / Taal",
     "changed": "Taal verander na {language}"
   },
   "notice": {
@@ -156,7 +155,346 @@
       "samePassword": "Jou nuwe wagwoord moet anders wees as jou ou een.",
       "invalidEmail": "Tik asseblief 'n geldige e-posadres in.",
       "emailNotConfirmed": "Bevestig asseblief eers jou e-pos, en teken dan in.",
-      "network": "Kon nie koppel nie. Kyk na jou internet en probeer weer."
+      "network": "Kon nie koppel nie. Kyk na jou internet en probeer weer.",
+      "mobileTaken": "Daardie selfoonnommer is reeds by 'n ander rekening geregistreer.",
+      "noAccount": "Geen rekening gevind met daardie selfoonnommer nie",
+      "notSignedIn": "Nie aangeteken nie.",
+      "saveEmail": "Kon nie daardie e-pos stoor nie. Probeer weer."
+    },
+    "retry": "Probeer weer"
+  },
+  "presets": {
+    "accounting": "Rekeningkunde",
+    "afrikaansFal": "Afrikaans Eerste Addisionele Taal",
+    "afrikaansHl": "Afrikaans Huistaal",
+    "agriculturalSciences": "Landbouwetenskappe",
+    "biology": "Biologie",
+    "businessStudies": "Besigheidstudies",
+    "cat": "Rekenaartoepassingstegnologie",
+    "consumerStudies": "Verbruikerstudies",
+    "dramaticArts": "Dramatiese Kunste",
+    "economics": "Ekonomie",
+    "engineeringGraphicsDesign": "Ingenieursgrafika en -ontwerp",
+    "englishFal": "Engels Eerste Addisionele Taal",
+    "englishHl": "Engels Huistaal",
+    "geography": "Geografie",
+    "history": "Geskiedenis",
+    "informationTechnology": "Inligtingstegnologie",
+    "lifeOrientation": "Lewensoriëntering",
+    "lifeSciences": "Lewenswetenskappe",
+    "mathematicalLiteracy": "Wiskundige Geletterdheid",
+    "mathematics": "Wiskunde",
+    "music": "Musiek",
+    "physicalSciences": "Fisiese Wetenskappe",
+    "religionStudies": "Godsdienstudies",
+    "sepediHl": "Sepedi Huistaal",
+    "setswanaHl": "Setswana Huistaal",
+    "tourism": "Toerisme",
+    "visualArts": "Visuele Kunste",
+    "xhosaHl": "isiXhosa Huistaal",
+    "zuluHl": "isiZulu Huistaal"
+  },
+  "subjects": {
+    "eyebrow": "BOU JOU VAKLYS",
+    "title": "Wat studeer jy?",
+    "searchLabel": "Soek of kies 'n vak",
+    "searchPlaceholder": "bv. Wiskunde",
+    "customPlaceholder": "Jou vak se naam",
+    "add": "Voeg by",
+    "addOwn": "+ Voeg my eie vak by",
+    "saving": "Stoor tans…",
+    "next": "Volgende: rangskik hierdie",
+    "saveError": "Kon nie jou vakke stoor nie. Probeer weer.",
+    "remove": "Verwyder {subject}"
+  },
+  "ranking": {
+    "eyebrow": "WEES EERLIK – DIT BEPAAL JOU PLAN",
+    "title": "Hoe selfversekerd voel jy oor elkeen?",
+    "scale": "1 = swakste  ·  5 = sterkste",
+    "scoreAria": "{subject}: selfvertroue {score}",
+    "saving": "Stoor tans…",
+    "next": "Volgende: eksamendatums",
+    "saveError": "Kon nie jou rangskikking stoor nie. Probeer weer."
+  },
+  "examDates": {
+    "eyebrow": "LAASTE STAP",
+    "title": "Wanneer is elke eksamen?",
+    "intro": "Tik op 'n vak om 'n eksamendatum by te voeg. Jy kan meer as een byvoeg, soos 'n kwartaaltoets en die eindeksamen.",
+    "minDate": "Eksamendatums moet minstens môre wees – kies asseblief 'n later datum.",
+    "addError": "Kon nie daardie datum byvoeg nie. Probeer weer.",
+    "removeError": "Kon nie daardie datum verwyder nie. Probeer weer.",
+    "generateError": "Kon nie jou plan skep nie. Probeer weer.",
+    "adding": "Voeg tans by…",
+    "addDate": "+ Voeg datum by",
+    "removeAria": "Verwyder {date} vir {subject}",
+    "stillNeed": "{count, plural, one {Nog 'n datum nodig vir: {subjects}.} other {Nog datums nodig vir: {subjects}.}}",
+    "generating": "Skep tans…",
+    "generate": "Skep my plan",
+    "footnote": "Jou skedule word dadelik gebou en elke dag opgedateer."
+  },
+  "manage": {
+    "eyebrow": "BESTUUR MY PLANNER",
+    "title": "Verander jou rangskikking of eksamendatums",
+    "tabSubjects": "Vakke",
+    "tabRanking": "Rangskikking",
+    "tabDates": "Eksamendatums",
+    "addSubjectLabel": "Voeg 'n vak by",
+    "searchPlaceholder": "bv. Wiskunde",
+    "customPlaceholder": "Jou vak se naam",
+    "add": "Voeg by",
+    "addOwn": "+ Voeg my eie vak by",
+    "yourSubjects": "Jou vakke",
+    "newSubjectNote": "Nuwe vakke het 'n selfvertroue-rangskikking en eksamendatum nodig voordat hulle in jou plan verskyn.",
+    "removeSubjectAria": "Verwyder {subject}",
+    "scale": "1 = swakste  ·  5 = sterkste",
+    "scoreAria": "{subject}: selfvertroue {score}",
+    "adding": "Voeg tans by…",
+    "addDate": "+ Voeg datum by",
+    "removeDateAria": "Verwyder {date} vir {subject}",
+    "updating": "Werk tans jou plan op…",
+    "addSubjectError": "Kon nie daardie vak byvoeg nie. Probeer weer.",
+    "removeSubjectError": "Kon nie daardie vak verwyder nie. Probeer weer.",
+    "saveError": "Kon nie dit stoor nie. Probeer weer.",
+    "minDate": "Eksamendatums moet minstens môre wees – kies asseblief 'n later datum.",
+    "addDateError": "Kon nie daardie datum byvoeg nie. Probeer weer.",
+    "removeDateError": "Kon nie daardie datum verwyder nie. Probeer weer."
+  },
+  "plan": {
+    "heading": "Vandag se plan (aanbeveel)",
+    "subheading": "Dis wat ons vir vandag aanbeveel – verander dit gerus om by jou te pas.",
+    "dateLine": "{weekday}, {dayMonth}",
+    "fallbackName": "daar",
+    "greetings": {
+      "g1": "Welkom terug, kampioen!",
+      "g2": "Lekker om jou weer te sien, {name}!",
+      "g3": "Kom ons gaan weer, {name}!",
+      "g4": "Jy het opgedaag. Dis reeds 'n wen, {name}.",
+      "g5": "Gereed wanneer jy is, {name}."
+    },
+    "sessionMinutes": "{minutes} min",
+    "hideNotes": "Versteek onderwerpnotas",
+    "addNotes": "Voeg onderwerpnotas by",
+    "removeSession": "Verwyder sessie: {subject}",
+    "markDone": "Merk onderwerp as klaar",
+    "markNotDone": "Merk onderwerp as nie klaar nie",
+    "topicPlaceholder": "Wat studeer jy?",
+    "allDoneTitle": "Jy is klaar met al jou huidige eksamens! 🎉",
+    "allDoneBody": "Voeg jou volgende eksamendatums hieronder by om jou studieplan aan die gang te hou.",
+    "examDone": "Eksamen klaar – voeg jou volgende datum by",
+    "minDate": "Eksamendatums moet minstens môre wees – kies asseblief 'n later datum.",
+    "adding": "Voeg tans by…",
+    "addDate": "+ Voeg datum by",
+    "updateRanking": "Wil jy ook jou vak-rangskikking opdateer? Bestuur my planner",
+    "addAnother": "+ Voeg nog 'n sessie by"
+  },
+  "share": {
+    "share": "Deel",
+    "preparing": "Berei voor…",
+    "shareAria": "Deel plan",
+    "preparingAria": "Berei deel voor",
+    "error": "Kon nie die PDF skep nie. Probeer weer.",
+    "shareTitle": "{name} se studieplan",
+    "shareText": "{name} se studieplan vir {date}",
+    "pdf": {
+      "title": "VANDAG SE STUDIEPLAN",
+      "forName": "vir {name}",
+      "empty": "Nog geen sessies vir vandag beplan nie.",
+      "done": "Klaar",
+      "pending": "Uitstaande",
+      "upcoming": "KOMENDE EKSAMENDATUMS",
+      "when": "{days, plural, =0 {vandag} =1 {môre} other {oor # dae}}",
+      "eyebrow": "GEDEEL VANAF EMPOWERMINT",
+      "headline": "{name} gebruik die Smart Study Planner om op top van hul studies te bly. Probeer dit gerus.",
+      "cta": "Begin gratis",
+      "scan": "SKANDEER OM TE BEGIN",
+      "micro": "geen kaart nodig nie"
     }
+  },
+  "install": {
+    "bannerTitle": "Voeg empowermint by jou tuisskerm",
+    "bannerBody": "Dan kan jy net so weer by jou plan uitkom, soos enige ander app.",
+    "dismiss": "Maak toe",
+    "addButton": "Voeg by tuisskerm",
+    "modalTitle": "Hou empowermint een tik weg",
+    "iosStep1": "Tik op die Deel-ikoon in Safari se nutsbalk.",
+    "iosStep2": "Blaai dan af en tik op <b>Add to Home Screen</b>.",
+    "androidStep": "Soek na <b>Add to Home Screen</b> of <b>Install App</b> in jou blaaier se kieslys.",
+    "gotIt": "Reg so"
+  },
+  "review": {
+    "title": "Hoe werk die SSP tot dusver vir jou?",
+    "subtitle": "Jou terugvoer help ons om dit beter te maak.",
+    "starAria": "{count, plural, one {# ster} other {# sterre}}",
+    "commentPlaceholder": "Wil jy iets deel? (opsioneel)",
+    "submit": "Dien resensie in",
+    "submitting": "Dien tans in…",
+    "notNow": "Nie nou nie",
+    "saveError": "Kon nie dit stoor nie. Probeer weer."
+  },
+  "reflection": {
+    "title": "Hoe het jou eksamen in {subject} gegaan?",
+    "subtitle": "{date} – dit help ons om jou volgende sessies te beplan.",
+    "saveError": "Kon nie dit stoor nie. Probeer weer.",
+    "choices": {
+      "tougher": "Moeiliker as verwag",
+      "expected": "Min of meer soos ek verwag het",
+      "better": "Beter as verwag"
+    }
+  },
+  "nav": {
+    "primary": "Hoofkieslys",
+    "plan": "Plan",
+    "calendar": "Kalender",
+    "manage": "Bestuur",
+    "exams": "Eksamens"
+  },
+  "settings": {
+    "aria": "Instellings",
+    "manage": "Bestuur my planner",
+    "language": "Language / Taal",
+    "addToHome": "Voeg by tuisskerm",
+    "logout": "Teken uit"
+  },
+  "exams": {
+    "title": "Eksamendatums",
+    "loading": "Laai tans…",
+    "empty": "Nog geen vakke nie.",
+    "daysBadge": "{days, plural, =0 {Vandag} =1 {1 dag} other {# dae}}",
+    "adding": "Voeg tans by…",
+    "addDate": "+ Voeg datum by",
+    "removeAria": "Verwyder {date} vir {subject}",
+    "pastPapers": "Vorige vraestelle →",
+    "minDate": "Eksamendatums moet minstens môre wees – kies asseblief 'n later datum.",
+    "addError": "Kon nie daardie datum byvoeg nie. Probeer weer.",
+    "removeError": "Kon nie daardie datum verwyder nie. Probeer weer.",
+    "upcoming": "Komende eksamendatums",
+    "examIn": "Eksamen in {subject} oor",
+    "daysCount": "{days} dae"
+  },
+  "timer": {
+    "eyebrow": "FOKUSSESSIE · {session} VAN {total} VANDAG",
+    "studySession": "Studiesessie",
+    "status": {
+      "green": "TYD OOR · BAIE TYD",
+      "amber": "TYD OOR · HOU DIE TEMPO",
+      "red": "TYD OOR · AMPER DAAR"
+    },
+    "pause": "Onderbreek",
+    "resume": "Gaan voort",
+    "end": "Beëindig sessie",
+    "start": "Begin sessie",
+    "hintRunning": "Die sessie word outomaties by vandag se plan aangeteken wanneer dit eindig.",
+    "hintIdle": "Tik Begin wanneer jy gereed is om te fokus."
+  },
+  "examTimer": {
+    "durationHours": "{hours, plural, one {# uur} other {# uur}}",
+    "durationHoursMinutes": "{hours} uur {minutes} min",
+    "entry": {
+      "title": "Oefen jou eksamentyd",
+      "badge": "Nuut",
+      "subtitle": "Volle-lengte aftelling vir jou volgende vraestel"
+    },
+    "setup": {
+      "eyebrow": "Eksamensimulasie-opstelling",
+      "intro": "Kom ons stel jou eksamensimulasie hier op. Kies uit die lyste die vak waarvoor jy 'n eksamen wil oefen, asook hoe lank die eksamen duur.",
+      "subjectLabel": "Kies vak",
+      "select": "Kies…",
+      "timeLabel": "Kies tyd (aantal ure)",
+      "go": "Gaan na eksamensessie"
+    },
+    "session": {
+      "eyebrow": "Eksamensimulasie-tydhoudersessie",
+      "subject": "Vak:",
+      "duration": "Duur:",
+      "studySession": "Studiesessie",
+      "minutes": "{minutes} minute",
+      "start": "Begin, alles van die beste.",
+      "pause": "Onderbreek",
+      "resume": "Gaan voort",
+      "endEarly": "Beëindig sessie vroeg",
+      "timesUp": "TYD IS OP",
+      "howDidItGo": "HOE HET DIT GEGAAN?",
+      "thumbsUp": "Duim op",
+      "thumbsDown": "Duim af",
+      "thanks": "Dankie vir jou terugvoer",
+      "back": "Terug na planner"
+    },
+    "status": {
+      "green": "Tyd oor · Baie tyd.",
+      "amber": "Tyd oor · Bly gefokus.",
+      "red": "Tyd oor · Laaste stuk."
+    }
+  },
+  "calendar": {
+    "title": "Kalenderaansig",
+    "subtitle": "Tik op 'n datum om te sien wat aan die gang is.",
+    "prevMonth": "Vorige maand",
+    "nextMonth": "Volgende maand",
+    "legendExam": "Eksamendag",
+    "legendToday": "Vandag",
+    "legendStudy": "Studiesessie",
+    "legendMissed": "Gemis",
+    "empty": "Niks aangeteken vir hierdie dag nie.",
+    "examLine": "Eksamen: {subject}",
+    "sessionLine": "{status, select, done {Studiesessie: {subject} · klaar} missed {Studiesessie: {subject} · gemis} other {Studiesessie: {subject}}}",
+    "addSession": "+ Voeg 'n studiesessie by"
+  },
+  "sessionComplete": {
+    "title": "Mooi so.\nSessie voltooi.",
+    "logged": "{minutes} minute aangeteken vir <b>{subject}</b>.",
+    "quotes": {
+      "q1": "Moeite hoef nie perfek te wees om te tel nie. Dit moet net herhaal word.",
+      "q2": "Die plan is nie die doel nie. Die plan is wat jou by die doel uitbring.",
+      "q3": "Selfvertroue is nie iets waarop jy wag nie. Dit word sessie vir sessie gebou.",
+      "q4": "Jy hoef nie gereed te voel nie. Jy moet net opdaag.",
+      "q5": "Elke uur wat jy nou insit, is 'n punt waaroor jy later nie hoef te sukkel nie.",
+      "q6": "Die leerder wat beplan, klop die leerder wat paniekerig raak – elke keer.",
+      "q7": "Vordering is nie altyd sigbaar nie. Maar dit is altyd werklik.",
+      "q8": "Jy is nader as wat jy dink."
+    },
+    "quoteSource": "— Mastering Your Studies",
+    "whatsNext": "Wat volg?",
+    "startNext": "Begin volgende: {subject}",
+    "doneToday": "Jy is klaar vir vandag. Mooi gedoen!",
+    "backToPlan": "Terug na vandag se plan",
+    "noPenalty": "Dis jou keuse – daar is geen straf hoe ook al nie."
+  },
+  "pastPapers": {
+    "title": "Vorige eksamenvraestelle",
+    "intro": "Kies jou eksamenraad om reguit na die amptelike vraestelle en nasienriglyne te gaan.",
+    "cardSubtitle": "Amptelike NSC- en IEB-vraestelle en memo's.",
+    "cardLocked": "Ontsluit in Graad 12",
+    "toastLocked": "Dit ontsluit sodra jy in Graad 12 is.",
+    "footnote": "Memo's is 'n nasienriglyn, nie 'n finale antwoordsleutel nie – gebruik dit om jou te lei, nie om jou eie werk te vervang nie.",
+    "boards": {
+      "caps": {
+        "label": "CAPS / NSC-vraestelle",
+        "helper": "Departement van Basiese Onderwys, vraestelle tot 2008 terug."
+      },
+      "ieb": {
+        "label": "IEB-vraestelle",
+        "helper": "Die IEB se eie portaal, die laaste 5 jaar."
+      }
+    }
+  },
+  "account": {
+    "title": "Rekening",
+    "signedInAs": "Aangeteken as",
+    "student": "Leerder: {name}",
+    "changePassword": "Verander wagwoord",
+    "contactUs": "Kontak ons",
+    "contactBody": "Vrae of terugvoer? Stuur 'n e-pos aan <link>ebrahim@empowermint.co.za</link>"
+  },
+  "parentNotify": {
+    "title": "Hou jou ouer in die kringloop",
+    "intro": "Voeg hul e-pos by en ons stuur 'n kort weeklikse opdatering oor hoe die studies gaan – sodat jy nie elke aand by die aandete jouself hoef te verduidelik nie.",
+    "currentContact": "Huidige kontak:",
+    "confirmed": "bevestig",
+    "waiting": "wag vir bevestiging",
+    "placeholder": "ouer@epos.com",
+    "sent": "Gestuur! Hulle kry 'n e-pos om te bevestig voordat enigiets uitgaan.",
+    "update": "Verander e-pos",
+    "add": "Voeg my ouer by",
+    "error": "Iets het skeefgeloop. Probeer weer."
   }
 }

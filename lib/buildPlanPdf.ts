@@ -17,6 +17,22 @@ const MUTED: [number, number, number] = [138, 133, 121];
 const BODY: [number, number, number] = [26, 25, 23];
 const BORDER: [number, number, number] = [226, 221, 208];
 
+export interface PlanPdfLabels {
+  title: string;
+  forName: string;
+  empty: string;
+  done: string;
+  pending: string;
+  upcoming: string;
+  /** Formats "today" / "tomorrow" / "in N days" for the active language. */
+  when: (days: number) => string;
+  eyebrow: string;
+  headline: string;
+  cta: string;
+  scan: string;
+  micro: string;
+}
+
 const SHARE_URL = 'https://plan.empowermint.co.za';
 const CARD_GRADIENT_TOP = '#F3F8F6';
 const CARD_GRADIENT_BOTTOM = '#EEF6F2';
@@ -27,10 +43,9 @@ const CTA_ORANGE: [number, number, number] = [236, 113, 46];
 const QR_CAPTION_GREY: [number, number, number] = [110, 154, 139];
 const MICRO_GREY: [number, number, number] = [157, 187, 175];
 
-// jsPDF's standard fonts have no emoji glyphs, so a raw handshake emoji in the
-// eyebrow line would render as a blank box in the actual PDF - drop it there
-// rather than ship a broken glyph.
-const EYEBROW_LABEL = 'SHARED FROM EMPOWERMINT';
+// jsPDF's standard fonts have no emoji glyphs, so the eyebrow label (supplied
+// by the caller) must stay plain text - no emoji, and only Latin-1 letters so
+// Afrikaans accents (ê ë ï ô û é è ö ü) render in the built-in Helvetica.
 
 function roundedRectPath(
   ctx: CanvasRenderingContext2D,
@@ -78,8 +93,8 @@ function renderGradientCard(w: number, h: number, radius: number): string {
   return canvas.toDataURL('image/png');
 }
 
-function formatExamDate(dateStr: string): string {
-  return new Date(`${dateStr}T00:00:00`).toLocaleDateString('en-GB', {
+function formatExamDate(dateStr: string, intlTag: string): string {
+  return new Date(`${dateStr}T00:00:00`).toLocaleDateString(intlTag, {
     day: 'numeric',
     month: 'short',
   });
@@ -99,11 +114,15 @@ export async function buildPlanPdf({
   dateLabel,
   sessions,
   exams,
+  labels,
+  intlTag,
 }: {
   studentName: string;
   dateLabel: string;
   sessions: PlanPdfSession[];
   exams: PlanPdfExam[];
+  labels: PlanPdfLabels;
+  intlTag: string;
 }): Promise<Blob> {
   const doc = new jsPDF({ unit: 'pt', format: 'a4' });
   const pageWidth = doc.internal.pageSize.getWidth();
@@ -120,13 +139,13 @@ export async function buildPlanPdf({
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(10);
   doc.setTextColor(...TEAL);
-  doc.text("TODAY'S STUDY PLAN", pageWidth / 2, y, { align: 'center' });
+  doc.text(labels.title, pageWidth / 2, y, { align: 'center' });
   y += 20;
 
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(18);
   doc.setTextColor(0, 0, 0);
-  doc.text(`for ${studentName}`, pageWidth / 2, y, { align: 'center' });
+  doc.text(labels.forName, pageWidth / 2, y, { align: 'center' });
   y += 18;
 
   doc.setFont('helvetica', 'normal');
@@ -143,7 +162,7 @@ export async function buildPlanPdf({
   if (sessions.length === 0) {
     doc.setFont('helvetica', 'normal');
     doc.setTextColor(...MUTED);
-    doc.text('No sessions planned for today yet.', marginX, y);
+    doc.text(labels.empty, marginX, y);
     y += 22;
   } else {
     for (const session of sessions) {
@@ -151,7 +170,7 @@ export async function buildPlanPdf({
       doc.setTextColor(...BODY);
       doc.text(session.subject_name, marginX, y);
       doc.setTextColor(...(session.completed ? TEAL : MUTED));
-      doc.text(session.completed ? 'Done' : 'Pending', pageWidth - marginX, y, { align: 'right' });
+      doc.text(session.completed ? labels.done : labels.pending, pageWidth - marginX, y, { align: 'right' });
       y += 22;
     }
   }
@@ -165,7 +184,7 @@ export async function buildPlanPdf({
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(10);
     doc.setTextColor(...MUTED);
-    doc.text('UPCOMING EXAM DATES', marginX, y);
+    doc.text(labels.upcoming, marginX, y);
     y += 20;
 
     doc.setFont('helvetica', 'normal');
@@ -173,9 +192,7 @@ export async function buildPlanPdf({
     for (const exam of exams) {
       doc.setTextColor(...BODY);
       doc.text(exam.subjectName, marginX, y);
-      const whenLabel = `${formatExamDate(exam.examDate)} · ${
-        exam.daysUntil === 0 ? 'today' : exam.daysUntil === 1 ? 'tomorrow' : `in ${exam.daysUntil} days`
-      }`;
+      const whenLabel = `${formatExamDate(exam.examDate, intlTag)} · ${labels.when(exam.daysUntil)}`;
       doc.setTextColor(...MUTED);
       doc.text(whenLabel, pageWidth - marginX, y, { align: 'right' });
       y += 20;
@@ -188,12 +205,11 @@ export async function buildPlanPdf({
   y += 20;
 
   // --- Shared-from-empowermint footer card ---
-  const firstName = studentName.split(' ')[0];
-  const headline = `${firstName} is using the Smart Study Planner to stay on top of their studying. Give it a go.`;
+  const headline = labels.headline;
   // "→" (U+2192) isn't in jsPDF's standard Helvetica encoding - it renders as
   // a broken glyph and throws off width measurement, so the arrow is drawn
   // as a small triangle instead of relying on the character.
-  const ctaLabel = 'Get started free';
+  const ctaLabel = labels.cta;
   const ctaArrowW = 8;
   const ctaArrowGap = 6;
 
@@ -234,7 +250,7 @@ export async function buildPlanPdf({
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(9);
   doc.setTextColor(...EYEBROW_GREEN);
-  doc.text(EYEBROW_LABEL, contentX, cy + eyebrowHeight - 2, { charSpace: 0.6 });
+  doc.text(labels.eyebrow, contentX, cy + eyebrowHeight - 2, { charSpace: 0.6 });
   cy += eyebrowHeight + 8;
 
   doc.setFont('helvetica', 'bold');
@@ -280,7 +296,7 @@ export async function buildPlanPdf({
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(7.5);
   doc.setTextColor(...QR_CAPTION_GREY);
-  doc.text('SCAN TO START', qrX + qrSize / 2, qrY + qrSize + 12, {
+  doc.text(labels.scan, qrX + qrSize / 2, qrY + qrSize + 12, {
     align: 'center',
     charSpace: 0.4,
   });
@@ -288,7 +304,7 @@ export async function buildPlanPdf({
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(8);
   doc.setTextColor(...MICRO_GREY);
-  doc.text(`${SHARE_URL.replace('https://', '')} · no card required`, pageWidth / 2, y + cardH - cardPad + 4, {
+  doc.text(`${SHARE_URL.replace('https://', '')} · ${labels.micro}`, pageWidth / 2, y + cardH - cardPad + 4, {
     align: 'center',
   });
 

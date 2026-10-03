@@ -1,6 +1,9 @@
 'use client';
 
 import { useRef, useState } from 'react';
+import { useTranslations } from 'next-intl';
+import { useIntlTag } from '@/lib/i18n/intl';
+import { useSubjectLabel } from '@/lib/i18n/useSubjectLabel';
 import { supabase } from '@/lib/supabaseClient';
 
 interface Reflection {
@@ -11,14 +14,14 @@ interface Reflection {
   confidenceScore: number;
 }
 
-const CHOICES: { label: string; delta: number }[] = [
-  { label: 'Tougher than expected', delta: -1 },
-  { label: 'About what I expected', delta: 0 },
-  { label: 'Better than expected', delta: 1 },
+const CHOICES: { key: string; delta: number }[] = [
+  { key: 'tougher', delta: -1 },
+  { key: 'expected', delta: 0 },
+  { key: 'better', delta: 1 },
 ];
 
-function formatExamDate(dateStr: string): string {
-  return new Date(`${dateStr}T00:00:00`).toLocaleDateString('en-GB', {
+function formatExamDate(dateStr: string, intlTag: string): string {
+  return new Date(`${dateStr}T00:00:00`).toLocaleDateString(intlTag, {
     day: 'numeric',
     month: 'short',
   });
@@ -29,6 +32,9 @@ export default function ExamReflectionPrompt({
 }: {
   initialReflections: Reflection[];
 }) {
+  const t = useTranslations('reflection');
+  const intlTag = useIntlTag();
+  const subjectLabel = useSubjectLabel();
   const [reflections, setReflections] = useState(initialReflections);
   const [submittingId, setSubmittingId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -57,7 +63,7 @@ export default function ExamReflectionPrompt({
     if (dateError) {
       submittingRef.current = null;
       setSubmittingId(null);
-      setError('Could not save that. Try again.');
+      setError(t('saveError'));
       return;
     }
 
@@ -84,21 +90,21 @@ export default function ExamReflectionPrompt({
           className="neu-raised rounded-neu-sm px-[14px] py-[13px] mb-[10px]"
         >
           <p className="font-heading font-bold text-[13.5px] text-text-primary">
-            How did your {r.subjectName} exam go?
+            {t('title', { subject: subjectLabel(r.subjectName) })}
           </p>
           <p className="font-body text-[11px] text-text-muted mt-[2px] mb-[10px]">
-            {formatExamDate(r.examDate)} — this helps us plan your next sessions.
+            {t('subtitle', { date: formatExamDate(r.examDate, intlTag) })}
           </p>
           <div className="flex flex-wrap gap-[8px]">
             {CHOICES.map((choice) => (
               <button
-                key={choice.label}
+                key={choice.key}
                 type="button"
                 disabled={submittingId === r.examDateId}
                 onClick={() => handleChoice(r, choice.delta)}
                 className="font-body text-xs rounded-[8px] px-[10px] py-[7px] border-[1.3px] text-teal border-teal disabled:opacity-50"
               >
-                {choice.label}
+                {t(`choices.${choice.key}`)}
               </button>
             ))}
           </div>

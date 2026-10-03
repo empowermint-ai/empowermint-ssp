@@ -1,4 +1,5 @@
 import { redirect } from 'next/navigation';
+import { getTranslations } from 'next-intl/server';
 import { createSupabaseServerClient } from '@/lib/supabaseServerClient';
 import CalendarGrid from '@/components/CalendarGrid';
 import NavArrows from '@/components/NavArrows';
@@ -6,6 +7,7 @@ import BottomNav from '@/components/BottomNav';
 import { NAV_HEIGHT } from '@/lib/layout';
 
 export default async function CalendarPage() {
+  const t = await getTranslations('calendar');
   const supabase = createSupabaseServerClient();
   const {
     data: { user },
@@ -53,10 +55,10 @@ export default async function CalendarPage() {
         <NavArrows showForward={false} />
         <div>
           <p className="font-heading font-bold text-[15px] uppercase tracking-[0.6px] text-teal">
-            Calendar view
+            {t('title')}
           </p>
           <p className="font-body text-[12px] text-text-muted mt-[2px]">
-            Tap a date to see what&apos;s on.
+            {t('subtitle')}
           </p>
         </div>
       </div>

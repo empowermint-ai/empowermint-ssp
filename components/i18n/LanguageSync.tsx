@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabaseClient';
-import { getLocaleConfig, hasMultipleLanguages } from '@/config/locales';
+import { getEnabledLocales, getLocaleConfig, hasMultipleLanguages } from '@/config/locales';
 import {
   hasExplicitChoice,
   markExplicitChoice,
@@ -33,6 +33,14 @@ export default function LanguageSync() {
   useEffect(() => {
     if (!hasMultipleLanguages()) return;
     let cancelled = false;
+
+    // The offline page (served from the cache, no framework) reads this to know
+    // which languages are switched on.
+    try {
+      localStorage.setItem('ssp_langs', getEnabledLocales().map((l) => l.code).join(','));
+    } catch {
+      // storage blocked: the offline page just stays in English
+    }
 
     (async () => {
       try {

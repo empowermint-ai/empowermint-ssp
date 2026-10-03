@@ -1,9 +1,11 @@
 import { redirect } from 'next/navigation';
+import { getTranslations } from 'next-intl/server';
 import { createSupabaseServerClient } from '@/lib/supabaseServerClient';
 import RankSubjectsForm from '@/components/RankSubjectsForm';
 import NavArrows from '@/components/NavArrows';
 
 export default async function RankSubjectsPage() {
+  const t = await getTranslations('ranking');
   const supabase = createSupabaseServerClient();
   const {
     data: { user },
@@ -31,13 +33,13 @@ export default async function RankSubjectsPage() {
       </div>
 
       <p className="font-heading font-bold text-[10px] uppercase text-teal">
-        BE HONEST — THIS DRIVES YOUR PLAN
+        {t('eyebrow')}
       </p>
       <h1 className="font-heading font-bold text-[21px] tracking-[-0.025em] text-text-primary mt-3">
-        How confident are you in each?
+        {t('title')}
       </h1>
       <p className="font-body text-[10px] text-text-muted mb-[18px] mt-1">
-        1 = weakest &nbsp;·&nbsp; 5 = strongest
+        {t('scale')}
       </p>
       <RankSubjectsForm initialSubjects={subjects} />
     </main>

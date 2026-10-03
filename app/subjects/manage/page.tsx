@@ -1,4 +1,5 @@
 import { redirect } from 'next/navigation';
+import { getTranslations } from 'next-intl/server';
 import { createSupabaseServerClient } from '@/lib/supabaseServerClient';
 import NavArrows from '@/components/NavArrows';
 import ManageSubjectsForm from '@/components/ManageSubjectsForm';
@@ -6,6 +7,7 @@ import BottomNav from '@/components/BottomNav';
 import { NAV_HEIGHT } from '@/lib/layout';
 
 export default async function ManageSubjectsPage() {
+  const t = await getTranslations('manage');
   const supabase = createSupabaseServerClient();
   const {
     data: { user },
@@ -35,9 +37,9 @@ export default async function ManageSubjectsPage() {
         <NavArrows showForward={false} />
       </div>
 
-      <p className="font-heading font-bold text-[10px] uppercase text-teal">MANAGE MY PLANNER</p>
+      <p className="font-heading font-bold text-[10px] uppercase text-teal">{t('eyebrow')}</p>
       <h1 className="font-heading font-bold text-[21px] tracking-[-0.025em] text-text-primary mt-3">
-        Update your ranking or exam dates
+        {t('title')}
       </h1>
 
       <ManageSubjectsForm userId={user.id} initialSubjects={subjects} />

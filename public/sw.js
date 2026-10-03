@@ -1,4 +1,4 @@
-const CACHE_NAME = "ssp-offline-v2";
+const CACHE_NAME = "ssp-offline-v3";
 const OFFLINE_URL = "/offline.html";
 const PRECACHE_URLS = [OFFLINE_URL, "/fonts/InterVariable.woff2"];
 

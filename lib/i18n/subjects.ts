@@ -41,3 +41,11 @@ const ID_BY_NAME = new Map(PRESET_SUBJECTS.map((s) => [s.name.toLowerCase(), s.i
 export function presetSubjectId(storedName: string): string | null {
   return ID_BY_NAME.get(storedName.trim().toLowerCase()) ?? null;
 }
+
+/** Lower-cases and strips accents so "lewensori" finds "Lewensoriëntering". */
+export function foldForSearch(text: string): string {
+  return text
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase();
+}

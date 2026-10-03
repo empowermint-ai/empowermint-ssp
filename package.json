@@ -6,7 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "i18n:check": "node scripts/i18n/check.mjs",
+    "i18n:scan": "node scripts/i18n/scan-hardcoded.mjs",
+    "i18n:export": "node scripts/i18n/export-csv.mjs",
+    "i18n:import": "node scripts/i18n/import-csv.mjs"
   },
   "dependencies": {
     "@next/third-parties": "^16.2.11",

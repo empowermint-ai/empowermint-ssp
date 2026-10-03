@@ -1,15 +1,13 @@
-export const EXAM_TIMER_DURATIONS: { minutes: number; label: string }[] = [
-  { minutes: 60, label: '1 hour' },
-  { minutes: 90, label: '1 hr 30 min' },
-  { minutes: 120, label: '2 hours' },
-  { minutes: 150, label: '2 hr 30 min' },
-  { minutes: 180, label: '3 hours' },
-  { minutes: 210, label: '3 hr 30 min' },
-  { minutes: 240, label: '4 hours' },
-  { minutes: 270, label: '4 hr 30 min' },
-  { minutes: 300, label: '5 hours' },
+// Whole minutes the learner can pick. Labels ("2 hr 30 min") are formatted per
+// language by formatExamDuration() in lib/i18n/duration.ts.
+export const EXAM_TIMER_DURATIONS: { minutes: number }[] = [
+  { minutes: 60 },
+  { minutes: 90 },
+  { minutes: 120 },
+  { minutes: 150 },
+  { minutes: 180 },
+  { minutes: 210 },
+  { minutes: 240 },
+  { minutes: 270 },
+  { minutes: 300 },
 ];
-
-export function examTimerDurationLabel(minutes: number): string {
-  return EXAM_TIMER_DURATIONS.find((d) => d.minutes === minutes)?.label ?? `${minutes} min`;
-}

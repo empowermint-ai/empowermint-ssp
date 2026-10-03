@@ -1,5 +1,6 @@
 'use client';
 import { ButtonHTMLAttributes } from 'react';
+import { useTranslations } from 'next-intl';
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   loading?: boolean;
@@ -20,13 +21,14 @@ export default function Button({
   className = '',
   ...props
 }: ButtonProps) {
+  const t = useTranslations('common');
   return (
     <button
       disabled={disabled || loading}
       className={`w-full rounded-full font-heading font-bold text-[14px] py-4 transition-all active:scale-[0.97] disabled:opacity-60 ${VARIANT_CLASSES[variant]} ${className}`}
       {...props}
     >
-      {loading ? 'Please wait…' : children}
+      {loading ? t('pleaseWait') : children}
     </button>
   );
 }

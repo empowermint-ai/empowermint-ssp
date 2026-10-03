@@ -6,6 +6,11 @@ import { useTranslations } from 'next-intl';
 // response - we only recognise known messages and show our own translated
 // wording, falling back to the original text for anything unrecognised.
 const RULES: [RegExp, string][] = [
+  [/mobile number is already registered/i, 'mobileTaken'],
+  [/no account found/i, 'noAccount'],
+  [/not signed in/i, 'notSignedIn'],
+  [/could not save that email/i, 'saveEmail'],
+  [/enter a valid email/i, 'invalidEmail'],
   [/invalid login credentials/i, 'invalidCredentials'],
   [/already (been )?registered|already exists/i, 'alreadyRegistered'],
   [/rate limit|too many requests|only request this after/i, 'rateLimited'],

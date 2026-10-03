@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef, useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { supabase } from '@/lib/supabaseClient';
 
 function StarIcon({ filled }: { filled: boolean }) {
@@ -23,6 +24,7 @@ function StarIcon({ filled }: { filled: boolean }) {
 }
 
 export default function AppReviewPrompt({ userId }: { userId: string }) {
+  const t = useTranslations('review');
   const [dismissed, setDismissed] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [rating, setRating] = useState(0);
@@ -55,7 +57,7 @@ export default function AppReviewPrompt({ userId }: { userId: string }) {
     setSubmitting(false);
 
     if (insertError) {
-      setError('Could not save that. Try again.');
+      setError(t('saveError'));
       return;
     }
 
@@ -65,10 +67,10 @@ export default function AppReviewPrompt({ userId }: { userId: string }) {
   return (
     <div className="neu-raised rounded-neu-sm px-[14px] py-[13px] mt-5">
       <p className="font-heading font-bold text-[13.5px] text-text-primary">
-        How is the SSP working for you so far?
+        {t('title')}
       </p>
       <p className="font-body text-[11px] text-text-muted mt-[2px] mb-[10px]">
-        Your feedback helps us make it better.
+        {t('subtitle')}
       </p>
 
       <div className="flex gap-[6px] mb-[10px]">
@@ -77,7 +79,7 @@ export default function AppReviewPrompt({ userId }: { userId: string }) {
             key={n}
             type="button"
             onClick={() => setRating(n)}
-            aria-label={`${n} star${n > 1 ? 's' : ''}`}
+            aria-label={t('starAria', { count: n })}
           >
             <StarIcon filled={n <= rating} />
           </button>
@@ -89,7 +91,7 @@ export default function AppReviewPrompt({ userId }: { userId: string }) {
           <textarea
             value={comment}
             onChange={(e) => setComment(e.target.value)}
-            placeholder="Anything you would like to share? (optional)"
+            placeholder={t('commentPlaceholder')}
             rows={3}
             className="neu-pressed w-full rounded-neu-sm px-[10px] py-[7px] font-body text-[12px] text-text-primary outline-none focus:ring-1 focus:ring-teal/40 resize-none mb-[10px]"
           />
@@ -100,7 +102,7 @@ export default function AppReviewPrompt({ userId }: { userId: string }) {
             onClick={handleSubmit}
             className="neu-raised font-body text-xs rounded-neu-sm px-[14px] py-[8px] text-teal font-bold disabled:opacity-50"
           >
-            {submitting ? 'Submitting…' : 'Submit review'}
+            {submitting ? t('submitting') : t('submit')}
           </button>
         </>
       )}
@@ -110,7 +112,7 @@ export default function AppReviewPrompt({ userId }: { userId: string }) {
         onClick={handleDismiss}
         className="block font-body text-[11px] text-text-muted underline mt-[10px]"
       >
-        Not now
+        {t('notNow')}
       </button>
     </div>
   );

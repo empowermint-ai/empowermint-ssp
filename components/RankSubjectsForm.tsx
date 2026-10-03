@@ -2,7 +2,9 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { supabase } from '@/lib/supabaseClient';
+import { useSubjectLabel } from '@/lib/i18n/useSubjectLabel';
 
 interface Subject {
   id: string;
@@ -12,6 +14,8 @@ interface Subject {
 
 export default function RankSubjectsForm({ initialSubjects }: { initialSubjects: Subject[] }) {
   const router = useRouter();
+  const t = useTranslations('ranking');
+  const subjectLabel = useSubjectLabel();
   const [subjects, setSubjects] = useState(initialSubjects);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -38,7 +42,7 @@ export default function RankSubjectsForm({ initialSubjects }: { initialSubjects:
     setSaving(false);
 
     if (results.some((r) => r.error)) {
-      setError('Could not save your rankings. Try again.');
+      setError(t('saveError'));
       return;
     }
 
@@ -54,7 +58,7 @@ export default function RankSubjectsForm({ initialSubjects }: { initialSubjects:
             className="neu-raised flex items-center justify-between rounded-neu-sm px-[14px] py-[11px] mb-[10px]"
           >
             <span className="font-body font-bold text-[13.5px] text-text-primary">
-              {subject.subject_name}
+              {subjectLabel(subject.subject_name)}
             </span>
             <div className="flex gap-[5px]">
               {[1, 2, 3, 4, 5].map((score) => {
@@ -67,7 +71,7 @@ export default function RankSubjectsForm({ initialSubjects }: { initialSubjects:
                     className={`w-5 h-5 rounded-full flex items-center justify-center font-heading font-bold text-[10px] ${
                       selected ? 'neu-pressed-accent-sm text-black' : 'neu-raised text-text-primary'
                     }`}
-                    aria-label={`${subject.subject_name}: confidence ${score}`}
+                    aria-label={t('scoreAria', { subject: subjectLabel(subject.subject_name), score })}
                   >
                     {score}
                   </button>
@@ -87,7 +91,7 @@ export default function RankSubjectsForm({ initialSubjects }: { initialSubjects:
           onClick={handleNext}
           className="neu-raised-accent w-full text-black font-heading font-bold text-[13.5px] rounded-full py-[14px] disabled:opacity-40"
         >
-          {saving ? 'Saving…' : 'Next: exam dates'}
+          {saving ? t('saving') : t('next')}
         </button>
       </div>
     </div>

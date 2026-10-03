@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { logActivity } from '@/lib/logActivity';
 
 function PaperIcon() {
@@ -49,6 +50,7 @@ export default function PastExamPapersCard({
   grade: string | null;
 }) {
   const router = useRouter();
+  const t = useTranslations('pastPapers');
   const isGrade12 = grade === 'Grade 12';
   const [toast, setToast] = useState(false);
   const loggedRef = useRef(false);
@@ -91,7 +93,7 @@ export default function PastExamPapersCard({
                 isGrade12 ? 'text-text-primary' : 'text-text-muted'
               }`}
             >
-              Past Exam Papers
+              {t('title')}
             </span>
             {!isGrade12 && (
               <span className="text-text-muted flex-shrink-0">
@@ -99,8 +101,8 @@ export default function PastExamPapersCard({
               </span>
             )}
           </span>
-          <span className="block font-body text-[11px] text-text-muted mt-[2px] truncate">
-            {isGrade12 ? 'Official NSC & IEB papers and memos.' : 'Unlocks in Grade 12'}
+          <span className="block font-body text-[11px] text-text-muted mt-[2px] line-clamp-2">
+            {isGrade12 ? t('cardSubtitle') : t('cardLocked')}
           </span>
         </span>
         {isGrade12 && (
@@ -113,7 +115,7 @@ export default function PastExamPapersCard({
       {toast && (
         <div className="absolute left-1/2 -translate-x-1/2 top-full mt-1 z-10 neu-raised rounded-neu-sm px-[12px] py-[8px] whitespace-nowrap">
           <span className="font-body text-[11px] text-text-primary">
-            This unlocks once you&apos;re in Grade 12.
+            {t('toastLocked')}
           </span>
         </div>
       )}

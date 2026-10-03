@@ -1,5 +1,8 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
+import { useIntlTag } from '@/lib/i18n/intl';
+import { useSubjectLabel } from '@/lib/i18n/useSubjectLabel';
 import { useMemo, useState } from 'react';
 import { supabase } from '@/lib/supabaseClient';
 
@@ -21,7 +24,12 @@ interface SubjectOption {
   subject_name: string;
 }
 
-const WEEKDAY_LABELS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+// 4 Jan 2021 was a Monday: seven consecutive days give Mon..Sun in any language.
+function weekdayLabels(intlTag: string): string[] {
+  return Array.from({ length: 7 }, (_, i) =>
+    new Date(2021, 0, 4 + i).toLocaleDateString(intlTag, { weekday: 'short' })
+  );
+}
 
 export default function CalendarGrid({
   exams,
@@ -34,6 +42,9 @@ export default function CalendarGrid({
   subjects: SubjectOption[];
   userId: string;
 }) {
+  const t = useTranslations('calendar');
+  const intlTag = useIntlTag();
+  const subjectLabel = useSubjectLabel();
   const todayStr = new Date().toISOString().slice(0, 10);
   const today = new Date(`${todayStr}T00:00:00`);
 
@@ -59,7 +70,7 @@ export default function CalendarGrid({
     return map;
   }, [exams, sessions]);
 
-  const monthLabel = new Date(viewYear, viewMonth, 1).toLocaleDateString('en-GB', {
+  const monthLabel = new Date(viewYear, viewMonth, 1).toLocaleDateString(intlTag, {
     month: 'long',
     year: 'numeric',
   });
@@ -133,7 +144,7 @@ export default function CalendarGrid({
   }
 
   const selected = byDate.get(selectedDate);
-  const selectedLabel = new Date(`${selectedDate}T00:00:00`).toLocaleDateString('en-GB', {
+  const selectedLabel = new Date(`${selectedDate}T00:00:00`).toLocaleDateString(intlTag, {
     weekday: 'long',
     day: 'numeric',
     month: 'long',
@@ -147,7 +158,7 @@ export default function CalendarGrid({
           <button
             type="button"
             onClick={goPrevMonth}
-            aria-label="Previous month"
+            aria-label={t('prevMonth')}
             className="text-text-primary text-[19px] leading-none p-2"
           >
             ‹
@@ -156,7 +167,7 @@ export default function CalendarGrid({
           <button
             type="button"
             onClick={goNextMonth}
-            aria-label="Next month"
+            aria-label={t('nextMonth')}
             className="text-text-primary text-[19px] leading-none p-2"
           >
             ›
@@ -164,7 +175,7 @@ export default function CalendarGrid({
         </div>
 
         <div className="grid grid-cols-7 mt-3 text-center">
-          {WEEKDAY_LABELS.map((d) => (
+          {weekdayLabels(intlTag).map((d) => (
             <span key={d} className="font-body text-[10px] text-text-muted uppercase">
               {d}
             </span>
@@ -218,16 +229,16 @@ export default function CalendarGrid({
 
       <div className="flex items-center gap-4 mt-4 flex-wrap">
         <span className="flex items-center gap-[6px] font-body text-[11px] text-text-muted">
-          <span className="w-[7px] h-[7px] rounded-full bg-orange" /> Exam day
+          <span className="w-[7px] h-[7px] rounded-full bg-orange" /> {t('legendExam')}
         </span>
         <span className="flex items-center gap-[6px] font-body text-[11px] text-text-muted">
-          <span className="w-[7px] h-[7px] rounded-full border-[1.5px] border-purple" /> Today
+          <span className="w-[7px] h-[7px] rounded-full border-[1.5px] border-purple" /> {t('legendToday')}
         </span>
         <span className="flex items-center gap-[6px] font-body text-[11px] text-text-muted">
-          <span className="w-[7px] h-[7px] rounded-full bg-teal" /> Study session
+          <span className="w-[7px] h-[7px] rounded-full bg-teal" /> {t('legendStudy')}
         </span>
         <span className="flex items-center gap-[6px] font-body text-[11px] text-text-muted">
-          <span className="w-[7px] h-[7px] rounded-full bg-red-600" /> Missed
+          <span className="w-[7px] h-[7px] rounded-full bg-red-600" /> {t('legendMissed')}
         </span>
       </div>
 
@@ -235,13 +246,15 @@ export default function CalendarGrid({
         <p className="font-heading font-bold text-[13px] text-text-primary mb-2">{selectedLabel}</p>
 
         {!selected || (selected.exams.length === 0 && selected.sessions.length === 0) ? (
-          <p className="font-body text-[12px] text-text-muted mb-2">Nothing on file for this day.</p>
+          <p className="font-body text-[12px] text-text-muted mb-2">{t('empty')}</p>
         ) : (
           <div className="space-y-2 mb-2">
             {selected.exams.map((name, i) => (
               <div key={`exam-${i}`} className="flex items-center gap-2">
                 <span className="w-[8px] h-[8px] rounded-full bg-orange flex-shrink-0" />
-                <span className="font-body text-[13px] text-text-primary">{name} exam</span>
+                <span className="font-body text-[13px] text-text-primary">
+                  {t('examLine', { subject: subjectLabel(name) })}
+                </span>
               </div>
             ))}
             {selected.sessions.map((s, i) => {
@@ -254,8 +267,10 @@ export default function CalendarGrid({
                     }`}
                   />
                   <span className="font-body text-[13px] text-text-primary">
-                    {s.subject_name} study session
-                    {s.completed ? ' · done' : missed ? ' · missed' : ''}
+                    {t('sessionLine', {
+                      subject: subjectLabel(s.subject_name),
+                      status: s.completed ? 'done' : missed ? 'missed' : 'planned',
+                    })}
                   </span>
                 </div>
               );
@@ -275,7 +290,7 @@ export default function CalendarGrid({
                     onClick={() => handleAddSession(s)}
                     className="font-body text-xs rounded-[8px] px-[10px] py-[6px] border-[1.3px] text-teal border-teal disabled:opacity-50"
                   >
-                    {s.subject_name}
+                    {subjectLabel(s.subject_name)}
                   </button>
                 ))}
               </div>
@@ -285,7 +300,7 @@ export default function CalendarGrid({
                 onClick={() => setPicking(true)}
                 className="font-body text-[12.5px] font-medium text-teal"
               >
-                + Add a study session
+                {t('addSession')}
               </button>
             )}
           </>

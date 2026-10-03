@@ -1,4 +1,6 @@
 import { redirect } from 'next/navigation';
+import { getTranslations } from 'next-intl/server';
+import { getIntlTag } from '@/lib/i18n/intlServer';
 import { createSupabaseServerClient } from '@/lib/supabaseServerClient';
 import TodayPlanClient from '@/components/TodayPlanClient';
 import SettingsMenu from '@/components/SettingsMenu';
@@ -12,15 +14,12 @@ import { priorityScore } from '@/lib/priorityScore';
 import { allocateSessions } from '@/lib/allocateSessions';
 import { getMaxDailySessions } from '@/lib/dailyPlanLimits';
 
-const GREETINGS: ((name: string) => string)[] = [
-  () => 'Welcome back, champ!',
-  (name) => `Good to see you again, ${name}!`,
-  (name) => `Let's go again, ${name}!`,
-  (name) => `You showed up. That is already a win, ${name}.`,
-  (name) => `Ready when you are, ${name}.`,
-];
+// Keys under plan.greetings; one is picked at random per visit.
+const GREETING_KEYS = ['g1', 'g2', 'g3', 'g4', 'g5'] as const;
 
 export default async function DashboardPage() {
+  const t = await getTranslations('plan');
+  const intlTag = await getIntlTag();
   const supabase = createSupabaseServerClient();
   const {
     data: { user },
@@ -32,9 +31,9 @@ export default async function DashboardPage() {
 
   const today = new Date();
   const todayStr = today.toISOString().slice(0, 10);
-  const weekday = today.toLocaleDateString('en-GB', { weekday: 'long' });
-  const dayMonth = today.toLocaleDateString('en-GB', { day: 'numeric', month: 'long' });
-  const todayFormatted = `${weekday}, ${dayMonth}`;
+  const weekday = today.toLocaleDateString(intlTag, { weekday: 'long' });
+  const dayMonth = today.toLocaleDateString(intlTag, { day: 'numeric', month: 'long' });
+  const todayFormatted = t('dateLine', { weekday, dayMonth });
 
   // These queries are all independent of each other, so fire them together
   // instead of one round trip at a time - this is the single biggest lever
@@ -72,8 +71,10 @@ export default async function DashboardPage() {
     supabase.from('app_reviews').select('id').eq('user_id', user.id).maybeSingle(),
   ]);
 
-  const username = profile?.username ?? 'there';
-  const greeting = GREETINGS[Math.floor(Math.random() * GREETINGS.length)](username);
+  const username = profile?.username ?? t('fallbackName');
+  const greeting = t(`greetings.${GREETING_KEYS[Math.floor(Math.random() * GREETING_KEYS.length)]}`, {
+    name: username,
+  });
 
   const subjects = activeSubjects ?? [];
 

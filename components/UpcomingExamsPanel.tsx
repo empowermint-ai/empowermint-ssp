@@ -1,6 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
+import { useSubjectLabel } from '@/lib/i18n/useSubjectLabel';
 
 interface ExamEntry {
   subjectName: string;
@@ -29,6 +31,8 @@ function ChevronIcon({ open }: { open: boolean }) {
 }
 
 export default function UpcomingExamsPanel({ exams }: { exams: ExamEntry[] }) {
+  const t = useTranslations('exams');
+  const subjectLabel = useSubjectLabel();
   const [open, setOpen] = useState(false);
 
   if (exams.length === 0) return null;
@@ -45,7 +49,7 @@ export default function UpcomingExamsPanel({ exams }: { exams: ExamEntry[] }) {
         className="w-full flex items-center justify-between px-[14px] py-[12px]"
       >
         <span className="font-heading font-bold text-[11px] uppercase tracking-[0.6px] text-white">
-          Upcoming exam dates
+          {t('upcoming')}
         </span>
         <span className="flex items-center gap-2">
           {!open && (
@@ -60,10 +64,10 @@ export default function UpcomingExamsPanel({ exams }: { exams: ExamEntry[] }) {
           {exams.map((e) => (
             <div key={e.subjectName} className="flex items-center justify-between gap-3 py-[8px]">
               <span className="font-body font-bold text-[11.5px] text-white">
-                {e.subjectName} exam in
+                {t('examIn', { subject: subjectLabel(e.subjectName) })}
               </span>
               <span className="font-heading font-bold text-[16px] text-white whitespace-nowrap">
-                {e.daysUntil} days
+                {t('daysCount', { days: e.daysUntil })}
               </span>
             </div>
           ))}

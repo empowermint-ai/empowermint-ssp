@@ -2,6 +2,8 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
+import { useSubjectLabel } from '@/lib/i18n/useSubjectLabel';
 import { supabase } from '@/lib/supabaseClient';
 import NavArrows from '@/components/NavArrows';
 
@@ -17,10 +19,10 @@ function getColorState(remainingSeconds: number): ColorState {
   return 'red';
 }
 
-const STATE_META: Record<ColorState, { glow: string; label: string }> = {
-  green: { glow: 'var(--glow-green)', label: 'REMAINING · PLENTY OF TIME' },
-  amber: { glow: 'var(--glow-amber)', label: 'REMAINING · STEADY PACE' },
-  red: { glow: 'var(--glow-red)', label: 'REMAINING · ALMOST THERE' },
+const STATE_META: Record<ColorState, { glow: string }> = {
+  green: { glow: 'var(--glow-green)' },
+  amber: { glow: 'var(--glow-amber)' },
+  red: { glow: 'var(--glow-red)' },
 };
 
 function formatMMSS(totalSeconds: number): string {
@@ -48,6 +50,9 @@ export default function TimerClient({
   dailyPlanId: string;
 }) {
   const router = useRouter();
+  const t = useTranslations('timer');
+  const subjectLabel = useSubjectLabel();
+  const displaySubject = subjectLabel(subjectName);
   const [started, setStarted] = useState(false);
   const [remainingSeconds, setRemainingSeconds] = useState(TOTAL_SECONDS);
   const [isPaused, setIsPaused] = useState(false);
@@ -141,17 +146,17 @@ export default function TimerClient({
         className="font-heading font-bold text-[10px] uppercase tracking-wide transition-colors duration-700"
         style={{ color: meta.glow }}
       >
-        FOCUS SESSION · {sessionNumber} OF {totalSessions} TODAY
+        {t('eyebrow', { session: sessionNumber, total: totalSessions })}
       </p>
 
       <h1
         className="font-heading font-bold text-[21px] text-center mt-3 text-text-primary"
         style={{ letterSpacing: '-0.025em' }}
       >
-        {subjectName}
+        {displaySubject}
       </h1>
 
-      <p className="font-body text-[14px] text-center mt-1 text-orange-text">Study session</p>
+      <p className="font-body text-[14px] text-center mt-1 text-orange-text">{t('studySession')}</p>
 
       <div className="relative mt-8" style={{ width: 230, height: 230 }}>
         {/* Ambient background lighting - a soft colored blur bleeding onto the
@@ -200,7 +205,7 @@ export default function TimerClient({
               className="font-body"
               style={{ fill: 'var(--color-text-muted)', fontSize: 7.5 }}
             >
-              {subjectName}
+              {displaySubject}
             </text>
 
             {/* Sweep hand (continuous rotation) */}
@@ -247,7 +252,7 @@ export default function TimerClient({
         className="font-body text-[10px] uppercase mt-1 transition-colors duration-700"
         style={{ color: meta.glow, letterSpacing: '1.5px' }}
       >
-        {meta.label}
+        {t(`status.${colorState}`)}
       </p>
 
       <div className="flex-1" />
@@ -259,14 +264,14 @@ export default function TimerClient({
             onClick={togglePause}
             className="neu-raised flex-1 font-heading font-bold text-[13.5px] text-text-primary rounded-neu-md py-[14px] transition-all active:scale-[0.97]"
           >
-            {isPaused ? 'Resume' : 'Pause'}
+            {isPaused ? t('resume') : t('pause')}
           </button>
           <button
             type="button"
             onClick={finishSession}
             className="neu-raised neu-outline-accent flex-1 font-heading font-bold text-[13.5px] text-text-primary rounded-neu-md py-[14px] transition-all active:scale-[0.97]"
           >
-            End session
+            {t('end')}
           </button>
         </div>
       ) : (
@@ -275,14 +280,12 @@ export default function TimerClient({
           onClick={handleStart}
           className="neu-raised-accent w-full font-heading font-bold text-[14px] text-black rounded-full py-[15px] transition-all active:scale-[0.97]"
         >
-          Start session
+          {t('start')}
         </button>
       )}
 
       <p className="font-body text-[10px] text-center mt-4 text-text-muted">
-        {started
-          ? "Session auto-logs to today's plan when it ends."
-          : "Tap Start when you're ready to focus."}
+        {started ? t('hintRunning') : t('hintIdle')}
       </p>
     </main>
   );

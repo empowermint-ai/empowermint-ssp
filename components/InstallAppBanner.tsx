@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { useInstallPromptState } from '@/lib/installPrompt';
 import InstallInstructionsModal from '@/components/InstallInstructionsModal';
 
@@ -16,6 +17,7 @@ function AddToHomeIcon() {
 }
 
 export default function InstallAppBanner() {
+  const t = useTranslations('install');
   const { canInstall, isIOS, isStandalone, promptInstall } = useInstallPromptState();
   const [dismissed, setDismissed] = useState(true);
   const [showModal, setShowModal] = useState(false);
@@ -50,16 +52,16 @@ export default function InstallAppBanner() {
           </span>
           <div className="min-w-0 flex-1">
             <p className="font-heading font-bold text-[13px] text-text-primary">
-              Add empowermint to your home screen
+              {t('bannerTitle')}
             </p>
             <p className="font-body text-[11.5px] text-text-muted mt-[2px]">
-              So you can jump straight back into your plan, just like any other app.
+              {t('bannerBody')}
             </p>
           </div>
           <button
             type="button"
             onClick={dismiss}
-            aria-label="Dismiss"
+            aria-label={t('dismiss')}
             className="text-text-muted text-[15px] leading-none px-1 flex-shrink-0"
           >
             ×
@@ -70,7 +72,7 @@ export default function InstallAppBanner() {
           onClick={canInstall ? handleAndroidInstall : () => setShowModal(true)}
           className="neu-raised-accent w-full font-heading font-bold text-[12.5px] text-black rounded-neu-sm py-[9px] mt-[10px]"
         >
-          Add to home screen
+          {t('addButton')}
         </button>
       </div>
 

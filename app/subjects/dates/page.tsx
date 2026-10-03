@@ -1,9 +1,11 @@
 import { redirect } from 'next/navigation';
+import { getTranslations } from 'next-intl/server';
 import { createSupabaseServerClient } from '@/lib/supabaseServerClient';
 import ExamDatesForm from '@/components/ExamDatesForm';
 import NavArrows from '@/components/NavArrows';
 
 export default async function SubjectDatesPage() {
+  const t = await getTranslations('examDates');
   const supabase = createSupabaseServerClient();
   const {
     data: { user },
@@ -33,13 +35,12 @@ export default async function SubjectDatesPage() {
         <NavArrows />
       </div>
 
-      <p className="font-heading font-bold text-[10px] uppercase text-teal">LAST STEP</p>
+      <p className="font-heading font-bold text-[10px] uppercase text-teal">{t('eyebrow')}</p>
       <h1 className="font-heading font-bold text-[21px] tracking-[-0.025em] text-text-primary mt-3">
-        When is each exam?
+        {t('title')}
       </h1>
       <p className="font-body text-[14px] text-text-body mt-2 mb-6">
-        Tap a subject to add an exam date. You can add more than one, like a
-        term test and the final.
+        {t('intro')}
       </p>
       <ExamDatesForm
         initialSubjects={subjects}

@@ -3,38 +3,10 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { supabase } from '@/lib/supabaseClient';
 import { recalculateTodayPlan } from '@/lib/recalculateTodayPlan';
-
-const PREDEFINED_SUBJECTS = [
-  'Accounting',
-  'Afrikaans FAL',
-  'Afrikaans HL',
-  'Agricultural Sciences',
-  'Biology',
-  'Business Studies',
-  'CAT',
-  'Consumer Studies',
-  'Dramatic Arts',
-  'Economics',
-  'Engineering Graphics & Design',
-  'English FAL',
-  'English HL',
-  'Geography',
-  'History',
-  'Information Technology',
-  'Life Orientation',
-  'Life Sciences',
-  'Mathematical Literacy',
-  'Mathematics',
-  'Music',
-  'Physical Sciences',
-  'Religion Studies',
-  'Sepedi HL',
-  'Setswana HL',
-  'Tourism',
-  'Visual Arts',
-  'Xhosa HL',
-  'Zulu HL',
-];
+import { useTranslations } from 'next-intl';
+import { useIntlTag } from '@/lib/i18n/intl';
+import { PRESET_SUBJECTS, foldForSearch } from '@/lib/i18n/subjects';
+import { useSubjectLabel } from '@/lib/i18n/useSubjectLabel';
 
 interface ExamDate {
   id: string;
@@ -52,9 +24,9 @@ function sortDates(dates: ExamDate[]): ExamDate[] {
   return [...dates].sort((a, b) => (a.exam_date < b.exam_date ? -1 : 1));
 }
 
-function formatDateChip(dateStr: string): string {
+function formatDateChip(dateStr: string, intlTag: string): string {
   const date = new Date(`${dateStr}T00:00:00`);
-  return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+  return date.toLocaleDateString(intlTag, { day: 'numeric', month: 'short' });
 }
 
 export default function ManageSubjectsForm({
@@ -64,6 +36,9 @@ export default function ManageSubjectsForm({
   userId: string;
   initialSubjects: Subject[];
 }) {
+  const t = useTranslations('manage');
+  const intlTag = useIntlTag();
+  const subjectLabel = useSubjectLabel();
   const [tab, setTab] = useState<'subjects' | 'ranking' | 'dates'>('ranking');
   const [subjects, setSubjects] = useState(
     initialSubjects.map((s) => ({ ...s, exam_dates: sortDates(s.exam_dates) }))
@@ -114,12 +89,15 @@ export default function ManageSubjectsForm({
   const minDateStr = tomorrow.toISOString().slice(0, 10);
 
   const filteredOptions = useMemo(() => {
-    const q = query.trim().toLowerCase();
+    // Search matches the stored (English) name AND the label in the active language.
+    const q = foldForSearch(query.trim());
     const already = new Set(subjects.map((s) => s.subject_name.toLowerCase()));
-    return PREDEFINED_SUBJECTS.filter(
-      (subj) => !already.has(subj.toLowerCase()) && (q === '' || subj.toLowerCase().includes(q))
+    return PRESET_SUBJECTS.map((p) => p.name).filter(
+      (subj) =>
+        !already.has(subj.toLowerCase()) &&
+        (q === '' || foldForSearch(subj).includes(q) || foldForSearch(subjectLabel(subj)).includes(q))
     );
-  }, [query, subjects]);
+  }, [query, subjects, subjectLabel]);
 
   async function addSubject(name: string, isCustom: boolean) {
     const trimmed = name.trim();
@@ -138,7 +116,7 @@ export default function ManageSubjectsForm({
     setAddingSubject(false);
 
     if (insertError || !data) {
-      setError('Could not add that subject. Try again.');
+      setError(t('addSubjectError'));
       return;
     }
 
@@ -169,7 +147,7 @@ export default function ManageSubjectsForm({
     setRemovingId(null);
 
     if (deleteError) {
-      setError('Could not remove that subject. Try again.');
+      setError(t('removeSubjectError'));
       return;
     }
 
@@ -193,7 +171,7 @@ export default function ManageSubjectsForm({
 
     if (updateError) {
       setSavingId(null);
-      setError('Could not save that. Try again.');
+      setError(t('saveError'));
       return;
     }
 
@@ -206,7 +184,7 @@ export default function ManageSubjectsForm({
   async function handleAddDate(subjectId: string, value: string) {
     if (!value) return;
     if (value < minDateStr) {
-      setError('Exam dates must be at least tomorrow - please pick a later date.');
+      setError(t('minDate'));
       return;
     }
 
@@ -233,7 +211,7 @@ export default function ManageSubjectsForm({
         .single();
 
       if (insertError || !data) {
-        setError('Could not add that date. Try again.');
+        setError(t('addDateError'));
         return;
       }
 
@@ -257,7 +235,7 @@ export default function ManageSubjectsForm({
     const { error: deleteError } = await supabase.from('exam_dates').delete().eq('id', dateId);
 
     if (deleteError) {
-      setError('Could not remove that date. Try again.');
+      setError(t('removeDateError'));
       return;
     }
 
@@ -284,7 +262,7 @@ export default function ManageSubjectsForm({
             tab === 'subjects' ? 'neu-raised-accent text-black' : 'text-text-muted'
           }`}
         >
-          Subjects
+          {t('tabSubjects')}
         </button>
         <button
           type="button"
@@ -293,7 +271,7 @@ export default function ManageSubjectsForm({
             tab === 'ranking' ? 'neu-raised-accent text-black' : 'text-text-muted'
           }`}
         >
-          Ranking
+          {t('tabRanking')}
         </button>
         <button
           type="button"
@@ -302,7 +280,7 @@ export default function ManageSubjectsForm({
             tab === 'dates' ? 'neu-raised-accent text-black' : 'text-text-muted'
           }`}
         >
-          Exam dates
+          {t('tabDates')}
         </button>
       </div>
 
@@ -312,11 +290,11 @@ export default function ManageSubjectsForm({
         <div>
           <div className="relative">
             <label className="block font-heading font-bold text-[10.5px] uppercase tracking-[0.6px] text-text-muted mb-1.5">
-              Add a subject
+              {t('addSubjectLabel')}
             </label>
             <input
               type="text"
-              placeholder="e.g. Mathematics"
+              placeholder={t('searchPlaceholder')}
               value={query}
               onChange={(e) => {
                 setQuery(e.target.value);
@@ -334,7 +312,7 @@ export default function ManageSubjectsForm({
                     onClick={() => handleSelectOption(opt)}
                     className="w-full text-left px-[14px] py-[10px] font-body text-[14px] text-text-primary"
                   >
-                    {opt}
+                    {subjectLabel(opt)}
                   </button>
                 ))}
               </div>
@@ -346,7 +324,7 @@ export default function ManageSubjectsForm({
               <input
                 type="text"
                 maxLength={60}
-                placeholder="Your subject name"
+                placeholder={t('customPlaceholder')}
                 value={customValue}
                 onChange={(e) => setCustomValue(e.target.value)}
                 onKeyDown={(e) => {
@@ -362,7 +340,7 @@ export default function ManageSubjectsForm({
                 onClick={handleAddCustom}
                 className="neu-raised-accent text-black font-heading font-bold text-[13.5px] rounded-neu-sm px-4"
               >
-                Add
+                {t('add')}
               </button>
             </div>
           ) : (
@@ -371,12 +349,12 @@ export default function ManageSubjectsForm({
               onClick={() => setShowCustomInput(true)}
               className="neu-raised w-full text-text-primary font-heading font-bold text-[12.5px] rounded-neu-md py-[11px] mt-3"
             >
-              + Add my own subject
+              {t('addOwn')}
             </button>
           )}
 
           <p className="font-heading font-bold text-[10.5px] uppercase tracking-[0.6px] text-text-muted mt-6 mb-2">
-            Your subjects
+            {t('yourSubjects')}
           </p>
           {subjects.map((subject) => (
             <div
@@ -384,22 +362,21 @@ export default function ManageSubjectsForm({
               className="neu-raised flex items-center justify-between rounded-neu-sm px-[14px] py-[11px] mb-[9px]"
             >
               <span className="font-body font-bold text-[13.5px] text-text-primary">
-                {subject.subject_name}
+                {subjectLabel(subject.subject_name)}
               </span>
               <button
                 type="button"
                 disabled={removingId === subject.id}
                 onClick={() => removeSubject(subject)}
                 className="text-text-muted text-lg leading-none px-2 disabled:opacity-40"
-                aria-label={`Remove ${subject.subject_name}`}
+                aria-label={t('removeSubjectAria', { subject: subjectLabel(subject.subject_name) })}
               >
                 ✕
               </button>
             </div>
           ))}
           <p className="font-body text-[10px] text-text-muted mt-2">
-            New subjects will need a confidence ranking and exam date before they show up in your
-            plan.
+            {t('newSubjectNote')}
           </p>
         </div>
       )}
@@ -407,7 +384,7 @@ export default function ManageSubjectsForm({
       {tab === 'ranking' && (
         <div>
           <p className="font-body text-[10px] text-text-muted mb-[14px]">
-            1 = weakest &nbsp;·&nbsp; 5 = strongest
+            {t('scale')}
           </p>
           {subjects.map((subject) => (
             <div
@@ -415,7 +392,7 @@ export default function ManageSubjectsForm({
               className="neu-raised flex items-center justify-between rounded-neu-sm px-[14px] py-[11px] mb-[10px]"
             >
               <span className="font-body font-bold text-[13.5px] text-text-primary">
-                {subject.subject_name}
+                {subjectLabel(subject.subject_name)}
               </span>
               <div className="flex gap-[5px]">
                 {[1, 2, 3, 4, 5].map((score) => {
@@ -429,7 +406,7 @@ export default function ManageSubjectsForm({
                       className={`w-5 h-5 rounded-full flex items-center justify-center font-heading font-bold text-[10px] disabled:opacity-50 ${
                         selected ? 'neu-pressed-accent-sm text-black' : 'neu-raised text-text-primary'
                       }`}
-                      aria-label={`${subject.subject_name}: confidence ${score}`}
+                      aria-label={t('scoreAria', { subject: subjectLabel(subject.subject_name), score })}
                     >
                       {score}
                     </button>
@@ -450,11 +427,11 @@ export default function ManageSubjectsForm({
             >
               <div className="flex items-center justify-between">
                 <span className="font-body font-bold text-[13.5px] text-text-primary">
-                  {subject.subject_name}
+                  {subjectLabel(subject.subject_name)}
                 </span>
                 <div className="relative">
                   <span className="font-body text-xs rounded-[8px] px-[10px] py-[5px] border-[1.3px] text-orange-text border-orange whitespace-nowrap">
-                    {addingId === subject.id ? 'Adding…' : '+ Add date'}
+                    {addingId === subject.id ? t('adding') : t('addDate')}
                   </span>
                   <input
                     type="date"
@@ -472,11 +449,11 @@ export default function ManageSubjectsForm({
                       key={d.id}
                       className="flex items-center gap-1 font-body text-xs rounded-[8px] pl-[10px] pr-[6px] py-[5px] border-[1.3px] text-navy dark:text-text-primary border-navy dark:border-text-primary"
                     >
-                      {formatDateChip(d.exam_date)}
+                      {formatDateChip(d.exam_date, intlTag)}
                       <button
                         type="button"
                         onClick={() => handleRemoveDate(subject.id, d.id)}
-                        aria-label={`Remove ${formatDateChip(d.exam_date)} for ${subject.subject_name}`}
+                        aria-label={t('removeDateAria', { date: formatDateChip(d.exam_date, intlTag), subject: subjectLabel(subject.subject_name) })}
                         className="text-text-muted leading-none"
                       >
                         ✕
@@ -492,7 +469,7 @@ export default function ManageSubjectsForm({
 
       {recalculating && (
         <p className="font-body text-[11px] text-text-muted text-center mt-2">
-          Updating your plan…
+          {t('updating')}
         </p>
       )}
     </div>

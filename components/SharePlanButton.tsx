@@ -1,6 +1,9 @@
 'use client';
 
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
+import { useIntlTag } from '@/lib/i18n/intl';
+import { useSubjectLabel } from '@/lib/i18n/useSubjectLabel';
 import type { PlanPdfExam, PlanPdfSession } from '@/lib/buildPlanPdf';
 
 export default function SharePlanButton({
@@ -16,6 +19,9 @@ export default function SharePlanButton({
   exams: PlanPdfExam[];
   iconOnly?: boolean;
 }) {
+  const t = useTranslations('share');
+  const intlTag = useIntlTag();
+  const subjectLabel = useSubjectLabel();
   const [sharing, setSharing] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -26,15 +32,36 @@ export default function SharePlanButton({
 
     try {
       const { buildPlanPdf } = await import('@/lib/buildPlanPdf');
-      const blob = await buildPlanPdf({ studentName, dateLabel, sessions, exams });
+      const firstName = studentName.split(' ')[0];
+      const blob = await buildPlanPdf({
+        studentName,
+        dateLabel,
+        sessions: sessions.map((s) => ({ ...s, subject_name: subjectLabel(s.subject_name) })),
+        exams: exams.map((e) => ({ ...e, subjectName: subjectLabel(e.subjectName) })),
+        intlTag,
+        labels: {
+          title: t('pdf.title'),
+          forName: t('pdf.forName', { name: studentName }),
+          empty: t('pdf.empty'),
+          done: t('pdf.done'),
+          pending: t('pdf.pending'),
+          upcoming: t('pdf.upcoming'),
+          when: (days: number) => t('pdf.when', { days }),
+          eyebrow: t('pdf.eyebrow'),
+          headline: t('pdf.headline', { name: firstName }),
+          cta: t('pdf.cta'),
+          scan: t('pdf.scan'),
+          micro: t('pdf.micro'),
+        },
+      });
       const fileName = `${studentName}-study-plan.pdf`;
       const file = new File([blob], fileName, { type: 'application/pdf' });
 
       if (navigator.canShare?.({ files: [file] })) {
         await navigator.share({
           files: [file],
-          title: `${studentName}'s study plan`,
-          text: `${studentName}'s study plan for ${dateLabel}`,
+          title: t('shareTitle', { name: studentName }),
+          text: t('shareText', { name: studentName, date: dateLabel }),
         });
       } else {
         const url = URL.createObjectURL(blob);
@@ -48,7 +75,7 @@ export default function SharePlanButton({
       if (err instanceof Error && err.name === 'AbortError') {
         return;
       }
-      setError('Could not create the PDF. Try again.');
+      setError(t('error'));
     } finally {
       setSharing(false);
     }
@@ -60,7 +87,7 @@ export default function SharePlanButton({
         type="button"
         onClick={handleShare}
         disabled={sharing}
-        aria-label={sharing ? 'Preparing share' : 'Share plan'}
+        aria-label={sharing ? t('preparingAria') : t('shareAria')}
         className={
           iconOnly
             ? 'flex items-center justify-center text-teal disabled:opacity-60'
@@ -76,7 +103,7 @@ export default function SharePlanButton({
             strokeLinejoin="round"
           />
         </svg>
-        {!iconOnly && (sharing ? 'Preparing…' : 'Share')}
+        {!iconOnly && (sharing ? t('preparing') : t('share'))}
       </button>
       {error && <p className="font-body text-xs text-red-600 mt-1">{error}</p>}
     </div>

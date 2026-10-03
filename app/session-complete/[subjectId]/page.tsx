@@ -1,25 +1,21 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
+import { getTranslations } from 'next-intl/server';
+import { getSubjectLabel } from '@/lib/i18n/getSubjectLabel';
 import { createSupabaseServerClient } from '@/lib/supabaseServerClient';
 import ProgressStrip from '@/components/ProgressStrip';
 import NavArrows from '@/components/NavArrows';
 
-const QUOTES = [
-  "Effort doesn't need to be perfect to count. It just needs to be repeated.",
-  'The plan is not the goal. The plan is what gets you to the goal.',
-  "Confidence isn't something you wait for. It's built session by session.",
-  "You don't need to feel ready. You need to show up.",
-  "Every hour you put in now is a mark you don't have to worry about later.",
-  'The learner who plans beats the learner who panics — every time.',
-  'Progress is not always visible. But it is always real.',
-  'You are closer than you think.',
-];
+// Quote text lives in messages (sessionComplete.quotes.q1..q8).
+const QUOTE_KEYS = ['q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8'] as const;
 
 export default async function SessionCompletePage({
   params,
 }: {
   params: { subjectId: string };
 }) {
+  const t = await getTranslations('sessionComplete');
+  const subjectLabel = await getSubjectLabel();
   const supabase = createSupabaseServerClient();
   const {
     data: { user },
@@ -62,7 +58,7 @@ export default async function SessionCompletePage({
 
   const allCompleted = rows.length > 0 && rows.every((r) => r.completed);
   const nextSession = rows.find((r) => !r.completed);
-  const quote = QUOTES[Math.floor(Math.random() * QUOTES.length)];
+  const quote = t(`quotes.${QUOTE_KEYS[Math.floor(Math.random() * QUOTE_KEYS.length)]}`);
 
   return (
     <main
@@ -77,14 +73,16 @@ export default async function SessionCompletePage({
         <span className="font-heading font-bold text-[24px] text-white">✓</span>
       </div>
 
-      <h1 className="font-heading font-bold text-[21px] tracking-[-0.025em] text-text-primary text-center">
-        Nice work.
-        <br />
-        Session complete.
+      <h1 className="font-heading font-bold text-[21px] tracking-[-0.025em] text-text-primary text-center whitespace-pre-line">
+        {t('title')}
       </h1>
 
       <p className="font-body text-[14px] text-text-body text-center mt-2">
-        25 minutes logged on <span className="font-bold">{subject.subject_name}</span>.
+        {t.rich('logged', {
+          minutes: 25,
+          subject: subjectLabel(subject.subject_name),
+          b: (chunks) => <span className="font-bold">{chunks}</span>,
+        })}
       </p>
 
       <div className="w-full mt-2 mb-[22px]">
@@ -98,7 +96,7 @@ export default async function SessionCompletePage({
           </span>
           <p className="font-body text-[14px] italic text-text-primary mt-1">{quote}</p>
           <p className="font-heading font-bold text-[10.5px] text-text-muted mt-3">
-            — Mastering Your Studies
+            {t('quoteSource')}
           </p>
         </div>
       )}
@@ -106,7 +104,7 @@ export default async function SessionCompletePage({
       <div className="flex-1" />
 
       <p className="font-heading font-bold text-[10.5px] uppercase text-text-primary text-center mb-3">
-        What&apos;s next?
+        {t('whatsNext')}
       </p>
 
       {nextSession ? (
@@ -114,11 +112,11 @@ export default async function SessionCompletePage({
           href={`/timer/${nextSession.id}`}
           className="neu-raised-accent w-full text-black font-heading font-bold text-[13.5px] rounded-full py-[14px] text-center"
         >
-          Start next: {nextSession.subject_name}
+          {t('startNext', { subject: subjectLabel(nextSession.subject_name) })}
         </Link>
       ) : (
         <p className="font-body text-[14px] text-text-body text-center">
-          You&apos;re done for today. Well done!
+          {t('doneToday')}
         </p>
       )}
 
@@ -126,11 +124,11 @@ export default async function SessionCompletePage({
         href="/dashboard"
         className="neu-raised w-full text-text-primary font-heading font-bold text-[13.5px] rounded-full py-[13px] text-center mt-[10px]"
       >
-        Back to Today&apos;s Plan
+        {t('backToPlan')}
       </Link>
 
       <p className="font-body text-[10px] text-text-muted text-center mt-3">
-        Your call — there&apos;s no penalty either way.
+        {t('noPenalty')}
       </p>
     </main>
   );

@@ -1,5 +1,7 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
+
 function ShareIcon() {
   return (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -21,6 +23,7 @@ export default function InstallInstructionsModal({
   isIOS: boolean;
   onClose: () => void;
 }) {
+  const t = useTranslations('install');
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/50 px-[22px] pb-[22px] sm:pb-0">
       <div
@@ -28,7 +31,7 @@ export default function InstallInstructionsModal({
         onClick={(e) => e.stopPropagation()}
       >
         <p className="font-heading font-bold text-[16px] text-text-primary">
-          Keep empowermint one tap away
+          {t('modalTitle')}
         </p>
 
         {isIOS ? (
@@ -37,16 +40,15 @@ export default function InstallInstructionsModal({
               <span className="text-teal flex-shrink-0">
                 <ShareIcon />
               </span>
-              Tap the Share icon in Safari&apos;s toolbar.
+              {t('iosStep1')}
             </p>
             <p className="font-body text-[13.5px] text-text-body">
-              Then scroll down and tap <span className="font-bold">Add to Home Screen</span>.
+              {t.rich('iosStep2', { b: (chunks) => <span className="font-bold">{chunks}</span> })}
             </p>
           </div>
         ) : (
           <p className="font-body text-[13.5px] text-text-body mt-3">
-            Look for <span className="font-bold">Add to Home Screen</span> or{' '}
-            <span className="font-bold">Install App</span> in your browser&apos;s menu.
+            {t.rich('androidStep', { b: (chunks) => <span className="font-bold">{chunks}</span> })}
           </p>
         )}
 
@@ -55,7 +57,7 @@ export default function InstallInstructionsModal({
           onClick={onClose}
           className="neu-raised-accent w-full font-heading font-bold text-[13.5px] text-black rounded-full py-[13px] mt-5"
         >
-          Got it
+          {t('gotIt')}
         </button>
       </div>
     </div>

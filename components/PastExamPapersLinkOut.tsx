@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import NavArrows from '@/components/NavArrows';
 import BottomNav from '@/components/BottomNav';
 import { logActivity } from '@/lib/logActivity';
@@ -27,6 +28,7 @@ export default function PastExamPapersLinkOut({
   learnerId: string;
   grade: string | null;
 }) {
+  const t = useTranslations('pastPapers');
   return (
     <main
       className="min-h-dvh bg-bg flex flex-col px-[22px] pt-[38px]"
@@ -35,10 +37,10 @@ export default function PastExamPapersLinkOut({
       <NavArrows showForward={false} />
 
       <h1 className="font-heading font-bold text-[21px] tracking-[-0.025em] text-text-primary mt-4">
-        Past Exam Papers
+        {t('title')}
       </h1>
       <p className="font-body text-[13px] text-text-muted mt-2">
-        Pick your board to go straight to the official papers and marking guidelines.
+        {t('intro')}
       </p>
 
       <div className="mt-6">
@@ -54,9 +56,9 @@ export default function PastExamPapersLinkOut({
           >
             <span className="min-w-0 flex-1">
               <span className="block font-heading font-bold text-[14px] text-text-primary">
-                {board.label}
+                {t(`boards.${board.id}.label`)}
               </span>
-              <span className="block font-body text-[11.5px] text-text-muted mt-[2px]">{board.helper}</span>
+              <span className="block font-body text-[11.5px] text-text-muted mt-[2px]">{t(`boards.${board.id}.helper`)}</span>
             </span>
             <span className="text-text-muted flex-shrink-0">
               <ExternalLinkIcon />
@@ -66,8 +68,7 @@ export default function PastExamPapersLinkOut({
       </div>
 
       <p className="font-body text-[10.5px] text-text-muted text-center mt-4">
-        Memos are a marking guideline, not a definitive answer key — used to guide, not to override, your
-        own working.
+        {t('footnote')}
       </p>
 
       <BottomNav userId={learnerId} />

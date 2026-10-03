@@ -1,6 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
 function ClockIcon() {
   return (
@@ -27,6 +28,7 @@ function ChevronIcon() {
 
 export default function ExamTimerEntryCard() {
   const router = useRouter();
+  const t = useTranslations('examTimer.entry');
 
   return (
     <button
@@ -40,14 +42,14 @@ export default function ExamTimerEntryCard() {
       <span className="min-w-0 flex-1">
         <span className="flex items-center gap-[6px]">
           <span className="font-heading font-bold text-[13.5px] text-text-primary">
-            Practice your exam timing
+            {t('title')}
           </span>
           <span className="font-heading font-bold text-[8.5px] uppercase tracking-wide text-black bg-orange rounded-full px-[6px] py-[1.5px] flex-shrink-0">
-            New
+            {t('badge')}
           </span>
         </span>
-        <span className="block font-body text-[11px] text-text-muted mt-[2px] truncate">
-          Full-length countdown for your next paper
+        <span className="block font-body text-[11px] text-text-muted mt-[2px] line-clamp-2">
+          {t('subtitle')}
         </span>
       </span>
       <span className="text-text-muted flex-shrink-0">

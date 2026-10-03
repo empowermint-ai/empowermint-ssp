@@ -2,39 +2,10 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { supabase } from '@/lib/supabaseClient';
-
-const PREDEFINED_SUBJECTS = [
-  'Accounting',
-  'Afrikaans FAL',
-  'Afrikaans HL',
-  'Agricultural Sciences',
-  'Biology',
-  'Business Studies',
-  'CAT',
-  'Consumer Studies',
-  'Dramatic Arts',
-  'Economics',
-  'Engineering Graphics & Design',
-  'English FAL',
-  'English HL',
-  'Geography',
-  'History',
-  'Information Technology',
-  'Life Orientation',
-  'Life Sciences',
-  'Mathematical Literacy',
-  'Mathematics',
-  'Music',
-  'Physical Sciences',
-  'Religion Studies',
-  'Sepedi HL',
-  'Setswana HL',
-  'Tourism',
-  'Visual Arts',
-  'Xhosa HL',
-  'Zulu HL',
-];
+import { PRESET_SUBJECTS, foldForSearch } from '@/lib/i18n/subjects';
+import { useSubjectLabel } from '@/lib/i18n/useSubjectLabel';
 
 interface SubjectItem {
   id: string | null;
@@ -50,6 +21,8 @@ export default function SubjectsForm({
   initialSubjects: { id: string; subject_name: string; is_custom: boolean }[];
 }) {
   const router = useRouter();
+  const t = useTranslations('subjects');
+  const subjectLabel = useSubjectLabel();
   const [subjects, setSubjects] = useState<SubjectItem[]>(
     initialSubjects.map((s) => ({ id: s.id, name: s.subject_name, isCustom: s.is_custom }))
   );
@@ -89,12 +62,15 @@ export default function SubjectsForm({
   }, [userId]);
 
   const filteredOptions = useMemo(() => {
-    const q = query.trim().toLowerCase();
+    // Search matches the stored (English) name AND the label in the active language.
+    const q = foldForSearch(query.trim());
     const already = new Set(subjects.map((s) => s.name.toLowerCase()));
-    return PREDEFINED_SUBJECTS.filter(
-      (subj) => !already.has(subj.toLowerCase()) && (q === '' || subj.toLowerCase().includes(q))
+    return PRESET_SUBJECTS.map((p) => p.name).filter(
+      (subj) =>
+        !already.has(subj.toLowerCase()) &&
+        (q === '' || foldForSearch(subj).includes(q) || foldForSearch(subjectLabel(subj)).includes(q))
     );
-  }, [query, subjects]);
+  }, [query, subjects, subjectLabel]);
 
   function addSubject(name: string, isCustom: boolean) {
     const trimmed = name.trim();
@@ -142,7 +118,7 @@ export default function SubjectsForm({
       if (error) {
         submittingRef.current = false;
         setSaving(false);
-        setError('Could not save your subjects. Try again.');
+        setError(t('saveError'));
         return;
       }
     }
@@ -154,11 +130,11 @@ export default function SubjectsForm({
     <div className="flex flex-col flex-1 min-h-0 mt-6">
       <div className="relative">
         <label className="block font-heading font-bold text-[10.5px] uppercase tracking-[0.6px] text-text-muted mb-1.5">
-          Search or select a subject
+          {t('searchLabel')}
         </label>
         <input
           type="text"
-          placeholder="e.g. Mathematics"
+          placeholder={t('searchPlaceholder')}
           value={query}
           onChange={(e) => {
             setQuery(e.target.value);
@@ -176,7 +152,7 @@ export default function SubjectsForm({
                 onClick={() => handleSelectOption(opt)}
                 className="w-full text-left px-[14px] py-[10px] font-body text-[14px] text-text-primary"
               >
-                {opt}
+                {subjectLabel(opt)}
               </button>
             ))}
           </div>
@@ -190,13 +166,13 @@ export default function SubjectsForm({
             className="neu-raised flex items-center justify-between rounded-neu-sm px-[14px] py-[11px] mb-[9px]"
           >
             <span className="font-body font-bold text-[13.5px] text-text-primary">
-              {subject.name}
+              {subjectLabel(subject.name)}
             </span>
             <button
               type="button"
               onClick={() => removeSubject(subject)}
               className="text-text-muted text-lg leading-none px-2"
-              aria-label={`Remove ${subject.name}`}
+              aria-label={t('remove', { subject: subjectLabel(subject.name) })}
             >
               ✕
             </button>
@@ -209,7 +185,7 @@ export default function SubjectsForm({
           <input
             type="text"
             maxLength={60}
-            placeholder="Your subject name"
+            placeholder={t('customPlaceholder')}
             value={customValue}
             onChange={(e) => setCustomValue(e.target.value)}
             onKeyDown={(e) => {
@@ -225,7 +201,7 @@ export default function SubjectsForm({
             onClick={handleAddCustom}
             className="neu-raised-accent text-black font-heading font-bold text-[13.5px] rounded-neu-sm px-4"
           >
-            Add
+            {t('add')}
           </button>
         </div>
       )}
@@ -235,7 +211,7 @@ export default function SubjectsForm({
         onClick={() => setShowCustomInput((v) => !v)}
         className="neu-raised w-full text-text-primary font-heading font-bold text-[13.5px] rounded-full py-[13px] mt-3"
       >
-        + Add my own subject
+        {t('addOwn')}
       </button>
 
       {error && <p className="text-red-600 text-xs mt-2 text-center">{error}</p>}
@@ -246,7 +222,7 @@ export default function SubjectsForm({
         onClick={handleNext}
         className="neu-raised-accent w-full text-black font-heading font-bold text-[13.5px] rounded-full py-[14px] mt-3 disabled:opacity-40"
       >
-        {saving ? 'Saving…' : 'Next: rank these'}
+        {saving ? t('saving') : t('next')}
       </button>
     </div>
   );

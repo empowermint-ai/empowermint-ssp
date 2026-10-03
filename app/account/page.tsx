@@ -1,4 +1,5 @@
 import { redirect } from 'next/navigation';
+import { getTranslations } from 'next-intl/server';
 import { createSupabaseServerClient } from '@/lib/supabaseServerClient';
 import SignOutButton from '@/components/SignOutButton';
 import ChangePasswordForm from '@/components/ChangePasswordForm';
@@ -6,6 +7,7 @@ import ParentNotifyForm from '@/components/ParentNotifyForm';
 import NavArrows from '@/components/NavArrows';
 
 export default async function AccountPage() {
+  const t = await getTranslations('account');
   const supabase = createSupabaseServerClient();
   const {
     data: { user },
@@ -28,21 +30,21 @@ export default async function AccountPage() {
           <div className="flex items-center gap-3">
             <NavArrows />
             <span className="font-heading text-2xl text-text-primary">
-              Account
+              {t('title')}
             </span>
           </div>
           <SignOutButton />
         </div>
         <div className="neu-raised rounded-neu-lg p-6">
-          <p className="text-text-body text-sm">Signed in as</p>
+          <p className="text-text-body text-sm">{t('signedInAs')}</p>
           <p className="text-text-primary font-medium">{user.email}</p>
           {profile?.username && (
-            <p className="text-text-muted text-xs mt-1">Student: {profile.username}</p>
+            <p className="text-text-muted text-xs mt-1">{t('student', { name: profile.username })}</p>
           )}
         </div>
         <div className="neu-raised rounded-neu-lg p-6 mt-4">
           <h2 className="font-heading text-lg text-text-primary mb-4">
-            Change password
+            {t('changePassword')}
           </h2>
           <ChangePasswordForm />
         </div>
@@ -54,13 +56,16 @@ export default async function AccountPage() {
         </div>
         <div className="neu-raised rounded-neu-lg p-6 mt-4">
           <h2 className="font-heading text-lg text-text-primary mb-2">
-            Contact us
+            {t('contactUs')}
           </h2>
           <p className="text-text-body text-sm">
-            Questions or feedback? Email{' '}
-            <a href="mailto:ebrahim@empowermint.co.za" className="text-teal font-medium">
-              ebrahim@empowermint.co.za
-            </a>
+            {t.rich('contactBody', {
+              link: (chunks) => (
+                <a href="mailto:ebrahim@empowermint.co.za" className="text-teal font-medium">
+                  {chunks}
+                </a>
+              ),
+            })}
           </p>
         </div>
       </div>

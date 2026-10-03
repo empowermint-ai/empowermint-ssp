@@ -4,16 +4,18 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import NavArrows from '@/components/NavArrows';
 import { logActivity } from '@/lib/logActivity';
-import { examTimerDurationLabel } from '@/lib/examTimerDurations';
+import { useTranslations } from 'next-intl';
+import { formatExamDuration } from '@/lib/i18n/duration';
+import { useSubjectLabel } from '@/lib/i18n/useSubjectLabel';
 import { getExamTimerColorState, type ExamTimerColorState } from '@/lib/examTimerColorState';
 
 const SWEEP_PERIOD_MS = 25000;
 const CENTER = 115;
 
-const STATE_META: Record<ExamTimerColorState, { glow: string; caption: string }> = {
-  green: { glow: 'var(--glow-green)', caption: 'Remaining · Plenty of time.' },
-  amber: { glow: 'var(--glow-amber)', caption: 'Remaining · Stay focused.' },
-  red: { glow: 'var(--glow-red)', caption: 'Remaining · Final stretch.' },
+const STATE_META: Record<ExamTimerColorState, { glow: string }> = {
+  green: { glow: 'var(--glow-green)' },
+  amber: { glow: 'var(--glow-amber)' },
+  red: { glow: 'var(--glow-red)' },
 };
 
 function formatRemaining(totalSeconds: number): string {
@@ -64,8 +66,13 @@ export default function ExamTimerSessionClient({
   durationMinutes: number;
 }) {
   const router = useRouter();
+  const t = useTranslations('examTimer');
+  const subjectLabel = useSubjectLabel();
+  // subjectName stays the stored (English) name for activity logging; only the
+  // text shown on screen is translated.
+  const displaySubject = subjectLabel(subjectName);
   const totalSeconds = durationMinutes * 60;
-  const durationLabel = examTimerDurationLabel(durationMinutes);
+  const durationLabel = formatExamDuration(t, durationMinutes);
 
   const [started, setStarted] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
@@ -183,19 +190,19 @@ export default function ExamTimerSessionClient({
       </div>
 
       <p className="font-heading font-bold text-[10px] uppercase tracking-wide text-teal text-center mt-4">
-        Simulation exam timer session
+        {t('session.eyebrow')}
       </p>
 
       <div className="w-full mt-4">
         <div className="flex justify-between items-baseline">
           <span className="font-heading font-bold text-[10px] uppercase tracking-wide text-text-muted">
-            Subject:
+            {t('session.subject')}
           </span>
-          <span className="font-body text-[13px] text-text-primary">{subjectName}</span>
+          <span className="font-body text-[13px] text-text-primary">{displaySubject}</span>
         </div>
         <div className="flex justify-between items-baseline mt-1">
           <span className="font-heading font-bold text-[10px] uppercase tracking-wide text-text-muted">
-            Duration:
+            {t('session.duration')}
           </span>
           <span className="font-body text-[13px] text-text-primary">{durationLabel}</span>
         </div>
@@ -206,9 +213,9 @@ export default function ExamTimerSessionClient({
         className="font-heading font-bold text-[21px] text-center mt-4 text-text-primary"
         style={{ letterSpacing: '-0.025em' }}
       >
-        {subjectName}
+        {displaySubject}
       </h1>
-      <p className="font-body text-[14px] text-center mt-1 text-orange-text">Study session</p>
+      <p className="font-body text-[14px] text-center mt-1 text-orange-text">{t('session.studySession')}</p>
 
       <div className="relative mt-6" style={{ width: 230, height: 230 }}>
         <div
@@ -250,7 +257,7 @@ export default function ExamTimerSessionClient({
               className="font-body"
               style={{ fill: 'var(--color-text-muted)', fontSize: 7.5 }}
             >
-              {subjectName}
+              {displaySubject}
             </text>
 
             <g ref={sweepHandRef}>
@@ -290,13 +297,13 @@ export default function ExamTimerSessionClient({
       {!completed ? (
         <>
           <p className="font-heading font-bold text-[22px] mt-6 text-text-primary">
-            {started ? formatRemaining(remainingSeconds) : `${durationMinutes} minutes`}
+            {started ? formatRemaining(remainingSeconds) : t('session.minutes', { minutes: durationMinutes })}
           </p>
           <p
             className="font-body text-[10px] uppercase mt-1 transition-colors duration-700"
             style={{ color: meta.glow, letterSpacing: '1.5px' }}
           >
-            {meta.caption}
+            {t(`status.${colorState}`)}
           </p>
 
           <div className="flex-1" />
@@ -307,7 +314,7 @@ export default function ExamTimerSessionClient({
               onClick={handleStart}
               className="neu-raised-accent w-full font-heading font-bold text-[14px] text-black rounded-full py-[15px] transition-all active:scale-[0.97]"
             >
-              Start, All The Best.
+              {t('session.start')}
             </button>
           ) : (
             <>
@@ -316,14 +323,14 @@ export default function ExamTimerSessionClient({
                 onClick={togglePause}
                 className="neu-raised w-full font-heading font-bold text-[13.5px] text-text-primary rounded-neu-md py-[14px] transition-all active:scale-[0.97]"
               >
-                {isPaused ? 'Resume' : 'Pause'}
+                {isPaused ? t('session.resume') : t('session.pause')}
               </button>
               <button
                 type="button"
                 onClick={handleEndEarly}
                 className="font-body text-[12px] text-text-muted underline text-center mt-3"
               >
-                End session early
+                {t('session.endEarly')}
               </button>
             </>
           )}
@@ -334,10 +341,10 @@ export default function ExamTimerSessionClient({
             className="font-heading font-bold text-[21px] text-center mt-6 text-text-primary"
             style={{ letterSpacing: '-0.02em' }}
           >
-            TIME&apos;S UP
+            {t('session.timesUp')}
           </h2>
           <p className="font-heading font-bold text-[12px] uppercase tracking-wide text-center mt-1 text-text-muted">
-            HOW DID IT GO?
+            {t('session.howDidItGo')}
           </p>
 
           <div className="flex items-center justify-center gap-6 mt-5">
@@ -345,7 +352,7 @@ export default function ExamTimerSessionClient({
               type="button"
               disabled={feedback !== null}
               onClick={() => handleFeedback('up')}
-              aria-label="Thumbs up"
+              aria-label={t('session.thumbsUp')}
               className={`flex items-center justify-center w-[60px] h-[60px] rounded-full transition-all disabled:opacity-40 ${
                 feedback === 'up' ? 'neu-pressed-accent text-black' : 'neu-raised text-text-primary'
               }`}
@@ -356,7 +363,7 @@ export default function ExamTimerSessionClient({
               type="button"
               disabled={feedback !== null}
               onClick={() => handleFeedback('down')}
-              aria-label="Thumbs down"
+              aria-label={t('session.thumbsDown')}
               className={`flex items-center justify-center w-[60px] h-[60px] rounded-full transition-all disabled:opacity-40 ${
                 feedback === 'down' ? 'neu-pressed-accent text-black' : 'neu-raised text-text-primary'
               }`}
@@ -366,7 +373,7 @@ export default function ExamTimerSessionClient({
           </div>
 
           {feedback && (
-            <p className="font-body text-[11px] text-teal text-center mt-2">Thanks for the feedback</p>
+            <p className="font-body text-[11px] text-teal text-center mt-2">{t('session.thanks')}</p>
           )}
 
           <div className="flex-1" />
@@ -376,7 +383,7 @@ export default function ExamTimerSessionClient({
             onClick={() => router.push('/dashboard')}
             className="neu-raised-accent w-full font-heading font-bold text-[14px] text-black rounded-full py-[15px] transition-all active:scale-[0.97]"
           >
-            Back to planner
+            {t('session.back')}
           </button>
         </>
       )}

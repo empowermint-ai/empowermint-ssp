@@ -11,7 +11,7 @@ import LoadingSpinner from '@/components/LoadingSpinner';
 export default function AuthCallbackPage() {
   const searchParams = useSearchParams();
   const t = useTranslations('auth.callback');
-  const [error, setError] = useState<string | null>(null);
+  const [failed, setFailed] = useState(false);
   const startedRef = useRef(false);
 
   const code = searchParams.get('code');
@@ -29,14 +29,14 @@ export default function AuthCallbackPage() {
 
     async function run() {
       if (searchParams.get('error')) {
-        setError('expired');
+        setFailed(true);
         return;
       }
 
       const hash = window.location.hash;
 
       if (hash.includes('error=')) {
-        setError('expired');
+        setFailed(true);
         return;
       }
 
@@ -69,7 +69,7 @@ export default function AuthCallbackPage() {
           window.location.href = next;
           return;
         }
-        setError('expired');
+        setFailed(true);
         return;
       }
 
@@ -79,7 +79,7 @@ export default function AuthCallbackPage() {
     run();
   }, [code, next]);
 
-  if (error) {
+  if (failed) {
     return (
       <AuthCard title={t('expiredTitle')} subtitle={t('expiredSubtitle')}>
         <Link href="/forgot-password" className="block text-teal text-sm font-medium">

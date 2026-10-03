@@ -64,7 +64,28 @@
     <div class="wrap">
       <div class="mark">em</div>
       <h1>empowermint SSP</h1>
-      <p>You're offline. Reconnect to keep planning.</p>
+      <p id="msg">You're offline. Reconnect to keep planning.</p>
     </div>
+    <script>
+      // Picks the language without any framework (this page is served from the
+      // cache while offline). Order: the app's NEXT_LOCALE cookie, then the
+      // phone language - but only if the app has Afrikaans (or any language)
+      // switched on, which the app records in localStorage "ssp_langs".
+      // To add a language: add one line to MESSAGES below.
+      (function () {
+        var MESSAGES = {
+          af: "Jy is vanlyn. Koppel weer om aan te hou beplan."
+        };
+        try {
+          var enabled = (localStorage.getItem('ssp_langs') || 'en').split(',');
+          var match = document.cookie.match(/(?:^|; )NEXT_LOCALE=([^;]+)/);
+          var lang = match ? decodeURIComponent(match[1]) : (navigator.language || '').toLowerCase().slice(0, 2);
+          if (MESSAGES[lang] && enabled.indexOf(lang) !== -1) {
+            document.documentElement.lang = lang;
+            document.getElementById('msg').textContent = MESSAGES[lang];
+          }
+        } catch (e) {}
+      })();
+    </script>
   </body>
 </html>

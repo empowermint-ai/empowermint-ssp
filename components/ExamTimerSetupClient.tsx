@@ -2,6 +2,9 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
+import { formatExamDuration } from '@/lib/i18n/duration';
+import { useSubjectLabel } from '@/lib/i18n/useSubjectLabel';
 import NavArrows from '@/components/NavArrows';
 import { EXAM_TIMER_DURATIONS } from '@/lib/examTimerDurations';
 
@@ -11,6 +14,8 @@ export default function ExamTimerSetupClient({
   subjects: { id: string; subject_name: string }[];
 }) {
   const router = useRouter();
+  const t = useTranslations('examTimer');
+  const subjectLabel = useSubjectLabel();
   const [subjectId, setSubjectId] = useState('');
   const [minutes, setMinutes] = useState('');
 
@@ -31,12 +36,11 @@ export default function ExamTimerSetupClient({
       </div>
 
       <p className="font-heading font-bold text-[10px] uppercase tracking-wide text-teal text-center mt-4">
-        Exam simulation set up
+        {t('setup.eyebrow')}
       </p>
 
       <p className="font-body text-[13px] text-text-body text-center mt-3">
-        Let&apos;s set up your exam simulation here. Enter from the drop down boxes, the subject
-        you want to practice an exam for as well as the duration of this exam.
+        {t('setup.intro')}
       </p>
 
       <div className="w-full mt-6">
@@ -44,7 +48,7 @@ export default function ExamTimerSetupClient({
           htmlFor="examTimerSubject"
           className="block font-heading font-bold text-[10.5px] uppercase tracking-[0.6px] text-text-muted mb-1.5"
         >
-          Select Subject
+          {t('setup.subjectLabel')}
         </label>
         <select
           id="examTimerSubject"
@@ -53,11 +57,11 @@ export default function ExamTimerSetupClient({
           className="neu-pressed w-full rounded-neu-md px-4 py-3.5 text-text-primary outline-none focus:ring-1 focus:ring-teal/40"
         >
           <option value="" disabled>
-            Select…
+            {t('setup.select')}
           </option>
           {subjects.map((s) => (
             <option key={s.id} value={s.id}>
-              {s.subject_name}
+              {subjectLabel(s.subject_name)}
             </option>
           ))}
         </select>
@@ -68,7 +72,7 @@ export default function ExamTimerSetupClient({
           htmlFor="examTimerDuration"
           className="block font-heading font-bold text-[10.5px] uppercase tracking-[0.6px] text-text-muted mb-1.5"
         >
-          Select time (number of hours)
+          {t('setup.timeLabel')}
         </label>
         <select
           id="examTimerDuration"
@@ -77,11 +81,11 @@ export default function ExamTimerSetupClient({
           className="neu-pressed w-full rounded-neu-md px-4 py-3.5 text-text-primary outline-none focus:ring-1 focus:ring-teal/40"
         >
           <option value="" disabled>
-            Select…
+            {t('setup.select')}
           </option>
           {EXAM_TIMER_DURATIONS.map((d) => (
             <option key={d.minutes} value={d.minutes}>
-              {d.label}
+              {formatExamDuration(t, d.minutes)}
             </option>
           ))}
         </select>
@@ -95,7 +99,7 @@ export default function ExamTimerSetupClient({
         onClick={handleGo}
         className="neu-raised-accent w-full font-heading font-bold text-[14px] text-black rounded-full py-[15px] transition-all active:scale-[0.97] disabled:opacity-40"
       >
-        Go to exam session
+        {t('setup.go')}
       </button>
     </main>
   );

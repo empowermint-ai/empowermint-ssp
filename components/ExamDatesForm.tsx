@@ -2,6 +2,9 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
+import { useIntlTag } from '@/lib/i18n/intl';
+import { useSubjectLabel } from '@/lib/i18n/useSubjectLabel';
 import { supabase } from '@/lib/supabaseClient';
 import { priorityScore } from '@/lib/priorityScore';
 import { nextExamDate } from '@/lib/nextExamDate';
@@ -20,9 +23,9 @@ interface Subject {
   exam_dates: ExamDate[];
 }
 
-function formatDateChip(dateStr: string): string {
+function formatDateChip(dateStr: string, intlTag: string): string {
   const date = new Date(`${dateStr}T00:00:00`);
-  return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+  return date.toLocaleDateString(intlTag, { day: 'numeric', month: 'short' });
 }
 
 function sortDates(dates: ExamDate[]): ExamDate[] {
@@ -41,6 +44,9 @@ export default function ExamDatesForm({
   grade: string | null;
 }) {
   const router = useRouter();
+  const t = useTranslations('examDates');
+  const intlTag = useIntlTag();
+  const subjectLabel = useSubjectLabel();
   const [subjects, setSubjects] = useState(
     initialSubjects.map((s) => ({ ...s, exam_dates: sortDates(s.exam_dates) }))
   );
@@ -89,7 +95,7 @@ export default function ExamDatesForm({
   async function handleAddDate(subjectId: string, value: string) {
     if (!value) return;
     if (value < minDateStr) {
-      setError('Exam dates must be at least tomorrow - please pick a later date.');
+      setError(t('minDate'));
       return;
     }
 
@@ -116,7 +122,7 @@ export default function ExamDatesForm({
         .single();
 
       if (error || !data) {
-        setError('Could not add that date. Try again.');
+        setError(t('addError'));
         return;
       }
 
@@ -135,7 +141,7 @@ export default function ExamDatesForm({
     const { error } = await supabase.from('exam_dates').delete().eq('id', dateId);
 
     if (error) {
-      setError('Could not remove that date. Try again.');
+      setError(t('removeError'));
       return;
     }
 
@@ -205,7 +211,7 @@ export default function ExamDatesForm({
 
     if (insertError) {
       submittingRef.current = false;
-      setError('Could not generate your plan. Try again.');
+      setError(t('generateError'));
       return;
     }
 
@@ -222,11 +228,11 @@ export default function ExamDatesForm({
           >
             <div className="flex items-center justify-between">
               <span className="font-body font-bold text-[13.5px] text-text-primary">
-                {subject.subject_name}
+                {subjectLabel(subject.subject_name)}
               </span>
               <div className="relative">
                 <span className="font-body text-xs rounded-[8px] px-[10px] py-[5px] border-[1.3px] text-orange-text border-orange whitespace-nowrap">
-                  {addingId === subject.id ? 'Adding…' : '+ Add date'}
+                  {addingId === subject.id ? t('adding') : t('addDate')}
                 </span>
                 <input
                   type="date"
@@ -244,11 +250,11 @@ export default function ExamDatesForm({
                     key={d.id}
                     className="flex items-center gap-1 font-body text-xs rounded-[8px] pl-[10px] pr-[6px] py-[5px] border-[1.3px] text-navy dark:text-text-primary border-navy dark:border-text-primary"
                   >
-                    {formatDateChip(d.exam_date)}
+                    {formatDateChip(d.exam_date, intlTag)}
                     <button
                       type="button"
                       onClick={() => handleRemoveDate(subject.id, d.id)}
-                      aria-label={`Remove ${formatDateChip(d.exam_date)} for ${subject.subject_name}`}
+                      aria-label={t('removeAria', { date: formatDateChip(d.exam_date, intlTag), subject: subjectLabel(subject.subject_name) })}
                       className="text-text-muted leading-none"
                     >
                       ✕
@@ -266,8 +272,10 @@ export default function ExamDatesForm({
 
         {!allDated && !error && (
           <p className="font-body text-xs text-text-muted text-center mb-2">
-            Still need{missingSubjects.length === 1 ? 's' : ''} a date:{' '}
-            {missingSubjects.map((s) => s.subject_name).join(', ')}.
+            {t('stillNeed', {
+              count: missingSubjects.length,
+              subjects: missingSubjects.map((s) => subjectLabel(s.subject_name)).join(', '),
+            })}
           </p>
         )}
 
@@ -277,11 +285,11 @@ export default function ExamDatesForm({
           onClick={handleGenerate}
           className="neu-raised-accent w-full text-black font-heading font-bold text-[13.5px] rounded-full py-[14px] disabled:opacity-40"
         >
-          {saving ? 'Generating…' : 'Generate my plan'}
+          {saving ? t('generating') : t('generate')}
         </button>
 
         <p className="font-body text-[10px] text-text-muted text-center mt-3">
-          Your schedule builds instantly and updates every day.
+          {t('footnote')}
         </p>
       </div>
     </div>

@@ -2,6 +2,9 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
+import { useIntlTag } from '@/lib/i18n/intl';
+import { useSubjectLabel } from '@/lib/i18n/useSubjectLabel';
 import { supabase } from '@/lib/supabaseClient';
 import { recalculateTodayPlan } from '@/lib/recalculateTodayPlan';
 import { nextExamDate } from '@/lib/nextExamDate';
@@ -22,13 +25,17 @@ function sortDates(dates: ExamDate[]): ExamDate[] {
   return [...dates].sort((a, b) => (a.exam_date < b.exam_date ? -1 : 1));
 }
 
-function formatDateChip(dateStr: string): string {
+function formatDateChip(dateStr: string, intlTag: string): string {
   const date = new Date(`${dateStr}T00:00:00`);
-  return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+  return date.toLocaleDateString(intlTag, { day: 'numeric', month: 'short' });
 }
 
 export default function ExamsSheet({ userId, onClose }: { userId: string; onClose: () => void }) {
   const router = useRouter();
+  const t = useTranslations('exams');
+  const tc = useTranslations('common');
+  const intlTag = useIntlTag();
+  const subjectLabel = useSubjectLabel();
   const [subjects, setSubjects] = useState<Subject[] | null>(null);
   const [isGrade12, setIsGrade12] = useState(false);
   const [addingId, setAddingId] = useState<string | null>(null);
@@ -91,7 +98,7 @@ export default function ExamsSheet({ userId, onClose }: { userId: string; onClos
   async function handleAddDate(subjectId: string, value: string) {
     if (!value || !subjects) return;
     if (value < minDateStr) {
-      setError('Exam dates must be at least tomorrow - please pick a later date.');
+      setError(t('minDate'));
       return;
     }
 
@@ -118,7 +125,7 @@ export default function ExamsSheet({ userId, onClose }: { userId: string; onClos
         .single();
 
       if (insertError || !data) {
-        setError('Could not add that date. Try again.');
+        setError(t('addError'));
         return;
       }
 
@@ -141,7 +148,7 @@ export default function ExamsSheet({ userId, onClose }: { userId: string; onClos
     const { error: deleteError } = await supabase.from('exam_dates').delete().eq('id', dateId);
 
     if (deleteError) {
-      setError('Could not remove that date. Try again.');
+      setError(t('removeError'));
       return;
     }
 
@@ -223,11 +230,11 @@ export default function ExamsSheet({ userId, onClose }: { userId: string; onClos
         </div>
 
         <div className="flex items-center justify-between mb-4 pb-1">
-          <h2 className="font-heading font-bold text-[16px] text-text-primary">Exam dates</h2>
+          <h2 className="font-heading font-bold text-[16px] text-text-primary">{t('title')}</h2>
           <button
             type="button"
             onClick={handleClose}
-            aria-label="Close"
+            aria-label={tc('close')}
             className="text-text-muted text-lg leading-none px-1"
           >
             ✕
@@ -237,9 +244,9 @@ export default function ExamsSheet({ userId, onClose }: { userId: string; onClos
         {error && <p className="text-red-600 text-xs text-center mb-3">{error}</p>}
 
         {subjects === null ? (
-          <p className="font-body text-[13px] text-text-muted text-center py-6">Loading…</p>
+          <p className="font-body text-[13px] text-text-muted text-center py-6">{t('loading')}</p>
         ) : subjects.length === 0 ? (
-          <p className="font-body text-[13px] text-text-muted text-center py-6">No subjects yet.</p>
+          <p className="font-body text-[13px] text-text-muted text-center py-6">{t('empty')}</p>
         ) : (
           <div className="pb-6">
             {subjects.map((subject) => {
@@ -253,17 +260,17 @@ export default function ExamsSheet({ userId, onClose }: { userId: string; onClos
                   <div className="flex items-center justify-between gap-2">
                     <div className="flex items-center gap-2 min-w-0">
                       <span className="font-body font-bold text-[13.5px] text-text-primary truncate">
-                        {subject.subject_name}
+                        {subjectLabel(subject.subject_name)}
                       </span>
                       {isSoonest && days !== undefined && (
                         <span className="neu-raised-accent text-black font-heading font-bold text-[9.5px] rounded-full px-[8px] py-[2px] whitespace-nowrap">
-                          {days === 0 ? 'Today' : days === 1 ? '1 day' : `${days} days`}
+                          {t('daysBadge', { days })}
                         </span>
                       )}
                     </div>
                     <div className="relative flex-shrink-0">
                       <span className="font-body text-xs rounded-[8px] px-[10px] py-[5px] border-[1.3px] text-orange-text border-orange whitespace-nowrap">
-                        {addingId === subject.id ? 'Adding…' : '+ Add date'}
+                        {addingId === subject.id ? t('adding') : t('addDate')}
                       </span>
                       <input
                         type="date"
@@ -281,11 +288,11 @@ export default function ExamsSheet({ userId, onClose }: { userId: string; onClos
                           key={d.id}
                           className="flex items-center gap-1 font-body text-xs rounded-[8px] pl-[10px] pr-[6px] py-[5px] border-[1.3px] text-navy dark:text-text-primary border-navy dark:border-text-primary"
                         >
-                          {formatDateChip(d.exam_date)}
+                          {formatDateChip(d.exam_date, intlTag)}
                           <button
                             type="button"
                             onClick={() => handleRemoveDate(subject.id, d.id)}
-                            aria-label={`Remove ${formatDateChip(d.exam_date)} for ${subject.subject_name}`}
+                            aria-label={t('removeAria', { date: formatDateChip(d.exam_date, intlTag), subject: subjectLabel(subject.subject_name) })}
                             className="text-text-muted leading-none"
                           >
                             ✕
@@ -301,7 +308,7 @@ export default function ExamsSheet({ userId, onClose }: { userId: string; onClos
                       onClick={() => router.push('/past-papers')}
                       className="font-body text-[11px] text-orange-text mt-[8px]"
                     >
-                      Past papers →
+                      {t('pastPapers')}
                     </button>
                   )}
                 </div>

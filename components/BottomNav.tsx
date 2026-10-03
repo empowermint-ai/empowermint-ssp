@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 import ExamsSheet from '@/components/ExamsSheet';
 
 function HouseIcon() {
@@ -72,6 +73,7 @@ function ExamsIcon() {
 
 export default function BottomNav({ userId }: { userId: string }) {
   const pathname = usePathname();
+  const t = useTranslations('nav');
   const [examsOpen, setExamsOpen] = useState(false);
 
   const isPlan = pathname === '/dashboard' && !examsOpen;
@@ -89,23 +91,23 @@ export default function BottomNav({ userId }: { userId: string }) {
       <nav
         className="neu-raised fixed bottom-0 inset-x-0 z-30 flex rounded-t-neu-lg"
         style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
-        aria-label="Primary"
+        aria-label={t('primary')}
       >
         <Link href="/dashboard" className={tabClass(isPlan)}>
           <HouseIcon />
-          <span className="font-heading font-bold text-[10px]">Plan</span>
+          <span className="font-heading font-bold text-[10px]">{t('plan')}</span>
         </Link>
         <Link href="/calendar" className={tabClass(isCalendar)}>
           <CalendarIcon />
-          <span className="font-heading font-bold text-[10px]">Calendar</span>
+          <span className="font-heading font-bold text-[10px]">{t('calendar')}</span>
         </Link>
         <Link href="/subjects/manage" className={tabClass(isManage)}>
           <ManageIcon />
-          <span className="font-heading font-bold text-[10px]">Manage</span>
+          <span className="font-heading font-bold text-[10px]">{t('manage')}</span>
         </Link>
         <button type="button" onClick={() => setExamsOpen(true)} className={tabClass(examsOpen)}>
           <ExamsIcon />
-          <span className="font-heading font-bold text-[10px]">Exams</span>
+          <span className="font-heading font-bold text-[10px]">{t('exams')}</span>
         </button>
       </nav>
 

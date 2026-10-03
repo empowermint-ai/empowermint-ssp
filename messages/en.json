@@ -13,7 +13,6 @@
     "label": "Language · Taal",
     "title": "Language / Taal",
     "open": "Language / Taal",
-    "settingsRow": "Language / Taal",
     "changed": "Language changed to {language}"
   },
   "notice": {
@@ -156,7 +155,346 @@
       "samePassword": "Your new password must be different from your old one.",
       "invalidEmail": "Please enter a valid email address.",
       "emailNotConfirmed": "Please confirm your email first, then log in.",
-      "network": "Couldn't connect. Check your internet and try again."
+      "network": "Couldn't connect. Check your internet and try again.",
+      "mobileTaken": "That mobile number is already registered to another account.",
+      "noAccount": "No account found with that mobile number",
+      "notSignedIn": "Not signed in.",
+      "saveEmail": "Could not save that email. Try again."
+    },
+    "retry": "Retry"
+  },
+  "presets": {
+    "accounting": "Accounting",
+    "afrikaansFal": "Afrikaans FAL",
+    "afrikaansHl": "Afrikaans HL",
+    "agriculturalSciences": "Agricultural Sciences",
+    "biology": "Biology",
+    "businessStudies": "Business Studies",
+    "cat": "CAT",
+    "consumerStudies": "Consumer Studies",
+    "dramaticArts": "Dramatic Arts",
+    "economics": "Economics",
+    "engineeringGraphicsDesign": "Engineering Graphics & Design",
+    "englishFal": "English FAL",
+    "englishHl": "English HL",
+    "geography": "Geography",
+    "history": "History",
+    "informationTechnology": "Information Technology",
+    "lifeOrientation": "Life Orientation",
+    "lifeSciences": "Life Sciences",
+    "mathematicalLiteracy": "Mathematical Literacy",
+    "mathematics": "Mathematics",
+    "music": "Music",
+    "physicalSciences": "Physical Sciences",
+    "religionStudies": "Religion Studies",
+    "sepediHl": "Sepedi HL",
+    "setswanaHl": "Setswana HL",
+    "tourism": "Tourism",
+    "visualArts": "Visual Arts",
+    "xhosaHl": "Xhosa HL",
+    "zuluHl": "Zulu HL"
+  },
+  "subjects": {
+    "eyebrow": "BUILD YOUR SUBJECT LIST",
+    "title": "What are you studying?",
+    "searchLabel": "Search or select a subject",
+    "searchPlaceholder": "e.g. Mathematics",
+    "customPlaceholder": "Your subject name",
+    "add": "Add",
+    "addOwn": "+ Add my own subject",
+    "saving": "Saving…",
+    "next": "Next: rank these",
+    "saveError": "Could not save your subjects. Try again.",
+    "remove": "Remove {subject}"
+  },
+  "ranking": {
+    "eyebrow": "BE HONEST — THIS DRIVES YOUR PLAN",
+    "title": "How confident are you in each?",
+    "scale": "1 = weakest  ·  5 = strongest",
+    "scoreAria": "{subject}: confidence {score}",
+    "saving": "Saving…",
+    "next": "Next: exam dates",
+    "saveError": "Could not save your rankings. Try again."
+  },
+  "examDates": {
+    "eyebrow": "LAST STEP",
+    "title": "When is each exam?",
+    "intro": "Tap a subject to add an exam date. You can add more than one, like a term test and the final.",
+    "minDate": "Exam dates must be at least tomorrow - please pick a later date.",
+    "addError": "Could not add that date. Try again.",
+    "removeError": "Could not remove that date. Try again.",
+    "generateError": "Could not generate your plan. Try again.",
+    "adding": "Adding…",
+    "addDate": "+ Add date",
+    "removeAria": "Remove {date} for {subject}",
+    "stillNeed": "{count, plural, one {Still needs a date: {subjects}.} other {Still need a date: {subjects}.}}",
+    "generating": "Generating…",
+    "generate": "Generate my plan",
+    "footnote": "Your schedule builds instantly and updates every day."
+  },
+  "manage": {
+    "eyebrow": "MANAGE MY PLANNER",
+    "title": "Update your ranking or exam dates",
+    "tabSubjects": "Subjects",
+    "tabRanking": "Ranking",
+    "tabDates": "Exam dates",
+    "addSubjectLabel": "Add a subject",
+    "searchPlaceholder": "e.g. Mathematics",
+    "customPlaceholder": "Your subject name",
+    "add": "Add",
+    "addOwn": "+ Add my own subject",
+    "yourSubjects": "Your subjects",
+    "newSubjectNote": "New subjects will need a confidence ranking and exam date before they show up in your plan.",
+    "removeSubjectAria": "Remove {subject}",
+    "scale": "1 = weakest  ·  5 = strongest",
+    "scoreAria": "{subject}: confidence {score}",
+    "adding": "Adding…",
+    "addDate": "+ Add date",
+    "removeDateAria": "Remove {date} for {subject}",
+    "updating": "Updating your plan…",
+    "addSubjectError": "Could not add that subject. Try again.",
+    "removeSubjectError": "Could not remove that subject. Try again.",
+    "saveError": "Could not save that. Try again.",
+    "minDate": "Exam dates must be at least tomorrow - please pick a later date.",
+    "addDateError": "Could not add that date. Try again.",
+    "removeDateError": "Could not remove that date. Try again."
+  },
+  "plan": {
+    "heading": "Today's plan (recommended)",
+    "subheading": "Here's what we recommend for today — feel free to amend it to suit you.",
+    "dateLine": "{weekday}, {dayMonth}",
+    "fallbackName": "there",
+    "greetings": {
+      "g1": "Welcome back, champ!",
+      "g2": "Good to see you again, {name}!",
+      "g3": "Let's go again, {name}!",
+      "g4": "You showed up. That is already a win, {name}.",
+      "g5": "Ready when you are, {name}."
+    },
+    "sessionMinutes": "{minutes} min",
+    "hideNotes": "Hide topic notes",
+    "addNotes": "Add topic notes",
+    "removeSession": "Remove {subject} session",
+    "markDone": "Mark topic done",
+    "markNotDone": "Mark topic not done",
+    "topicPlaceholder": "What are you studying?",
+    "allDoneTitle": "You have finished all your current exams! 🎉",
+    "allDoneBody": "Add your next exam dates below to keep your study plan going.",
+    "examDone": "Exam done — add your next date",
+    "minDate": "Exam dates must be at least tomorrow - please pick a later date.",
+    "adding": "Adding…",
+    "addDate": "+ Add date",
+    "updateRanking": "Want to update your subject ranking too? Manage my planner",
+    "addAnother": "+ Add another session"
+  },
+  "share": {
+    "share": "Share",
+    "preparing": "Preparing…",
+    "shareAria": "Share plan",
+    "preparingAria": "Preparing share",
+    "error": "Could not create the PDF. Try again.",
+    "shareTitle": "{name}'s study plan",
+    "shareText": "{name}'s study plan for {date}",
+    "pdf": {
+      "title": "TODAY'S STUDY PLAN",
+      "forName": "for {name}",
+      "empty": "No sessions planned for today yet.",
+      "done": "Done",
+      "pending": "Pending",
+      "upcoming": "UPCOMING EXAM DATES",
+      "when": "{days, plural, =0 {today} =1 {tomorrow} other {in # days}}",
+      "eyebrow": "SHARED FROM EMPOWERMINT",
+      "headline": "{name} is using the Smart Study Planner to stay on top of their studying. Give it a go.",
+      "cta": "Get started free",
+      "scan": "SCAN TO START",
+      "micro": "no card required"
     }
+  },
+  "install": {
+    "bannerTitle": "Add empowermint to your home screen",
+    "bannerBody": "So you can jump straight back into your plan, just like any other app.",
+    "dismiss": "Dismiss",
+    "addButton": "Add to home screen",
+    "modalTitle": "Keep empowermint one tap away",
+    "iosStep1": "Tap the Share icon in Safari's toolbar.",
+    "iosStep2": "Then scroll down and tap <b>Add to Home Screen</b>.",
+    "androidStep": "Look for <b>Add to Home Screen</b> or <b>Install App</b> in your browser's menu.",
+    "gotIt": "Got it"
+  },
+  "review": {
+    "title": "How is the SSP working for you so far?",
+    "subtitle": "Your feedback helps us make it better.",
+    "starAria": "{count, plural, one {# star} other {# stars}}",
+    "commentPlaceholder": "Anything you would like to share? (optional)",
+    "submit": "Submit review",
+    "submitting": "Submitting…",
+    "notNow": "Not now",
+    "saveError": "Could not save that. Try again."
+  },
+  "reflection": {
+    "title": "How did your {subject} exam go?",
+    "subtitle": "{date} — this helps us plan your next sessions.",
+    "saveError": "Could not save that. Try again.",
+    "choices": {
+      "tougher": "Tougher than expected",
+      "expected": "About what I expected",
+      "better": "Better than expected"
+    }
+  },
+  "nav": {
+    "primary": "Primary",
+    "plan": "Plan",
+    "calendar": "Calendar",
+    "manage": "Manage",
+    "exams": "Exams"
+  },
+  "settings": {
+    "aria": "Settings",
+    "manage": "Manage my planner",
+    "language": "Language / Taal",
+    "addToHome": "Add to Home Screen",
+    "logout": "Log out"
+  },
+  "exams": {
+    "title": "Exam dates",
+    "loading": "Loading…",
+    "empty": "No subjects yet.",
+    "daysBadge": "{days, plural, =0 {Today} =1 {1 day} other {# days}}",
+    "adding": "Adding…",
+    "addDate": "+ Add date",
+    "removeAria": "Remove {date} for {subject}",
+    "pastPapers": "Past papers →",
+    "minDate": "Exam dates must be at least tomorrow - please pick a later date.",
+    "addError": "Could not add that date. Try again.",
+    "removeError": "Could not remove that date. Try again.",
+    "upcoming": "Upcoming exam dates",
+    "examIn": "{subject} exam in",
+    "daysCount": "{days} days"
+  },
+  "timer": {
+    "eyebrow": "FOCUS SESSION · {session} OF {total} TODAY",
+    "studySession": "Study session",
+    "status": {
+      "green": "REMAINING · PLENTY OF TIME",
+      "amber": "REMAINING · STEADY PACE",
+      "red": "REMAINING · ALMOST THERE"
+    },
+    "pause": "Pause",
+    "resume": "Resume",
+    "end": "End session",
+    "start": "Start session",
+    "hintRunning": "Session auto-logs to today's plan when it ends.",
+    "hintIdle": "Tap Start when you're ready to focus."
+  },
+  "examTimer": {
+    "durationHours": "{hours, plural, one {# hour} other {# hours}}",
+    "durationHoursMinutes": "{hours} hr {minutes} min",
+    "entry": {
+      "title": "Practice your exam timing",
+      "badge": "New",
+      "subtitle": "Full-length countdown for your next paper"
+    },
+    "setup": {
+      "eyebrow": "Exam simulation set up",
+      "intro": "Let's set up your exam simulation here. Enter from the drop down boxes, the subject you want to practice an exam for as well as the duration of this exam.",
+      "subjectLabel": "Select Subject",
+      "select": "Select…",
+      "timeLabel": "Select time (number of hours)",
+      "go": "Go to exam session"
+    },
+    "session": {
+      "eyebrow": "Simulation exam timer session",
+      "subject": "Subject:",
+      "duration": "Duration:",
+      "studySession": "Study session",
+      "minutes": "{minutes} minutes",
+      "start": "Start, All The Best.",
+      "pause": "Pause",
+      "resume": "Resume",
+      "endEarly": "End session early",
+      "timesUp": "TIME'S UP",
+      "howDidItGo": "HOW DID IT GO?",
+      "thumbsUp": "Thumbs up",
+      "thumbsDown": "Thumbs down",
+      "thanks": "Thanks for the feedback",
+      "back": "Back to planner"
+    },
+    "status": {
+      "green": "Remaining · Plenty of time.",
+      "amber": "Remaining · Stay focused.",
+      "red": "Remaining · Final stretch."
+    }
+  },
+  "calendar": {
+    "title": "Calendar view",
+    "subtitle": "Tap a date to see what's on.",
+    "prevMonth": "Previous month",
+    "nextMonth": "Next month",
+    "legendExam": "Exam day",
+    "legendToday": "Today",
+    "legendStudy": "Study session",
+    "legendMissed": "Missed",
+    "empty": "Nothing on file for this day.",
+    "examLine": "{subject} exam",
+    "sessionLine": "{status, select, done {{subject} study session · done} missed {{subject} study session · missed} other {{subject} study session}}",
+    "addSession": "+ Add a study session"
+  },
+  "sessionComplete": {
+    "title": "Nice work.\nSession complete.",
+    "logged": "{minutes} minutes logged on <b>{subject}</b>.",
+    "quotes": {
+      "q1": "Effort doesn't need to be perfect to count. It just needs to be repeated.",
+      "q2": "The plan is not the goal. The plan is what gets you to the goal.",
+      "q3": "Confidence isn't something you wait for. It's built session by session.",
+      "q4": "You don't need to feel ready. You need to show up.",
+      "q5": "Every hour you put in now is a mark you don't have to worry about later.",
+      "q6": "The learner who plans beats the learner who panics — every time.",
+      "q7": "Progress is not always visible. But it is always real.",
+      "q8": "You are closer than you think."
+    },
+    "quoteSource": "— Mastering Your Studies",
+    "whatsNext": "What's next?",
+    "startNext": "Start next: {subject}",
+    "doneToday": "You're done for today. Well done!",
+    "backToPlan": "Back to Today's Plan",
+    "noPenalty": "Your call — there's no penalty either way."
+  },
+  "pastPapers": {
+    "title": "Past Exam Papers",
+    "intro": "Pick your board to go straight to the official papers and marking guidelines.",
+    "cardSubtitle": "Official NSC & IEB papers and memos.",
+    "cardLocked": "Unlocks in Grade 12",
+    "toastLocked": "This unlocks once you're in Grade 12.",
+    "footnote": "Memos are a marking guideline, not a definitive answer key — used to guide, not to override, your own working.",
+    "boards": {
+      "caps": {
+        "label": "CAPS / NSC Papers",
+        "helper": "Department of Basic Education, papers back to 2008."
+      },
+      "ieb": {
+        "label": "IEB Papers",
+        "helper": "IEB's own portal, last 5 years."
+      }
+    }
+  },
+  "account": {
+    "title": "Account",
+    "signedInAs": "Signed in as",
+    "student": "Student: {name}",
+    "changePassword": "Change password",
+    "contactUs": "Contact us",
+    "contactBody": "Questions or feedback? Email <link>ebrahim@empowermint.co.za</link>"
+  },
+  "parentNotify": {
+    "title": "Keep your parent in the loop",
+    "intro": "Add their email and we'll send a short weekly update on how studying's going — so you don't have to keep explaining yourself every night at dinner.",
+    "currentContact": "Current contact:",
+    "confirmed": "confirmed",
+    "waiting": "waiting on confirmation",
+    "placeholder": "parent@email.com",
+    "sent": "Sent! They'll get an email to confirm before anything goes out.",
+    "update": "Update email",
+    "add": "Add my parent",
+    "error": "Something went wrong. Try again."
   }
 }
