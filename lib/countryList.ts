@@ -13,12 +13,20 @@ function flagEmoji(countryCode: string): string {
     .replace(/./g, (char) => String.fromCodePoint(127397 + char.charCodeAt(0)));
 }
 
-let cached: CountryOption[] | null = null;
+const cache = new Map<string, CountryOption[]>();
 
-export function getCountryOptions(): CountryOption[] {
+// Country names come from Intl in the active language ("Suid-Afrika" in
+// Afrikaans); the order is re-sorted per language, with South Africa first.
+export function getCountryOptions(locale = 'en'): CountryOption[] {
+  const cached = cache.get(locale);
   if (cached) return cached;
 
-  const regionNames = new Intl.DisplayNames(['en'], { type: 'region' });
+  let regionNames: Intl.DisplayNames;
+  try {
+    regionNames = new Intl.DisplayNames([locale], { type: 'region' });
+  } catch {
+    regionNames = new Intl.DisplayNames(['en'], { type: 'region' });
+  }
 
   const options = getCountries().map((code) => ({
     code,
@@ -27,7 +35,7 @@ export function getCountryOptions(): CountryOption[] {
     flag: flagEmoji(code),
   }));
 
-  options.sort((a, b) => a.name.localeCompare(b.name));
+  options.sort((a, b) => a.name.localeCompare(b.name, locale));
 
   const zaIndex = options.findIndex((o) => o.code === 'ZA');
   if (zaIndex > -1) {
@@ -35,6 +43,6 @@ export function getCountryOptions(): CountryOption[] {
     options.unshift(za);
   }
 
-  cached = options;
+  cache.set(locale, options);
   return options;
 }

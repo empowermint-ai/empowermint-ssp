@@ -255,3 +255,50 @@ textarea:focus {
     scroll-behavior: auto !important;
   }
 }
+
+/* --- Soft (neumorphic) surfaces, scoped to the language UI ---------------
+   The brand refresh flattened the app-wide .neu-* classes. These three are
+   used ONLY by the new language control, sheet, notice card and toast, so the
+   rest of the app is untouched. Raised = idle/unselected, pressed = selected. */
+:root {
+  --soft-shadow-dark: rgba(122, 112, 92, 0.3);
+  --soft-shadow-light: #FFFFFF;
+  --soft-accent-dark: rgba(150, 60, 0, 0.45);
+  --soft-accent-light: rgba(255, 190, 140, 0.55);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --soft-shadow-dark: rgba(0, 0, 0, 0.8);
+    --soft-shadow-light: rgba(255, 255, 255, 0.08);
+    --soft-accent-dark: rgba(0, 0, 0, 0.45);
+    --soft-accent-light: rgba(255, 175, 120, 0.3);
+  }
+}
+@layer utilities {
+  .soft-raised {
+    background: var(--color-card);
+    box-shadow:
+      4px 4px 10px var(--soft-shadow-dark),
+      -4px -4px 10px var(--soft-shadow-light);
+  }
+  .soft-pressed {
+    background: var(--color-bg);
+    box-shadow:
+      inset 3px 3px 7px var(--soft-shadow-dark),
+      inset -3px -3px 7px var(--soft-shadow-light);
+  }
+  .soft-pressed-accent {
+    background: var(--color-orange);
+    box-shadow:
+      inset 2px 2px 5px var(--soft-accent-dark),
+      inset -2px -2px 5px var(--soft-accent-light);
+  }
+}
+
+/* Afrikaans runs 15-30% longer than English: balance heading line breaks, but
+   only for Afrikaans so existing English wrapping is left exactly as it was. */
+html[lang='af'] h1,
+html[lang='af'] h2,
+html[lang='af'] h3 {
+  text-wrap: balance;
+}
