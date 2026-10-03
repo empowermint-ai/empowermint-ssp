@@ -239,7 +239,9 @@ export default function ExamTimerSessionClient({
               strokeWidth={5}
             />
 
-            <circle cx={CENTER} cy={CENTER} r={95} style={{ fill: 'var(--color-bg)' }} />
+            {/* Recessed dial face */}
+            <circle cx={CENTER} cy={CENTER} r={95} style={{ fill: 'var(--neu-shadow-dark)' }} />
+            <circle cx={CENTER} cy={CENTER} r={92} style={{ fill: 'var(--color-bg)' }} />
 
             <text
               x={CENTER}

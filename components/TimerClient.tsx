@@ -183,10 +183,9 @@ export default function TimerClient({
               strokeWidth={5}
             />
 
-            {/* Dial face - flat white per the brief's "white background,
-                subtler glow" direction for the timer (the old recessed
-                shadow ring is gone along with the neumorphic surfaces). */}
-            <circle cx={CENTER} cy={CENTER} r={95} style={{ fill: 'var(--color-bg)' }} />
+            {/* Recessed dial face */}
+            <circle cx={CENTER} cy={CENTER} r={95} style={{ fill: 'var(--neu-shadow-dark)' }} />
+            <circle cx={CENTER} cy={CENTER} r={92} style={{ fill: 'var(--color-bg)' }} />
 
             {/* Dial wordmark */}
             <text

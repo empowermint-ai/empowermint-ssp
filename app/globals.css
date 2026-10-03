@@ -55,6 +55,15 @@
   --neu-radius-md: 20px;
   --neu-radius-sm: 12px;
 
+  /* Neumorphic shadow pair (the original soft-UI look, restored). Surfaces keep
+     the brand fills above; only depth comes from these two tones - a white
+     highlight top-left and a warm cream shade bottom-right. */
+  --neu-shadow-light: #FFFFFF;
+  --neu-shadow-dark: #DCD7CA;
+  /* Tinted pair for Hermes-orange surfaces so they emboss instead of glow. */
+  --neu-accent-shadow-light: rgba(255, 176, 122, 0.32);
+  --neu-accent-shadow-dark: rgba(178, 76, 8, 0.24);
+
   /* Exam/focus timer status colours - green maps to teal (on track), amber to
      orange (keep moving), red to the error colour (final stretch). */
   --glow-green: #0A7968;
@@ -92,6 +101,13 @@
     --glow-green: #1FA58F;
     --glow-amber: #F37021;
     --glow-red: #E5564A;
+
+    /* On a black page a dark shadow cannot show, so depth comes mostly from a
+       soft highlight on the top-left edge. */
+    --neu-shadow-light: #2B2A26;
+    --neu-shadow-dark: #000000;
+    --neu-accent-shadow-light: rgba(255, 176, 122, 0.16);
+    --neu-accent-shadow-dark: rgba(0, 0, 0, 0.45);
   }
 
   ::placeholder {
@@ -147,41 +163,55 @@ h6 {
     font-feature-settings: 'tnum' 1;
   }
 
-  /* Card/panel surface - flat cream fill, no shadow. Used for every card,
-     sheet and panel in place of the old dual-tone neumorphic shadow pair.
-     A couple of session-style cards additionally need a left-side accent
-     stripe (completed/to-do colour) - those set border-left via an inline
-     style instead of a border-l-* Tailwind class, since an inline style
-     reliably wins over this shorthand regardless of utility-layer ordering. */
+  /* Neumorphic surfaces - single source of truth for the raised/pressed shadow
+     pairs. Fills are the brand tokens (cream card, white input); a transparent
+     1px border keeps the box exactly the size the flat version had, and still
+     lets the orange focus border show on inputs. A few session-style cards set
+     border-left via an inline style for their status stripe, which wins over
+     this shorthand. */
   .neu-raised {
     background: var(--color-card);
-    border: 1px solid var(--color-card-border);
+    border: 1px solid transparent;
+    box-shadow:
+      6px 6px 14px var(--neu-shadow-dark),
+      -6px -6px 14px var(--neu-shadow-light);
   }
 
-  /* Pressed/inset surfaces (inputs, search fields) - flat white fill with a
-     visible border rather than an inset shadow. */
+  /* Pressed/inset surfaces (inputs, search fields, selected pills). */
   .neu-pressed {
     background: var(--color-bg);
-    border: 1px solid var(--color-input-border);
+    border: 1px solid transparent;
+    box-shadow:
+      inset 4px 4px 9px var(--neu-shadow-dark),
+      inset -4px -4px 9px var(--neu-shadow-light);
   }
 
-  /* Accent (orange) fill - primary buttons and any selected/active control.
-     Flat Hermes-orange fill, black text per the brief (text colour is set by
-     the consuming component, not here). */
+  /* Accent (orange) raised/pressed pair - primary buttons and any selected or
+     active control. Black text is set by the consuming component. */
   .neu-raised-accent {
     background: var(--color-orange);
+    box-shadow:
+      4px 4px 8px var(--neu-accent-shadow-dark),
+      -4px -4px 8px var(--neu-accent-shadow-light);
   }
 
   .neu-pressed-accent {
     background: var(--color-orange);
+    box-shadow:
+      inset 4px 4px 8px var(--neu-accent-shadow-dark),
+      inset -4px -4px 8px var(--neu-accent-shadow-light);
   }
 
+  /* Same pair scaled down for small badges (confidence-score circles). */
   .neu-pressed-accent-sm {
     background: var(--color-orange);
+    box-shadow:
+      inset 2px 2px 3px var(--neu-accent-shadow-dark),
+      inset -2px -2px 3px var(--neu-accent-shadow-light);
   }
 
-  /* Secondary button / calm-destructive outline - orange border on a white
-     fill, sits on top of .neu-raised rather than replacing it. */
+  /* Calm-destructive / secondary button: an orange outline on top of
+     .neu-raised, which supplies the fill and the shadows. */
   .neu-outline-accent {
     background: var(--color-bg);
     border: 1.5px solid var(--color-orange);
