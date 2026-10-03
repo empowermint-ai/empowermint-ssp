@@ -425,11 +425,11 @@ export default function ManageSubjectsForm({
               key={subject.id}
               className="neu-raised rounded-neu-sm px-[14px] py-[11px] mb-[10px]"
             >
-              <div className="flex items-center justify-between">
-                <span className="font-body font-bold text-[13.5px] text-text-primary">
+              <div className="flex items-center justify-between flex-wrap gap-x-2 gap-y-2">
+                <span className="min-w-0 font-body font-bold text-[13.5px] text-text-primary">
                   {subjectLabel(subject.subject_name)}
                 </span>
-                <div className="relative">
+                <div className="relative shrink-0">
                   <span className="font-body text-xs rounded-[8px] px-[10px] py-[5px] border-[1.3px] text-orange-text border-orange whitespace-nowrap">
                     {addingId === subject.id ? t('adding') : t('addDate')}
                   </span>
