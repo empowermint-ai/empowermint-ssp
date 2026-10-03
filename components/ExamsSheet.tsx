@@ -9,6 +9,7 @@ import { supabase } from '@/lib/supabaseClient';
 import { recalculateTodayPlan } from '@/lib/recalculateTodayPlan';
 import { nextExamDate } from '@/lib/nextExamDate';
 import { NAV_HEIGHT } from '@/lib/layout';
+import { openDatePicker } from '@/lib/openDatePicker';
 
 interface ExamDate {
   id: string;
@@ -275,6 +276,7 @@ export default function ExamsSheet({ userId, onClose }: { userId: string; onClos
                       <input
                         type="date"
                         value=""
+                        onClick={openDatePicker}
                         onChange={(e) => handleAddDate(subject.id, e.target.value)}
                         className="accent-orange absolute inset-0 z-10 h-full w-full cursor-pointer opacity-0"
                       />

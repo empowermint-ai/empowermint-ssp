@@ -13,6 +13,7 @@ import SharePlanButton from '@/components/SharePlanButton';
 import ExamTimerEntryCard from '@/components/ExamTimerEntryCard';
 import PastExamPapersCard from '@/components/PastExamPapersCard';
 import type { PlanPdfExam } from '@/lib/buildPlanPdf';
+import { openDatePicker } from '@/lib/openDatePicker';
 
 interface Session {
   id: string;
@@ -412,6 +413,7 @@ export default function TodayPlanClient({
                 <input
                   type="date"
                   value=""
+                  onClick={openDatePicker}
                   onChange={(e) => handleAddDate(subject.id, e.target.value)}
                   className="accent-orange absolute inset-0 z-10 h-full w-full cursor-pointer opacity-0"
                 />

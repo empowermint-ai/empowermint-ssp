@@ -10,6 +10,7 @@ import { priorityScore } from '@/lib/priorityScore';
 import { nextExamDate } from '@/lib/nextExamDate';
 import { getMaxDailySessions } from '@/lib/dailyPlanLimits';
 import { allocateSessions } from '@/lib/allocateSessions';
+import { openDatePicker } from '@/lib/openDatePicker';
 
 interface ExamDate {
   id: string;
@@ -237,6 +238,7 @@ export default function ExamDatesForm({
                 <input
                   type="date"
                   value=""
+                  onClick={openDatePicker}
                   onChange={(e) => handleAddDate(subject.id, e.target.value)}
                   className="accent-orange absolute inset-0 z-10 h-full w-full cursor-pointer opacity-0"
                 />

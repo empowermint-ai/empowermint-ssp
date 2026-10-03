@@ -7,6 +7,7 @@ import { useTranslations } from 'next-intl';
 import { useIntlTag } from '@/lib/i18n/intl';
 import { PRESET_SUBJECTS, foldForSearch } from '@/lib/i18n/subjects';
 import { useSubjectLabel } from '@/lib/i18n/useSubjectLabel';
+import { openDatePicker } from '@/lib/openDatePicker';
 
 interface ExamDate {
   id: string;
@@ -436,6 +437,7 @@ export default function ManageSubjectsForm({
                   <input
                     type="date"
                     value=""
+                    onClick={openDatePicker}
                     onChange={(e) => handleAddDate(subject.id, e.target.value)}
                     className="accent-orange absolute inset-0 z-10 h-full w-full cursor-pointer opacity-0"
                   />
