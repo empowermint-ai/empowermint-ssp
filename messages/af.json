@@ -17,7 +17,7 @@
   },
   "notice": {
     "aria": "Nuwe taal beskikbaar",
-    "headline": "Nuut: die planner is nou in {language} beskikbaar.",
+    "headline": "Nuut: die planner is nou beskikbaar in {languages}.",
     "switch": "Skakel oor na {language}",
     "notNow": "Nie nou nie"
   },

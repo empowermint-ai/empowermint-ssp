@@ -17,7 +17,7 @@
   },
   "notice": {
     "aria": "New language available",
-    "headline": "New: the planner is now available in {language}.",
+    "headline": "New: the planner is now available in {languages}.",
     "switch": "Switch to {language}",
     "notNow": "Not now"
   },

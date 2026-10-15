@@ -6,7 +6,10 @@ import { LANGUAGE_ANNOUNCEMENT, getLocaleConfig, isEnabledLocale } from '@/confi
 import { useLanguage } from '@/components/i18n/LanguageProvider';
 import { GlobeIcon } from '@/components/i18n/icons';
 
-const storageKey = (code: string, kind: 'dismissed' | 'done') => `ssp_lang_notice_${kind}_${code}`;
+// One key per announcement (the codes joined), so a learner who dismissed an
+// earlier announcement (for example Afrikaans) still sees a new one.
+const storageKey = (codes: string[], kind: 'dismissed' | 'done') =>
+  `ssp_lang_notice_${kind}_${codes.join('-')}`;
 
 /**
  * One-time "now available in <language>" card for learners who are not on that
@@ -17,10 +20,12 @@ export default function LanguageNotice() {
   const { locale, change } = useLanguage();
   const t = useTranslations('notice');
   const [visible, setVisible] = useState(false);
-  const { code, announcedUntil } = LANGUAGE_ANNOUNCEMENT;
+  const { announcedUntil } = LANGUAGE_ANNOUNCEMENT;
+  const codes = LANGUAGE_ANNOUNCEMENT.codes.filter((c) => isEnabledLocale(c));
+  const codesKey = codes.join('-');
 
   useEffect(() => {
-    if (!isEnabledLocale(code) || locale === code) {
+    if (codes.length === 0 || codes.includes(locale)) {
       setVisible(false);
       return;
     }
@@ -28,21 +33,27 @@ export default function LanguageNotice() {
     let hidden = false;
     try {
       hidden =
-        localStorage.getItem(storageKey(code, 'dismissed')) === '1' ||
-        localStorage.getItem(storageKey(code, 'done')) === '1';
+        localStorage.getItem(storageKey(codes, 'dismissed')) === '1' ||
+        localStorage.getItem(storageKey(codes, 'done')) === '1';
     } catch {
       // Storage blocked: just show it.
     }
     setVisible(!expired && !hidden);
-  }, [locale, code, announcedUntil]);
+  }, [locale, codesKey, announcedUntil]);
 
   if (!visible) return null;
 
-  const target = getLocaleConfig(code);
+  const targets = codes.map((c) => getLocaleConfig(c));
+  let languages = targets.map((l) => l.nativeName).join(', ');
+  try {
+    languages = new Intl.ListFormat(locale, { type: 'conjunction' }).format(targets.map((l) => l.nativeName));
+  } catch {
+    // older browsers: plain comma list
+  }
 
   function remember(kind: 'dismissed' | 'done') {
     try {
-      localStorage.setItem(storageKey(code, kind), '1');
+      localStorage.setItem(storageKey(codes, kind), '1');
     } catch {
       // ignore
     }
@@ -59,34 +70,40 @@ export default function LanguageNotice() {
         </span>
         <div className="min-w-0 flex-1 text-balance">
           <p className="font-heading text-[14px] font-semibold leading-snug text-text-primary">
-            {t('headline', { language: target.nativeName })}
+            {t('headline', { languages })}
           </p>
-          {target.noticeNative && (
-            <p lang={target.code} className="mt-1 font-body text-[13px] leading-snug text-text-body">
-              {target.noticeNative}
-            </p>
+          {targets.map(
+            (target) =>
+              target.noticeNative && (
+                <p key={target.code} lang={target.code} className="mt-1 font-body text-[13px] leading-snug text-text-body">
+                  {target.noticeNative}
+                </p>
+              )
           )}
         </div>
       </div>
       <div className="mt-4 flex flex-wrap gap-3">
-        <button
-          type="button"
-          onClick={() => {
-            remember('done');
-            setVisible(false);
-            change(code, 'notice');
-          }}
-          className="soft-pressed-accent min-h-[44px] flex-1 rounded-full px-5 font-body text-[14px] font-bold text-black"
-        >
-          {t('switch', { language: target.nativeName })}
-        </button>
+        {targets.map((target) => (
+          <button
+            key={target.code}
+            type="button"
+            onClick={() => {
+              remember('done');
+              setVisible(false);
+              change(target.code, 'notice');
+            }}
+            className="soft-pressed-accent min-h-[44px] flex-1 rounded-full px-5 font-body text-[14px] font-bold text-black"
+          >
+            {t('switch', { language: target.nativeName })}
+          </button>
+        ))}
         <button
           type="button"
           onClick={() => {
             remember('dismissed');
             setVisible(false);
           }}
-          className="soft-raised min-h-[44px] rounded-full px-5 font-body text-[14px] font-medium text-text-body"
+          className="soft-raised min-h-[44px] w-full rounded-full px-5 font-body text-[14px] font-medium text-text-body"
         >
           {t('notNow')}
         </button>

@@ -40,10 +40,10 @@ export const LOCALE_COOKIE = 'NEXT_LOCALE';
 export const LOCALE_SRC_COOKIE = 'NEXT_LOCALE_SRC';
 export const LOCALE_COOKIE_MAX_AGE = 60 * 60 * 24 * 365;
 
-/** Which language gets the one-time notice card, and the date it stops showing. */
+/** Which languages get the one-time notice card, and the date it stops showing. */
 export const LANGUAGE_ANNOUNCEMENT = {
-  code: 'af',
-  announcedUntil: '2026-12-31',
+  codes: ['zu', 'xh'],
+  announcedUntil: '2027-01-31',
 };
 
 // English is always enabled. With only "en" enabled the picker, the notice card
