@@ -26,6 +26,12 @@ export const LOCALES: LocaleConfig[] = [
     intl: 'zu-ZA',
     noticeNative: 'Okusha: i-planner manje iyatholakala ngesiZulu.',
   },
+  {
+    code: 'xh',
+    nativeName: 'isiXhosa',
+    intl: 'xh-ZA',
+    noticeNative: 'Okutsha: i-planner ngoku iyafumaneka ngesiXhosa.',
+  },
 ];
 
 export const DEFAULT_LOCALE = 'en';

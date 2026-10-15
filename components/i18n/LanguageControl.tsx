@@ -41,7 +41,7 @@ export default function LanguageControl({ source }: { source: LanguageSource }) 
       <div
         role="radiogroup"
         aria-labelledby={labelId}
-        className="soft-pressed inline-flex max-w-full gap-[6px] rounded-full p-[5px]"
+        className="soft-pressed inline-flex max-w-full flex-wrap justify-center gap-[6px] rounded-[28px] p-[5px]"
       >
         {enabled.map((language, index) => {
           const selected = language.code === locale;
