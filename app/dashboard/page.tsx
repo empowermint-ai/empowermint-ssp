@@ -21,9 +21,14 @@ export default async function DashboardPage() {
   const t = await getTranslations('plan');
   const intlTag = await getIntlTag();
   const supabase = createSupabaseServerClient();
+  // The middleware has just verified this session against Supabase Auth, so the
+  // id is read straight from the cookie here and the (network) verification runs
+  // alongside the data queries below instead of in front of them - one fewer
+  // sequential round trip. RLS still scopes every query to the real session.
   const {
-    data: { user },
-  } = await supabase.auth.getUser();
+    data: { session },
+  } = await supabase.auth.getSession();
+  const user = session?.user;
 
   if (!user) {
     redirect('/login');
@@ -39,12 +44,14 @@ export default async function DashboardPage() {
   // instead of one round trip at a time - this is the single biggest lever
   // on how long the dashboard takes to load.
   const [
+    { data: verified },
     { data: profile },
     { data: activeSubjects },
     { data: initialPlanRows },
     { count: completedSessionsCount },
     { data: existingReview },
   ] = await Promise.all([
+    supabase.auth.getUser(),
     supabase
       .from('users')
       .select('username, review_prompt_dismissed_at, grade, student_type')
@@ -70,6 +77,10 @@ export default async function DashboardPage() {
       .eq('completed', true),
     supabase.from('app_reviews').select('id').eq('user_id', user.id).maybeSingle(),
   ]);
+
+  if (!verified.user) {
+    redirect('/login');
+  }
 
   const username = profile?.username ?? t('fallbackName');
   const greeting = t(`greetings.${GREETING_KEYS[Math.floor(Math.random() * GREETING_KEYS.length)]}`, {
