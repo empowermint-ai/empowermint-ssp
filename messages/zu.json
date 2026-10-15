@@ -1,0 +1,500 @@
+{
+  "metadata": {
+    "title": "empowermint SSP",
+    "description": "empowermint Smart Study Planner"
+  },
+  "common": {
+    "pleaseWait": "Sicela ulinde…",
+    "back": "Emuva",
+    "forward": "Phambili",
+    "close": "Vala"
+  },
+  "language": {
+    "label": "Language · Ulimi",
+    "title": "Language / Ulimi",
+    "open": "Language / Ulimi",
+    "changed": "Ulimi lushintshiwe: {language}"
+  },
+  "notice": {
+    "aria": "Ulimi olusha luyatholakala",
+    "headline": "Okusha: i-planner manje iyatholakala — {language}.",
+    "switch": "Shintshela: {language}",
+    "notNow": "Hhayi manje"
+  },
+  "welcome": {
+    "title": "Isihleli sokufunda esihlakaniphile",
+    "tagline": "Kholwa ukuthi ungakwazi, hlela ukuthi uzokwenza kanjani",
+    "start": "qala i-planner yami",
+    "haveAccount": "Usunayo i-akhawunti? Ngena lapha"
+  },
+  "auth": {
+    "signOut": "Phuma",
+    "phone": {
+      "country": "Izwe",
+      "placeholder": "83 123 4567"
+    },
+    "password": {
+      "show": "Bonisa iphasiwedi",
+      "hide": "Fihla iphasiwedi"
+    },
+    "changePassword": {
+      "newPassword": "Iphasiwedi entsha",
+      "update": "Vuselela iphasiwedi",
+      "success": "Iphasiwedi ivuselelwe."
+    },
+    "login": {
+      "title": "Siyakwamukela\nfuthi.",
+      "subtitle": "Kuhle ukukubona futhi.",
+      "mobileLabel": "Inombolo yeselula",
+      "passwordLabel": "Iphasiwedi",
+      "passwordPlaceholder": "Faka iphasiwedi yakho",
+      "submit": "Ngena",
+      "forgot": "Ukhohlwe iphasiwedi?",
+      "newHere": "Umusha lapha? Qala i-planner yami",
+      "invalid": "Igama lomsebenzisi noma iphasiwedi akulungile. Zama futhi."
+    },
+    "register": {
+      "step": "ISIGABA 1 KWEZI-2",
+      "title": "Asikulungiselele.",
+      "intro": "Lokhu kungokwakho. Okuyisisekelo kuphela ukuze uqale.",
+      "usernameLabel": "Igama lomsebenzisi",
+      "usernamePlaceholder": "isb. thabo_m",
+      "mobileLabel": "Inombolo yeselula",
+      "passwordLabel": "Iphasiwedi",
+      "passwordPlaceholder": "Okungenani izinhlamvu eziyi-6",
+      "continue": "Qhubeka",
+      "footnote": "Inombolo yakho yeselula iyoba yindlela yakho yokungena kusukela manje.",
+      "usernameRequired": "Sicela ufake igama lomsebenzisi.",
+      "mobileRequired": "Sicela ufake inombolo yakho yeselula.",
+      "mobileInvalid": "Faka inombolo yeselula esebenzayo yezwe olikhethile.",
+      "passwordRequired": "Sicela ufake iphasiwedi.",
+      "passwordShort": "Iphasiwedi kumele okungenani ibe nezinhlamvu eziyi-6.",
+      "mobileTaken": "Le nombolo isibhalisiwe kakade.",
+      "loginInstead": "Ngena kunalokho"
+    },
+    "step2": {
+      "title": "Cishe sesiphelile",
+      "subtitle": "Sidinga nje i-imeyili ukuze siqinisekise i-akhawunti yakho.",
+      "emailLabel": "I-imeyili yomzali",
+      "emailHelp": "Isetshenziswa kanye kuphela ukuqinisekisa le akhawunti. Ngeke uyidinge ukuze ungene.",
+      "submit": "Dala i-akhawunti",
+      "emailTaken": "Leyo imeyili isibhalisiwe kakade. Zama ukungena, noma usebenzise enye i-imeyili.",
+      "numberTaken": "Leyo nombolo yeselula isibhalisiwe kakade.",
+      "checkTitle": "Hlola i-imeyili yakho",
+      "checkSubtitle": "Sikuthumelele isixhumanisi sokuqinisekisa.",
+      "checkBody": "Chofoza isixhumanisi ku-imeyili ukuze uqinisekise i-akhawunti yakho. Ngemuva kwalokho, ngena usebenzisa inombolo yakho yeselula nephasiwedi.",
+      "backToLogin": "Buyela ekungeneni"
+    },
+    "institution": {
+      "label": "Isikhungo",
+      "school": "Isikole",
+      "uni": "Inyuvesi / Okunye",
+      "schoolName": "Igama lesikole",
+      "uniName": "Igama lenyuvesi / okunye",
+      "grade": "Ibanga",
+      "year": "Unyaka wokufunda",
+      "select": "Khetha…",
+      "options": {
+        "g8": "Ibanga 8",
+        "g9": "Ibanga 9",
+        "g10": "Ibanga 10",
+        "g11": "Ibanga 11",
+        "g12": "Ibanga 12",
+        "y1": "Unyaka wokuqala",
+        "y2": "Unyaka wesibili",
+        "y3": "Unyaka wesithathu",
+        "y4": "Unyaka wesine",
+        "postgrad": "Ngemuva kwedigri"
+      }
+    },
+    "forgot": {
+      "title": "Ukhohlwe iphasiwedi?",
+      "subtitle": "Sizothumela isixhumanisi sokusetha kabusha ku-imeyili esiyigcinile ye-akhawunti yakho.",
+      "mobileLabel": "Inombolo yeselula",
+      "submit": "Thumela isixhumanisi sokusetha kabusha",
+      "noAccount": "Ayikho i-akhawunti etholakele ngalo inombolo yeselula",
+      "checkTitle": "Hlola i-imeyili yakho",
+      "checkSubtitle": "Sithumele isixhumanisi sokusetha kabusha iphasiwedi.",
+      "checkBody": "Chofoza isixhumanisi ku-imeyili ukuze ukhethe iphasiwedi entsha.",
+      "back": "Buyela ekungeneni"
+    },
+    "reset": {
+      "title": "Khetha iphasiwedi entsha",
+      "subtitle": "Faka iphasiwedi entsha ye-akhawunti yakho.",
+      "newPassword": "Iphasiwedi entsha",
+      "submit": "Vuselela iphasiwedi",
+      "expiredTitle": "Isixhumanisi siphelelwe isikhathi",
+      "expiredSubtitle": "Lesi sixhumanisi asisebenzi noma sesisetshenzisiwe kakade.",
+      "requestNew": "Cela isixhumanisi esisha sokusetha kabusha"
+    },
+    "callback": {
+      "expiredTitle": "Isixhumanisi siphelelwe isikhathi",
+      "expiredSubtitle": "Lesi sixhumanisi asisebenzi noma sesisetshenzisiwe kakade.",
+      "requestNew": "Cela isixhumanisi esisha sokusetha kabusha"
+    },
+    "parentConfirmed": {
+      "okTitle": "Konke sekulungile.",
+      "okBody": "Uzothola isifinyezo esifushane seviki sokufunda kwabo — akukho okunye.",
+      "expiredTitle": "Isixhumanisi siphelelwe isikhathi",
+      "expiredBody": "Lesi sixhumanisi sokuqinisekisa asisebenzi noma sesisetshenzisiwe kakade."
+    },
+    "parentUnsubscribed": {
+      "okTitle": "Ukhishiwe ohlwini",
+      "okBody": "Ngeke usathola izibuyekezo zeviki. Ingane yakho ingakufaka futhi ezilungiselelweni ze-akhawunti yayo noma inini.",
+      "expiredTitle": "Isixhumanisi siphelelwe isikhathi",
+      "expiredBody": "Lesi sixhumanisi asisebenzi noma sesisetshenzisiwe kakade."
+    }
+  },
+  "errors": {
+    "generic": "Kukhona okungahambanga kahle. Sicela uzame futhi.",
+    "auth": {
+      "invalidCredentials": "Igama lomsebenzisi noma iphasiwedi akulungile. Zama futhi.",
+      "alreadyRegistered": "Leyo imeyili isibhalisiwe kakade. Zama ukungena, noma usebenzise enye i-imeyili.",
+      "rateLimited": "Imizamo eminingi kakhulu. Sicela ulinde isikhashana bese uzama futhi.",
+      "passwordShort": "Iphasiwedi kumele okungenani ibe nezinhlamvu eziyi-6.",
+      "samePassword": "Iphasiwedi yakho entsha kumele ihluke kweyakudala.",
+      "invalidEmail": "Sicela ufake ikheli le-imeyili elivumelekile.",
+      "emailNotConfirmed": "Sicela uqale uqinisekise i-imeyili yakho, bese uyangena.",
+      "network": "Asikwazanga ukuxhuma. Hlola i-inthanethi yakho bese uzama futhi.",
+      "mobileTaken": "Leyo nombolo yeselula isibhaliswe kwenye i-akhawunti.",
+      "noAccount": "Ayikho i-akhawunti etholakele ngalo inombolo yeselula",
+      "notSignedIn": "Awungenanga.",
+      "saveEmail": "Asikwazanga ukugcina leyo imeyili. Zama futhi."
+    },
+    "retry": "Zama futhi"
+  },
+  "presets": {
+    "accounting": "Accounting",
+    "afrikaansFal": "Afrikaans FAL",
+    "afrikaansHl": "Afrikaans HL",
+    "agriculturalSciences": "Agricultural Sciences",
+    "biology": "Biology",
+    "businessStudies": "Business Studies",
+    "cat": "CAT",
+    "consumerStudies": "Consumer Studies",
+    "dramaticArts": "Dramatic Arts",
+    "economics": "Economics",
+    "engineeringGraphicsDesign": "Engineering Graphics & Design",
+    "englishFal": "English FAL",
+    "englishHl": "English HL",
+    "geography": "Geography",
+    "history": "Umlando",
+    "informationTechnology": "Information Technology",
+    "lifeOrientation": "Life Orientation",
+    "lifeSciences": "Life Sciences",
+    "mathematicalLiteracy": "Mathematical Literacy",
+    "mathematics": "Izibalo",
+    "music": "Umculo",
+    "physicalSciences": "Physical Sciences",
+    "religionStudies": "Religion Studies",
+    "sepediHl": "Sepedi HL",
+    "setswanaHl": "Setswana HL",
+    "tourism": "Tourism",
+    "visualArts": "Visual Arts",
+    "xhosaHl": "isiXhosa HL",
+    "zuluHl": "isiZulu HL"
+  },
+  "subjects": {
+    "eyebrow": "HLANGANISA UHLELO LWEZIFUNDO ZAKHO",
+    "title": "Ufundelani?",
+    "searchLabel": "Sesha noma ukhethe isifundo",
+    "searchPlaceholder": "isb. Izibalo",
+    "customPlaceholder": "Igama lesifundo sakho",
+    "add": "Engeza",
+    "addOwn": "+ Engeza isifundo sami",
+    "saving": "Iyagcina…",
+    "next": "Okulandelayo: zilinganise",
+    "saveError": "Azikwazanga ukugcinwa izifundo zakho. Zama futhi.",
+    "remove": "Susa {subject}"
+  },
+  "ranking": {
+    "eyebrow": "BA NOBUQINISO — LOKHU KUQONDISA UHLELO LAKHO",
+    "title": "Uzethemba kangakanani kwesinye nesinye?",
+    "scale": "1 = esibuthakathaka kakhulu  ·  5 = esiqinile kakhulu",
+    "scoreAria": "{subject}: ukuzethemba {score}",
+    "saving": "Iyagcina…",
+    "next": "Okulandelayo: izinsuku zokuhlolwa",
+    "saveError": "Ukulinganisa kwakho akukwazanga ukugcinwa. Zama futhi."
+  },
+  "examDates": {
+    "eyebrow": "ISINYATHELO ESIGCINA",
+    "title": "Kuyoba nini isivivinyo ngasinye?",
+    "intro": "Thinta isifundo ukuze wengeze usuku lwesivivinyo. Ungangeza ngaphezu kolulodwa, njengokuhlolwa kwenkathi nokokugcina.",
+    "minDate": "Izinsuku zokuhlolwa kumele okungenani zibe yikusasa - sicela ukhethe usuku olulandelayo.",
+    "addError": "Asikwazanga ukwengeza lolo suku. Zama futhi.",
+    "removeError": "Asikwazanga ukususa lolo suku. Zama futhi.",
+    "generateError": "Asikwazanga ukwenza uhlelo lwakho. Zama futhi.",
+    "adding": "Iyengeza…",
+    "addDate": "+ Engeza usuku",
+    "removeAria": "Susa usuku {date}: {subject}",
+    "stillNeed": "{count, plural, one {Isadinga usuku: {subjects}.} other {Zisadinga usuku: {subjects}.}}",
+    "generating": "Iyenza…",
+    "generate": "Yenza uhlelo lwami",
+    "footnote": "Uhlelo lwakho lwakheka ngokushesha futhi luvuseleleka nsuku zonke."
+  },
+  "manage": {
+    "eyebrow": "LUNGISA I-PLANNER YAMI",
+    "title": "Vuselela ukulinganisa kwakho noma izinsuku zokuhlolwa",
+    "tabSubjects": "Izifundo",
+    "tabRanking": "Ukulinganisa",
+    "tabDates": "Izinsuku zokuhlolwa",
+    "addSubjectLabel": "Engeza isifundo",
+    "searchPlaceholder": "isb. Izibalo",
+    "customPlaceholder": "Igama lesifundo sakho",
+    "add": "Engeza",
+    "addOwn": "+ Engeza isifundo sami",
+    "yourSubjects": "Izifundo zakho",
+    "newSubjectNote": "Izifundo ezintsha zizodinga ukulinganisa ukuzethemba nosuku lokuhlolwa ngaphambi kokuba zivele ohlelweni lwakho.",
+    "removeSubjectAria": "Susa {subject}",
+    "scale": "1 = esibuthakathaka kakhulu  ·  5 = esiqinile kakhulu",
+    "scoreAria": "{subject}: ukuzethemba {score}",
+    "adding": "Iyengeza…",
+    "addDate": "+ Engeza usuku",
+    "removeDateAria": "Susa usuku {date}: {subject}",
+    "updating": "Ivuselela uhlelo lwakho…",
+    "addSubjectError": "Asikwazanga ukwengeza leso sifundo. Zama futhi.",
+    "removeSubjectError": "Asikwazanga ukususa leso sifundo. Zama futhi.",
+    "saveError": "Asikwazanga ukukugcina lokho. Zama futhi.",
+    "minDate": "Izinsuku zokuhlolwa kumele okungenani zibe yikusasa - sicela ukhethe usuku olulandelayo.",
+    "addDateError": "Asikwazanga ukwengeza lolo suku. Zama futhi.",
+    "removeDateError": "Asikwazanga ukususa lolo suku. Zama futhi."
+  },
+  "plan": {
+    "heading": "Uhlelo lwanamuhla (olunconyiwe)",
+    "subheading": "Lokhu esikunconyayo namuhla — zizwe ukhululekile ukukushintsha kukulungele.",
+    "dateLine": "{weekday}, {dayMonth}",
+    "fallbackName": "mngani",
+    "greetings": {
+      "g1": "Siyakwamukela futhi, qhawe!",
+      "g2": "Kuhle ukukubona futhi, {name}!",
+      "g3": "Masiphinde futhi, {name}!",
+      "g4": "Ubonakele. Lokho sekuyinqobo, {name}.",
+      "g5": "Sikulindele noma ukulungele, {name}."
+    },
+    "sessionMinutes": "{minutes} imiz",
+    "hideNotes": "Fihla amanothi esihloko",
+    "addNotes": "Engeza amanothi esihloko",
+    "removeSession": "Susa isikhathi sokufunda: {subject}",
+    "markDone": "Maka isihloko njengesiqediwe",
+    "markNotDone": "Maka isihloko njengesingaqediwe",
+    "topicPlaceholder": "Ufunda ini?",
+    "allDoneTitle": "Uqedile zonke izivivinyo zakho zamanje! 🎉",
+    "allDoneBody": "Engeza izinsuku zakho zokuhlolwa ezilandelayo ngezansi ukuze uhlelo lwakho lokufunda luqhubeke.",
+    "examDone": "Isivivinyo siqediwe — engeza usuku olulandelayo",
+    "minDate": "Izinsuku zokuhlolwa kumele okungenani zibe yikusasa - sicela ukhethe usuku olulandelayo.",
+    "adding": "Iyengeza…",
+    "addDate": "+ Engeza usuku",
+    "updateRanking": "Ufuna ukuvuselela nokulinganisa kwakho kwezifundo? Lungisa i-planner yami",
+    "addAnother": "+ Engeza esinye isikhathi"
+  },
+  "share": {
+    "share": "Yabelana",
+    "preparing": "Iyalungiswa…",
+    "shareAria": "Yabelana ngohlelo",
+    "preparingAria": "Ilungisela ukwabelana",
+    "error": "Asikwazanga ukwenza i-PDF. Zama futhi.",
+    "shareTitle": "Uhlelo lokufunda luka-{name}",
+    "shareText": "Uhlelo lokufunda luka-{name}: {date}",
+    "pdf": {
+      "title": "UHLELO LOKUFUNDA LWANAMUHLA",
+      "forName": "luka-{name}",
+      "empty": "Azikho izikhathi ezihleliwe namuhla okwamanje.",
+      "done": "Kuqediwe",
+      "pending": "Kuyalindwa",
+      "upcoming": "IZINSUKU ZOKUHLOLWA EZILANDELAYO",
+      "when": "{days, plural, =0 {namuhla} =1 {kusasa} other {ezinsukwini ezingu-#}}",
+      "eyebrow": "KUBELANWE NGU-EMPOWERMINT",
+      "headline": "{name} usebenzisa i-Smart Study Planner ukuze ahlale ekhona ekufundeni. Zama nawe.",
+      "cta": "Qala mahhala",
+      "scan": "SCANA UKUQALA",
+      "micro": "akudingeki ikhadi"
+    }
+  },
+  "install": {
+    "bannerTitle": "Engeza i-empowermint esikrinini sakho sasekhaya",
+    "bannerBody": "Ukuze ubuyele ohlelweni lwakho ngokushesha, njenganoma iyiphi enye i-app.",
+    "dismiss": "Vala",
+    "addButton": "Engeza esikrinini sasekhaya",
+    "modalTitle": "Gcina i-empowermint ikufinyeleleka ngokuthinta kanye",
+    "iosStep1": "Thinta isithonjana sokwabelana kubha yamathuluzi ye-Safari.",
+    "iosStep2": "Bese uskrolela phansi uthinte <b>Add to Home Screen</b>.",
+    "androidStep": "Funa <b>Add to Home Screen</b> noma <b>Install App</b> kumenyu yesiphequluli sakho.",
+    "gotIt": "Ngiyezwa"
+  },
+  "review": {
+    "title": "Isebenza kanjani i-SSP kuwe kuze kube manje?",
+    "subtitle": "Impendulo yakho isisiza ukuyenza ibe ngcono.",
+    "starAria": "{count, plural, one {# inkanyezi} other {# izinkanyezi}}",
+    "commentPlaceholder": "Kukhona ofuna ukukwabelana nathi? (akuphoqelekile)",
+    "submit": "Thumela ukubuyekeza",
+    "submitting": "Iyathumela…",
+    "notNow": "Hhayi manje",
+    "saveError": "Asikwazanga ukukugcina lokho. Zama futhi."
+  },
+  "reflection": {
+    "title": "Isivivinyo sakho ({subject}) sihambe kanjani?",
+    "subtitle": "{date} — lokhu kusisiza ukuhlela izikhathi zakho ezilandelayo.",
+    "saveError": "Asikwazanga ukukugcina lokho. Zama futhi.",
+    "choices": {
+      "tougher": "Besinzima kunalokho engangikulindele",
+      "expected": "Njengoba bengilindele",
+      "better": "Besingcono kunalokho engangikulindele"
+    }
+  },
+  "nav": {
+    "primary": "Okuyinhloko",
+    "plan": "Uhlelo",
+    "calendar": "Ikhalenda",
+    "manage": "Lungisa",
+    "exams": "Izivivinyo"
+  },
+  "settings": {
+    "aria": "Izilungiselelo",
+    "manage": "Lungisa i-planner yami",
+    "language": "Language / Ulimi",
+    "addToHome": "Engeza esikrinini sasekhaya",
+    "logout": "Phuma"
+  },
+  "exams": {
+    "title": "Izinsuku zokuhlolwa",
+    "loading": "Iyalayisha…",
+    "empty": "Azikabikho izifundo.",
+    "daysBadge": "{days, plural, =0 {Namuhla} =1 {Usuku olu-1} other {Izinsuku ezingu-#}}",
+    "adding": "Iyengeza…",
+    "addDate": "+ Engeza usuku",
+    "removeAria": "Susa usuku {date}: {subject}",
+    "pastPapers": "Amaphepha adlule →",
+    "minDate": "Izinsuku zokuhlolwa kumele okungenani zibe yikusasa - sicela ukhethe usuku olulandelayo.",
+    "addError": "Asikwazanga ukwengeza lolo suku. Zama futhi.",
+    "removeError": "Asikwazanga ukususa lolo suku. Zama futhi.",
+    "upcoming": "Izinsuku zokuhlolwa ezilandelayo",
+    "examIn": "{subject} — isivivinyo kusele",
+    "daysCount": "izinsuku ezingu-{days}"
+  },
+  "timer": {
+    "eyebrow": "ISIKHATHI SOKUGXILA · {session} KWEZINGU-{total} NAMUHLA",
+    "studySession": "Isikhathi sokufunda",
+    "status": {
+      "green": "KUSELE · ISIKHATHI ESININGI",
+      "amber": "KUSELE · QHUBEKA KANJALO",
+      "red": "KUSELE · CISHE SESIFIKILE"
+    },
+    "pause": "Misa kancane",
+    "resume": "Qhubeka",
+    "end": "Qeda isikhathi",
+    "start": "Qala isikhathi",
+    "hintRunning": "Isikhathi sizongena ngokuzenzakalelayo ohlelweni lwanamuhla lapho siphela.",
+    "hintIdle": "Thinta Qala uma usulungele ukugxila."
+  },
+  "examTimer": {
+    "durationHours": "{hours, plural, one {# ihora} other {# amahora}}",
+    "durationHoursMinutes": "{hours} ihora {minutes} imiz",
+    "entry": {
+      "title": "Zivivinye isikhathi sesivivinyo",
+      "badge": "Okusha",
+      "subtitle": "Isikhathi sokubala esigcwele sephepha lakho elilandelayo"
+    },
+    "setup": {
+      "eyebrow": "Ukulungiselela ukulingisa isivivinyo",
+      "intro": "Ake silungiselele ukulingisa kwakho isivivinyo lapha. Khetha ezinhlwini ezehlayo isifundo ofuna ukuzivivinya sona kanye nobude besivivinyo.",
+      "subjectLabel": "Khetha Isifundo",
+      "select": "Khetha…",
+      "timeLabel": "Khetha isikhathi (inani lamahora)",
+      "go": "Yiya esikhathini sesivivinyo"
+    },
+    "session": {
+      "eyebrow": "Isikhathi sokulingisa isivivinyo",
+      "subject": "Isifundo:",
+      "duration": "Isikhathi:",
+      "studySession": "Isikhathi sokufunda",
+      "minutes": "{minutes} imizuzu",
+      "start": "Qala, Konke Okuhle.",
+      "pause": "Misa kancane",
+      "resume": "Qhubeka",
+      "endEarly": "Qeda isikhathi ngaphambi kwesikhathi",
+      "timesUp": "ISIKHATHI SIPHELILE",
+      "howDidItGo": "KUHAMBE KANJANI?",
+      "thumbsUp": "Isithupha phezulu",
+      "thumbsDown": "Isithupha phansi",
+      "thanks": "Siyabonga ngempendulo",
+      "back": "Buyela ku-planner"
+    },
+    "status": {
+      "green": "Kusele · Isikhathi esiningi.",
+      "amber": "Kusele · Hlala ugxile.",
+      "red": "Kusele · Ingxenye yokugcina."
+    }
+  },
+  "calendar": {
+    "title": "Ukubuka ikhalenda",
+    "subtitle": "Thinta usuku ukuze ubone okuhleliwe.",
+    "prevMonth": "Inyanga edlule",
+    "nextMonth": "Inyanga ezayo",
+    "legendExam": "Usuku lokuhlolwa",
+    "legendToday": "Namuhla",
+    "legendStudy": "Isikhathi sokufunda",
+    "legendMissed": "Okuphuthile",
+    "empty": "Akukho okuhleliwe kuleli suku.",
+    "examLine": "{subject}: isivivinyo",
+    "sessionLine": "{status, select, done {{subject}: isikhathi sokufunda · siqediwe} missed {{subject}: isikhathi sokufunda · siphuthile} other {{subject}: isikhathi sokufunda}}",
+    "addSession": "+ Engeza isikhathi sokufunda"
+  },
+  "sessionComplete": {
+    "title": "Umsebenzi omuhle.\nIsikhathi siqediwe.",
+    "logged": "Imizuzu engu-{minutes} igciniwe: <b>{subject}</b>.",
+    "quotes": {
+      "q1": "Umzamo awudingi ukuphelela ukuze ubalwe. Udinga nje ukuphindaphindwa.",
+      "q2": "Uhlelo akuyona inhloso. Uhlelo yilo oluholela enhlosweni.",
+      "q3": "Ukuzethemba akulindwa. Kwakhiwa isikhathi ngesikhathi.",
+      "q4": "Akudingeki uzizwe ulungile. Kudingeka nje ubonakale.",
+      "q5": "Ihora ngalinye olifaka manje liyimaka ongeke kudingeke ukuthi ukukhathalele kamuva.",
+      "q6": "Umfundi ohlelayo uhlula umfundi othukile — njalo nje.",
+      "q7": "Inqubekela phambili ayibonakali njalo. Kodwa iyiqiniso njalo.",
+      "q8": "Usondele kunalokho okucabangayo."
+    },
+    "quoteSource": "— Mastering Your Studies",
+    "whatsNext": "Kulandela ini?",
+    "startNext": "Qala okulandelayo: {subject}",
+    "doneToday": "Usuqedile namuhla. Wenze kahle!",
+    "backToPlan": "Buyela Ohlelweni Lwanamuhla",
+    "noPenalty": "Isinqumo sakho — akukho sijeziso nganoma iyiphi indlela."
+  },
+  "pastPapers": {
+    "title": "Amaphepha Okuhlolwa Adlule",
+    "intro": "Khetha ibhodi yakho ukuze uye ngqo emaphepheni asemthethweni nasezikhombisweni zokumaka.",
+    "cardSubtitle": "Amaphepha namamemo e-NSC ne-IEB asemthethweni.",
+    "cardLocked": "Kuvulwa eBangeni 12",
+    "toastLocked": "Lokhu kuvulwa uma ususe-Bangeni 12.",
+    "footnote": "Amamemo ayisiqondiso sokumaka, hhayi ikhiye eliphelele lezimpendulo — asetshenziselwa ukuqondisa, hhayi ukucindezela, umsebenzi wakho.",
+    "boards": {
+      "caps": {
+        "label": "Amaphepha e-CAPS / NSC",
+        "helper": "Umnyango Wezemfundo Eyisisekelo, amaphepha kuze kufike ku-2008."
+      },
+      "ieb": {
+        "label": "Amaphepha e-IEB",
+        "helper": "Iphothali ye-IEB uqobo, iminyaka emi-5 edlule."
+      }
+    }
+  },
+  "account": {
+    "title": "I-akhawunti",
+    "signedInAs": "Ungene njengo",
+    "student": "Umfundi: {name}",
+    "changePassword": "Shintsha iphasiwedi",
+    "contactUs": "Xhumana nathi",
+    "contactBody": "Imibuzo noma impendulo? Thumela i-imeyili ku-<link>ebrahim@empowermint.co.za</link>"
+  },
+  "parentNotify": {
+    "title": "Hlala uxhumene nomzali wakho",
+    "intro": "Faka i-imeyili yabo sizothumela isibuyekezo esifushane seviki sokuthi ukufunda kuhamba kanjani — ukuze ungadingi ukuzichaza njalo kusihlwa edilini.",
+    "currentContact": "Oxhumana naye samanje:",
+    "confirmed": "kuqinisekisiwe",
+    "waiting": "kulindwe ukuqinisekiswa",
+    "placeholder": "parent@email.com",
+    "sent": "Kuthunyelwe! Bazothola i-imeyili yokuqinisekisa ngaphambi kokuba kuphume noma yini.",
+    "update": "Vuselela i-imeyili",
+    "add": "Faka umzali wami",
+    "error": "Kukhona okungahambanga kahle. Zama futhi."
+  }
+}

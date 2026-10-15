@@ -20,6 +20,12 @@ export const LOCALES: LocaleConfig[] = [
     intl: 'af-ZA',
     noticeNative: 'Nuut: die planner is nou in Afrikaans beskikbaar.',
   },
+  {
+    code: 'zu',
+    nativeName: 'isiZulu',
+    intl: 'zu-ZA',
+    noticeNative: 'Okusha: i-planner manje iyatholakala ngesiZulu.',
+  },
 ];
 
 export const DEFAULT_LOCALE = 'en';

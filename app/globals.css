@@ -177,6 +177,15 @@ h6 {
       -6px -6px 14px var(--neu-shadow-light);
   }
 
+  /* Today's Plan subject cards: white fill with a cream outline (the cream
+     now lives in the border, not the fill). Declared after .neu-raised so it
+     wins; the raised shadow pair is kept. --color-card is cream in light mode
+     and the dark card tone in dark mode. */
+  .neu-plan-card {
+    background: var(--color-bg);
+    border: 1.5px solid var(--color-card);
+  }
+
   /* Pressed/inset surfaces (inputs, search fields, selected pills). */
   .neu-pressed {
     background: var(--color-bg);

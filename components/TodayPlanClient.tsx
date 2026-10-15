@@ -264,11 +264,7 @@ export default function TodayPlanClient({
           return (
           <div
             key={session.id}
-            className="neu-raised rounded-neu-sm px-[12px] py-[9px] mb-[8px]"
-            style={{
-              borderLeftWidth: '5px',
-              borderLeftColor: session.completed ? 'var(--color-teal)' : 'var(--color-orange)',
-            }}
+            className="neu-raised neu-plan-card rounded-neu-sm px-[12px] py-[9px] mb-[8px]"
           >
             <div
               onClick={() => router.push(`/timer/${session.id}`)}
@@ -402,7 +398,7 @@ export default function TodayPlanClient({
             {needsNewDate.map((subject) => (
               <div
                 key={subject.id}
-                className="neu-raised relative flex items-center justify-between rounded-neu-sm px-[14px] py-[11px] mb-[10px]"
+                className="neu-raised neu-plan-card relative flex items-center justify-between rounded-neu-sm px-[14px] py-[11px] mb-[10px]"
               >
                 <span className="font-body font-bold text-[13.5px] text-text-primary">
                   {subjectLabel(subject.subject_name)}
