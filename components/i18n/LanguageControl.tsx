@@ -41,7 +41,8 @@ export default function LanguageControl({ source }: { source: LanguageSource }) 
       <div
         role="radiogroup"
         aria-labelledby={labelId}
-        className="soft-pressed inline-flex max-w-full flex-wrap justify-center gap-[6px] rounded-[28px] p-[5px]"
+        className="soft-pressed grid w-full max-w-[320px] gap-[8px] rounded-[22px] p-[10px]"
+        style={{ gridTemplateColumns: `repeat(${Math.min(enabled.length, 3)}, minmax(0, 1fr))` }}
       >
         {enabled.map((language, index) => {
           const selected = language.code === locale;
@@ -58,14 +59,18 @@ export default function LanguageControl({ source }: { source: LanguageSource }) 
               lang={language.code}
               onClick={() => change(language.code, source)}
               onKeyDown={(event) => onKeyDown(event, index)}
-              className={`flex min-h-[44px] items-center justify-center gap-1.5 rounded-full px-4 font-body text-[14px] transition-colors ${
+              className={`flex min-h-[38px] min-w-0 items-center justify-center gap-1 rounded-full px-1 font-body text-[12px] transition-colors min-[360px]:px-2 min-[360px]:text-[13px] ${
                 selected
                   ? 'soft-pressed-accent font-bold text-black'
                   : 'soft-raised font-medium text-text-body'
               }`}
             >
-              {selected && <CheckIcon />}
-              <span>{language.nativeName}</span>
+              {selected && (
+                <span className="hidden min-[360px]:inline-flex">
+                  <CheckIcon size={13} />
+                </span>
+              )}
+              <span className="truncate">{language.nativeName}</span>
             </button>
           );
         })}
