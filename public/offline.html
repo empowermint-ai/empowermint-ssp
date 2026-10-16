@@ -76,7 +76,9 @@
         var MESSAGES = {
           af: "Jy is vanlyn. Koppel weer om aan te hou beplan.",
           zu: "Awuxhumekile ku-inthanethi. Xhuma futhi ukuze uqhubeke nokuhlela.",
-          xh: "Awuxhunyiwe kwi-intanethi. Xhuma kwakhona ukuze uqhubeke ucwangcisa."
+          xh: "Awuxhunyiwe kwi-intanethi. Xhuma kwakhona ukuze uqhubeke ucwangcisa.",
+          fr: "Tu es hors ligne. Reconnecte-toi pour continuer à planifier.",
+          ar: "أنت غير متصل بالإنترنت. أعد الاتصال لمواصلة التخطيط."
         };
         try {
           var enabled = (localStorage.getItem('ssp_langs') || 'en').split(',');
@@ -84,6 +86,7 @@
           var lang = match ? decodeURIComponent(match[1]) : (navigator.language || '').toLowerCase().slice(0, 2);
           if (MESSAGES[lang] && enabled.indexOf(lang) !== -1) {
             document.documentElement.lang = lang;
+            if (lang === 'ar') document.documentElement.dir = 'rtl';
             document.getElementById('msg').textContent = MESSAGES[lang];
           }
         } catch (e) {}

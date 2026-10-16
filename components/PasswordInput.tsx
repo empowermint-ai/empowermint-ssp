@@ -51,7 +51,7 @@ export default function PasswordInput({ className = '', id, ...props }: Password
         type="button"
         onClick={() => setVisible((v) => !v)}
         aria-label={visible ? t('hide') : t('show')}
-        className="absolute right-[12px] top-1/2 -translate-y-1/2 text-text-muted"
+        className="absolute end-[12px] top-1/2 -translate-y-1/2 text-text-muted"
       >
         {visible ? <EyeOffIcon /> : <EyeIcon />}
       </button>

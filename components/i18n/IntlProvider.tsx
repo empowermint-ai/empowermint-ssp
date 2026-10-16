@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { NextIntlClientProvider } from 'next-intl';
+import { getDir } from '@/config/locales';
 import type { Messages } from '@/lib/i18n/loadMessages';
 
 interface Override {
@@ -37,6 +38,7 @@ export default function IntlProvider({
 
   useEffect(() => {
     document.documentElement.lang = active.locale;
+    document.documentElement.dir = getDir(active.locale);
   }, [active.locale]);
 
   const setter = useMemo(() => (next: Override) => setOverride(next), []);

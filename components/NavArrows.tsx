@@ -23,7 +23,7 @@ export default function NavArrows({
         className={`text-[19px] leading-none p-1 ${dark ? '' : 'text-text-primary'}`}
         style={color ? { color } : undefined}
       >
-        ←
+        <span className="inline-block rtl:-scale-x-100">←</span>
       </button>
       {showForward && (
         <button
@@ -33,7 +33,7 @@ export default function NavArrows({
           className={`text-[19px] leading-none p-1 ${dark ? '' : 'text-text-primary'}`}
           style={color ? { color } : undefined}
         >
-          →
+          <span className="inline-block rtl:-scale-x-100">→</span>
         </button>
       )}
     </div>

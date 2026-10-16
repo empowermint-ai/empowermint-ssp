@@ -8,6 +8,7 @@ import IntlProvider from "@/components/i18n/IntlProvider";
 import ToastProvider from "@/components/i18n/ToastProvider";
 import LanguageProvider from "@/components/i18n/LanguageProvider";
 import LanguageSync from "@/components/i18n/LanguageSync";
+import { getDir } from "@/config/locales";
 import type { Messages } from "@/lib/i18n/loadMessages";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -50,7 +51,7 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale}>
+    <html lang={locale} dir={getDir(locale)}>
       <head>
         <link
           rel="preload"

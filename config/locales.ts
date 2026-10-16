@@ -8,6 +8,8 @@ export interface LocaleConfig {
   nativeName: string;
   /** BCP 47 tag handed to Intl for dates, numbers and plurals. */
   intl: string;
+  /** Reading direction; omit for left-to-right. Drives <html dir> and the rtl: styles. */
+  dir?: 'rtl';
   /** One line, written in this language, used by the one-time "now available" notice card. */
   noticeNative?: string;
 }
@@ -32,6 +34,21 @@ export const LOCALES: LocaleConfig[] = [
     intl: 'xh-ZA',
     noticeNative: 'Okutsha: i-planner ngoku iyafumaneka ngesiXhosa.',
   },
+  {
+    code: 'fr',
+    nativeName: 'Français',
+    intl: 'fr-FR',
+    noticeNative: 'Nouveau : le planificateur est maintenant disponible en français.',
+  },
+  {
+    // Western digits (nu-latn): dates, exam countdowns and phone numbers read the
+    // same in every language.
+    code: 'ar',
+    nativeName: 'العربية',
+    intl: 'ar-u-nu-latn',
+    dir: 'rtl',
+    noticeNative: 'جديد: المخطط متاح الآن بالعربية.',
+  },
 ];
 
 export const DEFAULT_LOCALE = 'en';
@@ -42,8 +59,8 @@ export const LOCALE_COOKIE_MAX_AGE = 60 * 60 * 24 * 365;
 
 /** Which languages get the one-time notice card, and the date it stops showing. */
 export const LANGUAGE_ANNOUNCEMENT = {
-  codes: ['zu', 'xh'],
-  announcedUntil: '2027-01-31',
+  codes: ['fr', 'ar'],
+  announcedUntil: '2027-02-28',
 };
 
 // English is always enabled. With only "en" enabled the picker, the notice card
@@ -83,6 +100,10 @@ export function getEnabledLocales(): LocaleConfig[] {
 
 export function isEnabledLocale(code: string | null | undefined): code is string {
   return !!code && getEnabledLocales().some((l) => l.code === code);
+}
+
+export function getDir(code: string): 'rtl' | 'ltr' {
+  return LOCALES.find((l) => l.code === code)?.dir ?? 'ltr';
 }
 
 export function getLocaleConfig(code: string): LocaleConfig {

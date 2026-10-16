@@ -46,7 +46,7 @@ export default function InstitutionField({
   }
 
   return (
-    <div className="text-left">
+    <div className="text-start">
       <label className="block font-heading font-bold text-[10.5px] uppercase tracking-[0.6px] text-text-muted mb-1.5">
         {t('label')}
       </label>

@@ -1,0 +1,500 @@
+{
+  "metadata": {
+    "title": "empowermint SSP",
+    "description": "empowermint Smart Study Planner"
+  },
+  "common": {
+    "pleaseWait": "Un instant…",
+    "back": "Retour",
+    "forward": "Suivant",
+    "close": "Fermer"
+  },
+  "language": {
+    "label": "Language · Langue",
+    "title": "Language / Langue",
+    "open": "Language / Langue",
+    "changed": "Langue changée : {language}"
+  },
+  "notice": {
+    "aria": "Nouvelle langue disponible",
+    "headline": "Nouveau : le planificateur est maintenant disponible en {languages}.",
+    "switch": "Passer à {language}",
+    "notNow": "Pas maintenant"
+  },
+  "welcome": {
+    "title": "Le planificateur d'étude intelligent",
+    "tagline": "Crois en toi, planifie comment tu vas y arriver",
+    "start": "démarrer mon planificateur",
+    "haveAccount": "Tu as déjà un compte ? Connecte-toi ici"
+  },
+  "auth": {
+    "signOut": "Se déconnecter",
+    "phone": {
+      "country": "Pays",
+      "placeholder": "83 123 4567"
+    },
+    "password": {
+      "show": "Afficher le mot de passe",
+      "hide": "Masquer le mot de passe"
+    },
+    "changePassword": {
+      "newPassword": "Nouveau mot de passe",
+      "update": "Mettre à jour le mot de passe",
+      "success": "Mot de passe mis à jour."
+    },
+    "login": {
+      "title": "Content de\nte revoir.",
+      "subtitle": "Ça fait plaisir de te revoir.",
+      "mobileLabel": "Numéro de portable",
+      "passwordLabel": "Mot de passe",
+      "passwordPlaceholder": "Saisis ton mot de passe",
+      "submit": "Se connecter",
+      "forgot": "Mot de passe oublié ?",
+      "newHere": "Nouveau ici ? Démarre mon planificateur",
+      "invalid": "Nom d'utilisateur ou mot de passe incorrect. Réessaie."
+    },
+    "register": {
+      "step": "ÉTAPE 1 SUR 2",
+      "title": "Commençons.",
+      "intro": "C'est à toi. Juste l'essentiel pour démarrer.",
+      "usernameLabel": "Nom d'utilisateur",
+      "usernamePlaceholder": "ex. thabo_m",
+      "mobileLabel": "Numéro de portable",
+      "passwordLabel": "Mot de passe",
+      "passwordPlaceholder": "6 caractères minimum",
+      "continue": "Continuer",
+      "footnote": "Ton numéro de portable est ce qui te permettra de te connecter désormais.",
+      "usernameRequired": "Saisis un nom d'utilisateur.",
+      "mobileRequired": "Saisis ton numéro de portable.",
+      "mobileInvalid": "Saisis un numéro de portable valide pour le pays sélectionné.",
+      "passwordRequired": "Saisis un mot de passe.",
+      "passwordShort": "Le mot de passe doit contenir au moins 6 caractères.",
+      "mobileTaken": "Ce numéro est déjà enregistré.",
+      "loginInstead": "Se connecter plutôt"
+    },
+    "step2": {
+      "title": "Presque terminé",
+      "subtitle": "Il nous faut juste une adresse e-mail pour confirmer ton compte.",
+      "emailLabel": "E-mail d'un parent",
+      "emailHelp": "Utilisé une seule fois pour confirmer ce compte. Tu n'en auras pas besoin pour te connecter.",
+      "submit": "Créer le compte",
+      "emailTaken": "Cette adresse e-mail est déjà enregistrée. Essaie de te connecter ou utilise une autre adresse.",
+      "numberTaken": "Ce numéro de portable est déjà enregistré.",
+      "checkTitle": "Vérifie tes e-mails",
+      "checkSubtitle": "Nous t'avons envoyé un lien de confirmation.",
+      "checkBody": "Clique sur le lien dans l'e-mail pour confirmer ton compte. Ensuite, connecte-toi avec ton numéro de portable et ton mot de passe.",
+      "backToLogin": "Retour à la connexion"
+    },
+    "institution": {
+      "label": "Établissement",
+      "school": "École",
+      "uni": "Université / Autre",
+      "schoolName": "Nom de l'école",
+      "uniName": "Nom de l'université / autre",
+      "grade": "Classe",
+      "year": "Année d'études",
+      "select": "Choisir…",
+      "options": {
+        "g8": "Grade 8",
+        "g9": "Grade 9",
+        "g10": "Grade 10",
+        "g11": "Grade 11",
+        "g12": "Grade 12",
+        "y1": "1re année",
+        "y2": "2e année",
+        "y3": "3e année",
+        "y4": "4e année",
+        "postgrad": "Troisième cycle"
+      }
+    },
+    "forgot": {
+      "title": "Mot de passe oublié ?",
+      "subtitle": "Nous enverrons un lien de réinitialisation à l'adresse e-mail enregistrée pour ton compte.",
+      "mobileLabel": "Numéro de portable",
+      "submit": "Envoyer le lien de réinitialisation",
+      "noAccount": "Aucun compte trouvé avec ce numéro de portable",
+      "checkTitle": "Vérifie tes e-mails",
+      "checkSubtitle": "Nous avons envoyé un lien de réinitialisation du mot de passe.",
+      "checkBody": "Clique sur le lien dans l'e-mail pour choisir un nouveau mot de passe.",
+      "back": "Retour à la connexion"
+    },
+    "reset": {
+      "title": "Choisis un nouveau mot de passe",
+      "subtitle": "Saisis un nouveau mot de passe pour ton compte.",
+      "newPassword": "Nouveau mot de passe",
+      "submit": "Mettre à jour le mot de passe",
+      "expiredTitle": "Lien expiré",
+      "expiredSubtitle": "Ce lien de réinitialisation n'est pas valide ou a déjà été utilisé.",
+      "requestNew": "Demander un nouveau lien de réinitialisation"
+    },
+    "callback": {
+      "expiredTitle": "Lien expiré",
+      "expiredSubtitle": "Ce lien n'est pas valide ou a déjà été utilisé.",
+      "requestNew": "Demander un nouveau lien de réinitialisation"
+    },
+    "parentConfirmed": {
+      "okTitle": "Tout est en ordre.",
+      "okBody": "Tu recevras un court résumé hebdomadaire de ses études, rien de plus.",
+      "expiredTitle": "Lien expiré",
+      "expiredBody": "Ce lien de confirmation n'est pas valide ou a déjà été utilisé."
+    },
+    "parentUnsubscribed": {
+      "okTitle": "Tu es désinscrit",
+      "okBody": "Tu ne recevras plus de mises à jour hebdomadaires. Ton enfant peut te réinscrire à tout moment depuis les paramètres de son compte.",
+      "expiredTitle": "Lien expiré",
+      "expiredBody": "Ce lien n'est pas valide ou a déjà été utilisé."
+    }
+  },
+  "errors": {
+    "generic": "Une erreur s'est produite. Réessaie.",
+    "auth": {
+      "invalidCredentials": "Nom d'utilisateur ou mot de passe incorrect. Réessaie.",
+      "alreadyRegistered": "Cette adresse e-mail est déjà enregistrée. Essaie de te connecter ou utilise une autre adresse.",
+      "rateLimited": "Trop de tentatives. Patiente un instant puis réessaie.",
+      "passwordShort": "Le mot de passe doit contenir au moins 6 caractères.",
+      "samePassword": "Ton nouveau mot de passe doit être différent de l'ancien.",
+      "invalidEmail": "Saisis une adresse e-mail valide.",
+      "emailNotConfirmed": "Confirme d'abord ton adresse e-mail, puis connecte-toi.",
+      "network": "Connexion impossible. Vérifie ta connexion Internet et réessaie.",
+      "mobileTaken": "Ce numéro de portable est déjà enregistré pour un autre compte.",
+      "noAccount": "Aucun compte trouvé avec ce numéro de portable",
+      "notSignedIn": "Non connecté.",
+      "saveEmail": "Impossible d'enregistrer cette adresse e-mail. Réessaie."
+    },
+    "retry": "Réessayer"
+  },
+  "presets": {
+    "accounting": "Comptabilité",
+    "afrikaansFal": "Afrikaans (langue seconde)",
+    "afrikaansHl": "Afrikaans (langue maternelle)",
+    "agriculturalSciences": "Sciences agricoles",
+    "biology": "Biologie",
+    "businessStudies": "Études commerciales",
+    "cat": "CAT (informatique et bureautique)",
+    "consumerStudies": "Sciences de la consommation",
+    "dramaticArts": "Arts dramatiques",
+    "economics": "Économie",
+    "engineeringGraphicsDesign": "Graphisme et design technique",
+    "englishFal": "Anglais (langue seconde)",
+    "englishHl": "Anglais (langue maternelle)",
+    "geography": "Géographie",
+    "history": "Histoire",
+    "informationTechnology": "Technologies de l'information",
+    "lifeOrientation": "Orientation de vie",
+    "lifeSciences": "Sciences de la vie",
+    "mathematicalLiteracy": "Culture mathématique",
+    "mathematics": "Mathématiques",
+    "music": "Musique",
+    "physicalSciences": "Sciences physiques",
+    "religionStudies": "Études religieuses",
+    "sepediHl": "Sepedi (langue maternelle)",
+    "setswanaHl": "Setswana (langue maternelle)",
+    "tourism": "Tourisme",
+    "visualArts": "Arts visuels",
+    "xhosaHl": "isiXhosa (langue maternelle)",
+    "zuluHl": "isiZulu (langue maternelle)"
+  },
+  "subjects": {
+    "eyebrow": "CONSTRUIS TA LISTE DE MATIÈRES",
+    "title": "Qu'est-ce que tu étudies ?",
+    "searchLabel": "Cherche ou choisis une matière",
+    "searchPlaceholder": "ex. Mathématiques",
+    "customPlaceholder": "Le nom de ta matière",
+    "add": "Ajouter",
+    "addOwn": "+ Ajouter ma propre matière",
+    "saving": "Enregistrement…",
+    "next": "Suite : les classer",
+    "saveError": "Impossible d'enregistrer tes matières. Réessaie.",
+    "remove": "Retirer {subject}"
+  },
+  "ranking": {
+    "eyebrow": "SOIS HONNÊTE — CELA DIRIGE TON PLAN",
+    "title": "Quelle confiance as-tu dans chacune ?",
+    "scale": "1 = la plus faible  ·  5 = la plus forte",
+    "scoreAria": "{subject} : confiance {score}",
+    "saving": "Enregistrement…",
+    "next": "Suite : dates d'examen",
+    "saveError": "Impossible d'enregistrer ton classement. Réessaie."
+  },
+  "examDates": {
+    "eyebrow": "DERNIÈRE ÉTAPE",
+    "title": "Quand a lieu chaque examen ?",
+    "intro": "Touche une matière pour ajouter une date d'examen. Tu peux en ajouter plusieurs, comme un test de trimestre et l'examen final.",
+    "minDate": "Les dates d'examen doivent être au plus tôt demain - choisis une date plus tardive.",
+    "addError": "Impossible d'ajouter cette date. Réessaie.",
+    "removeError": "Impossible de retirer cette date. Réessaie.",
+    "generateError": "Impossible de générer ton plan. Réessaie.",
+    "adding": "Ajout…",
+    "addDate": "+ Ajouter une date",
+    "removeAria": "Retirer la date {date} : {subject}",
+    "stillNeed": "{count, plural, one {Il manque encore une date : {subjects}.} other {Il manque encore des dates : {subjects}.}}",
+    "generating": "Génération…",
+    "generate": "Générer mon plan",
+    "footnote": "Ton planning se construit instantanément et se met à jour chaque jour."
+  },
+  "manage": {
+    "eyebrow": "GÉRER MON PLANIFICATEUR",
+    "title": "Mets à jour ton classement ou tes dates d'examen",
+    "tabSubjects": "Matières",
+    "tabRanking": "Classement",
+    "tabDates": "Dates d'examen",
+    "addSubjectLabel": "Ajouter une matière",
+    "searchPlaceholder": "ex. Mathématiques",
+    "customPlaceholder": "Le nom de ta matière",
+    "add": "Ajouter",
+    "addOwn": "+ Ajouter ma propre matière",
+    "yourSubjects": "Tes matières",
+    "newSubjectNote": "Les nouvelles matières ont besoin d'un niveau de confiance et d'une date d'examen avant d'apparaître dans ton plan.",
+    "removeSubjectAria": "Retirer {subject}",
+    "scale": "1 = la plus faible  ·  5 = la plus forte",
+    "scoreAria": "{subject} : confiance {score}",
+    "adding": "Ajout…",
+    "addDate": "+ Ajouter une date",
+    "removeDateAria": "Retirer la date {date} : {subject}",
+    "updating": "Mise à jour de ton plan…",
+    "addSubjectError": "Impossible d'ajouter cette matière. Réessaie.",
+    "removeSubjectError": "Impossible de retirer cette matière. Réessaie.",
+    "saveError": "Impossible d'enregistrer. Réessaie.",
+    "minDate": "Les dates d'examen doivent être au plus tôt demain - choisis une date plus tardive.",
+    "addDateError": "Impossible d'ajouter cette date. Réessaie.",
+    "removeDateError": "Impossible de retirer cette date. Réessaie."
+  },
+  "plan": {
+    "heading": "Plan du jour (recommandé)",
+    "subheading": "Voici ce que nous recommandons pour aujourd'hui — modifie-le comme tu veux.",
+    "dateLine": "{weekday}, {dayMonth}",
+    "fallbackName": "toi",
+    "greetings": {
+      "g1": "Content de te revoir, champion !",
+      "g2": "Ça fait plaisir de te revoir, {name} !",
+      "g3": "On y retourne, {name} !",
+      "g4": "Tu es là. C'est déjà une victoire, {name}.",
+      "g5": "Prêt quand tu l'es, {name}."
+    },
+    "sessionMinutes": "{minutes} min",
+    "hideNotes": "Masquer les notes du sujet",
+    "addNotes": "Ajouter des notes sur le sujet",
+    "removeSession": "Retirer la séance : {subject}",
+    "markDone": "Marquer le sujet comme terminé",
+    "markNotDone": "Marquer le sujet comme non terminé",
+    "topicPlaceholder": "Qu'est-ce que tu étudies ?",
+    "allDoneTitle": "Tu as terminé tous tes examens en cours ! 🎉",
+    "allDoneBody": "Ajoute tes prochaines dates d'examen ci-dessous pour poursuivre ton plan d'étude.",
+    "examDone": "Examen terminé — ajoute ta prochaine date",
+    "minDate": "Les dates d'examen doivent être au plus tôt demain - choisis une date plus tardive.",
+    "adding": "Ajout…",
+    "addDate": "+ Ajouter une date",
+    "updateRanking": "Tu veux aussi mettre à jour ton classement des matières ? Gérer mon planificateur",
+    "addAnother": "+ Ajouter une autre séance"
+  },
+  "share": {
+    "share": "Partager",
+    "preparing": "Préparation…",
+    "shareAria": "Partager le plan",
+    "preparingAria": "Préparation du partage",
+    "error": "Impossible de créer le PDF. Réessaie.",
+    "shareTitle": "Plan d'étude de {name}",
+    "shareText": "Plan d'étude de {name} pour le {date}",
+    "pdf": {
+      "title": "PLAN D'ÉTUDE DU JOUR",
+      "forName": "pour {name}",
+      "empty": "Aucune séance prévue pour aujourd'hui.",
+      "done": "Terminé",
+      "pending": "À faire",
+      "upcoming": "PROCHAINES DATES D'EXAMEN",
+      "when": "{days, plural, =0 {aujourd'hui} =1 {demain} other {dans # jours}}",
+      "eyebrow": "PARTAGÉ PAR EMPOWERMINT",
+      "headline": "{name} utilise le Smart Study Planner pour rester au top dans ses études. Essaie-le.",
+      "cta": "Commencer gratuitement",
+      "scan": "SCANNE POUR COMMENCER",
+      "micro": "sans carte bancaire"
+    }
+  },
+  "install": {
+    "bannerTitle": "Ajoute empowermint à ton écran d'accueil",
+    "bannerBody": "Pour retrouver ton plan d'un geste, comme n'importe quelle autre appli.",
+    "dismiss": "Ignorer",
+    "addButton": "Ajouter à l'écran d'accueil",
+    "modalTitle": "Garde empowermint à portée de main",
+    "iosStep1": "Touche l'icône Partager dans la barre d'outils de Safari.",
+    "iosStep2": "Fais ensuite défiler vers le bas et touche <b>Add to Home Screen</b>.",
+    "androidStep": "Cherche <b>Add to Home Screen</b> ou <b>Install App</b> dans le menu de ton navigateur.",
+    "gotIt": "Compris"
+  },
+  "review": {
+    "title": "Comment le SSP fonctionne-t-il pour toi jusqu'ici ?",
+    "subtitle": "Ton avis nous aide à l'améliorer.",
+    "starAria": "{count, plural, one {# étoile} other {# étoiles}}",
+    "commentPlaceholder": "Quelque chose à partager ? (facultatif)",
+    "submit": "Envoyer l'avis",
+    "submitting": "Envoi…",
+    "notNow": "Pas maintenant",
+    "saveError": "Impossible d'enregistrer. Réessaie."
+  },
+  "reflection": {
+    "title": "Comment s'est passé ton examen de {subject} ?",
+    "subtitle": "{date} — cela nous aide à planifier tes prochaines séances.",
+    "saveError": "Impossible d'enregistrer. Réessaie.",
+    "choices": {
+      "tougher": "Plus difficile que prévu",
+      "expected": "À peu près comme prévu",
+      "better": "Mieux que prévu"
+    }
+  },
+  "nav": {
+    "primary": "Principal",
+    "plan": "Plan",
+    "calendar": "Calendrier",
+    "manage": "Gérer",
+    "exams": "Examens"
+  },
+  "settings": {
+    "aria": "Paramètres",
+    "manage": "Gérer mon planificateur",
+    "language": "Language / Langue",
+    "addToHome": "Ajouter à l'écran d'accueil",
+    "logout": "Se déconnecter"
+  },
+  "exams": {
+    "title": "Dates d'examen",
+    "loading": "Chargement…",
+    "empty": "Aucune matière pour l'instant.",
+    "daysBadge": "{days, plural, =0 {Aujourd'hui} =1 {1 jour} other {# jours}}",
+    "adding": "Ajout…",
+    "addDate": "+ Ajouter une date",
+    "removeAria": "Retirer la date {date} : {subject}",
+    "pastPapers": "Anciens sujets →",
+    "minDate": "Les dates d'examen doivent être au plus tôt demain - choisis une date plus tardive.",
+    "addError": "Impossible d'ajouter cette date. Réessaie.",
+    "removeError": "Impossible de retirer cette date. Réessaie.",
+    "upcoming": "Prochaines dates d'examen",
+    "examIn": "Examen de {subject} dans",
+    "daysCount": "{days} jours"
+  },
+  "timer": {
+    "eyebrow": "SÉANCE DE CONCENTRATION · {session} SUR {total} AUJOURD'HUI",
+    "studySession": "Séance d'étude",
+    "status": {
+      "green": "RESTANT · LARGEMENT LE TEMPS",
+      "amber": "RESTANT · BON RYTHME",
+      "red": "RESTANT · PRESQUE FINI"
+    },
+    "pause": "Pause",
+    "resume": "Reprendre",
+    "end": "Terminer la séance",
+    "start": "Démarrer la séance",
+    "hintRunning": "La séance s'ajoute automatiquement au plan du jour à la fin.",
+    "hintIdle": "Touche Démarrer quand tu es prêt à te concentrer."
+  },
+  "examTimer": {
+    "durationHours": "{hours, plural, one {# heure} other {# heures}}",
+    "durationHoursMinutes": "{hours} h {minutes} min",
+    "entry": {
+      "title": "Entraîne-toi à gérer ton temps d'examen",
+      "badge": "Nouveau",
+      "subtitle": "Compte à rebours complet pour ta prochaine épreuve"
+    },
+    "setup": {
+      "eyebrow": "Préparation de la simulation d'examen",
+      "intro": "Préparons ta simulation d'examen. Choisis dans les listes déroulantes la matière pour laquelle tu veux t'entraîner ainsi que la durée de l'examen.",
+      "subjectLabel": "Choisis la matière",
+      "select": "Choisir…",
+      "timeLabel": "Choisis la durée (en heures)",
+      "go": "Aller à la séance d'examen"
+    },
+    "session": {
+      "eyebrow": "Séance de simulation d'examen",
+      "subject": "Matière :",
+      "duration": "Durée :",
+      "studySession": "Séance d'étude",
+      "minutes": "{minutes} minutes",
+      "start": "Commencer, bonne chance.",
+      "pause": "Pause",
+      "resume": "Reprendre",
+      "endEarly": "Terminer la séance plus tôt",
+      "timesUp": "TEMPS ÉCOULÉ",
+      "howDidItGo": "COMMENT ÇA S'EST PASSÉ ?",
+      "thumbsUp": "Pouce levé",
+      "thumbsDown": "Pouce baissé",
+      "thanks": "Merci pour ton retour",
+      "back": "Retour au planificateur"
+    },
+    "status": {
+      "green": "Restant · Largement le temps.",
+      "amber": "Restant · Reste concentré.",
+      "red": "Restant · Dernière ligne droite."
+    }
+  },
+  "calendar": {
+    "title": "Vue calendrier",
+    "subtitle": "Touche une date pour voir ce qui est prévu.",
+    "prevMonth": "Mois précédent",
+    "nextMonth": "Mois suivant",
+    "legendExam": "Jour d'examen",
+    "legendToday": "Aujourd'hui",
+    "legendStudy": "Séance d'étude",
+    "legendMissed": "Manquée",
+    "empty": "Rien de prévu ce jour-là.",
+    "examLine": "Examen de {subject}",
+    "sessionLine": "{status, select, done {Séance d'étude de {subject} · terminée} missed {Séance d'étude de {subject} · manquée} other {Séance d'étude de {subject}}}",
+    "addSession": "+ Ajouter une séance d'étude"
+  },
+  "sessionComplete": {
+    "title": "Beau travail.\nSéance terminée.",
+    "logged": "{minutes} minutes enregistrées sur <b>{subject}</b>.",
+    "quotes": {
+      "q1": "L'effort n'a pas besoin d'être parfait pour compter. Il doit juste être répété.",
+      "q2": "Le plan n'est pas le but. Le plan est ce qui t'y mène.",
+      "q3": "La confiance ne s'attend pas. Elle se construit séance après séance.",
+      "q4": "Tu n'as pas besoin de te sentir prêt. Tu dois juste te présenter.",
+      "q5": "Chaque heure que tu investis maintenant est un point dont tu n'auras pas à te soucier plus tard.",
+      "q6": "L'élève qui planifie bat toujours l'élève qui panique.",
+      "q7": "Les progrès ne sont pas toujours visibles. Mais ils sont toujours réels.",
+      "q8": "Tu es plus proche que tu ne le crois."
+    },
+    "quoteSource": "— Mastering Your Studies",
+    "whatsNext": "Et ensuite ?",
+    "startNext": "Commencer la suivante : {subject}",
+    "doneToday": "Tu as terminé pour aujourd'hui. Bravo !",
+    "backToPlan": "Retour au plan du jour",
+    "noPenalty": "À toi de décider — il n'y a aucune pénalité dans les deux cas."
+  },
+  "pastPapers": {
+    "title": "Anciens sujets d'examen",
+    "intro": "Choisis ton organisme pour accéder directement aux sujets officiels et aux barèmes de correction.",
+    "cardSubtitle": "Sujets et corrigés officiels NSC et IEB.",
+    "cardLocked": "Se débloque en Grade 12",
+    "toastLocked": "Cela se débloque une fois en Grade 12.",
+    "footnote": "Les corrigés sont un barème de correction, pas une clé de réponses définitive — ils servent à guider ton travail, pas à le remplacer.",
+    "boards": {
+      "caps": {
+        "label": "Sujets CAPS / NSC",
+        "helper": "Département de l'Éducation de base, sujets remontant à 2008."
+      },
+      "ieb": {
+        "label": "Sujets IEB",
+        "helper": "Le portail de l'IEB, 5 dernières années."
+      }
+    }
+  },
+  "account": {
+    "title": "Compte",
+    "signedInAs": "Connecté en tant que",
+    "student": "Élève : {name}",
+    "changePassword": "Changer le mot de passe",
+    "contactUs": "Nous contacter",
+    "contactBody": "Une question ou un avis ? Écris à <link>ebrahim@empowermint.co.za</link>"
+  },
+  "parentNotify": {
+    "title": "Tiens ton parent informé",
+    "intro": "Ajoute son adresse e-mail et nous enverrons un court point hebdomadaire sur tes études — pour que tu n'aies pas à t'expliquer chaque soir au dîner.",
+    "currentContact": "Contact actuel :",
+    "confirmed": "confirmé",
+    "waiting": "en attente de confirmation",
+    "placeholder": "parent@email.com",
+    "sent": "Envoyé ! Il recevra un e-mail de confirmation avant que quoi que ce soit ne soit envoyé.",
+    "update": "Mettre à jour l'e-mail",
+    "add": "Ajouter mon parent",
+    "error": "Une erreur s'est produite. Réessaie."
+  }
+}

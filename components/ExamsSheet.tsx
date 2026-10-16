@@ -288,7 +288,7 @@ export default function ExamsSheet({ userId, onClose }: { userId: string; onClos
                       {subject.exam_dates.map((d) => (
                         <span
                           key={d.id}
-                          className="flex items-center gap-1 font-body text-xs rounded-[8px] pl-[10px] pr-[6px] py-[5px] border-[1.3px] text-navy dark:text-text-primary border-navy dark:border-text-primary"
+                          className="flex items-center gap-1 font-body text-xs rounded-[8px] ps-[10px] pe-[6px] py-[5px] border-[1.3px] text-navy dark:text-text-primary border-navy dark:border-text-primary"
                         >
                           {formatDateChip(d.exam_date, intlTag)}
                           <button

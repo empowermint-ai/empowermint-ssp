@@ -30,7 +30,7 @@ function LockIcon() {
 
 function ChevronIcon() {
   return (
-    <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg className="rtl:-scale-x-100" width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
         d="M1 1L7 7L1 13"
         stroke="currentColor"
@@ -75,7 +75,7 @@ export default function PastExamPapersCard({
       <button
         type="button"
         onClick={handleClick}
-        className={`neu-raised w-full flex items-center gap-3 rounded-neu-sm px-[12px] py-[9px] mb-[8px] text-left ${
+        className={`neu-raised w-full flex items-center gap-3 rounded-neu-sm px-[12px] py-[9px] mb-[8px] text-start ${
           isGrade12 ? '' : 'opacity-70'
         }`}
       >

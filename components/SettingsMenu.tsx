@@ -47,14 +47,14 @@ export default function SettingsMenu() {
       {open && (
         <>
           <div className="fixed inset-0 z-10" onClick={() => setOpen(false)} />
-          <div className={`neu-raised absolute right-0 top-full mt-2 z-20 rounded-neu-sm overflow-hidden ${enabled.length > 1 ? 'min-w-[200px]' : 'min-w-[160px]'}`}>
+          <div className={`neu-raised absolute end-0 top-full mt-2 z-20 rounded-neu-sm overflow-hidden ${enabled.length > 1 ? 'min-w-[200px]' : 'min-w-[160px]'}`}>
             <button
               type="button"
               onClick={() => {
                 setOpen(false);
                 router.push('/subjects/manage');
               }}
-              className="w-full text-left font-body text-[13px] text-text-primary px-4 py-3 border-b border-card-border"
+              className="w-full text-start font-body text-[13px] text-text-primary px-4 py-3 border-b border-card-border"
             >
               {t('manage')}
             </button>
@@ -65,7 +65,7 @@ export default function SettingsMenu() {
                   setOpen(false);
                   setShowLanguageSheet(true);
                 }}
-                className="w-full flex items-center justify-between gap-3 text-left font-body text-[13px] text-text-primary px-4 py-3 border-b border-card-border"
+                className="w-full flex items-center justify-between gap-3 text-start font-body text-[13px] text-text-primary px-4 py-3 border-b border-card-border"
               >
                 <span>{t('language')}</span>
                 <span lang={locale} className="font-bold text-text-muted">
@@ -77,7 +77,7 @@ export default function SettingsMenu() {
               <button
                 type="button"
                 onClick={handleInstallClick}
-                className="w-full text-left font-body text-[13px] text-text-primary px-4 py-3 border-b border-card-border"
+                className="w-full text-start font-body text-[13px] text-text-primary px-4 py-3 border-b border-card-border"
               >
                 {t('addToHome')}
               </button>
@@ -85,7 +85,7 @@ export default function SettingsMenu() {
             <button
               type="button"
               onClick={handleLogout}
-              className="w-full text-left font-body text-[13px] text-text-primary px-4 py-3"
+              className="w-full text-start font-body text-[13px] text-text-primary px-4 py-3"
             >
               {t('logout')}
             </button>

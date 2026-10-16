@@ -157,7 +157,7 @@ export default function SubjectsForm({
                 key={opt}
                 type="button"
                 onClick={() => handleSelectOption(opt)}
-                className="w-full text-left px-[14px] py-[10px] font-body text-[14px] text-text-primary"
+                className="w-full text-start px-[14px] py-[10px] font-body text-[14px] text-text-primary"
               >
                 {subjectLabel(opt)}
               </button>

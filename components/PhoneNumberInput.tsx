@@ -47,7 +47,7 @@ export default function PhoneNumberInput({
   }
 
   return (
-    <div className="text-left">
+    <div className="text-start">
       {label && (
         <label
           htmlFor={id}
@@ -72,6 +72,7 @@ export default function PhoneNumberInput({
         <input
           id={id}
           type="tel"
+          dir="ltr"
           inputMode="numeric"
           autoComplete="tel-national"
           placeholder={t('placeholder')}

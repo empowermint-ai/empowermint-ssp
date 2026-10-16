@@ -13,7 +13,12 @@ const fail = (msg) => problems.push(msg);
 
 // Keys that are read through a translator passed as a function argument, which
 // the static scan below cannot follow back to a namespace.
-const EXTRA_USED = new Set(['examTimer.durationHours', 'examTimer.durationHoursMinutes']);
+const EXTRA_USED = new Set([
+  'examTimer.durationHours',
+  'examTimer.durationHoursMinutes',
+  // read through a translator that is English-only for Arabic (SharePlanButton)
+  ...['title', 'forName', 'empty', 'done', 'pending', 'upcoming', 'when', 'eyebrow', 'headline', 'cta', 'scan', 'micro'].map((k) => `share.pdf.${k}`),
+]);
 
 // ---- 1. structure ------------------------------------------------------
 const languages = enabledLanguageCodes();

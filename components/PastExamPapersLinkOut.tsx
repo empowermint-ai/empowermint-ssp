@@ -51,8 +51,8 @@ export default function PastExamPapersLinkOut({
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => logActivity(learnerId, 'past_papers_link_opened', { grade, board: board.id })}
-            className="neu-raised w-full flex items-center justify-between gap-3 rounded-neu-sm px-[14px] py-[13px] mb-[10px] text-left"
-            style={{ borderLeftWidth: '4px', borderLeftColor: 'var(--color-orange)' }}
+            className="neu-raised w-full flex items-center justify-between gap-3 rounded-neu-sm px-[14px] py-[13px] mb-[10px] text-start"
+            style={{ borderInlineStartWidth: '4px', borderInlineStartColor: 'var(--color-orange)' }}
           >
             <span className="min-w-0 flex-1">
               <span className="block font-heading font-bold text-[14px] text-text-primary">

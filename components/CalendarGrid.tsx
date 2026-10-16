@@ -161,7 +161,7 @@ export default function CalendarGrid({
             aria-label={t('prevMonth')}
             className="text-text-primary text-[19px] leading-none p-2"
           >
-            ‹
+            <span className="inline-block rtl:-scale-x-100">‹</span>
           </button>
           <p className="font-heading font-bold text-[15px] text-text-primary">{monthLabel}</p>
           <button
@@ -170,7 +170,7 @@ export default function CalendarGrid({
             aria-label={t('nextMonth')}
             className="text-text-primary text-[19px] leading-none p-2"
           >
-            ›
+            <span className="inline-block rtl:-scale-x-100">›</span>
           </button>
         </div>
 

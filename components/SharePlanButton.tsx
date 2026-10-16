@@ -1,10 +1,20 @@
 'use client';
 
 import { useState } from 'react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
+import { getDir } from '@/config/locales';
 import { useIntlTag } from '@/lib/i18n/intl';
 import { useSubjectLabel } from '@/lib/i18n/useSubjectLabel';
+import { createTranslator } from 'next-intl';
+import enMessages from '@/messages/en.json';
 import type { PlanPdfExam, PlanPdfSession } from '@/lib/buildPlanPdf';
+
+function englishDateLabel(): string {
+  const now = new Date();
+  const weekday = now.toLocaleDateString('en-GB', { weekday: 'long' });
+  const dayMonth = now.toLocaleDateString('en-GB', { day: 'numeric', month: 'long' });
+  return `${weekday}, ${dayMonth}`;
+}
 
 export default function SharePlanButton({
   studentName,
@@ -22,6 +32,7 @@ export default function SharePlanButton({
   const t = useTranslations('share');
   const intlTag = useIntlTag();
   const subjectLabel = useSubjectLabel();
+  const rtl = getDir(useLocale()) === 'rtl';
   const [sharing, setSharing] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -33,24 +44,39 @@ export default function SharePlanButton({
     try {
       const { buildPlanPdf } = await import('@/lib/buildPlanPdf');
       const firstName = studentName.split(' ')[0];
+      // The PDF is drawn with a built-in Latin font that has no Arabic letters, so
+      // for Arabic the shared sheet is produced in English (subjects and date too).
+      const latinOnly = rtl;
+      const pt = latinOnly
+        ? createTranslator({ locale: 'en', messages: enMessages, namespace: 'share' })
+        : t;
+      const pdfDateLabel = latinOnly
+        ? englishDateLabel()
+        : dateLabel;
       const blob = await buildPlanPdf({
-        dateLabel,
-        sessions: sessions.map((s) => ({ ...s, subject_name: subjectLabel(s.subject_name) })),
-        exams: exams.map((e) => ({ ...e, subjectName: subjectLabel(e.subjectName) })),
-        intlTag,
+        dateLabel: pdfDateLabel,
+        sessions: sessions.map((s) => ({
+          ...s,
+          subject_name: latinOnly ? s.subject_name : subjectLabel(s.subject_name),
+        })),
+        exams: exams.map((e) => ({
+          ...e,
+          subjectName: latinOnly ? e.subjectName : subjectLabel(e.subjectName),
+        })),
+        intlTag: latinOnly ? 'en-GB' : intlTag,
         labels: {
-          title: t('pdf.title'),
-          forName: t('pdf.forName', { name: studentName }),
-          empty: t('pdf.empty'),
-          done: t('pdf.done'),
-          pending: t('pdf.pending'),
-          upcoming: t('pdf.upcoming'),
-          when: (days: number) => t('pdf.when', { days }),
-          eyebrow: t('pdf.eyebrow'),
-          headline: t('pdf.headline', { name: firstName }),
-          cta: t('pdf.cta'),
-          scan: t('pdf.scan'),
-          micro: t('pdf.micro'),
+          title: pt('pdf.title'),
+          forName: pt('pdf.forName', { name: studentName }),
+          empty: pt('pdf.empty'),
+          done: pt('pdf.done'),
+          pending: pt('pdf.pending'),
+          upcoming: pt('pdf.upcoming'),
+          when: (days: number) => pt('pdf.when', { days }),
+          eyebrow: pt('pdf.eyebrow'),
+          headline: pt('pdf.headline', { name: firstName }),
+          cta: pt('pdf.cta'),
+          scan: pt('pdf.scan'),
+          micro: pt('pdf.micro'),
         },
       });
       const fileName = `${studentName}-study-plan.pdf`;

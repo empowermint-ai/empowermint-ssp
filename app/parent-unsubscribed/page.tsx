@@ -12,7 +12,7 @@ export default async function ParentUnsubscribedPage({
 
   return (
     <main className="relative min-h-screen bg-bg flex flex-col items-center justify-center px-10 text-center">
-      <div className="absolute top-6 left-6">
+      <div className="absolute top-6 start-6">
         <NavArrows />
       </div>
 
