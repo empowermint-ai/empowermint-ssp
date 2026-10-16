@@ -59,7 +59,7 @@ export const LOCALE_COOKIE_MAX_AGE = 60 * 60 * 24 * 365;
 
 /** Which languages get the one-time notice card, and the date it stops showing. */
 export const LANGUAGE_ANNOUNCEMENT = {
-  codes: ['fr', 'ar'],
+  codes: ['zu', 'xh', 'fr', 'ar'],
   announcedUntil: '2027-02-28',
 };
 

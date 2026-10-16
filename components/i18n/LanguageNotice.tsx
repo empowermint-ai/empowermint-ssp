@@ -25,7 +25,7 @@ export default function LanguageNotice() {
   const codesKey = codes.join('-');
 
   useEffect(() => {
-    if (codes.length === 0 || codes.includes(locale)) {
+    if (codes.filter((c) => c !== locale).length === 0) {
       setVisible(false);
       return;
     }
@@ -43,7 +43,8 @@ export default function LanguageNotice() {
 
   if (!visible) return null;
 
-  const targets = codes.map((c) => getLocaleConfig(c));
+  // The learner's own language is left out of the list (a Zulu learner is offered the other three).
+  const targets = codes.filter((c) => c !== locale).map((c) => getLocaleConfig(c));
   let languages = targets.map((l) => l.nativeName).join(', ');
   try {
     languages = new Intl.ListFormat(locale, { type: 'conjunction' }).format(targets.map((l) => l.nativeName));
@@ -75,14 +76,14 @@ export default function LanguageNotice() {
           {targets.map(
             (target) =>
               target.noticeNative && (
-                <p key={target.code} lang={target.code} className="mt-1 font-body text-[13px] leading-snug text-text-body">
+                <p key={target.code} lang={target.code} dir={target.dir} className="mt-1 font-body text-[13px] leading-snug text-text-body">
                   {target.noticeNative}
                 </p>
               )
           )}
         </div>
       </div>
-      <div className="mt-4 flex flex-wrap gap-3">
+      <div className="mt-4 grid grid-cols-2 gap-3">
         {targets.map((target) => (
           <button
             key={target.code}
@@ -92,7 +93,7 @@ export default function LanguageNotice() {
               setVisible(false);
               change(target.code, 'notice');
             }}
-            className="soft-pressed-accent min-h-[44px] flex-1 rounded-full px-5 font-body text-[14px] font-bold text-black"
+            className="soft-pressed-accent min-h-[44px] rounded-full px-3 font-body text-[14px] font-bold text-black"
           >
             {t('switch', { language: target.nativeName })}
           </button>
@@ -103,7 +104,7 @@ export default function LanguageNotice() {
             remember('dismissed');
             setVisible(false);
           }}
-          className="soft-raised min-h-[44px] w-full rounded-full px-5 font-body text-[14px] font-medium text-text-body"
+          className="soft-raised col-span-2 min-h-[44px] w-full rounded-full px-5 font-body text-[14px] font-medium text-text-body"
         >
           {t('notNow')}
         </button>
