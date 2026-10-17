@@ -70,7 +70,7 @@ export default async function CalendarPage() {
         userId={user.id}
       />
 
-      <BottomNav userId={user.id} />
+      <BottomNav />
     </main>
   );
 }

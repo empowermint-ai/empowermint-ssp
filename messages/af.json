@@ -346,7 +346,7 @@
     "plan": "Plan",
     "calendar": "Kalender",
     "manage": "Bestuur",
-    "exams": "Eksamens"
+    "calculator": "Sakrekenaar"
   },
   "settings": {
     "aria": "Instellings",
@@ -496,5 +496,41 @@
     "update": "Verander e-pos",
     "add": "Voeg my ouer by",
     "error": "Iets het skeefgeloop. Probeer weer."
+  },
+  "calculator": {
+    "title": "Sakrekenaar",
+    "back": "Terug",
+    "languageAria": "Sakrekenaar-taal",
+    "clear": "Maak skoon",
+    "clearHint": "Druk AC om skoon te maak",
+    "angleMode": "Hoekmodus",
+    "helpToggle": "Hoe tekens en instellings werk",
+    "signTitle": "Tekenkonvensie",
+    "signBody": "Geld wat jy uitbetaal is negatief; geld wat jy ontvang is positief. Leen R100 000 (PV = +100 000) en jou paaiement kom negatief uit.",
+    "ppyBody": "Betalings per jaar en BGN/END: druk 2ND dan N om betalings per jaar te verander (12, 1, 2, 4); 2ND dan PV wissel tussen END (betalings aan die einde van elke tydperk) en BGN (aan die begin). CPT dan 'n sleutel bereken dit; 2ND dan CPT maak die vyf waardes skoon.",
+    "flowBody": "Kontantvloei: druk CF, tik elke bedrag en druk = om dit by te voeg (die eerste is vandag). Druk dan NPV (gebruik I/Y as die koers per tydperk) of IRR. 2ND dan CF maak die lys skoon.",
+    "cfHint": "Tik 'n bedrag en druk dan = om dit by te voeg. Druk CF om toe te maak.",
+    "cptHint": "Druk nou die waarde wat bereken moet word",
+    "focus": {
+      "label": "Fokussessie",
+      "finance": "Finansies",
+      "pause": "wag",
+      "resume": "gaan voort",
+      "finished": "Sessie klaar — tik om te voltooi"
+    },
+    "finError": {
+      "missing": "Vul eers die ander waardes in",
+      "no-solution": "Geen oplossing vir hierdie waardes nie",
+      "invalid": "Gaan jou waardes na",
+      "syntax": "Gaan na wat jy getik het"
+    },
+    "annual": {
+      "title": "Nuwe akademiese jaar",
+      "subtitle": "Bevestig jou besonderhede sodat die sakrekenaar en plan by jou pas.",
+      "confirm": "Bevestig en gaan voort",
+      "saving": "Stoor tans…",
+      "incomplete": "Vul asseblief al die velde in.",
+      "saveError": "Kon dit nie stoor nie. Probeer weer."
+    }
   }
 }

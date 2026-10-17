@@ -71,7 +71,7 @@ export default function PastExamPapersLinkOut({
         {t('footnote')}
       </p>
 
-      <BottomNav userId={learnerId} />
+      <BottomNav />
     </main>
   );
 }

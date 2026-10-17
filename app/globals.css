@@ -341,3 +341,66 @@ html[lang='af'] h2,
 html[lang='af'] h3 {
   text-wrap: balance;
 }
+
+/* --- Calculators (scientific + financial) -------------------------------
+   Self-contained theme so the keypad matches the approved mockups exactly. The
+   accent is a variable so it can follow a user / brand theme later. */
+.calc {
+  --calc-accent: #F37021;
+  --calc-bg: #FFFFFF;
+  --calc-ink: #0B0B0B;
+  --calc-muted: #6F6F6A;
+  --calc-fn-bg: #F1EFE7;
+  --calc-fn-ink: #0B0B0B;
+  --calc-num-bg: #FFFFFF;
+  --calc-num-border: #ECE9E2;
+  --calc-ac-bg: #FDEEE2;
+  --calc-equals: #0C786C;
+  --calc-display-border: #F1EFE7;
+  --calc-display-bg: #FFFFFF;
+  --calc-track: #F1EFE7;
+  --calc-chip: #F1EFE7;
+  --calc-kh-fn: clamp(38px, 5.9dvh, 50px);
+  --calc-kh-num: clamp(44px, 6.9dvh, 58px);
+  background: var(--calc-bg);
+  color: var(--calc-ink);
+  font-family: var(--font-body);
+}
+
+@media (prefers-color-scheme: dark) {
+  .calc {
+    --calc-bg: #0E0D0B;
+    --calc-ink: #F2F0EA;
+    --calc-muted: #A8A296;
+    --calc-fn-bg: #211F1B;
+    --calc-fn-ink: #F2F0EA;
+    --calc-num-bg: #171613;
+    --calc-num-border: #2B2924;
+    --calc-ac-bg: rgba(243, 112, 33, 0.16);
+    --calc-equals: #139883;
+    --calc-display-border: #C9BFA8;
+    --calc-display-bg: #171613;
+    --calc-track: #2B2924;
+    --calc-chip: #211F1B;
+  }
+}
+
+.calc-key {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  font-family: var(--font-body);
+  transition: transform 0.06s ease, filter 0.12s ease;
+}
+.calc-key:active { transform: scale(0.96); filter: brightness(0.94); }
+.calc-key:focus-visible { outline: 2px solid var(--calc-accent); outline-offset: 2px; }
+.calc-key-fn { background: var(--calc-fn-bg); color: var(--calc-fn-ink); height: var(--calc-kh-fn); font-size: 14px; font-weight: 700; }
+.calc-key-num { background: var(--calc-num-bg); border: 1px solid var(--calc-num-border); color: var(--calc-ink); height: var(--calc-kh-num); font-size: 20px; font-weight: 700; }
+.calc-key-op { background: var(--calc-accent); color: #FFFFFF; height: var(--calc-kh-num); font-size: 22px; font-weight: 800; }
+.calc-key-ac { background: var(--calc-ac-bg); color: var(--calc-accent); height: var(--calc-kh-fn); font-size: 14px; font-weight: 700; }
+.calc-key-eq { background: var(--calc-equals); color: #FFFFFF; height: var(--calc-kh-num); font-size: 22px; font-weight: 800; }
+.calc-key-cpt { background: var(--calc-equals); color: #FFFFFF; height: var(--calc-kh-fn); font-size: 14px; font-weight: 700; }
+.calc-key-active { outline: 2px solid var(--calc-accent); outline-offset: -2px; }

@@ -346,7 +346,7 @@
     "plan": "Uhlelo",
     "calendar": "Ikhalenda",
     "manage": "Lungisa",
-    "exams": "Izivivinyo"
+    "calculator": "Ikhalkhuletha"
   },
   "settings": {
     "aria": "Izilungiselelo",
@@ -496,5 +496,41 @@
     "update": "Vuselela i-imeyili",
     "add": "Faka umzali wami",
     "error": "Kukhona okungahambanga kahle. Zama futhi."
+  },
+  "calculator": {
+    "title": "Ikhalkhuletha",
+    "back": "Emuva",
+    "languageAria": "Ulimi lwekhalkhuletha",
+    "clear": "Sula",
+    "clearHint": "Cindezela i-AC ukusula",
+    "angleMode": "Imodi yekhoneni",
+    "helpToggle": "Ukuthi amasiginekha nezilungiselelo zisebenza kanjani",
+    "signTitle": "Isivumelwano samasiginekha",
+    "signBody": "Imali oyikhokhayo iyinegethivu; imali oyitholayo iyipositivu. Boleka i-R100 000 (PV = +100 000) bese inkokhelo yakho ivela iyinegethivu.",
+    "ppyBody": "Izinkokhelo ngonyaka ne-BGN/END: cindezela i-2ND bese i-N ukushintsha izinkokhelo ngonyaka (12, 1, 2, 4); i-2ND bese i-PV ishintshashintsha phakathi kwe-END (izinkokhelo ekupheleni kwesikhathi ngasinye) ne-BGN (ekuqaleni). I-CPT bese ucindezela inani ofuna ukulibala; i-2ND bese i-CPT isula amanani amahlanu.",
+    "flowBody": "Ukuhamba kwemali: cindezela i-CF, thayipha inani ngalinye bese ucindezela = ukulifaka (elokuqala lanamuhla). Bese ucindezela i-NPV (isebenzisa i-I/Y njengesilinganiso ngesikhathi ngasinye) noma i-IRR. I-2ND bese i-CF isula uhlu.",
+    "cfHint": "Thayipha inani, bese ucindezela = ukulifaka. Cindezela i-CF ukuvala.",
+    "cptHint": "Manje cindezela inani ofuna ukulibala",
+    "focus": {
+      "label": "Isikhathi sokugxila",
+      "finance": "Ezezimali",
+      "pause": "misa",
+      "resume": "qhubeka",
+      "finished": "Isikhathi siphelile — thinta ukuqeda"
+    },
+    "finError": {
+      "missing": "Faka kuqala amanye amanani",
+      "no-solution": "Akukho siphetho salamanani",
+      "invalid": "Hlola amanani akho",
+      "syntax": "Hlola okuthayiphile"
+    },
+    "annual": {
+      "title": "Unyaka omusha wezifundo",
+      "subtitle": "Qinisekisa imininingwane yakho ukuze ikhalkhuletha nohlelo kukulingele.",
+      "confirm": "Qinisekisa uqhubeke",
+      "saving": "Iyagcina…",
+      "incomplete": "Sicela ugcwalise zonke izinkambu.",
+      "saveError": "Asikwazanga ukukugcina lokho. Zama futhi."
+    }
   }
 }

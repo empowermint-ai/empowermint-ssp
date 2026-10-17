@@ -2,9 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import ExamsSheet from '@/components/ExamsSheet';
 
 function HouseIcon() {
   return (
@@ -50,35 +48,29 @@ function ManageIcon() {
   );
 }
 
-function ExamsIcon() {
+function CalculatorIcon() {
   return (
     <svg width="21" height="21" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="5" y="3" width="14" height="18" rx="2.2" stroke="currentColor" strokeWidth="1.8" />
+      <rect x="8" y="6" width="8" height="3.4" rx="0.8" stroke="currentColor" strokeWidth="1.4" />
       <path
-        d="M6 3.5h9l3 3v13.5a1 1 0 01-1 1H6a1 1 0 01-1-1V4.5a1 1 0 011-1z"
+        d="M8.5 13h.01M12 13h.01M15.5 13h.01M8.5 16.5h.01M12 16.5h.01M15.5 16.5h.01"
         stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M8.3 10.9l1.2 1.2 2.3-2.5M8.3 15.9l1.2 1.2 2.3-2.5"
-        stroke="currentColor"
-        strokeWidth="1.6"
+        strokeWidth="2.2"
         strokeLinecap="round"
-        strokeLinejoin="round"
       />
-      <path d="M13.6 10.4h2.9M13.6 15.4h2.9" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
     </svg>
   );
 }
 
-export default function BottomNav({ userId }: { userId: string }) {
+export default function BottomNav() {
   const pathname = usePathname();
   const t = useTranslations('nav');
-  const [examsOpen, setExamsOpen] = useState(false);
 
-  const isPlan = pathname === '/dashboard' && !examsOpen;
-  const isCalendar = pathname.startsWith('/calendar') && !examsOpen;
-  const isManage = pathname.startsWith('/subjects/manage') && !examsOpen;
+  const isPlan = pathname === '/dashboard';
+  const isCalendar = pathname.startsWith('/calendar');
+  const isCalculator = pathname.startsWith('/calculator');
+  const isManage = pathname.startsWith('/subjects/manage');
 
   function tabClass(active: boolean) {
     return `flex flex-col items-center justify-center gap-[3px] flex-1 py-[11px] ${
@@ -105,13 +97,14 @@ export default function BottomNav({ userId }: { userId: string }) {
           <ManageIcon />
           <span className="font-heading font-bold text-[10px]">{t('manage')}</span>
         </Link>
-        <button type="button" onClick={() => setExamsOpen(true)} className={tabClass(examsOpen)}>
-          <ExamsIcon />
-          <span className="font-heading font-bold text-[10px]">{t('exams')}</span>
-        </button>
+        {/* One entry point: /calculator picks the scientific or financial calculator
+            from the learner's stored education level. */}
+        <Link href="/calculator" className={tabClass(isCalculator)}>
+          <CalculatorIcon />
+          <span className="font-heading font-bold text-[10px]">{t('calculator')}</span>
+        </Link>
       </nav>
 
-      {examsOpen && <ExamsSheet userId={userId} onClose={() => setExamsOpen(false)} />}
     </>
   );
 }

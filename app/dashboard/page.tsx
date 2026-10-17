@@ -255,7 +255,7 @@ export default async function DashboardPage() {
 
       {showReviewPrompt && <AppReviewPrompt userId={user.id} />}
 
-      <BottomNav userId={user.id} />
+      <BottomNav />
     </main>
   );
 }

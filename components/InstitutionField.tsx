@@ -28,15 +28,18 @@ export default function InstitutionField({
   onInstitutionChange,
   onGradeChange,
   onTypeChange,
+  initialType = null,
 }: {
   institution: string;
   grade: string;
   onInstitutionChange: (value: string) => void;
   onGradeChange: (value: string) => void;
   onTypeChange: (value: InstitutionType) => void;
+  /** Pre-selects school / uni when the learner's type is already known (yearly check). */
+  initialType?: InstitutionType | null;
 }) {
   const t = useTranslations('auth.institution');
-  const [type, setType] = useState<InstitutionType | null>(null);
+  const [type, setType] = useState<InstitutionType | null>(initialType);
 
   function handleTypeChange(next: InstitutionType) {
     setType(next);

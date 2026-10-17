@@ -346,7 +346,7 @@
     "plan": "Plan",
     "calendar": "Calendar",
     "manage": "Manage",
-    "exams": "Exams"
+    "calculator": "Calculator"
   },
   "settings": {
     "aria": "Settings",
@@ -496,5 +496,41 @@
     "update": "Update email",
     "add": "Add my parent",
     "error": "Something went wrong. Try again."
+  },
+  "calculator": {
+    "title": "Calculator",
+    "back": "Back",
+    "languageAria": "Calculator language",
+    "clear": "Clear",
+    "clearHint": "Press AC to clear",
+    "angleMode": "Angle mode",
+    "helpToggle": "How signs and settings work",
+    "signTitle": "Sign convention",
+    "signBody": "Money you pay out is negative; money you receive is positive. Borrow R100,000 (PV = +100,000) and your payment comes out negative.",
+    "ppyBody": "Payments per year and BGN/END: press 2ND then N to change payments per year (12, 1, 2, 4); 2ND then PV switches between END (payments at the end of each period) and BGN (at the start). CPT then a key computes it; 2ND then CPT clears the five values.",
+    "flowBody": "Cash flows: press CF, type each amount and press = to add it (the first is today). Then press NPV (uses I/Y as the rate per period) or IRR. 2ND then CF clears the list.",
+    "cfHint": "Type an amount, then press = to add it. Press CF to close.",
+    "cptHint": "Now press the value to compute",
+    "focus": {
+      "label": "Focus session",
+      "finance": "Finance",
+      "pause": "pause",
+      "resume": "resume",
+      "finished": "Session finished — tap to finish"
+    },
+    "finError": {
+      "missing": "Enter the other values first",
+      "no-solution": "No solution for these values",
+      "invalid": "Check your values",
+      "syntax": "Check what you typed"
+    },
+    "annual": {
+      "title": "New academic year",
+      "subtitle": "Confirm your details so the calculator and plan fit you.",
+      "confirm": "Confirm and continue",
+      "saving": "Saving…",
+      "incomplete": "Please fill in all the fields.",
+      "saveError": "Could not save that. Try again."
+    }
   }
 }

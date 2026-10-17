@@ -44,7 +44,7 @@ export default async function ManageSubjectsPage() {
 
       <ManageSubjectsForm userId={user.id} initialSubjects={subjects} />
 
-      <BottomNav userId={user.id} />
+      <BottomNav />
     </main>
   );
 }

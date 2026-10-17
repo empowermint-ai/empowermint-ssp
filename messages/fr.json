@@ -346,7 +346,7 @@
     "plan": "Plan",
     "calendar": "Calendrier",
     "manage": "Gérer",
-    "exams": "Examens"
+    "calculator": "Calculatrice"
   },
   "settings": {
     "aria": "Paramètres",
@@ -496,5 +496,41 @@
     "update": "Mettre à jour l'e-mail",
     "add": "Ajouter mon parent",
     "error": "Une erreur s'est produite. Réessaie."
+  },
+  "calculator": {
+    "title": "Calculatrice",
+    "back": "Retour",
+    "languageAria": "Langue de la calculatrice",
+    "clear": "Effacer",
+    "clearHint": "Appuie sur AC pour effacer",
+    "angleMode": "Mode d'angle",
+    "helpToggle": "Comment fonctionnent les signes et les réglages",
+    "signTitle": "Convention de signes",
+    "signBody": "L'argent que tu paies est négatif ; l'argent que tu reçois est positif. Emprunte 100 000 R (PV = +100 000) et ta mensualité sort en négatif.",
+    "ppyBody": "Paiements par an et BGN/END : appuie sur 2ND puis N pour changer le nombre de paiements par an (12, 1, 2, 4) ; 2ND puis PV bascule entre END (paiements en fin de période) et BGN (en début de période). CPT puis une touche la calcule ; 2ND puis CPT efface les cinq valeurs.",
+    "flowBody": "Flux de trésorerie : appuie sur CF, saisis chaque montant et appuie sur = pour l'ajouter (le premier est aujourd'hui). Appuie ensuite sur NPV (utilise I/Y comme taux par période) ou IRR. 2ND puis CF efface la liste.",
+    "cfHint": "Saisis un montant puis appuie sur = pour l'ajouter. Appuie sur CF pour fermer.",
+    "cptHint": "Appuie maintenant sur la valeur à calculer",
+    "focus": {
+      "label": "Séance de concentration",
+      "finance": "Finance",
+      "pause": "pause",
+      "resume": "reprendre",
+      "finished": "Séance terminée — touche pour terminer"
+    },
+    "finError": {
+      "missing": "Saisis d'abord les autres valeurs",
+      "no-solution": "Pas de solution pour ces valeurs",
+      "invalid": "Vérifie tes valeurs",
+      "syntax": "Vérifie ce que tu as saisi"
+    },
+    "annual": {
+      "title": "Nouvelle année scolaire",
+      "subtitle": "Confirme tes informations pour que la calculatrice et le plan te correspondent.",
+      "confirm": "Confirmer et continuer",
+      "saving": "Enregistrement…",
+      "incomplete": "Remplis tous les champs.",
+      "saveError": "Impossible d'enregistrer. Réessaie."
+    }
   }
 }

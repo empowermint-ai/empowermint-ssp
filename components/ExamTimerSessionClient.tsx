@@ -1,6 +1,12 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
+import {
+  clearActiveSession,
+  loadActiveSession,
+  remainingSeconds as sessionRemaining,
+  saveActiveSession,
+} from '@/lib/activeSession';
 import { useRouter } from 'next/navigation';
 import NavArrows from '@/components/NavArrows';
 import { logActivity } from '@/lib/logActivity';
@@ -58,10 +64,12 @@ function ThumbsDownIcon() {
 
 export default function ExamTimerSessionClient({
   learnerId,
+  subjectId,
   subjectName,
   durationMinutes,
 }: {
   learnerId: string;
+  subjectId: string;
   subjectName: string;
   durationMinutes: number;
 }) {
@@ -88,6 +96,7 @@ export default function ExamTimerSessionClient({
   const pausedAtRef = useRef<number | null>(null);
   const endedRef = useRef(false);
 
+  const sessionRef = `${subjectName}:${durationMinutes}`;
   const elapsedSeconds = totalSeconds - remainingSeconds;
   const colorState = getExamTimerColorState(elapsedSeconds, totalSeconds);
   const meta = STATE_META[colorState];
@@ -95,6 +104,7 @@ export default function ExamTimerSessionClient({
   const finishSession = useCallback(async () => {
     if (endedRef.current) return;
     endedRef.current = true;
+    clearActiveSession();
     setCompleted(true);
     await logActivity(learnerId, 'exam_timer_completed', {
       subject: subjectName,
@@ -102,6 +112,20 @@ export default function ExamTimerSessionClient({
       endedEarly: false,
     });
   }, [learnerId, subjectName, durationMinutes]);
+
+  // Resume an exam simulation that was left running (see the calculator's focus strip).
+  useEffect(() => {
+    const saved = loadActiveSession();
+    if (!saved || saved.kind !== 'exam' || saved.ref !== sessionRef) return;
+    startTimeRef.current = saved.startedAt;
+    if (saved.pausedAt !== null) {
+      pausedAtRef.current = saved.pausedAt;
+      setIsPaused(true);
+    }
+    setRemainingSeconds(Math.max(0, Math.ceil(sessionRemaining(saved))));
+    setStarted(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (!started || completed) return;
@@ -140,8 +164,21 @@ export default function ExamTimerSessionClient({
     };
   }, [started, completed, totalSeconds, finishSession]);
 
+  function persist(pausedAt: number | null) {
+    saveActiveSession({
+      kind: 'exam',
+      ref: sessionRef,
+      label: subjectName,
+      totalSeconds,
+      startedAt: startTimeRef.current,
+      pausedAt,
+      returnPath: `/exam-timer/session?subjectId=${subjectId}&minutes=${durationMinutes}`,
+    });
+  }
+
   function handleStart() {
     startTimeRef.current = Date.now();
+    persist(null);
     setStarted(true);
     logActivity(learnerId, 'exam_timer_started', { subject: subjectName, durationMinutes });
   }
@@ -153,18 +190,21 @@ export default function ExamTimerSessionClient({
         pausedAtRef.current = null;
       }
       setIsPaused(false);
+      persist(null);
       if (tickRef.current) {
         rafRef.current = requestAnimationFrame(tickRef.current);
       }
     } else {
       pausedAtRef.current = Date.now();
       setIsPaused(true);
+      persist(pausedAtRef.current);
     }
   }
 
   async function handleEndEarly() {
     if (endedRef.current) return;
     endedRef.current = true;
+    clearActiveSession();
     if (rafRef.current) cancelAnimationFrame(rafRef.current);
     await logActivity(learnerId, 'exam_timer_completed', {
       subject: subjectName,

@@ -1,6 +1,12 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
+import {
+  clearActiveSession,
+  loadActiveSession,
+  remainingSeconds as sessionRemaining,
+  saveActiveSession,
+} from '@/lib/activeSession';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useSubjectLabel } from '@/lib/i18n/useSubjectLabel';
@@ -71,9 +77,26 @@ export default function TimerClient({
   const finishSession = useCallback(async () => {
     if (endedRef.current) return;
     endedRef.current = true;
+    clearActiveSession();
     await supabase.from('daily_plans').update({ completed: true }).eq('id', dailyPlanId);
     router.push(`/session-complete/${subjectId}`);
   }, [dailyPlanId, subjectId, router]);
+
+  // Pick up a session that was started here and left running (for example while the
+  // learner popped over to the calculator). A session that finished long ago is
+  // dropped by loadActiveSession, so it never counts as studied.
+  useEffect(() => {
+    const saved = loadActiveSession();
+    if (!saved || saved.kind !== 'study' || saved.ref !== dailyPlanId) return;
+    startTimeRef.current = saved.startedAt;
+    if (saved.pausedAt !== null) {
+      pausedAtRef.current = saved.pausedAt;
+      setIsPaused(true);
+    }
+    setRemainingSeconds(Math.max(0, Math.ceil(sessionRemaining(saved))));
+    setStarted(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (!started) return;
@@ -112,8 +135,21 @@ export default function TimerClient({
     };
   }, [started, finishSession]);
 
+  function persist(pausedAt: number | null) {
+    saveActiveSession({
+      kind: 'study',
+      ref: dailyPlanId,
+      label: subjectName,
+      totalSeconds: TOTAL_SECONDS,
+      startedAt: startTimeRef.current,
+      pausedAt,
+      returnPath: `/timer/${dailyPlanId}`,
+    });
+  }
+
   function handleStart() {
     startTimeRef.current = Date.now();
+    persist(null);
     setStarted(true);
   }
 
@@ -124,12 +160,14 @@ export default function TimerClient({
         pausedAtRef.current = null;
       }
       setIsPaused(false);
+      persist(null);
       if (tickRef.current) {
         rafRef.current = requestAnimationFrame(tickRef.current);
       }
     } else {
       pausedAtRef.current = Date.now();
       setIsPaused(true);
+      persist(pausedAtRef.current);
     }
   }
 

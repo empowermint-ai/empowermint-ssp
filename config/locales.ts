@@ -79,6 +79,7 @@ export const CLIENT_RENDERED_ROUTES = [
   '/timer',
   '/exam-timer',
   '/past-papers',
+  '/calculator',
 ];
 
 export function isClientRenderedRoute(pathname: string | null | undefined): boolean {

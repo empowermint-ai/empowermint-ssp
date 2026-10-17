@@ -36,6 +36,6 @@ export default async function ExamTimerSessionPage({
   }
 
   return (
-    <ExamTimerSessionClient learnerId={user.id} subjectName={subject.subject_name} durationMinutes={minutes} />
+    <ExamTimerSessionClient learnerId={user.id} subjectId={subject.id} subjectName={subject.subject_name} durationMinutes={minutes} />
   );
 }
