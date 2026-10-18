@@ -54,7 +54,7 @@ export default function LanguageSheet({
         <h2 className="mb-4 font-heading text-[18px] font-semibold text-text-primary">
           {t('title')}
         </h2>
-        <div role="radiogroup" aria-label={t('title')} className="flex flex-col gap-3">
+        <div role="radiogroup" aria-label={t('title')} className="flex max-h-[60dvh] flex-col gap-3 overflow-y-auto pb-1">
           {enabled.map((language) => {
             const selected = language.code === locale;
             return (

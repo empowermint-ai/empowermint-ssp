@@ -19,7 +19,8 @@
     "aria": "Ulimi olusha luyatholakala",
     "headline": "Okusha: i-planner manje iyatholakala — {languages}.",
     "switch": "Shintshela: {language}",
-    "notNow": "Hhayi manje"
+    "notNow": "Hhayi manje",
+    "listAnd": ","
   },
   "calculatorNotice": {
     "aria": "Isici esisha: ikhalkhuletha",

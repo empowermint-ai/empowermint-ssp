@@ -1,0 +1,547 @@
+{
+  "metadata": {
+    "title": "empowermint SSP",
+    "description": "empowermint Smart Study Planner"
+  },
+  "common": {
+    "pleaseWait": "Tafadhali subiri…",
+    "back": "Rudi",
+    "forward": "Mbele",
+    "close": "Funga"
+  },
+  "language": {
+    "label": "Language · Lugha",
+    "title": "Language / Lugha",
+    "open": "Language / Lugha",
+    "changed": "Lugha imebadilishwa: {language}"
+  },
+  "notice": {
+    "aria": "Lugha mpya inapatikana",
+    "headline": "Mpya: mpangaji sasa anapatikana katika {languages}.",
+    "switch": "Badilisha hadi {language}",
+    "notNow": "Si sasa",
+    "listAnd": "na"
+  },
+  "calculatorNotice": {
+    "aria": "Kipengele kipya: kikokotoo",
+    "headline": "Mpya: kikokotoo, ndani ya mpangaji wako.",
+    "bodyScientific": "Kikokotoo cha kisayansi cha hisabati na sayansi — kinafanya kazi pamoja na kipima muda chako cha kusoma.",
+    "bodyFinancial": "Kikokotoo cha kifedha cha mikopo, akiba, NPV na IRR — kinafanya kazi pamoja na kipima muda chako cha kusoma.",
+    "bodyGeneric": "Kikokotoo cha kisayansi au cha kifedha kinachofaa masomo yako — kinafanya kazi pamoja na kipima muda chako cha kusoma.",
+    "open": "Fungua kikokotoo"
+  },
+  "welcome": {
+    "title": "Mpangaji mahiri wa masomo",
+    "tagline": "Amini unaweza, panga jinsi utakavyofanya",
+    "start": "anza mpangaji wangu",
+    "haveAccount": "Tayari una akaunti? Ingia hapa"
+  },
+  "auth": {
+    "signOut": "Toka",
+    "phone": {
+      "country": "Nchi",
+      "placeholder": "83 123 4567"
+    },
+    "password": {
+      "show": "Onyesha nenosiri",
+      "hide": "Ficha nenosiri"
+    },
+    "changePassword": {
+      "newPassword": "Nenosiri jipya",
+      "update": "Sasisha nenosiri",
+      "success": "Nenosiri limesasishwa."
+    },
+    "login": {
+      "title": "Karibu\ntena.",
+      "subtitle": "Ni vizuri kukuona tena.",
+      "mobileLabel": "Nambari ya simu",
+      "passwordLabel": "Nenosiri",
+      "passwordPlaceholder": "Weka nenosiri lako",
+      "submit": "Ingia",
+      "forgot": "Umesahau nenosiri?",
+      "newHere": "Mgeni hapa? Anza mpangaji wangu",
+      "invalid": "Jina la mtumiaji au nenosiri si sahihi. Jaribu tena."
+    },
+    "register": {
+      "step": "HATUA YA 1 KATI YA 2",
+      "title": "Tukuandae.",
+      "intro": "Hii ni yako. Mambo ya msingi tu ili kuanza.",
+      "usernameLabel": "Jina la mtumiaji",
+      "usernamePlaceholder": "mf. thabo_m",
+      "mobileLabel": "Nambari ya simu",
+      "passwordLabel": "Nenosiri",
+      "passwordPlaceholder": "Angalau herufi 6",
+      "continue": "Endelea",
+      "footnote": "Nambari yako ya simu ndiyo utakayotumia kuingia kuanzia sasa.",
+      "usernameRequired": "Tafadhali weka jina la mtumiaji.",
+      "mobileRequired": "Tafadhali weka nambari yako ya simu.",
+      "mobileInvalid": "Weka nambari halali ya simu kwa nchi uliyochagua.",
+      "passwordRequired": "Tafadhali weka nenosiri.",
+      "passwordShort": "Nenosiri lazima liwe na angalau herufi 6.",
+      "mobileTaken": "Nambari hii tayari imesajiliwa.",
+      "loginInstead": "Ingia badala yake"
+    },
+    "step2": {
+      "title": "Karibu tumemaliza",
+      "subtitle": "Tunahitaji barua pepe tu kuthibitisha akaunti yako.",
+      "emailLabel": "Barua pepe ya mzazi",
+      "emailHelp": "Hutumika mara moja tu kuthibitisha akaunti hii. Hutaihitaji kuingia.",
+      "submit": "Fungua akaunti",
+      "emailTaken": "Barua pepe hiyo tayari imesajiliwa. Jaribu kuingia, au tumia barua pepe nyingine.",
+      "numberTaken": "Nambari hiyo ya simu tayari imesajiliwa.",
+      "checkTitle": "Angalia barua pepe yako",
+      "checkSubtitle": "Tumekutumia kiungo cha uthibitisho.",
+      "checkBody": "Bofya kiungo kwenye barua pepe ili kuthibitisha akaunti yako. Baada ya hapo, ingia ukitumia nambari yako ya simu na nenosiri.",
+      "backToLogin": "Rudi kwenye kuingia"
+    },
+    "institution": {
+      "label": "Taasisi",
+      "school": "Shule",
+      "uni": "Chuo kikuu / Nyingine",
+      "schoolName": "Jina la shule",
+      "uniName": "Jina la chuo / nyingine",
+      "grade": "Darasa",
+      "year": "Mwaka wa masomo",
+      "select": "Chagua…",
+      "options": {
+        "g8": "Darasa la 8",
+        "g9": "Darasa la 9",
+        "g10": "Darasa la 10",
+        "g11": "Darasa la 11",
+        "g12": "Darasa la 12",
+        "y1": "Mwaka wa 1",
+        "y2": "Mwaka wa 2",
+        "y3": "Mwaka wa 3",
+        "y4": "Mwaka wa 4",
+        "postgrad": "Shahada ya uzamili"
+      }
+    },
+    "forgot": {
+      "title": "Umesahau nenosiri?",
+      "subtitle": "Tutatuma kiungo cha kuweka upya kwenye barua pepe iliyosajiliwa ya akaunti yako.",
+      "mobileLabel": "Nambari ya simu",
+      "submit": "Tuma kiungo cha kuweka upya",
+      "noAccount": "Hakuna akaunti iliyopatikana yenye nambari hiyo ya simu",
+      "checkTitle": "Angalia barua pepe yako",
+      "checkSubtitle": "Tumetuma kiungo cha kuweka upya nenosiri.",
+      "checkBody": "Bofya kiungo kwenye barua pepe ili kuchagua nenosiri jipya.",
+      "back": "Rudi kwenye kuingia"
+    },
+    "reset": {
+      "title": "Chagua nenosiri jipya",
+      "subtitle": "Weka nenosiri jipya la akaunti yako.",
+      "newPassword": "Nenosiri jipya",
+      "submit": "Sasisha nenosiri",
+      "expiredTitle": "Kiungo kimeisha muda",
+      "expiredSubtitle": "Kiungo hiki cha kuweka upya si halali au kimeshatumika.",
+      "requestNew": "Omba kiungo kipya cha kuweka upya"
+    },
+    "callback": {
+      "expiredTitle": "Kiungo kimeisha muda",
+      "expiredSubtitle": "Kiungo hiki si halali au kimeshatumika.",
+      "requestNew": "Omba kiungo kipya cha kuweka upya"
+    },
+    "parentConfirmed": {
+      "okTitle": "Kila kitu kiko tayari.",
+      "okBody": "Utapokea muhtasari mfupi wa kila wiki wa masomo yao — hakuna zaidi.",
+      "expiredTitle": "Kiungo kimeisha muda",
+      "expiredBody": "Kiungo hiki cha uthibitisho si halali au kimeshatumika."
+    },
+    "parentUnsubscribed": {
+      "okTitle": "Umejiondoa",
+      "okBody": "Hutapokea tena taarifa za kila wiki. Mtoto wako anaweza kukuongeza tena kupitia mipangilio ya akaunti yake wakati wowote.",
+      "expiredTitle": "Kiungo kimeisha muda",
+      "expiredBody": "Kiungo hiki si halali au kimeshatumika."
+    }
+  },
+  "errors": {
+    "generic": "Hitilafu imetokea. Tafadhali jaribu tena.",
+    "auth": {
+      "invalidCredentials": "Jina la mtumiaji au nenosiri si sahihi. Jaribu tena.",
+      "alreadyRegistered": "Barua pepe hiyo tayari imesajiliwa. Jaribu kuingia, au tumia barua pepe nyingine.",
+      "rateLimited": "Majaribio mengi mno. Tafadhali subiri kidogo kisha ujaribu tena.",
+      "passwordShort": "Nenosiri lazima liwe na angalau herufi 6.",
+      "samePassword": "Nenosiri lako jipya lazima liwe tofauti na la zamani.",
+      "invalidEmail": "Tafadhali weka anwani halali ya barua pepe.",
+      "emailNotConfirmed": "Tafadhali thibitisha barua pepe yako kwanza, kisha ingia.",
+      "network": "Imeshindwa kuunganisha. Angalia intaneti yako kisha ujaribu tena.",
+      "mobileTaken": "Nambari hiyo ya simu tayari imesajiliwa kwa akaunti nyingine.",
+      "noAccount": "Hakuna akaunti iliyopatikana yenye nambari hiyo ya simu",
+      "notSignedIn": "Hujaingia.",
+      "saveEmail": "Imeshindwa kuhifadhi barua pepe hiyo. Jaribu tena."
+    },
+    "retry": "Jaribu tena"
+  },
+  "presets": {
+    "accounting": "Uhasibu",
+    "afrikaansFal": "Kiafrikaans (lugha ya pili)",
+    "afrikaansHl": "Kiafrikaans (lugha ya kwanza)",
+    "agriculturalSciences": "Sayansi ya Kilimo",
+    "biology": "Baiolojia",
+    "businessStudies": "Masomo ya Biashara",
+    "cat": "CAT",
+    "consumerStudies": "Masomo ya Mtumiaji",
+    "dramaticArts": "Sanaa ya Maigizo",
+    "economics": "Uchumi",
+    "engineeringGraphicsDesign": "Michoro na Usanifu wa Uhandisi",
+    "englishFal": "Kiingereza (lugha ya pili)",
+    "englishHl": "Kiingereza (lugha ya kwanza)",
+    "geography": "Jiografia",
+    "history": "Historia",
+    "informationTechnology": "Teknolojia ya Habari",
+    "lifeOrientation": "Mwelekeo wa Maisha",
+    "lifeSciences": "Sayansi ya Maisha",
+    "mathematicalLiteracy": "Ujuzi wa Hisabati",
+    "mathematics": "Hisabati",
+    "music": "Muziki",
+    "physicalSciences": "Sayansi ya Fizikia",
+    "religionStudies": "Masomo ya Dini",
+    "sepediHl": "Kisepedi (lugha ya kwanza)",
+    "setswanaHl": "Kisetswana (lugha ya kwanza)",
+    "tourism": "Utalii",
+    "visualArts": "Sanaa za Kuona",
+    "xhosaHl": "Kixhosa (lugha ya kwanza)",
+    "zuluHl": "Kizulu (lugha ya kwanza)"
+  },
+  "subjects": {
+    "eyebrow": "JENGA ORODHA YA MASOMO YAKO",
+    "title": "Unasoma nini?",
+    "searchLabel": "Tafuta au chagua somo",
+    "searchPlaceholder": "mf. Hisabati",
+    "customPlaceholder": "Jina la somo lako",
+    "add": "Ongeza",
+    "addOwn": "+ Ongeza somo langu mwenyewe",
+    "saving": "Inahifadhi…",
+    "next": "Inayofuata: yapange",
+    "saveError": "Imeshindwa kuhifadhi masomo yako. Jaribu tena.",
+    "remove": "Ondoa {subject}"
+  },
+  "ranking": {
+    "eyebrow": "KUWA MWAMINIFU — HII INAONGOZA MPANGO WAKO",
+    "title": "Una uhakika kiasi gani katika kila moja?",
+    "scale": "1 = dhaifu zaidi  ·  5 = imara zaidi",
+    "scoreAria": "{subject}: uhakika {score}",
+    "saving": "Inahifadhi…",
+    "next": "Inayofuata: tarehe za mitihani",
+    "saveError": "Imeshindwa kuhifadhi mpangilio wako. Jaribu tena."
+  },
+  "examDates": {
+    "eyebrow": "HATUA YA MWISHO",
+    "title": "Kila mtihani ni lini?",
+    "intro": "Gusa somo ili kuongeza tarehe ya mtihani. Unaweza kuongeza zaidi ya moja, kama mtihani wa muhula na wa mwisho.",
+    "minDate": "Tarehe za mitihani lazima ziwe kuanzia kesho - tafadhali chagua tarehe ya baadaye.",
+    "addError": "Imeshindwa kuongeza tarehe hiyo. Jaribu tena.",
+    "removeError": "Imeshindwa kuondoa tarehe hiyo. Jaribu tena.",
+    "generateError": "Imeshindwa kutengeneza mpango wako. Jaribu tena.",
+    "adding": "Inaongeza…",
+    "addDate": "+ Ongeza tarehe",
+    "removeAria": "Ondoa tarehe {date}: {subject}",
+    "stillNeed": "{count, plural, one {Bado linahitaji tarehe: {subjects}.} other {Bado yanahitaji tarehe: {subjects}.}}",
+    "generating": "Inatengeneza…",
+    "generate": "Tengeneza mpango wangu",
+    "footnote": "Ratiba yako hujengwa papo hapo na husasishwa kila siku."
+  },
+  "manage": {
+    "eyebrow": "DHIBITI MPANGAJI WANGU",
+    "title": "Sasisha mpangilio wako au tarehe za mitihani",
+    "tabSubjects": "Masomo",
+    "tabRanking": "Mpangilio",
+    "tabDates": "Tarehe za mitihani",
+    "addSubjectLabel": "Ongeza somo",
+    "searchPlaceholder": "mf. Hisabati",
+    "customPlaceholder": "Jina la somo lako",
+    "add": "Ongeza",
+    "addOwn": "+ Ongeza somo langu mwenyewe",
+    "yourSubjects": "Masomo yako",
+    "newSubjectNote": "Masomo mapya yatahitaji kiwango cha uhakika na tarehe ya mtihani kabla ya kuonekana kwenye mpango wako.",
+    "removeSubjectAria": "Ondoa {subject}",
+    "scale": "1 = dhaifu zaidi  ·  5 = imara zaidi",
+    "scoreAria": "{subject}: uhakika {score}",
+    "adding": "Inaongeza…",
+    "addDate": "+ Ongeza tarehe",
+    "removeDateAria": "Ondoa tarehe {date}: {subject}",
+    "updating": "Inasasisha mpango wako…",
+    "addSubjectError": "Imeshindwa kuongeza somo hilo. Jaribu tena.",
+    "removeSubjectError": "Imeshindwa kuondoa somo hilo. Jaribu tena.",
+    "saveError": "Imeshindwa kuhifadhi. Jaribu tena.",
+    "minDate": "Tarehe za mitihani lazima ziwe kuanzia kesho - tafadhali chagua tarehe ya baadaye.",
+    "addDateError": "Imeshindwa kuongeza tarehe hiyo. Jaribu tena.",
+    "removeDateError": "Imeshindwa kuondoa tarehe hiyo. Jaribu tena."
+  },
+  "plan": {
+    "heading": "Mpango wa leo (unaopendekezwa)",
+    "subheading": "Hiki ndicho tunachopendekeza kwa leo — jisikie huru kukirekebisha kikufae.",
+    "dateLine": "{weekday}, {dayMonth}",
+    "fallbackName": "rafiki",
+    "greetings": {
+      "g1": "Karibu tena, bingwa!",
+      "g2": "Ni vizuri kukuona tena, {name}!",
+      "g3": "Twende tena, {name}!",
+      "g4": "Umejitokeza. Hilo tayari ni ushindi, {name}.",
+      "g5": "Niko tayari ukiwa tayari, {name}."
+    },
+    "sessionMinutes": "dak {minutes}",
+    "hideNotes": "Ficha maelezo ya mada",
+    "addNotes": "Ongeza maelezo ya mada",
+    "removeSession": "Ondoa kipindi: {subject}",
+    "markDone": "Weka alama mada imekamilika",
+    "markNotDone": "Weka alama mada haijakamilika",
+    "topicPlaceholder": "Unasoma nini?",
+    "allDoneTitle": "Umemaliza mitihani yako yote ya sasa! 🎉",
+    "allDoneBody": "Ongeza tarehe zako zinazofuata za mitihani hapa chini ili mpango wako wa masomo uendelee.",
+    "examDone": "Mtihani umekwisha — ongeza tarehe yako inayofuata",
+    "minDate": "Tarehe za mitihani lazima ziwe kuanzia kesho - tafadhali chagua tarehe ya baadaye.",
+    "adding": "Inaongeza…",
+    "addDate": "+ Ongeza tarehe",
+    "updateRanking": "Unataka kusasisha pia mpangilio wa masomo yako? Dhibiti mpangaji wangu",
+    "addAnother": "+ Ongeza kipindi kingine"
+  },
+  "share": {
+    "share": "Shiriki",
+    "preparing": "Inaandaa…",
+    "shareAria": "Shiriki mpango",
+    "preparingAria": "Inaandaa kushiriki",
+    "error": "Imeshindwa kutengeneza PDF. Jaribu tena.",
+    "shareTitle": "Mpango wa masomo wa {name}",
+    "shareText": "Mpango wa masomo wa {name} wa {date}",
+    "pdf": {
+      "title": "MPANGO WA MASOMO WA LEO",
+      "forName": "wa {name}",
+      "empty": "Hakuna vipindi vilivyopangwa leo bado.",
+      "done": "Imekamilika",
+      "pending": "Inasubiri",
+      "upcoming": "TAREHE ZIJAZO ZA MITIHANI",
+      "when": "{days, plural, =0 {leo} =1 {kesho} other {baada ya siku #}}",
+      "eyebrow": "IMESHIRIKIWA NA EMPOWERMINT",
+      "headline": "{name} anatumia Smart Study Planner kuendelea vizuri na masomo. Jaribu na wewe.",
+      "cta": "Anza bure",
+      "scan": "SKANI ILI KUANZA",
+      "micro": "hakuna kadi inayohitajika"
+    }
+  },
+  "install": {
+    "bannerTitle": "Ongeza empowermint kwenye skrini yako ya kwanza",
+    "bannerBody": "Ili urudi moja kwa moja kwenye mpango wako, kama programu nyingine yoyote.",
+    "dismiss": "Ondoa",
+    "addButton": "Ongeza kwenye skrini ya kwanza",
+    "modalTitle": "Weka empowermint kwa mguso mmoja",
+    "iosStep1": "Gusa aikoni ya Shiriki kwenye upau wa zana wa Safari.",
+    "iosStep2": "Kisha sogeza chini na uguse <b>Add to Home Screen</b>.",
+    "androidStep": "Tafuta <b>Add to Home Screen</b> au <b>Install App</b> kwenye menyu ya kivinjari chako.",
+    "gotIt": "Nimeelewa"
+  },
+  "review": {
+    "title": "SSP inakufanyia kazi vipi hadi sasa?",
+    "subtitle": "Maoni yako yanatusaidia kuiboresha.",
+    "starAria": "{count, plural, one {nyota #} other {nyota #}}",
+    "commentPlaceholder": "Kuna chochote ungependa kushiriki? (si lazima)",
+    "submit": "Tuma tathmini",
+    "submitting": "Inatuma…",
+    "notNow": "Si sasa",
+    "saveError": "Imeshindwa kuhifadhi. Jaribu tena."
+  },
+  "reflection": {
+    "title": "Mtihani wako wa {subject} ulikwendaje?",
+    "subtitle": "{date} — hii inatusaidia kupanga vipindi vyako vijavyo.",
+    "saveError": "Imeshindwa kuhifadhi. Jaribu tena.",
+    "choices": {
+      "tougher": "Ulikuwa mgumu kuliko nilivyotarajia",
+      "expected": "Kama nilivyotarajia",
+      "better": "Ulikuwa bora kuliko nilivyotarajia"
+    }
+  },
+  "nav": {
+    "primary": "Kuu",
+    "plan": "Mpango",
+    "calendar": "Kalenda",
+    "manage": "Dhibiti",
+    "calculator": "Kikokotoo"
+  },
+  "settings": {
+    "aria": "Mipangilio",
+    "manage": "Dhibiti mpangaji wangu",
+    "language": "Language / Lugha",
+    "addToHome": "Ongeza kwenye Skrini ya Kwanza",
+    "logout": "Toka"
+  },
+  "exams": {
+    "title": "Tarehe za mitihani",
+    "loading": "Inapakia…",
+    "empty": "Hakuna masomo bado.",
+    "daysBadge": "{days, plural, =0 {Leo} =1 {Siku 1} other {Siku #}}",
+    "adding": "Inaongeza…",
+    "addDate": "+ Ongeza tarehe",
+    "removeAria": "Ondoa tarehe {date}: {subject}",
+    "pastPapers": "Mitihani ya zamani →",
+    "minDate": "Tarehe za mitihani lazima ziwe kuanzia kesho - tafadhali chagua tarehe ya baadaye.",
+    "addError": "Imeshindwa kuongeza tarehe hiyo. Jaribu tena.",
+    "removeError": "Imeshindwa kuondoa tarehe hiyo. Jaribu tena.",
+    "upcoming": "Tarehe zijazo za mitihani",
+    "examIn": "Mtihani wa {subject} baada ya",
+    "daysCount": "siku {days}"
+  },
+  "timer": {
+    "eyebrow": "KIPINDI CHA UMAKINI · {session} KATI YA {total} LEO",
+    "studySession": "Kipindi cha kusoma",
+    "status": {
+      "green": "KILICHOBAKI · MUDA MWINGI",
+      "amber": "KILICHOBAKI · KASI THABITI",
+      "red": "KILICHOBAKI · KARIBU KUMALIZA"
+    },
+    "pause": "Simamisha",
+    "resume": "Endelea",
+    "end": "Maliza kipindi",
+    "start": "Anza kipindi",
+    "hintRunning": "Kipindi hurekodiwa kiotomatiki kwenye mpango wa leo kikiisha.",
+    "hintIdle": "Gusa Anza ukiwa tayari kuzingatia."
+  },
+  "examTimer": {
+    "durationHours": "{hours, plural, one {saa #} other {saa #}}",
+    "durationHoursMinutes": "saa {hours} dak {minutes}",
+    "entry": {
+      "title": "Fanya mazoezi ya muda wa mtihani",
+      "badge": "Mpya",
+      "subtitle": "Hesabu kamili ya kurudi nyuma kwa karatasi yako ijayo"
+    },
+    "setup": {
+      "eyebrow": "Kuweka mtihani wa majaribio",
+      "intro": "Tuweke mtihani wako wa majaribio hapa. Chagua kutoka kwenye orodha somo unalotaka kufanyia mazoezi pamoja na muda wa mtihani huu.",
+      "subjectLabel": "Chagua somo",
+      "select": "Chagua…",
+      "timeLabel": "Chagua muda (idadi ya saa)",
+      "go": "Nenda kwenye kipindi cha mtihani"
+    },
+    "session": {
+      "eyebrow": "Kipindi cha kipima muda cha mtihani wa majaribio",
+      "subject": "Somo:",
+      "duration": "Muda:",
+      "studySession": "Kipindi cha kusoma",
+      "minutes": "dakika {minutes}",
+      "start": "Anza, Kila La Heri.",
+      "pause": "Simamisha",
+      "resume": "Endelea",
+      "endEarly": "Maliza kipindi mapema",
+      "timesUp": "MUDA UMEISHA",
+      "howDidItGo": "ILIKWENDAJE?",
+      "thumbsUp": "Kidole gumba juu",
+      "thumbsDown": "Kidole gumba chini",
+      "thanks": "Asante kwa maoni",
+      "back": "Rudi kwa mpangaji"
+    },
+    "status": {
+      "green": "Kilichobaki · Muda mwingi.",
+      "amber": "Kilichobaki · Endelea kuzingatia.",
+      "red": "Kilichobaki · Sehemu ya mwisho."
+    }
+  },
+  "calendar": {
+    "title": "Mwonekano wa kalenda",
+    "subtitle": "Gusa tarehe kuona kilichopangwa.",
+    "prevMonth": "Mwezi uliopita",
+    "nextMonth": "Mwezi ujao",
+    "legendExam": "Siku ya mtihani",
+    "legendToday": "Leo",
+    "legendStudy": "Kipindi cha kusoma",
+    "legendMissed": "Kilichokosa",
+    "empty": "Hakuna kilichopangwa siku hii.",
+    "examLine": "Mtihani wa {subject}",
+    "sessionLine": "{status, select, done {Kipindi cha kusoma {subject} · kimekamilika} missed {Kipindi cha kusoma {subject} · kimekosa} other {Kipindi cha kusoma {subject}}}",
+    "addSession": "+ Ongeza kipindi cha kusoma"
+  },
+  "sessionComplete": {
+    "title": "Kazi nzuri.\nKipindi kimekamilika.",
+    "logged": "Dakika {minutes} zimerekodiwa kwenye <b>{subject}</b>.",
+    "quotes": {
+      "q1": "Juhudi haihitaji kuwa kamilifu ili ihesabiwe. Inahitaji tu kurudiwa.",
+      "q2": "Mpango si lengo. Mpango ndio unaokufikisha kwenye lengo.",
+      "q3": "Kujiamini si kitu cha kusubiri. Hujengwa kipindi baada ya kipindi.",
+      "q4": "Huhitaji kujisikia tayari. Unahitaji tu kujitokeza.",
+      "q5": "Kila saa unayoweka sasa ni alama ambayo hutalazimika kuihangaikia baadaye.",
+      "q6": "Mwanafunzi anayepanga humshinda mwanafunzi anayehangaika — kila mara.",
+      "q7": "Maendeleo hayaonekani kila wakati. Lakini ni ya kweli daima.",
+      "q8": "Uko karibu kuliko unavyofikiri."
+    },
+    "quoteSource": "— Mastering Your Studies",
+    "whatsNext": "Nini kinafuata?",
+    "startNext": "Anza kinachofuata: {subject}",
+    "doneToday": "Umemaliza kwa leo. Hongera!",
+    "backToPlan": "Rudi kwenye Mpango wa Leo",
+    "noPenalty": "Uamuzi ni wako — hakuna adhabu kwa vyovyote."
+  },
+  "pastPapers": {
+    "title": "Mitihani ya Zamani",
+    "intro": "Chagua bodi yako ili uende moja kwa moja kwenye mitihani rasmi na miongozo ya kusahihisha.",
+    "cardSubtitle": "Mitihani na majibu rasmi ya NSC na IEB.",
+    "cardLocked": "Hufunguka Darasa la 12",
+    "toastLocked": "Hii hufunguka ukifika Darasa la 12.",
+    "footnote": "Majibu ni mwongozo wa kusahihisha, si ufunguo wa majibu wa mwisho — hutumika kuongoza, si kubatilisha, kazi yako mwenyewe.",
+    "boards": {
+      "caps": {
+        "label": "Mitihani ya CAPS / NSC",
+        "helper": "Idara ya Elimu ya Msingi, mitihani hadi mwaka 2008."
+      },
+      "ieb": {
+        "label": "Mitihani ya IEB",
+        "helper": "Tovuti ya IEB yenyewe, miaka 5 iliyopita."
+      }
+    }
+  },
+  "account": {
+    "title": "Akaunti",
+    "signedInAs": "Umeingia kama",
+    "student": "Mwanafunzi: {name}",
+    "changePassword": "Badilisha nenosiri",
+    "contactUs": "Wasiliana nasi",
+    "contactBody": "Maswali au maoni? Tuma barua pepe kwa <link>ebrahim@empowermint.co.za</link>"
+  },
+  "parentNotify": {
+    "title": "Mjulishe mzazi wako",
+    "intro": "Ongeza barua pepe yake nasi tutatuma taarifa fupi ya kila wiki kuhusu masomo yanavyoendelea — ili usilazimike kujieleza kila usiku wakati wa chakula cha jioni.",
+    "currentContact": "Mwasiliani wa sasa:",
+    "confirmed": "imethibitishwa",
+    "waiting": "inasubiri uthibitisho",
+    "placeholder": "parent@email.com",
+    "sent": "Imetumwa! Atapokea barua pepe ya kuthibitisha kabla ya chochote kutumwa.",
+    "update": "Sasisha barua pepe",
+    "add": "Ongeza mzazi wangu",
+    "error": "Hitilafu imetokea. Jaribu tena."
+  },
+  "calculator": {
+    "title": "Kikokotoo",
+    "sciTitle": "Kikokotoo cha kisayansi",
+    "finTitle": "Kikokotoo cha kifedha",
+    "back": "Rudi",
+    "languageAria": "Lugha ya kikokotoo",
+    "clear": "Futa",
+    "clearHint": "Bonyeza AC kufuta",
+    "angleMode": "Hali ya pembe",
+    "helpToggle": "Jinsi alama na mipangilio inavyofanya kazi",
+    "signTitle": "Kanuni ya alama",
+    "signBody": "Pesa unazolipa ni hasi; pesa unazopokea ni chanya. Kopa R100,000 (PV = +100,000) na malipo yako yatatoka hasi.",
+    "ppyBody": "Malipo kwa mwaka na BGN/END: bonyeza 2ND kisha N kubadilisha malipo kwa mwaka (12, 1, 2, 4); 2ND kisha PV hubadilisha kati ya END (malipo mwishoni mwa kila kipindi) na BGN (mwanzoni). CPT kisha kitufe hukokotoa; 2ND kisha CPT hufuta thamani tano.",
+    "flowBody": "Mtiririko wa fedha: bonyeza CF, andika kila kiasi kisha bonyeza = kukiongeza (cha kwanza ni cha leo). Kisha bonyeza NPV (hutumia I/Y kama kiwango kwa kipindi) au IRR. 2ND kisha CF hufuta orodha.",
+    "cfHint": "Andika kiasi, kisha bonyeza = kukiongeza. Bonyeza CF kufunga.",
+    "cptHint": "Sasa bonyeza thamani ya kukokotoa",
+    "focus": {
+      "label": "Kipindi cha umakini",
+      "finance": "Fedha",
+      "pause": "simamisha",
+      "resume": "endelea",
+      "finished": "Kipindi kimeisha — gusa kumaliza"
+    },
+    "finError": {
+      "missing": "Weka thamani nyingine kwanza",
+      "no-solution": "Hakuna suluhisho kwa thamani hizi",
+      "invalid": "Angalia thamani zako",
+      "syntax": "Angalia ulichoandika"
+    },
+    "annual": {
+      "title": "Mwaka mpya wa masomo",
+      "subtitle": "Thibitisha taarifa zako ili kikokotoo na mpango vikufae.",
+      "confirm": "Thibitisha na uendelee",
+      "saving": "Inahifadhi…",
+      "incomplete": "Tafadhali jaza sehemu zote.",
+      "saveError": "Imeshindwa kuhifadhi. Jaribu tena."
+    }
+  }
+}

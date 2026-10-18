@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
-import { getDir } from '@/config/locales';
+import { isNonLatin } from '@/config/locales';
 import { useIntlTag } from '@/lib/i18n/intl';
 import { useSubjectLabel } from '@/lib/i18n/useSubjectLabel';
 import { createTranslator } from 'next-intl';
@@ -32,7 +32,7 @@ export default function SharePlanButton({
   const t = useTranslations('share');
   const intlTag = useIntlTag();
   const subjectLabel = useSubjectLabel();
-  const rtl = getDir(useLocale()) === 'rtl';
+  const nonLatin = isNonLatin(useLocale());
   const [sharing, setSharing] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -45,8 +45,8 @@ export default function SharePlanButton({
       const { buildPlanPdf } = await import('@/lib/buildPlanPdf');
       const firstName = studentName.split(' ')[0];
       // The PDF is drawn with a built-in Latin font that has no Arabic letters, so
-      // for Arabic the shared sheet is produced in English (subjects and date too).
-      const latinOnly = rtl;
+      // for Arabic and Hindi the shared sheet is produced in English (subjects and date too).
+      const latinOnly = nonLatin;
       const pt = latinOnly
         ? createTranslator({ locale: 'en', messages: enMessages, namespace: 'share' })
         : t;

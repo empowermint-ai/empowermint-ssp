@@ -45,12 +45,16 @@ export default function LanguageNotice() {
 
   // The learner's own language is left out of the list (a Zulu learner is offered the other three).
   const targets = codes.filter((c) => c !== locale).map((c) => getLocaleConfig(c));
-  let languages = targets.map((l) => l.nativeName).join(', ');
-  try {
-    languages = new Intl.ListFormat(locale, { type: 'conjunction' }).format(targets.map((l) => l.nativeName));
-  } catch {
-    // older browsers: plain comma list
-  }
+  // Joined by hand with a per-language "and": the browser's list formatter has no data for
+  // several of these languages and would fall back to English. "," means a plain comma list.
+  const names = targets.map((l) => l.nativeName);
+  const and = t('listAnd');
+  const languages =
+    names.length < 2
+      ? names.join('')
+      : and === ','
+        ? names.join(', ')
+        : `${names.slice(0, -1).join(', ')} ${and} ${names[names.length - 1]}`;
 
   function remember(kind: 'dismissed' | 'done') {
     try {

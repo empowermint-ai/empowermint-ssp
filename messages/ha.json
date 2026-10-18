@@ -1,0 +1,547 @@
+{
+  "metadata": {
+    "title": "empowermint SSP",
+    "description": "empowermint Smart Study Planner"
+  },
+  "common": {
+    "pleaseWait": "Don Allah a jira…",
+    "back": "Baya",
+    "forward": "Gaba",
+    "close": "Rufe"
+  },
+  "language": {
+    "label": "Language · Harshe",
+    "title": "Language / Harshe",
+    "open": "Language / Harshe",
+    "changed": "An canza harshe zuwa {language}"
+  },
+  "notice": {
+    "aria": "Sabon harshe yana nan",
+    "headline": "Sabo: mai tsara karatu yanzu yana nan cikin {languages}.",
+    "switch": "Canza zuwa {language}",
+    "notNow": "Ba yanzu ba",
+    "listAnd": "da"
+  },
+  "calculatorNotice": {
+    "aria": "Sabon abu: na'urar lissafi",
+    "headline": "Sabo: na'urar lissafi, a cikin mai tsara karatu.",
+    "bodyScientific": "Na'urar lissafi ta kimiyya don lissafi da kimiyya — tana aiki tare da ma'aunin lokacin karatu.",
+    "bodyFinancial": "Na'urar lissafi ta kuɗi don rance, ajiya, NPV da IRR — tana aiki tare da ma'aunin lokacin karatu.",
+    "bodyGeneric": "Na'urar lissafi ta kimiyya ko ta kuɗi da ta dace da karatu — tana aiki tare da ma'aunin lokacin karatu.",
+    "open": "Buɗe na'urar lissafi"
+  },
+  "welcome": {
+    "title": "Mai tsara karatu mai wayo",
+    "tagline": "Ku yi imani za ku iya, ku tsara yadda za ku yi",
+    "start": "fara mai tsara karatu",
+    "haveAccount": "Kuna da asusu? Ku shiga nan"
+  },
+  "auth": {
+    "signOut": "Fita",
+    "phone": {
+      "country": "Ƙasa",
+      "placeholder": "83 123 4567"
+    },
+    "password": {
+      "show": "Nuna kalmar sirri",
+      "hide": "Ɓoye kalmar sirri"
+    },
+    "changePassword": {
+      "newPassword": "Sabuwar kalmar sirri",
+      "update": "Sabunta kalmar sirri",
+      "success": "An sabunta kalmar sirri."
+    },
+    "login": {
+      "title": "Barka da\ndawowa.",
+      "subtitle": "Mun yi murnar sake ganin ku.",
+      "mobileLabel": "Lambar waya",
+      "passwordLabel": "Kalmar sirri",
+      "passwordPlaceholder": "Shigar da kalmar sirri",
+      "submit": "Shiga",
+      "forgot": "An manta kalmar sirri?",
+      "newHere": "Sabo ne? Ku fara mai tsara karatu",
+      "invalid": "Sunan mai amfani ko kalmar sirri ba daidai ba ne. Ku sake gwadawa."
+    },
+    "register": {
+      "step": "MATAKI NA 1 DAGA 2",
+      "title": "Mu shirya.",
+      "intro": "Wannan na ku ne. Abubuwan da ake buƙata kawai don farawa.",
+      "usernameLabel": "Sunan mai amfani",
+      "usernamePlaceholder": "misali thabo_m",
+      "mobileLabel": "Lambar waya",
+      "passwordLabel": "Kalmar sirri",
+      "passwordPlaceholder": "Haruffa 6 aƙalla",
+      "continue": "Ci gaba",
+      "footnote": "Lambar wayarku ita ce za ku yi amfani da ita wajen shiga daga yanzu.",
+      "usernameRequired": "Don Allah ku shigar da sunan mai amfani.",
+      "mobileRequired": "Don Allah ku shigar da lambar wayarku.",
+      "mobileInvalid": "Ku shigar da lambar waya mai inganci ta ƙasar da kuka zaɓa.",
+      "passwordRequired": "Don Allah ku shigar da kalmar sirri.",
+      "passwordShort": "Dole kalmar sirri ta kasance haruffa 6 aƙalla.",
+      "mobileTaken": "An riga an yi rajistar wannan lambar.",
+      "loginInstead": "Ku shiga maimakon haka"
+    },
+    "step2": {
+      "title": "Mun kusa gamawa",
+      "subtitle": "Muna buƙatar imel kawai don tabbatar da asusunku.",
+      "emailLabel": "Imel ɗin iyaye",
+      "emailHelp": "Ana amfani da shi sau ɗaya don tabbatar da wannan asusu. Ba za ku buƙace shi don shiga ba.",
+      "submit": "Ƙirƙiri asusu",
+      "emailTaken": "An riga an yi rajistar wannan imel. Ku gwada shiga, ko ku yi amfani da wani imel.",
+      "numberTaken": "An riga an yi rajistar wannan lambar waya.",
+      "checkTitle": "Ku duba imel",
+      "checkSubtitle": "Mun aiko muku da hanyar tabbatarwa.",
+      "checkBody": "Ku danna hanyar da ke cikin imel don tabbatar da asusunku. Bayan haka, ku shiga da lambar wayarku da kalmar sirri.",
+      "backToLogin": "Komawa zuwa shiga"
+    },
+    "institution": {
+      "label": "Cibiyar karatu",
+      "school": "Makaranta",
+      "uni": "Jami'a / Wani",
+      "schoolName": "Sunan makaranta",
+      "uniName": "Sunan jami'a / wani",
+      "grade": "Aji",
+      "year": "Shekarar karatu",
+      "select": "Zaɓi…",
+      "options": {
+        "g8": "Aji na 8",
+        "g9": "Aji na 9",
+        "g10": "Aji na 10",
+        "g11": "Aji na 11",
+        "g12": "Aji na 12",
+        "y1": "Shekara ta 1",
+        "y2": "Shekara ta 2",
+        "y3": "Shekara ta 3",
+        "y4": "Shekara ta 4",
+        "postgrad": "Digiri na gaba"
+      }
+    },
+    "forgot": {
+      "title": "An manta kalmar sirri?",
+      "subtitle": "Za mu aika hanyar sake saiti zuwa imel da aka yi rajista da asusunku.",
+      "mobileLabel": "Lambar waya",
+      "submit": "Aika hanyar sake saiti",
+      "noAccount": "Ba a sami asusu da wannan lambar waya ba",
+      "checkTitle": "Ku duba imel",
+      "checkSubtitle": "Mun aika hanyar sake saita kalmar sirri.",
+      "checkBody": "Ku danna hanyar da ke cikin imel don zaɓar sabuwar kalmar sirri.",
+      "back": "Komawa zuwa shiga"
+    },
+    "reset": {
+      "title": "Ku zaɓi sabuwar kalmar sirri",
+      "subtitle": "Ku shigar da sabuwar kalmar sirri don asusunku.",
+      "newPassword": "Sabuwar kalmar sirri",
+      "submit": "Sabunta kalmar sirri",
+      "expiredTitle": "Hanyar ta ƙare",
+      "expiredSubtitle": "Wannan hanyar sake saiti ba ta da inganci ko an riga an yi amfani da ita.",
+      "requestNew": "Ku nemi sabuwar hanyar sake saiti"
+    },
+    "callback": {
+      "expiredTitle": "Hanyar ta ƙare",
+      "expiredSubtitle": "Wannan hanyar ba ta da inganci ko an riga an yi amfani da ita.",
+      "requestNew": "Ku nemi sabuwar hanyar sake saiti"
+    },
+    "parentConfirmed": {
+      "okTitle": "An gama komai.",
+      "okBody": "Za ku sami taƙaitaccen bayani na mako-mako game da karatunsu — ba wani abu ba.",
+      "expiredTitle": "Hanyar ta ƙare",
+      "expiredBody": "Wannan hanyar tabbatarwa ba ta da inganci ko an riga an yi amfani da ita."
+    },
+    "parentUnsubscribed": {
+      "okTitle": "An cire rajistarku",
+      "okBody": "Ba za ku ƙara samun sabuntawa na mako-mako ba. Yaranku za su iya sake ƙara ku daga saitunan asusunsu a kowane lokaci.",
+      "expiredTitle": "Hanyar ta ƙare",
+      "expiredBody": "Wannan hanyar ba ta da inganci ko an riga an yi amfani da ita."
+    }
+  },
+  "errors": {
+    "generic": "Wani abu ya faru ba daidai ba. Don Allah ku sake gwadawa.",
+    "auth": {
+      "invalidCredentials": "Sunan mai amfani ko kalmar sirri ba daidai ba ne. Ku sake gwadawa.",
+      "alreadyRegistered": "An riga an yi rajistar wannan imel. Ku gwada shiga, ko ku yi amfani da wani imel.",
+      "rateLimited": "Ƙoƙari da yawa. Don Allah ku jira ɗan lokaci ku sake gwadawa.",
+      "passwordShort": "Dole kalmar sirri ta kasance haruffa 6 aƙalla.",
+      "samePassword": "Sabuwar kalmar sirri dole ta bambanta da tsohuwar.",
+      "invalidEmail": "Don Allah ku shigar da adireshin imel mai inganci.",
+      "emailNotConfirmed": "Don Allah ku fara tabbatar da imel, sannan ku shiga.",
+      "network": "Ba a iya haɗawa ba. Ku duba intanet ku sake gwadawa.",
+      "mobileTaken": "An riga an yi rajistar wannan lambar waya ga wani asusu.",
+      "noAccount": "Ba a sami asusu da wannan lambar waya ba",
+      "notSignedIn": "Ba a shiga ba.",
+      "saveEmail": "Ba a iya adana wannan imel ba. Ku sake gwadawa."
+    },
+    "retry": "Sake gwadawa"
+  },
+  "presets": {
+    "accounting": "Accounting",
+    "afrikaansFal": "Afrikaans (harshe na biyu)",
+    "afrikaansHl": "Afrikaans (harshen farko)",
+    "agriculturalSciences": "Agricultural Sciences",
+    "biology": "Ilimin Halittu",
+    "businessStudies": "Business Studies",
+    "cat": "CAT",
+    "consumerStudies": "Consumer Studies",
+    "dramaticArts": "Dramatic Arts",
+    "economics": "Tattalin Arziki",
+    "engineeringGraphicsDesign": "Engineering Graphics & Design",
+    "englishFal": "Turanci (harshe na biyu)",
+    "englishHl": "Turanci (harshen farko)",
+    "geography": "Geography",
+    "history": "Tarihi",
+    "informationTechnology": "Information Technology",
+    "lifeOrientation": "Life Orientation",
+    "lifeSciences": "Life Sciences",
+    "mathematicalLiteracy": "Mathematical Literacy",
+    "mathematics": "Lissafi",
+    "music": "Kiɗa",
+    "physicalSciences": "Physical Sciences",
+    "religionStudies": "Religion Studies",
+    "sepediHl": "Sepedi (harshen farko)",
+    "setswanaHl": "Setswana (harshen farko)",
+    "tourism": "Yawon Buɗe Ido",
+    "visualArts": "Visual Arts",
+    "xhosaHl": "isiXhosa (harshen farko)",
+    "zuluHl": "isiZulu (harshen farko)"
+  },
+  "subjects": {
+    "eyebrow": "GINA JERIN DARUSSANKU",
+    "title": "Me kuke karantawa?",
+    "searchLabel": "Ku nemo ko ku zaɓi darasi",
+    "searchPlaceholder": "misali Lissafi",
+    "customPlaceholder": "Sunan darasinku",
+    "add": "Ƙara",
+    "addOwn": "+ Ƙara nawa darasi",
+    "saving": "Ana adanawa…",
+    "next": "Na gaba: a jera su",
+    "saveError": "Ba a iya adana darussanku ba. Ku sake gwadawa.",
+    "remove": "Cire {subject}"
+  },
+  "ranking": {
+    "eyebrow": "KU YI GASKIYA — WANNAN YANA JAGORANTAR TSARINKU",
+    "title": "Yaya ƙwarin gwiwarku a kowanne?",
+    "scale": "1 = mafi rauni  ·  5 = mafi ƙarfi",
+    "scoreAria": "{subject}: ƙwarin gwiwa {score}",
+    "saving": "Ana adanawa…",
+    "next": "Na gaba: ranakun jarrabawa",
+    "saveError": "Ba a iya adana jerinku ba. Ku sake gwadawa."
+  },
+  "examDates": {
+    "eyebrow": "MATAKI NA ƘARSHE",
+    "title": "Yaushe ne kowace jarrabawa?",
+    "intro": "Ku taɓa darasi don ƙara ranar jarrabawa. Za ku iya ƙara fiye da ɗaya, kamar jarrabawar zango da ta ƙarshe.",
+    "minDate": "Ranakun jarrabawa dole su fara daga gobe - don Allah ku zaɓi rana ta gaba.",
+    "addError": "Ba a iya ƙara ranar ba. Ku sake gwadawa.",
+    "removeError": "Ba a iya cire ranar ba. Ku sake gwadawa.",
+    "generateError": "Ba a iya ƙirƙirar tsarinku ba. Ku sake gwadawa.",
+    "adding": "Ana ƙarawa…",
+    "addDate": "+ Ƙara rana",
+    "removeAria": "Cire ranar {date}: {subject}",
+    "stillNeed": "{count, plural, one {Har yanzu yana buƙatar rana: {subjects}.} other {Har yanzu suna buƙatar rana: {subjects}.}}",
+    "generating": "Ana ƙirƙira…",
+    "generate": "Ƙirƙiri tsarina",
+    "footnote": "Ana gina jadawalinku nan take kuma ana sabunta shi kullum."
+  },
+  "manage": {
+    "eyebrow": "SARRAFA MAI TSARA KARATU",
+    "title": "Ku sabunta jerinku ko ranakun jarrabawa",
+    "tabSubjects": "Darussa",
+    "tabRanking": "Jeri",
+    "tabDates": "Ranakun jarrabawa",
+    "addSubjectLabel": "Ƙara darasi",
+    "searchPlaceholder": "misali Lissafi",
+    "customPlaceholder": "Sunan darasinku",
+    "add": "Ƙara",
+    "addOwn": "+ Ƙara nawa darasi",
+    "yourSubjects": "Darussanku",
+    "newSubjectNote": "Sabbin darussa za su buƙaci matakin ƙwarin gwiwa da ranar jarrabawa kafin su bayyana a tsarinku.",
+    "removeSubjectAria": "Cire {subject}",
+    "scale": "1 = mafi rauni  ·  5 = mafi ƙarfi",
+    "scoreAria": "{subject}: ƙwarin gwiwa {score}",
+    "adding": "Ana ƙarawa…",
+    "addDate": "+ Ƙara rana",
+    "removeDateAria": "Cire ranar {date}: {subject}",
+    "updating": "Ana sabunta tsarinku…",
+    "addSubjectError": "Ba a iya ƙara wannan darasi ba. Ku sake gwadawa.",
+    "removeSubjectError": "Ba a iya cire wannan darasi ba. Ku sake gwadawa.",
+    "saveError": "Ba a iya adanawa ba. Ku sake gwadawa.",
+    "minDate": "Ranakun jarrabawa dole su fara daga gobe - don Allah ku zaɓi rana ta gaba.",
+    "addDateError": "Ba a iya ƙara ranar ba. Ku sake gwadawa.",
+    "removeDateError": "Ba a iya cire ranar ba. Ku sake gwadawa."
+  },
+  "plan": {
+    "heading": "Tsarin yau (shawara)",
+    "subheading": "Ga abin da muke ba da shawara a yau — ku sauya shi yadda ya dace da ku.",
+    "dateLine": "{weekday}, {dayMonth}",
+    "fallbackName": "aboki",
+    "greetings": {
+      "g1": "Barka da dawowa, zakara!",
+      "g2": "Mun yi murnar sake ganin ku, {name}!",
+      "g3": "Mu sake farawa, {name}!",
+      "g4": "Kun zo. Wannan riga nasara ce, {name}.",
+      "g5": "A shirye muke idan kun shirya, {name}."
+    },
+    "sessionMinutes": "{minutes} min",
+    "hideNotes": "Ɓoye bayanan batu",
+    "addNotes": "Ƙara bayanan batu",
+    "removeSession": "Cire zaman karatu: {subject}",
+    "markDone": "Yi alama batu ya ƙare",
+    "markNotDone": "Yi alama batu bai ƙare ba",
+    "topicPlaceholder": "Me kuke karantawa?",
+    "allDoneTitle": "Kun gama dukkan jarrabawarku na yanzu! 🎉",
+    "allDoneBody": "Ku ƙara ranakun jarrabawarku na gaba a ƙasa don tsarin karatunku ya ci gaba.",
+    "examDone": "Jarrabawa ta ƙare — ƙara rana ta gaba",
+    "minDate": "Ranakun jarrabawa dole su fara daga gobe - don Allah ku zaɓi rana ta gaba.",
+    "adding": "Ana ƙarawa…",
+    "addDate": "+ Ƙara rana",
+    "updateRanking": "Kuna son sabunta jerin darussanku ma? Sarrafa mai tsara karatu",
+    "addAnother": "+ Ƙara wani zama"
+  },
+  "share": {
+    "share": "Raba",
+    "preparing": "Ana shiryawa…",
+    "shareAria": "Raba tsari",
+    "preparingAria": "Ana shirya rabawa",
+    "error": "Ba a iya ƙirƙirar PDF ba. Ku sake gwadawa.",
+    "shareTitle": "Tsarin karatun {name}",
+    "shareText": "Tsarin karatun {name} na {date}",
+    "pdf": {
+      "title": "TSARIN KARATUN YAU",
+      "forName": "na {name}",
+      "empty": "Babu zaman karatu da aka tsara yau tukuna.",
+      "done": "An gama",
+      "pending": "Ana jira",
+      "upcoming": "RANAKUN JARRABAWA MASU ZUWA",
+      "when": "{days, plural, =0 {yau} =1 {gobe} other {nan da kwanaki #}}",
+      "eyebrow": "EMPOWERMINT NE YA RABA",
+      "headline": "{name} yana amfani da Smart Study Planner don ci gaba da karatu da kyau. Ku gwada.",
+      "cta": "Fara kyauta",
+      "scan": "DUBA DON FARAWA",
+      "micro": "ba a buƙatar kati"
+    }
+  },
+  "install": {
+    "bannerTitle": "Ku ƙara empowermint a allon gida",
+    "bannerBody": "Don komawa tsarinku kai tsaye, kamar kowace manhaja.",
+    "dismiss": "Rufe",
+    "addButton": "Ƙara a allon gida",
+    "modalTitle": "Ku kiyaye empowermint a taɓawa ɗaya",
+    "iosStep1": "Ku taɓa alamar Raba a mashayin kayan aikin Safari.",
+    "iosStep2": "Sai ku gungura ƙasa ku taɓa <b>Add to Home Screen</b>.",
+    "androidStep": "Ku nemi <b>Add to Home Screen</b> ko <b>Install App</b> a menu na burauzarku.",
+    "gotIt": "Na gane"
+  },
+  "review": {
+    "title": "Yaya SSP ke yi muku aiki zuwa yanzu?",
+    "subtitle": "Ra'ayinku yana taimaka mana mu inganta shi.",
+    "starAria": "{count, plural, one {tauraro #} other {taurari #}}",
+    "commentPlaceholder": "Akwai abin da kuke so ku raba? (na zaɓi)",
+    "submit": "Aika bita",
+    "submitting": "Ana aikawa…",
+    "notNow": "Ba yanzu ba",
+    "saveError": "Ba a iya adanawa ba. Ku sake gwadawa."
+  },
+  "reflection": {
+    "title": "Yaya jarrabawar {subject} ta kasance?",
+    "subtitle": "{date} — wannan yana taimaka mana mu tsara zamanku na gaba.",
+    "saveError": "Ba a iya adanawa ba. Ku sake gwadawa.",
+    "choices": {
+      "tougher": "Ta fi wahala fiye da yadda nake tsammani",
+      "expected": "Kusan yadda nake tsammani",
+      "better": "Ta fi sauƙi fiye da yadda nake tsammani"
+    }
+  },
+  "nav": {
+    "primary": "Babba",
+    "plan": "Tsari",
+    "calendar": "Kalanda",
+    "manage": "Sarrafa",
+    "calculator": "Lissafi"
+  },
+  "settings": {
+    "aria": "Saituna",
+    "manage": "Sarrafa mai tsara karatu",
+    "language": "Language / Harshe",
+    "addToHome": "Ƙara a Allon Gida",
+    "logout": "Fita"
+  },
+  "exams": {
+    "title": "Ranakun jarrabawa",
+    "loading": "Ana lodawa…",
+    "empty": "Babu darussa tukuna.",
+    "daysBadge": "{days, plural, =0 {Yau} =1 {Rana 1} other {Kwanaki #}}",
+    "adding": "Ana ƙarawa…",
+    "addDate": "+ Ƙara rana",
+    "removeAria": "Cire ranar {date}: {subject}",
+    "pastPapers": "Jarrabawar baya →",
+    "minDate": "Ranakun jarrabawa dole su fara daga gobe - don Allah ku zaɓi rana ta gaba.",
+    "addError": "Ba a iya ƙara ranar ba. Ku sake gwadawa.",
+    "removeError": "Ba a iya cire ranar ba. Ku sake gwadawa.",
+    "upcoming": "Ranakun jarrabawa masu zuwa",
+    "examIn": "Jarrabawar {subject} nan da",
+    "daysCount": "kwanaki {days}"
+  },
+  "timer": {
+    "eyebrow": "ZAMAN MAIDA HANKALI · {session} DAGA {total} YAU",
+    "studySession": "Zaman karatu",
+    "status": {
+      "green": "SAURA · LOKACI DA YAWA",
+      "amber": "SAURA · TAFIYA DAIDAI",
+      "red": "SAURA · KUSAN ƘARSHE"
+    },
+    "pause": "Dakata",
+    "resume": "Ci gaba",
+    "end": "Ƙare zama",
+    "start": "Fara zama",
+    "hintRunning": "Ana adana zaman kai tsaye a tsarin yau idan ya ƙare.",
+    "hintIdle": "Ku taɓa Fara idan kun shirya maida hankali."
+  },
+  "examTimer": {
+    "durationHours": "{hours, plural, one {awa #} other {awanni #}}",
+    "durationHoursMinutes": "awa {hours} min {minutes}",
+    "entry": {
+      "title": "Ku yi atisayen lokacin jarrabawa",
+      "badge": "Sabo",
+      "subtitle": "Ƙidayar lokaci cikakke don takardar jarrabawa ta gaba"
+    },
+    "setup": {
+      "eyebrow": "Shirya jarrabawar gwaji",
+      "intro": "Mu shirya jarrabawar gwajinku a nan. Ku zaɓi daga jerin darasin da kuke so ku yi atisaye da tsawon jarrabawar.",
+      "subjectLabel": "Zaɓi darasi",
+      "select": "Zaɓi…",
+      "timeLabel": "Zaɓi lokaci (adadin awanni)",
+      "go": "Je zuwa zaman jarrabawa"
+    },
+    "session": {
+      "eyebrow": "Zaman ma'aunin lokaci na jarrabawar gwaji",
+      "subject": "Darasi:",
+      "duration": "Tsawo:",
+      "studySession": "Zaman karatu",
+      "minutes": "mintuna {minutes}",
+      "start": "Fara, Allah Ya ba da sa'a.",
+      "pause": "Dakata",
+      "resume": "Ci gaba",
+      "endEarly": "Ƙare zama da wuri",
+      "timesUp": "LOKACI YA ƘARE",
+      "howDidItGo": "YAYA ABIN YA KASANCE?",
+      "thumbsUp": "Babban yatsa sama",
+      "thumbsDown": "Babban yatsa ƙasa",
+      "thanks": "Na gode da ra'ayi",
+      "back": "Komawa mai tsara karatu"
+    },
+    "status": {
+      "green": "Saura · Lokaci da yawa.",
+      "amber": "Saura · Ku mai da hankali.",
+      "red": "Saura · Mataki na ƙarshe."
+    }
+  },
+  "calendar": {
+    "title": "Duban kalanda",
+    "subtitle": "Ku taɓa rana don ganin abin da aka tsara.",
+    "prevMonth": "Watan da ya gabata",
+    "nextMonth": "Wata mai zuwa",
+    "legendExam": "Ranar jarrabawa",
+    "legendToday": "Yau",
+    "legendStudy": "Zaman karatu",
+    "legendMissed": "Wanda aka rasa",
+    "empty": "Babu abin da aka tsara a wannan rana.",
+    "examLine": "Jarrabawar {subject}",
+    "sessionLine": "{status, select, done {Zaman karatu na {subject} · an gama} missed {Zaman karatu na {subject} · an rasa} other {Zaman karatu na {subject}}}",
+    "addSession": "+ Ƙara zaman karatu"
+  },
+  "sessionComplete": {
+    "title": "Aiki mai kyau.\nZama ya ƙare.",
+    "logged": "An adana mintuna {minutes} akan <b>{subject}</b>.",
+    "quotes": {
+      "q1": "Ƙoƙari ba sai ya zama cikakke ba don a ƙidaya shi. Sai dai a maimaita shi.",
+      "q2": "Tsari ba shi ne buri ba. Tsari shi ne abin da ke kai ku ga buri.",
+      "q3": "Ƙarfin gwiwa ba abin jira ba ne. Ana gina shi zama bayan zama.",
+      "q4": "Ba sai kun ji kun shirya ba. Sai dai ku zo.",
+      "q5": "Kowace awa da kuka zuba yanzu maki ne da ba za ku damu da shi daga baya ba.",
+      "q6": "Ɗalibin da ke tsarawa yana cin ɗalibin da ke tsorata — kowane lokaci.",
+      "q7": "Ci gaba ba ya bayyana koyaushe. Amma gaskiya ne koyaushe.",
+      "q8": "Kuna kusa fiye da yadda kuke tunani."
+    },
+    "quoteSource": "— Mastering Your Studies",
+    "whatsNext": "Me ke gaba?",
+    "startNext": "Fara na gaba: {subject}",
+    "doneToday": "Kun gama don yau. Sannu da aiki!",
+    "backToPlan": "Komawa Tsarin Yau",
+    "noPenalty": "Shawara ta ku ce — babu hukunci ko ta wace hanya."
+  },
+  "pastPapers": {
+    "title": "Jarrabawar Baya",
+    "intro": "Ku zaɓi hukumarku don ku je kai tsaye zuwa takardun jarrabawa na hukuma da jagororin duba.",
+    "cardSubtitle": "Takardun jarrabawa da amsoshin NSC da IEB na hukuma.",
+    "cardLocked": "Yana buɗewa a Aji na 12",
+    "toastLocked": "Wannan yana buɗewa idan kun kai Aji na 12.",
+    "footnote": "Amsoshi jagoran duba ne, ba mabuɗin amsa na ƙarshe ba — ana amfani da su don jagora, ba don maye gurbin aikinku ba.",
+    "boards": {
+      "caps": {
+        "label": "Takardun CAPS / NSC",
+        "helper": "Ma'aikatar Ilimin Asali, takardu har zuwa 2008."
+      },
+      "ieb": {
+        "label": "Takardun IEB",
+        "helper": "Shafin IEB da kansa, shekaru 5 da suka wuce."
+      }
+    }
+  },
+  "account": {
+    "title": "Asusu",
+    "signedInAs": "An shiga a matsayin",
+    "student": "Ɗalibi: {name}",
+    "changePassword": "Canza kalmar sirri",
+    "contactUs": "Tuntuɓe mu",
+    "contactBody": "Tambayoyi ko ra'ayi? Ku aika imel zuwa <link>ebrahim@empowermint.co.za</link>"
+  },
+  "parentNotify": {
+    "title": "Ku sanar da iyayenku",
+    "intro": "Ku ƙara imel ɗinsu za mu aika taƙaitaccen bayani na mako-mako kan yadda karatu ke tafiya — don kada ku riƙa bayyana kanku kowane dare a lokacin cin abinci.",
+    "currentContact": "Lambar sadarwa ta yanzu:",
+    "confirmed": "an tabbatar",
+    "waiting": "ana jiran tabbatarwa",
+    "placeholder": "parent@email.com",
+    "sent": "An aika! Za su sami imel don tabbatarwa kafin a aika komai.",
+    "update": "Sabunta imel",
+    "add": "Ƙara iyayena",
+    "error": "Wani abu ya faru ba daidai ba. Ku sake gwadawa."
+  },
+  "calculator": {
+    "title": "Na'urar lissafi",
+    "sciTitle": "Na'urar lissafi ta kimiyya",
+    "finTitle": "Na'urar lissafi ta kuɗi",
+    "back": "Baya",
+    "languageAria": "Harshen na'urar lissafi",
+    "clear": "Share",
+    "clearHint": "Ku danna AC don sharewa",
+    "angleMode": "Yanayin kusurwa",
+    "helpToggle": "Yadda alamomi da saituna ke aiki",
+    "signTitle": "Ka'idar alamomi",
+    "signBody": "Kuɗin da kuke biya yana da alamar ragi (−); kuɗin da kuke karɓa yana da alamar ƙari (+). Ku ranci R100,000 (PV = +100,000) kuma biyanku zai fito da alamar ragi.",
+    "ppyBody": "Biyan kuɗi a shekara da BGN/END: ku danna 2ND sannan N don canza adadin biyan kuɗi a shekara (12, 1, 2, 4); 2ND sannan PV yana sauyawa tsakanin END (biyan kuɗi a ƙarshen kowane lokaci) da BGN (a farko). CPT sannan maɓalli yana lissafa shi; 2ND sannan CPT yana share ƙimomi biyar.",
+    "flowBody": "Kwararar kuɗi: ku danna CF, ku rubuta kowane adadi sannan ku danna = don ƙara shi (na farko na yau ne). Sannan ku danna NPV (yana amfani da I/Y a matsayin ƙimar kowane lokaci) ko IRR. 2ND sannan CF yana share jerin.",
+    "cfHint": "Ku rubuta adadi, sannan ku danna = don ƙara shi. Ku danna CF don rufewa.",
+    "cptHint": "Yanzu ku danna ƙimar da za a lissafa",
+    "focus": {
+      "label": "Zaman maida hankali",
+      "finance": "Kuɗi",
+      "pause": "dakata",
+      "resume": "ci gaba",
+      "finished": "Zama ya ƙare — taɓa don gamawa"
+    },
+    "finError": {
+      "missing": "A shigar da sauran ƙimomi da farko",
+      "no-solution": "Babu mafita ga waɗannan ƙimomi",
+      "invalid": "A duba ƙimominku",
+      "syntax": "A duba abin da aka rubuta"
+    },
+    "annual": {
+      "title": "Sabuwar shekarar karatu",
+      "subtitle": "Ku tabbatar da bayananku don na'urar lissafi da tsari su dace da ku.",
+      "confirm": "Tabbatar a ci gaba",
+      "saving": "Ana adanawa…",
+      "incomplete": "Don Allah ku cika dukkan fannoni.",
+      "saveError": "Ba a iya adanawa ba. Ku sake gwadawa."
+    }
+  }
+}

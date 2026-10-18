@@ -19,7 +19,8 @@
     "aria": "Ulwimi olutsha luyafumaneka",
     "headline": "Okutsha: i-planner ngoku iyafumaneka — {languages}.",
     "switch": "Tshintshela: {language}",
-    "notNow": "Hayi ngoku"
+    "notNow": "Hayi ngoku",
+    "listAnd": ","
   },
   "calculatorNotice": {
     "aria": "Into entsha: ikhalkhuleyitha",

@@ -19,7 +19,8 @@
     "aria": "Nuwe taal beskikbaar",
     "headline": "Nuut: die planner is nou beskikbaar in {languages}.",
     "switch": "Skakel oor na {language}",
-    "notNow": "Nie nou nie"
+    "notNow": "Nie nou nie",
+    "listAnd": "en"
   },
   "calculatorNotice": {
     "aria": "Nuwe funksie: sakrekenaar",

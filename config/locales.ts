@@ -10,6 +10,8 @@ export interface LocaleConfig {
   intl: string;
   /** Reading direction; omit for left-to-right. Drives <html dir> and the rtl: styles. */
   dir?: 'rtl';
+  /** Written in a script the share-PDF font cannot draw (Arabic, Devanagari): the PDF is produced in English. */
+  nonLatin?: boolean;
   /** One line, written in this language, used by the one-time "now available" notice card. */
   noticeNative?: string;
 }
@@ -47,7 +49,27 @@ export const LOCALES: LocaleConfig[] = [
     nativeName: 'العربية',
     intl: 'ar-u-nu-latn',
     dir: 'rtl',
+    nonLatin: true,
     noticeNative: 'جديد: المخطط متاح الآن بالعربية.',
+  },
+  {
+    code: 'sw',
+    nativeName: 'Kiswahili',
+    intl: 'sw-KE',
+    noticeNative: 'Mpya: mpangaji sasa anapatikana kwa Kiswahili.',
+  },
+  {
+    code: 'ha',
+    nativeName: 'Hausa',
+    intl: 'ha-NG',
+    noticeNative: 'Sabo: mai tsara karatu yanzu yana nan cikin Hausa.',
+  },
+  {
+    code: 'hi',
+    nativeName: 'हिन्दी',
+    intl: 'hi-IN',
+    nonLatin: true,
+    noticeNative: 'नया: प्लानर अब हिन्दी में उपलब्ध है।',
   },
 ];
 
@@ -59,7 +81,7 @@ export const LOCALE_COOKIE_MAX_AGE = 60 * 60 * 24 * 365;
 
 /** Which languages get the one-time notice card, and the date it stops showing. */
 export const LANGUAGE_ANNOUNCEMENT = {
-  codes: ['zu', 'xh', 'fr', 'ar'],
+  codes: ['sw', 'ha', 'hi'],
   announcedUntil: '2027-02-28',
 };
 
@@ -101,6 +123,10 @@ export function getEnabledLocales(): LocaleConfig[] {
 
 export function isEnabledLocale(code: string | null | undefined): code is string {
   return !!code && getEnabledLocales().some((l) => l.code === code);
+}
+
+export function isNonLatin(code: string): boolean {
+  return !!LOCALES.find((l) => l.code === code)?.nonLatin;
 }
 
 export function getDir(code: string): 'rtl' | 'ltr' {

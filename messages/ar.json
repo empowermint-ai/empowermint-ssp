@@ -19,7 +19,8 @@
     "aria": "لغة جديدة متاحة",
     "headline": "جديد: المخطط متاح الآن — {languages}.",
     "switch": "التبديل إلى {language}",
-    "notNow": "ليس الآن"
+    "notNow": "ليس الآن",
+    "listAnd": "و"
   },
   "calculatorNotice": {
     "aria": "ميزة جديدة: آلة حاسبة",

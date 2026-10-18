@@ -19,7 +19,8 @@
     "aria": "New language available",
     "headline": "New: the planner is now available in {languages}.",
     "switch": "Switch to {language}",
-    "notNow": "Not now"
+    "notNow": "Not now",
+    "listAnd": "and"
   },
   "calculatorNotice": {
     "aria": "New feature: calculator",

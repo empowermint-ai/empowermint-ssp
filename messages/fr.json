@@ -19,7 +19,8 @@
     "aria": "Nouvelle langue disponible",
     "headline": "Nouveau : le planificateur est maintenant disponible en {languages}.",
     "switch": "Passer à {language}",
-    "notNow": "Pas maintenant"
+    "notNow": "Pas maintenant",
+    "listAnd": "et"
   },
   "calculatorNotice": {
     "aria": "Nouvelle fonction : calculatrice",
