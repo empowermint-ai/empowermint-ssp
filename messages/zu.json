@@ -21,6 +21,14 @@
     "switch": "Shintshela: {language}",
     "notNow": "Hhayi manje"
   },
+  "calculatorNotice": {
+    "aria": "Isici esisha: ikhalkhuletha",
+    "headline": "Okusha: ikhalkhuletha, ngaphakathi ku-planner yakho.",
+    "bodyScientific": "Ikhalkhuletha yesayensi yezibalo nesayensi — isebenza kanye nesikhathi sakho sokufunda.",
+    "bodyFinancial": "Ikhalkhuletha yezezimali yezikweletu, ukonga, i-NPV ne-IRR — isebenza kanye nesikhathi sakho sokufunda.",
+    "bodyGeneric": "Ikhalkhuletha yesayensi noma yezezimali ehambisana nezifundo zakho — isebenza kanye nesikhathi sakho sokufunda.",
+    "open": "Vula ikhalkhuletha"
+  },
   "welcome": {
     "title": "Isihleli sokufunda esihlakaniphile",
     "tagline": "Kholwa ukuthi ungakwazi, hlela ukuthi uzokwenza kanjani",

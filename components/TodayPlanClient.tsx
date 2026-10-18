@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useSubjectLabel } from '@/lib/i18n/useSubjectLabel';
 import LanguageNotice from '@/components/i18n/LanguageNotice';
+import CalculatorNotice from '@/components/CalculatorNotice';
 import { hasMultipleLanguages } from '@/config/locales';
 import Link from 'next/link';
 import { supabase } from '@/lib/supabaseClient';
@@ -237,6 +238,7 @@ export default function TodayPlanClient({
   return (
     <>
       {hasMultipleLanguages() && <LanguageNotice />}
+      <CalculatorNotice grade={grade} />
 
       <div className="mt-3 flex items-center gap-2">
         <p className="font-heading font-bold text-[15px] uppercase tracking-[0.6px] text-teal">

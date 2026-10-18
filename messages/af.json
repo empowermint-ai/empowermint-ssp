@@ -21,6 +21,14 @@
     "switch": "Skakel oor na {language}",
     "notNow": "Nie nou nie"
   },
+  "calculatorNotice": {
+    "aria": "Nuwe funksie: sakrekenaar",
+    "headline": "Nuut: 'n sakrekenaar, reg in jou planner.",
+    "bodyScientific": "'n Wetenskaplike sakrekenaar vir wiskunde en wetenskap — dit werk saam met jou studietydhouer.",
+    "bodyFinancial": "'n Finansiële sakrekenaar vir lenings, spaar, NPV en IRR — dit werk saam met jou studietydhouer.",
+    "bodyGeneric": "'n Wetenskaplike of finansiële sakrekenaar wat by jou studies pas — dit werk saam met jou studietydhouer.",
+    "open": "Maak sakrekenaar oop"
+  },
   "welcome": {
     "title": "Die slim studieplanner",
     "tagline": "Glo jy kan, beplan hoe jy sal",

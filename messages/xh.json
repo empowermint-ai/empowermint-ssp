@@ -21,6 +21,14 @@
     "switch": "Tshintshela: {language}",
     "notNow": "Hayi ngoku"
   },
+  "calculatorNotice": {
+    "aria": "Into entsha: ikhalkhuleyitha",
+    "headline": "Okutsha: ikhalkhuleyitha, ngaphakathi kwi-planner yakho.",
+    "bodyScientific": "Ikhalkhuleyitha yesayensi yezibalo nesayensi — isebenza kunye nexesha lakho lokufunda.",
+    "bodyFinancial": "Ikhalkhuleyitha yezimali yemali-mboleko, ukonga, i-NPV ne-IRR — isebenza kunye nexesha lakho lokufunda.",
+    "bodyGeneric": "Ikhalkhuleyitha yesayensi okanye yezimali ehambelana nezifundo zakho — isebenza kunye nexesha lakho lokufunda.",
+    "open": "Vula ikhalkhuleyitha"
+  },
   "welcome": {
     "title": "Isicwangciso sokufunda esikrelekrele",
     "tagline": "Kholwa ukuba unokukwazi, cwangcisa ukuba uya kukwenza njani",

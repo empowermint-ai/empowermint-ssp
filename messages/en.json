@@ -21,6 +21,14 @@
     "switch": "Switch to {language}",
     "notNow": "Not now"
   },
+  "calculatorNotice": {
+    "aria": "New feature: calculator",
+    "headline": "New: a calculator, right inside your planner.",
+    "bodyScientific": "A scientific calculator for maths and science — it works alongside your study timer.",
+    "bodyFinancial": "A financial calculator for loans, savings, NPV and IRR — it works alongside your study timer.",
+    "bodyGeneric": "A scientific or financial calculator that fits your studies — it works alongside your study timer.",
+    "open": "Open calculator"
+  },
   "welcome": {
     "title": "The smart study planner",
     "tagline": "Believe you can, plan how you will",

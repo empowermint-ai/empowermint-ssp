@@ -5,11 +5,11 @@ import { useTranslations } from 'next-intl';
 import { LANGUAGE_ANNOUNCEMENT, getLocaleConfig, isEnabledLocale } from '@/config/locales';
 import { useLanguage } from '@/components/i18n/LanguageProvider';
 import { GlobeIcon } from '@/components/i18n/icons';
+import { announceNoticeChange, languageNoticeKey } from '@/lib/i18n/noticeStorage';
 
 // One key per announcement (the codes joined), so a learner who dismissed an
 // earlier announcement (for example Afrikaans) still sees a new one.
-const storageKey = (codes: string[], kind: 'dismissed' | 'done') =>
-  `ssp_lang_notice_${kind}_${codes.join('-')}`;
+const storageKey = languageNoticeKey;
 
 /**
  * One-time "now available in <language>" card for learners who are not on that
@@ -58,6 +58,7 @@ export default function LanguageNotice() {
     } catch {
       // ignore
     }
+    announceNoticeChange();
   }
 
   return (

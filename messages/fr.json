@@ -21,6 +21,14 @@
     "switch": "Passer à {language}",
     "notNow": "Pas maintenant"
   },
+  "calculatorNotice": {
+    "aria": "Nouvelle fonction : calculatrice",
+    "headline": "Nouveau : une calculatrice, directement dans ton planificateur.",
+    "bodyScientific": "Une calculatrice scientifique pour les maths et les sciences — elle fonctionne avec ton minuteur d'étude.",
+    "bodyFinancial": "Une calculatrice financière pour les prêts, l'épargne, la NPV et l'IRR — elle fonctionne avec ton minuteur d'étude.",
+    "bodyGeneric": "Une calculatrice scientifique ou financière adaptée à tes études — elle fonctionne avec ton minuteur d'étude.",
+    "open": "Ouvrir la calculatrice"
+  },
   "welcome": {
     "title": "Le planificateur d'étude intelligent",
     "tagline": "Crois en toi, planifie comment tu vas y arriver",
