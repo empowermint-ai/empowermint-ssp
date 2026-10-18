@@ -22,7 +22,9 @@ export default function LanguageSheet({
   useEffect(() => {
     const frame = requestAnimationFrame(() => {
       setEntered(true);
-      selectedRef.current?.focus();
+      // roll the list so the current language sits in the middle of the view
+      selectedRef.current?.scrollIntoView({ block: 'center' });
+      selectedRef.current?.focus({ preventScroll: true });
     });
     const onKey = (event: KeyboardEvent) => {
       if (event.key === 'Escape') onClose();
@@ -54,7 +56,16 @@ export default function LanguageSheet({
         <h2 className="mb-4 font-heading text-[18px] font-semibold text-text-primary">
           {t('title')}
         </h2>
-        <div role="radiogroup" aria-label={t('title')} className="flex max-h-[60dvh] flex-col gap-3 overflow-y-auto pb-1">
+        <div
+          role="radiogroup"
+          aria-label={t('title')}
+          className="flex max-h-[min(52dvh,320px)] snap-y snap-proximity flex-col gap-3 overflow-y-auto py-4"
+          // soft fade at the top and bottom edges hints that the list keeps rolling
+          style={{
+            WebkitMaskImage: 'linear-gradient(to bottom, transparent 0, #000 14%, #000 86%, transparent 100%)',
+            maskImage: 'linear-gradient(to bottom, transparent 0, #000 14%, #000 86%, transparent 100%)',
+          }}
+        >
           {enabled.map((language) => {
             const selected = language.code === locale;
             return (
@@ -69,7 +80,7 @@ export default function LanguageSheet({
                   change(language.code, source);
                   onClose();
                 }}
-                className={`flex min-h-[56px] w-full items-center justify-between gap-3 rounded-[18px] px-5 text-left font-body text-[16px] ${
+                className={`flex min-h-[56px] w-full flex-shrink-0 snap-center items-center justify-between gap-3 rounded-[18px] px-5 text-start font-body text-[16px] ${
                   selected
                     ? 'soft-pressed-accent font-bold text-black'
                     : 'soft-raised font-medium text-text-primary'
