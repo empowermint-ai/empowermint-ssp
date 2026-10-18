@@ -144,6 +144,11 @@ function Frame({
         </div>
       ) : null}
 
+      {/* Visible proof of the screen's language: the keypad itself is never translated. */}
+      <h1 className="px-6 pb-1 text-[13px] font-bold" style={{ color: 'var(--calc-muted)' }}>
+        {kind === 'scientific' ? t('sciTitle') : t('finTitle')}
+      </h1>
+
       <FocusStrip variant={kind} session={session} now={now} onChange={setSession} />
 
       {kind === 'scientific' ? <ScientificCalculator stripActive={!!session} /> : <FinancialCalculator />}

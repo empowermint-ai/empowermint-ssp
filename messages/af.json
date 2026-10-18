@@ -499,6 +499,8 @@
   },
   "calculator": {
     "title": "Sakrekenaar",
+    "sciTitle": "Wetenskaplike sakrekenaar",
+    "finTitle": "Finansiële sakrekenaar",
     "back": "Terug",
     "languageAria": "Sakrekenaar-taal",
     "clear": "Maak skoon",

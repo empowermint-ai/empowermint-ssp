@@ -499,6 +499,8 @@
   },
   "calculator": {
     "title": "Ikhalkhuleyitha",
+    "sciTitle": "Ikhalkhuleyitha yesayensi",
+    "finTitle": "Ikhalkhuleyitha yezimali",
     "back": "Emva",
     "languageAria": "Ulwimi lwekhalkhuleyitha",
     "clear": "Cima",

@@ -499,6 +499,8 @@
   },
   "calculator": {
     "title": "Ikhalkhuletha",
+    "sciTitle": "Ikhalkhuletha yesayensi",
+    "finTitle": "Ikhalkhuletha yezezimali",
     "back": "Emuva",
     "languageAria": "Ulimi lwekhalkhuletha",
     "clear": "Sula",

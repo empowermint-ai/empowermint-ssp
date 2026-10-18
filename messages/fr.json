@@ -499,6 +499,8 @@
   },
   "calculator": {
     "title": "Calculatrice",
+    "sciTitle": "Calculatrice scientifique",
+    "finTitle": "Calculatrice financière",
     "back": "Retour",
     "languageAria": "Langue de la calculatrice",
     "clear": "Effacer",
