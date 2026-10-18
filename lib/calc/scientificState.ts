@@ -90,9 +90,15 @@ function pressOperator(state: SciState, op: string): SciState {
       return state; // an operator on an empty display does nothing
     }
   }
-  if (expr === '−') return state; // a lone leading minus cannot take another operator
-  // replace a trailing operator instead of stacking two
-  if (expr.length > 0 && isOperator(lastChar(expr))) expr = expr.slice(0, -1);
+  const last = lastChar(expr);
+  if (op === '−') {
+    // A minus after an operator is a sign: 5×−3, 2^−3, 5−−3 (typed as written).
+  } else {
+    if (last === '(') return state; // an operator right after "(" makes no sense
+    // a new operator replaces any operators already waiting (including a sign)
+    while (expr.length > 0 && isOperator(lastChar(expr))) expr = expr.slice(0, -1);
+    if (expr === '') return state;
+  }
   return { ...state, expr: expr + op, evaluated: false, shift: false };
 }
 

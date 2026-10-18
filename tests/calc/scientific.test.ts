@@ -70,6 +70,20 @@ describe('scientific functions', () => {
   });
 });
 
+describe('angle edge cases found by fuzzing', () => {
+  it('a tiny negative angle is treated as 0 degrees, not an error', () => {
+    expect(evaluate('sin(−1e-17)', 'deg')).toBe(0);
+    expect(evaluate('cos(−1e-17)', 'deg')).toBe(1);
+    expect(evaluate('tan(−1e-17)', 'deg')).toBe(0);
+  });
+  it('negative and wrapped angles', () => {
+    expect(evaluate('sin(−30)', 'deg')).toBeCloseTo(-0.5, 12);
+    expect(evaluate('cos(−60)', 'deg')).toBeCloseTo(0.5, 12);
+    expect(evaluate('sin(390)', 'deg')).toBeCloseTo(0.5, 12);
+    expect(evaluate('sin(−270)', 'deg')).toBe(1);
+  });
+});
+
 describe('error cases never crash or return a wrong number', () => {
   const code = (expr: string) => {
     try {

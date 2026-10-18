@@ -110,26 +110,71 @@ export function solveIY(v: TvmInputs): number {
     v.PV * Math.pow(1 + i, v.N) + v.PMT * annuityFactor(i, v.N, v.begin) + v.FV;
 
   const grid: number[] = [];
-  for (let x = -0.99; x < -0.001; x += 0.01) grid.push(x);
-  for (let e = -6; e <= 1; e += 0.05) grid.push(Math.pow(10, e) * 1); // 1e-6 .. 10 (positive)
-  grid.sort((a, b) => a - b);
-  // include i = 0 neighbourhood explicitly
+  for (let x = -0.99; x < -0.001; x += 0.005) grid.push(x);
+  for (let e = -6; e <= 1; e += 0.01) grid.push(Math.pow(10, e)); // 1e-6 .. 10 (positive)
   grid.push(0);
-  grid.sort((a, b) => a - b);
+  grid.sort((p, q) => p - q);
 
-  const roots: number[] = [];
-  for (let k = 0; k < grid.length - 1; k++) {
-    const lo = grid[k];
-    const hi = grid[k + 1];
-    const flo = f(lo);
-    const fhi = f(hi);
-    if (!Number.isFinite(flo) || !Number.isFinite(fhi)) continue;
-    if (flo === 0) roots.push(lo);
-    else if (flo * fhi < 0) roots.push(refineRoot(f, lo, hi));
-  }
+  const roots = scanRoots(f, grid);
   if (roots.length === 0) throw new FinancialError('no-solution');
   roots.sort((a, b) => Math.abs(a) - Math.abs(b));
   return roots[0] * v.ppy * 100;
+}
+
+
+/**
+ * Finds roots of f on an ascending grid. Two kinds are caught:
+ *  1. an ordinary sign change between neighbouring grid points, and
+ *  2. a narrow "dip" where f stays on one side of zero at the grid points but
+ *     crosses it in between (two roots very close together, as happens for some
+ *     borrow-and-pay-back shapes). A golden-section search finds the dip's lowest
+ *     point; if it crosses zero, both roots are refined.
+ */
+function scanRoots(f: (x: number) => number, grid: number[]): number[] {
+  const roots: number[] = [];
+  const vals = grid.map((x) => f(x));
+  for (let k = 0; k < grid.length - 1; k++) {
+    const flo = vals[k];
+    const fhi = vals[k + 1];
+    if (!Number.isFinite(flo) || !Number.isFinite(fhi)) continue;
+    if (flo === 0) roots.push(grid[k]);
+    else if (flo * fhi < 0) roots.push(refineRoot(f, grid[k], grid[k + 1]));
+  }
+  for (let k = 1; k < grid.length - 1; k++) {
+    const a = vals[k - 1];
+    const b = vals[k];
+    const c = vals[k + 1];
+    if (![a, b, c].every(Number.isFinite) || b === 0) continue;
+    const sign = Math.sign(b);
+    if (Math.sign(a) !== sign || Math.sign(c) !== sign) continue;
+    if (!(Math.abs(b) <= Math.abs(a) && Math.abs(b) <= Math.abs(c))) continue; // not a local minimum of |f|
+    // golden-section search for the point where sign*f is smallest
+    let lo = grid[k - 1];
+    let hi = grid[k + 1];
+    const g = (x: number) => sign * f(x);
+    const phi = (Math.sqrt(5) - 1) / 2;
+    let x1 = hi - phi * (hi - lo);
+    let x2 = lo + phi * (hi - lo);
+    let g1 = g(x1);
+    let g2 = g(x2);
+    for (let n = 0; n < 80; n++) {
+      if (g1 < g2) {
+        hi = x2; x2 = x1; g2 = g1;
+        x1 = hi - phi * (hi - lo);
+        g1 = g(x1);
+      } else {
+        lo = x1; x1 = x2; g1 = g2;
+        x2 = lo + phi * (hi - lo);
+        g2 = g(x2);
+      }
+    }
+    const xm = (lo + hi) / 2;
+    if (g(xm) < 0) {
+      roots.push(refineRoot(f, grid[k - 1], xm));
+      roots.push(refineRoot(f, xm, grid[k + 1]));
+    }
+  }
+  return roots;
 }
 
 function refineRoot(f: (x: number) => number, lo: number, hi: number): number {
@@ -199,18 +244,11 @@ export function irr(flows: number[]): number {
     return t;
   };
   const grid: number[] = [];
-  for (let x = -0.99; x < 0; x += 0.01) grid.push(x);
-  for (let e = -6; e <= 2; e += 0.05) grid.push(Math.pow(10, e));
+  for (let x = -0.99; x < 0; x += 0.005) grid.push(x);
+  for (let e = -6; e <= 2; e += 0.01) grid.push(Math.pow(10, e));
   grid.push(0);
-  grid.sort((a, b) => a - b);
-  const roots: number[] = [];
-  for (let k = 0; k < grid.length - 1; k++) {
-    const flo = f(grid[k]);
-    const fhi = f(grid[k + 1]);
-    if (!Number.isFinite(flo) || !Number.isFinite(fhi)) continue;
-    if (flo === 0) roots.push(grid[k]);
-    else if (flo * fhi < 0) roots.push(refineRoot(f, grid[k], grid[k + 1]));
-  }
+  grid.sort((p, q) => p - q);
+  const roots = scanRoots(f, grid);
   if (roots.length === 0) throw new FinancialError('no-solution');
   roots.sort((a, b) => Math.abs(a) - Math.abs(b));
   return roots[0] * 100;

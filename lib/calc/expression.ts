@@ -143,30 +143,38 @@ function snap(x: number): number {
   return Math.abs(x) < 1e-15 ? 0 : x;
 }
 
+/** x mod 360 in [0, 360), exact for any size of input (no add-then-mod rounding). */
+function reduceDegrees(x: number): number {
+  let a = x % 360;
+  if (a < 0) a += 360;
+  // a tiny negative angle rounds up to exactly 360: that is 0 degrees
+  return a >= 360 ? 0 : a;
+}
+
 export function sinOf(x: number, mode: AngleMode): number {
   if (mode === 'deg') {
-    const a = ((x % 360) + 360) % 360;
+    const a = reduceDegrees(x);
     if (a % 90 === 0) return [0, 1, 0, -1][a / 90];
-    return Math.sin(x * RAD_PER_DEG);
+    return Math.sin(a * RAD_PER_DEG); // reduced angle: exact for huge inputs
   }
   return snap(Math.sin(x));
 }
 
 export function cosOf(x: number, mode: AngleMode): number {
   if (mode === 'deg') {
-    const a = ((x % 360) + 360) % 360;
+    const a = reduceDegrees(x);
     if (a % 90 === 0) return [1, 0, -1, 0][a / 90];
-    return Math.cos(x * RAD_PER_DEG);
+    return Math.cos(a * RAD_PER_DEG); // reduced angle: exact for huge inputs
   }
   return snap(Math.cos(x));
 }
 
 export function tanOf(x: number, mode: AngleMode): number {
   if (mode === 'deg') {
-    const a = ((x % 360) + 360) % 360;
+    const a = reduceDegrees(x);
     if (a % 180 === 90) throw new CalcError('domain', 'tan undefined');
     if (a % 180 === 0) return 0;
-    return Math.tan(x * RAD_PER_DEG);
+    return Math.tan(a * RAD_PER_DEG); // reduced angle: exact for huge inputs
   }
   const c = Math.cos(x);
   if (Math.abs(c) < 1e-15) throw new CalcError('domain', 'tan undefined');

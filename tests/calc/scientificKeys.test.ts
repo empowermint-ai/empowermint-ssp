@@ -34,6 +34,16 @@ describe('scientific key presses', () => {
   it('a second operator replaces the first', () => {
     expect(sciMainLine(press(['5', '+', '×', '3', '=']))).toBe('15');
   });
+  it('a minus after an operator is a sign: 5 × −3, 2 ^ −3, 5 − −3', () => {
+    expect(sciMainLine(press(['5', '×', '−', '3', '=']))).toBe('-15');
+    expect(sciMainLine(press(['2', 'x^y', '−', '3', '=']))).toBe('0.125');
+    expect(sciMainLine(press(['5', '−', '−', '3', '=']))).toBe('8');
+    expect(sciMainLine(press(['−', '5', '+', '2', '=']))).toBe('-3');
+  });
+  it('a plus or times replaces waiting operators, and is ignored right after a bracket', () => {
+    expect(sciMainLine(press(['5', '×', '−', '+', '3', '=']))).toBe('8');
+    expect(sciMainLine(press(['(', '×', '3', ')', '=']))).toBe('3');
+  });
   it('degree / radian toggle changes the same input\'s answer', () => {
     const deg = press(['sin', '9', '0', '=']);
     expect(deg.angle).toBe('deg');
