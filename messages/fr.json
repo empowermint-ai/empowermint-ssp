@@ -270,7 +270,7 @@
   },
   "plan": {
     "heading": "Plan du jour (recommandé)",
-    "subheading": "Voici ce que nous recommandons pour aujourd'hui — modifie-le comme tu veux.",
+    "subheading": "Recommandation du jour – modifie-la si besoin",
     "dateLine": "{weekday}, {dayMonth}",
     "fallbackName": "toi",
     "greetings": {

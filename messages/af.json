@@ -270,7 +270,7 @@
   },
   "plan": {
     "heading": "Vandag se plan (aanbeveel)",
-    "subheading": "Dis wat ons vir vandag aanbeveel – verander dit gerus om by jou te pas.",
+    "subheading": "Vandag se aanbeveling – verander dit gerus indien nodig",
     "dateLine": "{weekday}, {dayMonth}",
     "fallbackName": "daar",
     "greetings": {

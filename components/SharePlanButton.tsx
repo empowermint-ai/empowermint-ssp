@@ -2,19 +2,10 @@
 
 import { useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
-import { isNonLatin } from '@/config/locales';
+import { getDir, isNonLatin } from '@/config/locales';
 import { useIntlTag } from '@/lib/i18n/intl';
 import { useSubjectLabel } from '@/lib/i18n/useSubjectLabel';
-import { createTranslator } from 'next-intl';
-import enMessages from '@/messages/en.json';
 import type { PlanPdfExam, PlanPdfSession } from '@/lib/buildPlanPdf';
-
-function englishDateLabel(): string {
-  const now = new Date();
-  const weekday = now.toLocaleDateString('en-GB', { weekday: 'long' });
-  const dayMonth = now.toLocaleDateString('en-GB', { day: 'numeric', month: 'long' });
-  return `${weekday}, ${dayMonth}`;
-}
 
 export default function SharePlanButton({
   studentName,
@@ -32,7 +23,8 @@ export default function SharePlanButton({
   const t = useTranslations('share');
   const intlTag = useIntlTag();
   const subjectLabel = useSubjectLabel();
-  const nonLatin = isNonLatin(useLocale());
+  const locale = useLocale();
+  const nonLatin = isNonLatin(locale);
   const [sharing, setSharing] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -44,26 +36,21 @@ export default function SharePlanButton({
     try {
       const { buildPlanPdf } = await import('@/lib/buildPlanPdf');
       const firstName = studentName.split(' ')[0];
-      // The PDF is drawn with a built-in Latin font that has no Arabic letters, so
-      // for Arabic and Hindi the shared sheet is produced in English (subjects and date too).
-      const latinOnly = nonLatin;
-      const pt = latinOnly
-        ? createTranslator({ locale: 'en', messages: enMessages, namespace: 'share' })
-        : t;
-      const pdfDateLabel = latinOnly
-        ? englishDateLabel()
-        : dateLabel;
+      // Arabic and Hindi lines are drawn by the browser (jsPDF's fonts lack those scripts).
+      const pt = t;
       const blob = await buildPlanPdf({
-        dateLabel: pdfDateLabel,
+        dateLabel,
         sessions: sessions.map((s) => ({
           ...s,
-          subject_name: latinOnly ? s.subject_name : subjectLabel(s.subject_name),
+          subject_name: subjectLabel(s.subject_name),
         })),
         exams: exams.map((e) => ({
           ...e,
-          subjectName: latinOnly ? e.subjectName : subjectLabel(e.subjectName),
+          subjectName: subjectLabel(e.subjectName),
         })),
-        intlTag: latinOnly ? 'en-GB' : intlTag,
+        intlTag,
+        rtl: getDir(locale) === 'rtl',
+        raster: nonLatin,
         labels: {
           title: pt('pdf.title'),
           forName: pt('pdf.forName', { name: studentName }),

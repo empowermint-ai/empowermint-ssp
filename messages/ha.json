@@ -270,7 +270,7 @@
   },
   "plan": {
     "heading": "Tsarin yau (shawara)",
-    "subheading": "Ga abin da muke ba da shawara a yau — ku sauya shi yadda ya dace da ku.",
+    "subheading": "Shawarar yau – canza idan ya cancanta",
     "dateLine": "{weekday}, {dayMonth}",
     "fallbackName": "aboki",
     "greetings": {
@@ -545,15 +545,15 @@
     }
   },
   "streak": {
-    "aria": "{count}-day study streak",
-    "toast": "Day {count}. Nicely done.",
-    "milestone": "{count} days in a row. That is real consistency.",
-    "share": "Share your streak",
-    "dismiss": "Dismiss",
-    "cardLabel": "day study streak",
-    "cardTagline": "Showing up, every day.",
-    "shareTitle": "My study streak",
-    "shareText": "{count} days of studying in a row.",
-    "shareError": "Could not make the image. Try again."
+    "aria": "Jerin karatun kwanaki {count}",
+    "toast": "Rana ta {count}. Madalla.",
+    "milestone": "Kwanaki {count} a jere. Wannan jajircewa ce ta gaske.",
+    "share": "Raba jerin ka",
+    "dismiss": "Rufe",
+    "cardLabel": "kwanakin karatu a jere",
+    "cardTagline": "Ana zuwa kowace rana.",
+    "shareTitle": "Jerin karatuna",
+    "shareText": "Kwanaki {count} na karatu a jere.",
+    "shareError": "Ba a iya yin hoton ba. Sake gwadawa."
   }
 }

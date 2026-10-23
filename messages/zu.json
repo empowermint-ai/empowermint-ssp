@@ -270,7 +270,7 @@
   },
   "plan": {
     "heading": "Uhlelo lwanamuhla (olunconyiwe)",
-    "subheading": "Lokhu esikunconyayo namuhla — zizwe ukhululekile ukukushintsha kukulungele.",
+    "subheading": "Isincomo sanamuhla – shintsha uma kudingeka",
     "dateLine": "{weekday}, {dayMonth}",
     "fallbackName": "mngani",
     "greetings": {
@@ -545,15 +545,15 @@
     }
   },
   "streak": {
-    "aria": "{count}-day study streak",
-    "toast": "Day {count}. Nicely done.",
-    "milestone": "{count} days in a row. That is real consistency.",
-    "share": "Share your streak",
-    "dismiss": "Dismiss",
-    "cardLabel": "day study streak",
-    "cardTagline": "Showing up, every day.",
-    "shareTitle": "My study streak",
-    "shareText": "{count} days of studying in a row.",
-    "shareError": "Could not make the image. Try again."
+    "aria": "Uchungechunge lokufunda lwezinsuku ezingu-{count}",
+    "toast": "Usuku lwe-{count}. Wenze kahle.",
+    "milestone": "Izinsuku ezingu-{count} ngokulandelana. Lokhu ukuzinikela kweqiniso.",
+    "share": "Yabelana ngochungechunge lwakho",
+    "dismiss": "Vala",
+    "cardLabel": "izinsuku zokufunda ngokulandelana",
+    "cardTagline": "Ubakhona nsuku zonke.",
+    "shareTitle": "Uchungechunge lwami lokufunda",
+    "shareText": "Izinsuku ezingu-{count} zokufunda ngokulandelana.",
+    "shareError": "Ayikwazanga ukwenza isithombe. Zama futhi."
   }
 }

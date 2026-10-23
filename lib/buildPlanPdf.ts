@@ -109,18 +109,66 @@ function loadImage(src: string): Promise<HTMLImageElement> {
   });
 }
 
+interface TextOpts {
+  size: number;
+  bold?: boolean;
+  color: [number, number, number];
+  align?: 'left' | 'right' | 'center';
+  charSpace?: number;
+}
+
+const RASTER_SCALE = 4;
+const RASTER_FONT = "Inter, 'Noto Sans Arabic', 'Noto Sans Devanagari', system-ui, -apple-system, 'Segoe UI', sans-serif";
+
+// jsPDF's built-in fonts have no Arabic or Devanagari glyphs and cannot shape
+// them. For those languages each line is drawn by the browser (which shapes
+// and orders the text correctly) onto a canvas and placed as a transparent PNG.
+function rasterFont(size: number, bold?: boolean) {
+  return `${bold ? 700 : 400} ${size * RASTER_SCALE}px ${RASTER_FONT}`;
+}
+
+function measureRaster(text: string, size: number, bold: boolean | undefined, rtl: boolean): number {
+  const ctx = document.createElement('canvas').getContext('2d')!;
+  ctx.font = rasterFont(size, bold);
+  ctx.direction = rtl ? 'rtl' : 'ltr';
+  return ctx.measureText(text).width / RASTER_SCALE;
+}
+
+function wrapRaster(text: string, maxWidth: number, size: number, bold: boolean | undefined, rtl: boolean): string[] {
+  const words = text.split(/\s+/);
+  const lines: string[] = [];
+  let line = '';
+  for (const word of words) {
+    const next = line ? `${line} ${word}` : word;
+    if (line && measureRaster(next, size, bold, rtl) > maxWidth) {
+      lines.push(line);
+      line = word;
+    } else {
+      line = next;
+    }
+  }
+  if (line) lines.push(line);
+  return lines;
+}
+
 export async function buildPlanPdf({
   dateLabel,
   sessions,
   exams,
   labels,
   intlTag,
+  rtl = false,
+  raster = false,
 }: {
   dateLabel: string;
   sessions: PlanPdfSession[];
   exams: PlanPdfExam[];
   labels: PlanPdfLabels;
   intlTag: string;
+  /** Right-to-left layout (Arabic): rows and the footer card are mirrored. */
+  rtl?: boolean;
+  /** Draw text through the browser so non-Latin scripts render (Arabic, Hindi). */
+  raster?: boolean;
 }): Promise<Blob> {
   const doc = new jsPDF({ unit: 'pt', format: 'a4' });
   const pageWidth = doc.internal.pageSize.getWidth();
@@ -128,47 +176,75 @@ export async function buildPlanPdf({
   const contentWidth = pageWidth - marginX * 2;
   let y = 64;
 
+  // Where a row starts / ends in reading order.
+  const startX = rtl ? pageWidth - marginX : marginX;
+  const endX = rtl ? marginX : pageWidth - marginX;
+  const startAlign: 'left' | 'right' = rtl ? 'right' : 'left';
+  const endAlign: 'left' | 'right' = rtl ? 'left' : 'right';
+
+  function textWidth(str: string, size: number, bold?: boolean): number {
+    if (raster) return measureRaster(str, size, bold, rtl);
+    doc.setFont('helvetica', bold ? 'bold' : 'normal');
+    doc.setFontSize(size);
+    return doc.getTextWidth(str);
+  }
+
+  function text(str: string, x: number, baseline: number, o: TextOpts) {
+    const align = o.align ?? 'left';
+    if (!raster) {
+      doc.setFont('helvetica', o.bold ? 'bold' : 'normal');
+      doc.setFontSize(o.size);
+      doc.setTextColor(...o.color);
+      doc.text(str, x, baseline, { align, charSpace: o.charSpace });
+      return;
+    }
+    const w = Math.ceil(measureRaster(str, o.size, o.bold, rtl)) + 4;
+    const h = Math.ceil(o.size * 1.7);
+    const canvas = document.createElement('canvas');
+    canvas.width = w * RASTER_SCALE;
+    canvas.height = h * RASTER_SCALE;
+    const ctx = canvas.getContext('2d')!;
+    ctx.font = rasterFont(o.size, o.bold);
+    ctx.direction = rtl ? 'rtl' : 'ltr';
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'alphabetic';
+    ctx.fillStyle = `rgb(${o.color.join(',')})`;
+    const ascent = o.size * 1.2;
+    ctx.fillText(str, 2 * RASTER_SCALE, ascent * RASTER_SCALE);
+    const left = align === 'right' ? x - w + 2 : align === 'center' ? x - w / 2 : x - 2;
+    doc.addImage(canvas.toDataURL('image/png'), 'PNG', left, baseline - ascent, w, h, undefined, 'FAST');
+  }
+
   const logo = await loadImage('/brand/logo-em-power-black.png');
   const logoWidth = 90;
   const logoHeight = (logo.height / logo.width) * logoWidth;
   doc.addImage(logo, 'PNG', (pageWidth - logoWidth) / 2, y, logoWidth, logoHeight);
   y += logoHeight + 26;
 
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(10);
-  doc.setTextColor(...TEAL);
-  doc.text(labels.title, pageWidth / 2, y, { align: 'center' });
+  text(labels.title, pageWidth / 2, y, { size: 10, bold: true, color: TEAL, align: 'center' });
   y += 20;
 
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(18);
-  doc.setTextColor(0, 0, 0);
-  doc.text(labels.forName, pageWidth / 2, y, { align: 'center' });
+  text(labels.forName, pageWidth / 2, y, { size: 18, bold: true, color: [0, 0, 0], align: 'center' });
   y += 18;
 
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(11);
-  doc.setTextColor(...MUTED);
-  doc.text(dateLabel, pageWidth / 2, y, { align: 'center' });
+  text(dateLabel, pageWidth / 2, y, { size: 11, color: MUTED, align: 'center' });
   y += 26;
 
   doc.setDrawColor(...BORDER);
   doc.line(marginX, y, pageWidth - marginX, y);
   y += 24;
 
-  doc.setFontSize(12);
   if (sessions.length === 0) {
-    doc.setFont('helvetica', 'normal');
-    doc.setTextColor(...MUTED);
-    doc.text(labels.empty, marginX, y);
+    text(labels.empty, startX, y, { size: 12, color: MUTED, align: startAlign });
     y += 22;
   } else {
     for (const session of sessions) {
-      doc.setFont('helvetica', 'normal');
-      doc.setTextColor(...BODY);
-      doc.text(session.subject_name, marginX, y);
-      doc.setTextColor(...(session.completed ? TEAL : MUTED));
-      doc.text(session.completed ? labels.done : labels.pending, pageWidth - marginX, y, { align: 'right' });
+      text(session.subject_name, startX, y, { size: 12, color: BODY, align: startAlign });
+      text(session.completed ? labels.done : labels.pending, endX, y, {
+        size: 12,
+        color: session.completed ? TEAL : MUTED,
+        align: endAlign,
+      });
       y += 22;
     }
   }
@@ -179,20 +255,13 @@ export async function buildPlanPdf({
     doc.line(marginX, y, pageWidth - marginX, y);
     y += 24;
 
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(10);
-    doc.setTextColor(...MUTED);
-    doc.text(labels.upcoming, marginX, y);
+    text(labels.upcoming, startX, y, { size: 10, bold: true, color: MUTED, align: startAlign });
     y += 20;
 
-    doc.setFont('helvetica', 'normal');
-    doc.setFontSize(12);
     for (const exam of exams) {
-      doc.setTextColor(...BODY);
-      doc.text(exam.subjectName, marginX, y);
+      text(exam.subjectName, startX, y, { size: 12, color: BODY, align: startAlign });
       const whenLabel = `${formatExamDate(exam.examDate, intlTag)} · ${labels.when(exam.daysUntil)}`;
-      doc.setTextColor(...MUTED);
-      doc.text(whenLabel, pageWidth - marginX, y, { align: 'right' });
+      text(whenLabel, endX, y, { size: 12, color: MUTED, align: endAlign });
       y += 20;
     }
     y += 14;
@@ -203,7 +272,6 @@ export async function buildPlanPdf({
   y += 20;
 
   // --- Shared-from-empowermint footer card ---
-  const headline = labels.headline;
   // "→" (U+2192) isn't in jsPDF's standard Helvetica encoding - it renders as
   // a broken glyph and throws off width measurement, so the arrow is drawn
   // as a small triangle instead of relying on the character.
@@ -218,14 +286,16 @@ export async function buildPlanPdf({
   const colGap = 16;
   const leftColW = cardW - cardPad * 2 - qrSize - colGap;
 
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(11.5);
-  const headlineLines = doc.splitTextToSize(headline, leftColW) as string[];
+  const headlineLines = raster
+    ? wrapRaster(labels.headline, leftColW, 11.5, true, rtl)
+    : (() => {
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(11.5);
+        return doc.splitTextToSize(labels.headline, leftColW) as string[];
+      })();
   const headlineLineHeight = 15;
 
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(10.5);
-  const ctaTextWidth = doc.getTextWidth(ctaLabel);
+  const ctaTextWidth = textWidth(ctaLabel, 10.5, true);
   const ctaContentW = ctaTextWidth + ctaArrowGap + ctaArrowW;
   const ctaPadX = 16;
   const ctaW = ctaContentW + ctaPadX * 2;
@@ -242,47 +312,46 @@ export async function buildPlanPdf({
   const cardBg = renderGradientCard(cardW, cardH, 16);
   doc.addImage(cardBg, 'PNG', cardX, y, cardW, cardH, undefined, 'MEDIUM');
 
-  const contentX = cardX + cardPad;
+  // Text column anchor: left edge normally, right edge when mirrored.
+  const textX = rtl ? cardX + cardW - cardPad : cardX + cardPad;
   let cy = y + cardPad;
 
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(9);
-  doc.setTextColor(...EYEBROW_GREEN);
-  doc.text(labels.eyebrow, contentX, cy + eyebrowHeight - 2, { charSpace: 0.6 });
+  text(labels.eyebrow, textX, cy + eyebrowHeight - 2, {
+    size: 9,
+    bold: true,
+    color: EYEBROW_GREEN,
+    align: startAlign,
+    // Letter-spacing is a Latin-caps touch; it would break up joined Arabic letters.
+    charSpace: raster ? undefined : 0.6,
+  });
   cy += eyebrowHeight + 8;
 
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(11.5);
-  doc.setTextColor(...HEADLINE_DARK);
   for (const line of headlineLines) {
-    doc.text(line, contentX, cy + 10);
+    text(line, textX, cy + 10, { size: 11.5, bold: true, color: HEADLINE_DARK, align: startAlign });
     cy += headlineLineHeight;
   }
   cy += 10;
 
+  const ctaX = rtl ? textX - ctaW : textX;
   doc.setFillColor(...CTA_ORANGE);
-  doc.roundedRect(contentX, cy, ctaW, ctaH, ctaH / 2, ctaH / 2, 'F');
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(10.5);
-  doc.setTextColor(255, 255, 255);
-  const ctaGroupStartX = contentX + (ctaW - ctaContentW) / 2;
+  doc.roundedRect(ctaX, cy, ctaW, ctaH, ctaH / 2, ctaH / 2, 'F');
+  const ctaGroupStartX = ctaX + (ctaW - ctaContentW) / 2;
   const ctaBaselineY = cy + ctaH / 2 + 3.5;
-  doc.text(ctaLabel, ctaGroupStartX, ctaBaselineY);
-  const arrowX = ctaGroupStartX + ctaTextWidth + ctaArrowGap;
   const arrowMidY = cy + ctaH / 2;
   doc.setFillColor(255, 255, 255);
-  doc.triangle(
-    arrowX,
-    arrowMidY - 3.5,
-    arrowX,
-    arrowMidY + 3.5,
-    arrowX + ctaArrowW,
-    arrowMidY,
-    'F'
-  );
-  doc.link(contentX, cy, ctaW, ctaH, { url: SHARE_URL });
+  if (rtl) {
+    // Arrow first, pointing left, then the label.
+    const tipX = ctaGroupStartX;
+    doc.triangle(tipX + ctaArrowW, arrowMidY - 3.5, tipX + ctaArrowW, arrowMidY + 3.5, tipX, arrowMidY, 'F');
+    text(ctaLabel, ctaGroupStartX + ctaArrowW + ctaArrowGap, ctaBaselineY, { size: 10.5, bold: true, color: [255, 255, 255] });
+  } else {
+    text(ctaLabel, ctaGroupStartX, ctaBaselineY, { size: 10.5, bold: true, color: [255, 255, 255] });
+    const arrowX = ctaGroupStartX + ctaTextWidth + ctaArrowGap;
+    doc.triangle(arrowX, arrowMidY - 3.5, arrowX, arrowMidY + 3.5, arrowX + ctaArrowW, arrowMidY, 'F');
+  }
+  doc.link(ctaX, cy, ctaW, ctaH, { url: SHARE_URL });
 
-  const qrX = cardX + cardW - cardPad - qrSize;
+  const qrX = rtl ? cardX + cardPad : cardX + cardW - cardPad - qrSize;
   const qrY = y + cardPad;
   const qrDataUrl = await QRCode.toDataURL(SHARE_URL, {
     margin: 1,
@@ -291,18 +360,17 @@ export async function buildPlanPdf({
   });
   doc.addImage(qrDataUrl, 'PNG', qrX, qrY, qrSize, qrSize, undefined, 'MEDIUM');
 
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(7.5);
-  doc.setTextColor(...QR_CAPTION_GREY);
-  doc.text(labels.scan, qrX + qrSize / 2, qrY + qrSize + 12, {
+  text(labels.scan, qrX + qrSize / 2, qrY + qrSize + 12, {
+    size: 7.5,
+    bold: true,
+    color: QR_CAPTION_GREY,
     align: 'center',
-    charSpace: 0.4,
+    charSpace: raster ? undefined : 0.4,
   });
 
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(8);
-  doc.setTextColor(...MICRO_GREY);
-  doc.text(`${SHARE_URL.replace('https://', '')} · ${labels.micro}`, pageWidth / 2, y + cardH - cardPad + 4, {
+  text(`${SHARE_URL.replace('https://', '')} · ${labels.micro}`, pageWidth / 2, y + cardH - cardPad + 4, {
+    size: 8,
+    color: MICRO_GREY,
     align: 'center',
   });
 
