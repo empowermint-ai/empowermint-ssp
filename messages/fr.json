@@ -543,5 +543,17 @@
       "incomplete": "Remplis tous les champs.",
       "saveError": "Impossible d'enregistrer. Réessaie."
     }
+  },
+  "streak": {
+    "aria": "Série d’étude de {count} jours",
+    "toast": "Jour {count}. Bien joué.",
+    "milestone": "{count} jours d’affilée. C’est de la vraie régularité.",
+    "share": "Partager ta série",
+    "dismiss": "Fermer",
+    "cardLabel": "jours d’étude d’affilée",
+    "cardTagline": "Présent(e), chaque jour.",
+    "shareTitle": "Ma série d’étude",
+    "shareText": "{count} jours d’étude d’affilée.",
+    "shareError": "Impossible de créer l’image. Réessaie."
   }
 }

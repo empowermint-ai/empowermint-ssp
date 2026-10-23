@@ -543,5 +543,17 @@
       "incomplete": "Tafadhali jaza sehemu zote.",
       "saveError": "Imeshindwa kuhifadhi. Jaribu tena."
     }
+  },
+  "streak": {
+    "aria": "Mfululizo wa kusoma wa siku {count}",
+    "toast": "Siku ya {count}. Hongera.",
+    "milestone": "Siku {count} mfululizo. Huo ni uthabiti wa kweli.",
+    "share": "Shiriki mfululizo wako",
+    "dismiss": "Funga",
+    "cardLabel": "siku za kusoma mfululizo",
+    "cardTagline": "Kujitokeza kila siku.",
+    "shareTitle": "Mfululizo wangu wa kusoma",
+    "shareText": "Siku {count} za kusoma mfululizo.",
+    "shareError": "Imeshindwa kutengeneza picha. Jaribu tena."
   }
 }

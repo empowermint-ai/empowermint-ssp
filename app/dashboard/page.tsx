@@ -7,6 +7,7 @@ import SettingsMenu from '@/components/SettingsMenu';
 import InstallAppBanner from '@/components/InstallAppBanner';
 import ExamReflectionPrompt from '@/components/ExamReflectionPrompt';
 import AppReviewPrompt from '@/components/AppReviewPrompt';
+import StreakStatus from '@/components/streak/StreakStatus';
 import BottomNav from '@/components/BottomNav';
 import { NAV_HEIGHT } from '@/lib/layout';
 import { nextExamDate } from '@/lib/nextExamDate';
@@ -231,7 +232,10 @@ export default async function DashboardPage() {
           <h1 className="font-heading font-bold text-[19px] tracking-[-0.025em] text-text-primary">
             {greeting}
           </h1>
-          <p className="font-body text-[11px] text-text-muted mt-1">{todayFormatted}</p>
+          <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1">
+            <p className="font-body text-[11px] text-text-muted">{todayFormatted}</p>
+            <StreakStatus userId={user.id} showBadge />
+          </div>
         </div>
         <SettingsMenu />
       </div>

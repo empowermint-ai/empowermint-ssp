@@ -543,5 +543,17 @@
       "incomplete": "Vul asseblief al die velde in.",
       "saveError": "Kon dit nie stoor nie. Probeer weer."
     }
+  },
+  "streak": {
+    "aria": "Studiereeks van {count} dae",
+    "toast": "Dag {count}. Mooi so.",
+    "milestone": "{count} dae in ’n ry. Dis egte konsekwentheid.",
+    "share": "Deel jou reeks",
+    "dismiss": "Maak toe",
+    "cardLabel": "dae studiereeks",
+    "cardTagline": "Daag elke dag op.",
+    "shareTitle": "My studiereeks",
+    "shareText": "{count} dae in ’n ry gestudeer.",
+    "shareError": "Kon nie die prent maak nie. Probeer weer."
   }
 }

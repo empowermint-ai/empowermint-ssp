@@ -5,6 +5,7 @@ import { getSubjectLabel } from '@/lib/i18n/getSubjectLabel';
 import { createSupabaseServerClient } from '@/lib/supabaseServerClient';
 import ProgressStrip from '@/components/ProgressStrip';
 import NavArrows from '@/components/NavArrows';
+import StreakStatus from '@/components/streak/StreakStatus';
 
 // Quote text lives in messages (sessionComplete.quotes.q1..q8).
 const QUOTE_KEYS = ['q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8'] as const;
@@ -65,6 +66,8 @@ export default async function SessionCompletePage({
       className="min-h-dvh bg-bg flex flex-col items-center px-[22px] pt-[38px]"
       style={{ paddingBottom: 'calc(18px + env(safe-area-inset-bottom))' }}
     >
+      <StreakStatus userId={user.id} showBadge={false} />
+
       <div className="w-full">
         <NavArrows />
       </div>

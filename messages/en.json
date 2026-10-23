@@ -270,7 +270,7 @@
   },
   "plan": {
     "heading": "Today's plan (recommended)",
-    "subheading": "Here's what we recommend for today — feel free to amend it to suit you.",
+    "subheading": "Today's recommendation - change to amend, if need be",
     "dateLine": "{weekday}, {dayMonth}",
     "fallbackName": "there",
     "greetings": {
@@ -543,5 +543,17 @@
       "incomplete": "Please fill in all the fields.",
       "saveError": "Could not save that. Try again."
     }
+  },
+  "streak": {
+    "aria": "{count}-day study streak",
+    "toast": "Day {count}. Nicely done.",
+    "milestone": "{count} days in a row. Real consistency.",
+    "share": "Share your streak",
+    "dismiss": "Dismiss",
+    "cardLabel": "days studying in a row",
+    "cardTagline": "Showing up, every day.",
+    "shareTitle": "My study streak",
+    "shareText": "{count} days of studying in a row.",
+    "shareError": "Could not make the image. Try again."
   }
 }

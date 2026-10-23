@@ -404,3 +404,30 @@ html[lang='af'] h3 {
 .calc-key-eq { background: var(--calc-equals); color: #FFFFFF; height: var(--calc-kh-num); font-size: 22px; font-weight: 800; }
 .calc-key-cpt { background: var(--calc-equals); color: #FFFFFF; height: var(--calc-kh-fn); font-size: 14px; font-weight: 700; }
 .calc-key-active { outline: 2px solid var(--calc-accent); outline-offset: -2px; }
+
+/* --- Study streak toast --------------------------------------------------
+   Ordinary days: a quiet fade with a 6px rise. Milestones add a short burst
+   of particles from the flame. Reduced motion keeps only a plain fade. */
+@keyframes streak-rise {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes streak-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes streak-fade-out {
+  to { opacity: 0; }
+}
+@keyframes streak-burst {
+  0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  100% { opacity: 0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(0.4); }
+}
+.streak-toast { animation: streak-rise 250ms ease-out both; }
+.streak-toast-out { animation: streak-fade-out 250ms ease-out forwards; }
+.streak-particle { animation: streak-burst 600ms ease-out forwards; }
+@media (prefers-reduced-motion: reduce) {
+  .streak-toast.streak-toast { animation: streak-fade-in 200ms ease-out both !important; animation-duration: 200ms !important; }
+  .streak-toast.streak-toast-out { animation: streak-fade-out 200ms ease-out forwards !important; animation-duration: 200ms !important; }
+  .streak-particle { display: none; }
+}
