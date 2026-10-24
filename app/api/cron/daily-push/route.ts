@@ -41,6 +41,7 @@ export async function GET(request: Request) {
   let failed = 0;
   let due = 0;
   const pushErrors: number[] = [];
+  const reasons: string[] = [];
 
   for (const learner of learners ?? []) {
     const isDueNow = isDue(
@@ -54,7 +55,7 @@ export async function GET(request: Request) {
     const markDone = () =>
       supabase.from('users').update({ push_last_sent_on: localDate }).eq('id', learner.id);
 
-    const [{ data: plan }, { data: subjects }, { data: subs }] = await Promise.all([
+    const [{ data: plan, error: planError }, { data: subjects }, { data: subs }] = await Promise.all([
       supabase
         .from('daily_plans')
         .select('completed, subjects(subject_name)')
@@ -71,6 +72,7 @@ export async function GET(request: Request) {
 
     // No device yet (for example they are turning reminders on right now): look again next hour.
     if (!subs?.length) {
+      reasons.push('no-device');
       skipped++;
       continue;
     }
@@ -78,6 +80,7 @@ export async function GET(request: Request) {
     // Nothing to nudge about: no plan yet, or every session is already done.
     const rows = plan ?? [];
     if (rows.length === 0 || rows.every((r) => r.completed)) {
+      reasons.push(rows.length === 0 ? `no-plan${planError ? ':' + planError.message : ''}` : 'all-done');
       await markDone();
       skipped++;
       continue;
@@ -142,5 +145,5 @@ export async function GET(request: Request) {
     }
   }
 
-  return NextResponse.json({ ok: true, enabled: learners?.length ?? 0, due, sent, skipped, failed, pushErrors });
+  return NextResponse.json({ ok: true, enabled: learners?.length ?? 0, due, sent, skipped, failed, pushErrors, reasons });
 }
