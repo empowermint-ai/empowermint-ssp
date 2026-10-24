@@ -11,7 +11,9 @@ export const dynamic = 'force-dynamic';
 // Runs every hour (see supabase/push-cron.sql). Each learner gets at most one
 // reminder a day, at the hour they chose in their own timezone.
 export async function GET(request: Request) {
-  if (request.headers.get('authorization') !== `Bearer ${process.env.CRON_SECRET}`) {
+  const authorization = request.headers.get('authorization');
+  const allowed = [process.env.CRON_SECRET, process.env.PUSH_CRON_SECRET].filter(Boolean);
+  if (!authorization || !allowed.some((secret) => authorization === `Bearer ${secret}`)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
   if (!process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY || !process.env.VAPID_PRIVATE_KEY) {
