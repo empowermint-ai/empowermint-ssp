@@ -7,6 +7,7 @@ import SettingsMenu from '@/components/SettingsMenu';
 import InstallAppBanner from '@/components/InstallAppBanner';
 import ExamReflectionPrompt from '@/components/ExamReflectionPrompt';
 import AppReviewPrompt from '@/components/AppReviewPrompt';
+import ReminderCard from '@/components/push/ReminderCard';
 import StreakStatus from '@/components/streak/StreakStatus';
 import BottomNav from '@/components/BottomNav';
 import { NAV_HEIGHT } from '@/lib/layout';
@@ -241,6 +242,8 @@ export default async function DashboardPage() {
       </div>
 
       <InstallAppBanner />
+
+      <ReminderCard />
 
       <ExamReflectionPrompt initialReflections={pendingReflections} />
 

@@ -9,6 +9,7 @@ import LanguageSheet from '@/components/i18n/LanguageSheet';
 import { supabase } from '@/lib/supabaseClient';
 import { useInstallPromptState } from '@/lib/installPrompt';
 import InstallInstructionsModal from '@/components/InstallInstructionsModal';
+import ReminderSheet from '@/components/push/ReminderSheet';
 
 // Same line style as the bottom-nav icons (24px grid, 1.8 stroke, round joins).
 function GearIcon() {
@@ -34,6 +35,8 @@ export default function SettingsMenu() {
   const [open, setOpen] = useState(false);
   const [showLanguageSheet, setShowLanguageSheet] = useState(false);
   const [showInstallModal, setShowInstallModal] = useState(false);
+  const [showReminderSheet, setShowReminderSheet] = useState(false);
+  const tPush = useTranslations('push');
   const { canInstall, isIOS, isStandalone, promptInstall } = useInstallPromptState();
 
   async function handleLogout() {
@@ -92,6 +95,16 @@ export default function SettingsMenu() {
                 </span>
               </button>
             )}
+            <button
+              type="button"
+              onClick={() => {
+                setOpen(false);
+                setShowReminderSheet(true);
+              }}
+              className="w-full text-start font-body text-[13px] text-text-primary px-4 py-3 border-b border-card-border"
+            >
+              {tPush('menuLabel')}
+            </button>
             {!isStandalone && (
               <button
                 type="button"
@@ -115,6 +128,8 @@ export default function SettingsMenu() {
       {showLanguageSheet && (
         <LanguageSheet source="settings" onClose={() => setShowLanguageSheet(false)} />
       )}
+
+      {showReminderSheet && <ReminderSheet onClose={() => setShowReminderSheet(false)} />}
 
       {showInstallModal && (
         <InstallInstructionsModal isIOS={isIOS} onClose={() => setShowInstallModal(false)} />

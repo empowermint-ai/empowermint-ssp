@@ -14,6 +14,8 @@ const fail = (msg) => problems.push(msg);
 // Keys that are read through a translator passed as a function argument, which
 // the static scan below cannot follow back to a namespace.
 const EXTRA_USED = new Set([
+  // read on the server when the daily reminder is built (lib/push/dailyMessage.ts)
+  ...['title1', 'title2', 'title3', 'bodyPlan', 'examLine', 'actionOpen'].map((k) => `push.${k}`),
   'examTimer.durationHours',
   'examTimer.durationHoursMinutes',
   // read through a translator that is English-only for Arabic (SharePlanButton)

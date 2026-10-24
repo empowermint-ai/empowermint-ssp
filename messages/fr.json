@@ -555,5 +555,27 @@
     "shareTitle": "Ma série d’étude",
     "shareText": "{count} jours d’étude d’affilée.",
     "shareError": "Impossible de créer l’image. Réessaie."
+  },
+  "push": {
+    "title1": "Le toi du futur te dit merci pour aujourd’hui",
+    "title2": "Une petite séance aujourd’hui, une grande différence le jour de l’examen",
+    "title3": "Franchement, venir étudier aujourd’hui serait impressionnant",
+    "bodyPlan": "{count, plural, one {# séance} other {# séances}}, environ {minutes} min : {subjects}.",
+    "examLine": "{days, plural, =0 {{subject} : c’est aujourd’hui.} one {{subject} dans # jour.} other {{subject} dans # jours.}}",
+    "actionOpen": "Ouvrir mon plan",
+    "cardTitle": "Reçois un petit rappel d’étude chaque jour",
+    "cardBody": "Un rappel tranquille par jour avec ton plan. Choisis l’heure qui te convient.",
+    "timeLabel": "Envoyer à",
+    "enable": "Activer",
+    "notNow": "Pas maintenant",
+    "menuLabel": "Rappel quotidien",
+    "sheetTitle": "Rappel quotidien",
+    "save": "Enregistrer l’heure",
+    "turnOff": "Désactiver",
+    "blocked": "Les notifications sont bloquées pour cette appli. Active-les dans les réglages de ton téléphone.",
+    "iosHint": "Ajoute d’abord l’appli à ton écran d’accueil, puis reviens ici pour activer les rappels.",
+    "error": "Impossible d’activer les rappels. Réessaie.",
+    "savedToast": "Rappel quotidien réglé sur {time}",
+    "offToast": "Rappel quotidien désactivé"
   }
 }

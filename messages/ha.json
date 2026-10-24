@@ -555,5 +555,27 @@
     "shareTitle": "Jerin karatuna",
     "shareText": "Kwanaki {count} na karatu a jere.",
     "shareError": "Ba a iya yin hoton ba. Sake gwadawa."
+  },
+  "push": {
+    "title1": "Kai na gaba yana gode maka saboda yau",
+    "title2": "Karamin zaman karatu yau, babban canji a ranar jarrabawa",
+    "title3": "Gaskiya, zuwa yau karatu zai zama abin burgewa",
+    "bodyPlan": "{count, plural, one {Zama #} other {Zamuka #}}, kusan minti {minutes}: {subjects}.",
+    "examLine": "{days, plural, =0 {Jarrabawar {subject} yau ce.} one {Jarrabawar {subject} nan da rana #.} other {Jarrabawar {subject} nan da kwanaki #.}}",
+    "actionOpen": "Buɗe shirina",
+    "cardTitle": "Samu tunatarwar karatu ta kullum",
+    "cardBody": "Tunatarwa ɗaya mai natsuwa a rana tare da shirinka. Zaɓi lokacin da ya dace da kai.",
+    "timeLabel": "Aika da misalin",
+    "enable": "Kunna",
+    "notNow": "Ba yanzu ba",
+    "menuLabel": "Tunatarwa ta kullum",
+    "sheetTitle": "Tunatarwa ta kullum",
+    "save": "Ajiye lokaci",
+    "turnOff": "Kashe",
+    "blocked": "An toshe sanarwa ga wannan manhaja. Kunna su a saitunan wayarka.",
+    "iosHint": "Da farko ƙara manhajar zuwa allon farko, sannan ka dawo nan don kunna tunatarwa.",
+    "error": "Ba a iya kunna tunatarwa ba. Sake gwadawa.",
+    "savedToast": "An saita tunatarwa ta kullum zuwa {time}",
+    "offToast": "An kashe tunatarwa ta kullum"
   }
 }

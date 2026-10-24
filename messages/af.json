@@ -555,5 +555,27 @@
     "shareTitle": "My studiereeks",
     "shareText": "{count} dae in ’n ry gestudeer.",
     "shareError": "Kon nie die prent maak nie. Probeer weer."
+  },
+  "push": {
+    "title1": "Toekomstige jy sê dankie vir vandag",
+    "title2": "’n Kort sessie vandag, ’n groot verskil op eksamendag",
+    "title3": "Eerlikwaar, om vandag op te daag sal indrukwekkend wees",
+    "bodyPlan": "{count, plural, one {# sessie} other {# sessies}}, ongeveer {minutes} min: {subjects}.",
+    "examLine": "{days, plural, =0 {{subject} is vandag.} one {{subject} is oor # dag.} other {{subject} is oor # dae.}}",
+    "actionOpen": "Maak my plan oop",
+    "cardTitle": "Kry ’n daaglikse studie-aansporing",
+    "cardBody": "Een kalm herinnering per dag met jou plan. Kies die tyd wat jou pas.",
+    "timeLabel": "Stuur dit om",
+    "enable": "Skakel aan",
+    "notNow": "Nie nou nie",
+    "menuLabel": "Daaglikse herinnering",
+    "sheetTitle": "Daaglikse herinnering",
+    "save": "Stoor tyd",
+    "turnOff": "Skakel af",
+    "blocked": "Kennisgewings is vir hierdie app geblokkeer. Skakel dit aan in jou foon se instellings.",
+    "iosHint": "Voeg die app eers by jou tuisskerm, kom dan terug om herinnerings aan te skakel.",
+    "error": "Kon nie herinnerings aanskakel nie. Probeer weer.",
+    "savedToast": "Daaglikse herinnering gestel vir {time}",
+    "offToast": "Daaglikse herinnering afgeskakel"
   }
 }

@@ -555,5 +555,27 @@
     "shareTitle": "Mfululizo wangu wa kusoma",
     "shareText": "Siku {count} za kusoma mfululizo.",
     "shareError": "Imeshindwa kutengeneza picha. Jaribu tena."
+  },
+  "push": {
+    "title1": "Wewe wa baadaye anakushukuru kwa leo",
+    "title2": "Kipindi kidogo leo, tofauti kubwa siku ya mtihani",
+    "title3": "Kweli kabisa, kujitokeza leo kungekuwa jambo la kuvutia",
+    "bodyPlan": "{count, plural, one {Kipindi #} other {Vipindi #}}, takriban dakika {minutes}: {subjects}.",
+    "examLine": "{days, plural, =0 {Mtihani wa {subject} ni leo.} one {Mtihani wa {subject} ni baada ya siku #.} other {Mtihani wa {subject} ni baada ya siku #.}}",
+    "actionOpen": "Fungua mpango wangu",
+    "cardTitle": "Pata kikumbusho cha kila siku cha kusoma",
+    "cardBody": "Kikumbusho kimoja tulivu kwa siku chenye mpango wako. Chagua muda unaokufaa.",
+    "timeLabel": "Tuma saa",
+    "enable": "Washa",
+    "notNow": "Si sasa",
+    "menuLabel": "Kikumbusho cha kila siku",
+    "sheetTitle": "Kikumbusho cha kila siku",
+    "save": "Hifadhi muda",
+    "turnOff": "Zima",
+    "blocked": "Arifa zimezuiwa kwa programu hii. Ziwashe kwenye mipangilio ya simu yako.",
+    "iosHint": "Ongeza programu kwenye skrini ya kwanza kwanza, kisha rudi hapa kuwasha vikumbusho.",
+    "error": "Imeshindwa kuwasha vikumbusho. Jaribu tena.",
+    "savedToast": "Kikumbusho cha kila siku kimewekwa saa {time}",
+    "offToast": "Kikumbusho cha kila siku kimezimwa"
   }
 }

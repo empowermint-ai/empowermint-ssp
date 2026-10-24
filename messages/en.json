@@ -555,5 +555,27 @@
     "shareTitle": "My study streak",
     "shareText": "{count} days of studying in a row.",
     "shareError": "Could not make the image. Try again."
+  },
+  "push": {
+    "title1": "Future you says thanks for today",
+    "title2": "Small session today, big difference on exam day",
+    "title3": "Not gonna lie, showing up today would be pretty impressive",
+    "bodyPlan": "{count, plural, one {# session} other {# sessions}}, about {minutes} min: {subjects}.",
+    "examLine": "{days, plural, =0 {{subject} is today.} one {{subject} is in # day.} other {{subject} is in # days.}}",
+    "actionOpen": "Open my plan",
+    "cardTitle": "Get a daily study nudge",
+    "cardBody": "One calm reminder a day with your plan. Choose the time that suits you.",
+    "timeLabel": "Send it at",
+    "enable": "Turn on",
+    "notNow": "Not now",
+    "menuLabel": "Daily reminder",
+    "sheetTitle": "Daily reminder",
+    "save": "Save time",
+    "turnOff": "Turn off",
+    "blocked": "Notifications are blocked for this app. Turn them on in your phone settings.",
+    "iosHint": "Add the app to your home screen first, then come back here to turn on reminders.",
+    "error": "Could not turn on reminders. Try again.",
+    "savedToast": "Daily reminder set for {time}",
+    "offToast": "Daily reminder turned off"
   }
 }

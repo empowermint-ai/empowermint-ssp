@@ -555,5 +555,27 @@
     "shareTitle": "Uchungechunge lwami lokufunda",
     "shareText": "Izinsuku ezingu-{count} zokufunda ngokulandelana.",
     "shareError": "Ayikwazanga ukwenza isithombe. Zama futhi."
+  },
+  "push": {
+    "title1": "Wena wekusasa ukuthokozela namuhla",
+    "title2": "Isikhathi esifushane namuhla, umehluko omkhulu ngosuku lokuhlolwa",
+    "title3": "Ngempela, ukuvela namuhla kungaba okumangalisayo",
+    "bodyPlan": "{count, plural, one {Isikhathi esingu-#} other {Izikhathi ezingu-#}}, cishe imizuzu engu-{minutes}: {subjects}.",
+    "examLine": "{days, plural, =0 {Ukuhlolwa kwe-{subject} kungamuhla.} one {Ukuhlolwa kwe-{subject} kusenosuku olu-#.} other {Ukuhlolwa kwe-{subject} kusezinsukwini ezingu-#.}}",
+    "actionOpen": "Vula uhlelo lwami",
+    "cardTitle": "Thola isikhumbuzo sansuku zonke sokufunda",
+    "cardBody": "Isikhumbuzo esisodwa esithule ngosuku nohlelo lwakho. Khetha isikhathi esikulungele.",
+    "timeLabel": "Thumela ngo",
+    "enable": "Vula",
+    "notNow": "Hhayi manje",
+    "menuLabel": "Isikhumbuzo sansuku zonke",
+    "sheetTitle": "Isikhumbuzo sansuku zonke",
+    "save": "Gcina isikhathi",
+    "turnOff": "Vala",
+    "blocked": "Izaziso zivinjelwe kule app. Zivule kuzilungiselelo zefoni yakho.",
+    "iosHint": "Qala ngokufaka i-app esikrinini sakho sasekhaya, bese ubuya lapha ukuze uvule izikhumbuzo.",
+    "error": "Ayikwazanga ukuvula izikhumbuzo. Zama futhi.",
+    "savedToast": "Isikhumbuzo sansuku zonke sisethwe ku-{time}",
+    "offToast": "Isikhumbuzo sansuku zonke sivaliwe"
   }
 }
