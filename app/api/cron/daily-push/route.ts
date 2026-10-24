@@ -34,8 +34,6 @@ export async function GET(request: Request) {
     .eq('push_enabled', true);
   if (error) return NextResponse.json({ ok: false, error: error.message }, { status: 500 });
 
-  const { count: totalUsers } = await supabase.from('users').select('id', { count: 'exact', head: true });
-  const { count: enabledCount, error: enabledError } = await supabase.from('users').select('id', { count: 'exact', head: true }).eq('push_enabled', true);
   let sent = 0;
   let skipped = 0;
   let failed = 0;
@@ -124,5 +122,5 @@ export async function GET(request: Request) {
     }
   }
 
-  return NextResponse.json({ ok: true, enabled: learners?.length ?? 0, totalUsers, enabledCount, enabledError: enabledError?.message, due, sent, skipped, failed });
+  return NextResponse.json({ ok: true, enabled: learners?.length ?? 0, due, sent, skipped, failed });
 }
