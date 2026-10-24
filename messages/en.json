@@ -564,7 +564,7 @@
     "examLine": "{days, plural, =0 {{subject} is today.} one {{subject} is in # day.} other {{subject} is in # days.}}",
     "actionOpen": "Open my plan",
     "cardTitle": "Get a daily study nudge",
-    "cardBody": "One calm reminder a day with your plan. Choose the time that suits you.",
+    "cardBody": "One calm reminder a day with your plan. Choose the time that suits you, and change it any time in Settings.",
     "timeLabel": "Send it at",
     "enable": "Turn on",
     "notNow": "Not now",
@@ -575,7 +575,7 @@
     "blocked": "Notifications are blocked for this app. Turn them on in your phone settings.",
     "iosHint": "Add the app to your home screen first, then come back here to turn on reminders.",
     "error": "Could not turn on reminders. Try again.",
-    "savedToast": "Daily reminder set for {time}",
+    "savedToast": "Daily reminder set for {time}. Change it any time in Settings.",
     "offToast": "Daily reminder turned off"
   }
 }

@@ -564,7 +564,7 @@
     "examLine": "{days, plural, =0 {Jarrabawar {subject} yau ce.} one {Jarrabawar {subject} nan da rana #.} other {Jarrabawar {subject} nan da kwanaki #.}}",
     "actionOpen": "Buɗe shirina",
     "cardTitle": "Samu tunatarwar karatu ta kullum",
-    "cardBody": "Tunatarwa ɗaya mai natsuwa a rana tare da shirinka. Zaɓi lokacin da ya dace da kai.",
+    "cardBody": "Tunatarwa ɗaya mai natsuwa a rana tare da shirinka. Zaɓi lokacin da ya dace da kai, kuma ka canza shi kowane lokaci a Saituna.",
     "timeLabel": "Aika da misalin",
     "enable": "Kunna",
     "notNow": "Ba yanzu ba",
@@ -575,7 +575,7 @@
     "blocked": "An toshe sanarwa ga wannan manhaja. Kunna su a saitunan wayarka.",
     "iosHint": "Da farko ƙara manhajar zuwa allon farko, sannan ka dawo nan don kunna tunatarwa.",
     "error": "Ba a iya kunna tunatarwa ba. Sake gwadawa.",
-    "savedToast": "An saita tunatarwa ta kullum zuwa {time}",
+    "savedToast": "An saita tunatarwa ta kullum zuwa {time}. Za ka iya canza shi kowane lokaci a Saituna.",
     "offToast": "An kashe tunatarwa ta kullum"
   }
 }

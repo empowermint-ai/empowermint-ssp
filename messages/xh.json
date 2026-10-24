@@ -564,7 +564,7 @@
     "examLine": "{days, plural, =0 {Uvavanyo lwe-{subject} lusemhlanje.} one {Uvavanyo lwe-{subject} lusemva kosuku olu-#.} other {Uvavanyo lwe-{subject} lusemva kweentsuku ezi-#.}}",
     "actionOpen": "Vula isicwangciso sam",
     "cardTitle": "Fumana isikhumbuzo sansuku zonke sokufunda",
-    "cardBody": "Isikhumbuzo esinye esinesidima ngosuku kunye nesicwangciso sakho. Khetha ixesha elikulungeleyo.",
+    "cardBody": "Isikhumbuzo esinye esinesidima ngosuku kunye nesicwangciso sakho. Khetha ixesha elikulungeleyo, uzeulitshintshe nangaliphi na ixesha kwi-Iisetingi.",
     "timeLabel": "Thumela ngo",
     "enable": "Vula",
     "notNow": "Hayi ngoku",
@@ -575,7 +575,7 @@
     "blocked": "Izaziso zivaliwe kule app. Zivule kwiisetingi zefowuni yakho.",
     "iosHint": "Qala ngokongeza i-app kwisikrini sakho sasekhaya, uze ubuye apha ukuvula izikhumbuzo.",
     "error": "Ayikwazanga ukuvula izikhumbuzo. Zama kwakhona.",
-    "savedToast": "Isikhumbuzo sansuku zonke sisetelwe ku-{time}",
+    "savedToast": "Isikhumbuzo sansuku zonke sisetelwe ku-{time}. Sinokutshintshwa nangaliphi na ixesha kwi-Iisetingi.",
     "offToast": "Isikhumbuzo sansuku zonke sicinyiwe"
   }
 }

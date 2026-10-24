@@ -564,7 +564,7 @@
     "examLine": "{days, plural, =0 {Mtihani wa {subject} ni leo.} one {Mtihani wa {subject} ni baada ya siku #.} other {Mtihani wa {subject} ni baada ya siku #.}}",
     "actionOpen": "Fungua mpango wangu",
     "cardTitle": "Pata kikumbusho cha kila siku cha kusoma",
-    "cardBody": "Kikumbusho kimoja tulivu kwa siku chenye mpango wako. Chagua muda unaokufaa.",
+    "cardBody": "Kikumbusho kimoja tulivu kwa siku chenye mpango wako. Chagua muda unaokufaa, na uubadilishe wakati wowote kwenye Mipangilio.",
     "timeLabel": "Tuma saa",
     "enable": "Washa",
     "notNow": "Si sasa",
@@ -575,7 +575,7 @@
     "blocked": "Arifa zimezuiwa kwa programu hii. Ziwashe kwenye mipangilio ya simu yako.",
     "iosHint": "Ongeza programu kwenye skrini ya kwanza kwanza, kisha rudi hapa kuwasha vikumbusho.",
     "error": "Imeshindwa kuwasha vikumbusho. Jaribu tena.",
-    "savedToast": "Kikumbusho cha kila siku kimewekwa saa {time}",
+    "savedToast": "Kikumbusho cha kila siku kimewekwa saa {time}. Kibadilishe wakati wowote kwenye Mipangilio.",
     "offToast": "Kikumbusho cha kila siku kimezimwa"
   }
 }

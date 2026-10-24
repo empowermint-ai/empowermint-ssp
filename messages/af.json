@@ -564,7 +564,7 @@
     "examLine": "{days, plural, =0 {{subject} is vandag.} one {{subject} is oor # dag.} other {{subject} is oor # dae.}}",
     "actionOpen": "Maak my plan oop",
     "cardTitle": "Kry ’n daaglikse studie-aansporing",
-    "cardBody": "Een kalm herinnering per dag met jou plan. Kies die tyd wat jou pas.",
+    "cardBody": "Een kalm herinnering per dag met jou plan. Kies die tyd wat jou pas, en verander dit enige tyd in Instellings.",
     "timeLabel": "Stuur dit om",
     "enable": "Skakel aan",
     "notNow": "Nie nou nie",
@@ -575,7 +575,7 @@
     "blocked": "Kennisgewings is vir hierdie app geblokkeer. Skakel dit aan in jou foon se instellings.",
     "iosHint": "Voeg die app eers by jou tuisskerm, kom dan terug om herinnerings aan te skakel.",
     "error": "Kon nie herinnerings aanskakel nie. Probeer weer.",
-    "savedToast": "Daaglikse herinnering gestel vir {time}",
+    "savedToast": "Daaglikse herinnering gestel vir {time}. Verander dit enige tyd in Instellings.",
     "offToast": "Daaglikse herinnering afgeskakel"
   }
 }
