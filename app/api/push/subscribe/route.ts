@@ -27,7 +27,7 @@ export async function POST(request: Request) {
 
   const { error: userError } = await supabase
     .from('users')
-    .update({ push_enabled: true, push_hour: body.hour, push_timezone: body.timezone })
+    .update({ push_enabled: true, push_hour: body.hour, push_timezone: body.timezone, push_last_sent_on: null })
     .eq('id', user.id);
   if (userError) return NextResponse.json({ error: userError.message }, { status: 500 });
 

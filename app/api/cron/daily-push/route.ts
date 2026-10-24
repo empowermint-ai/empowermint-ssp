@@ -69,9 +69,15 @@ export async function GET(request: Request) {
       supabase.from('push_subscriptions').select('id, endpoint, p256dh, auth').eq('user_id', learner.id),
     ]);
 
+    // No device yet (for example they are turning reminders on right now): look again next hour.
+    if (!subs?.length) {
+      skipped++;
+      continue;
+    }
+
     // Nothing to nudge about: no plan yet, or every session is already done.
     const rows = plan ?? [];
-    if (rows.length === 0 || rows.every((r) => r.completed) || !subs?.length) {
+    if (rows.length === 0 || rows.every((r) => r.completed)) {
       await markDone();
       skipped++;
       continue;
