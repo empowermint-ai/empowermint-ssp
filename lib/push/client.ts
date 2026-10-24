@@ -83,8 +83,18 @@ export async function disableReminders(): Promise<boolean> {
   return !!res?.ok;
 }
 
+/** Reminders count as on only if this phone still holds a live subscription. */
 export async function fetchReminderSettings(): Promise<{ enabled: boolean; hour: number } | null> {
   const res = await fetch('/api/push/settings').catch(() => null);
   if (!res?.ok) return null;
-  return res.json();
+  const settings: { enabled: boolean; hour: number } = await res.json();
+  if (settings.enabled && pushSupported()) {
+    try {
+      const registration = await navigator.serviceWorker.ready;
+      if (!(await registration.pushManager.getSubscription())) settings.enabled = false;
+    } catch {
+      // keep the server's answer
+    }
+  }
+  return settings;
 }

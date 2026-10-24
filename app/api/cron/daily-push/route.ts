@@ -40,6 +40,7 @@ export async function GET(request: Request) {
   let skipped = 0;
   let failed = 0;
   let due = 0;
+  const pushErrors: number[] = [];
 
   for (const learner of learners ?? []) {
     const isDueNow = isDue(
@@ -100,6 +101,7 @@ export async function GET(request: Request) {
     });
 
     let delivered = false;
+    let gone = 0;
     for (const sub of subs) {
       try {
         await webpush.sendNotification(
@@ -112,8 +114,11 @@ export async function GET(request: Request) {
         const status = (err as { statusCode?: number }).statusCode;
         // 404/410: the learner removed the app or revoked permission.
         if (status === 404 || status === 410) {
+          gone++;
+          pushErrors.push(status);
           await supabase.from('push_subscriptions').delete().eq('id', sub.id);
         } else {
+          pushErrors.push(status ?? 0);
           failed++;
         }
       }
@@ -121,8 +126,15 @@ export async function GET(request: Request) {
     if (delivered) {
       sent++;
       await markDone();
+    } else if (gone === subs.length) {
+      // Every device is gone: switch reminders off so the app offers to turn them on again.
+      await supabase
+        .from('users')
+        .update({ push_enabled: false, push_last_sent_on: localDate })
+        .eq('id', learner.id);
+      skipped++;
     }
   }
 
-  return NextResponse.json({ ok: true, enabled: learners?.length ?? 0, due, sent, skipped, failed });
+  return NextResponse.json({ ok: true, enabled: learners?.length ?? 0, due, sent, skipped, failed, pushErrors });
 }
