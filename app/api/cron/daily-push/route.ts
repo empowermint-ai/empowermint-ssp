@@ -37,13 +37,15 @@ export async function GET(request: Request) {
   let sent = 0;
   let skipped = 0;
   let failed = 0;
+  let due = 0;
 
   for (const learner of learners ?? []) {
-    const due = isDue(
+    const isDueNow = isDue(
       { hour: learner.push_hour, timeZone: learner.push_timezone, lastSentOn: learner.push_last_sent_on },
       now
     );
-    if (!due) continue;
+    if (!isDueNow) continue;
+    due++;
 
     const localDate = localHourAndDate(learner.push_timezone, now).date;
     const markDone = () =>
@@ -120,5 +122,5 @@ export async function GET(request: Request) {
     }
   }
 
-  return NextResponse.json({ ok: true, sent, skipped, failed });
+  return NextResponse.json({ ok: true, enabled: learners?.length ?? 0, due, sent, skipped, failed });
 }
