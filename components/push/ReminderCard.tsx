@@ -5,7 +5,21 @@ import { useTranslations } from 'next-intl';
 import ReminderSheet from '@/components/push/ReminderSheet';
 import { fetchReminderSettings, pushSupported } from '@/lib/push/client';
 
-const DISMISSED_KEY = 'ssp_push_card_dismissed';
+// "Not now" snoozes the card rather than hiding it for good, so a learner who
+// said no on a busy day is asked again later. Each spot keeps its own snooze.
+const SNOOZE_DAYS = { plan: 5, complete: 2 } as const;
+const snoozeKey = (variant: Variant) => `ssp_push_card_snoozed_${variant}`;
+
+type Variant = keyof typeof SNOOZE_DAYS;
+
+function isSnoozed(variant: Variant): boolean {
+  try {
+    const until = Number(localStorage.getItem(snoozeKey(variant)));
+    return Number.isFinite(until) && until > Date.now();
+  } catch {
+    return false;
+  }
+}
 
 function BellIcon() {
   return (
@@ -21,8 +35,11 @@ function BellIcon() {
   );
 }
 
-/** One-time invitation on the dashboard. Hidden once reminders are on or the learner says "not now". */
-export default function ReminderCard() {
+/**
+ * Invitation to turn on the daily reminder. Shown on Today's Plan and again right
+ * after a finished session. Hidden once reminders are on, or while snoozed.
+ */
+export default function ReminderCard({ variant = 'plan' }: { variant?: Variant }) {
   const t = useTranslations('push');
   const [visible, setVisible] = useState(false);
   const [open, setOpen] = useState(false);
@@ -31,11 +48,7 @@ export default function ReminderCard() {
     let cancelled = false;
     async function check() {
       if (!pushSupported() || Notification.permission === 'denied') return;
-      try {
-        if (localStorage.getItem(DISMISSED_KEY) === '1') return;
-      } catch {
-        // storage blocked: show the card
-      }
+      if (isSnoozed(variant)) return;
       const settings = await fetchReminderSettings();
       if (!cancelled && settings && !settings.enabled) setVisible(true);
     }
@@ -43,11 +56,11 @@ export default function ReminderCard() {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [variant]);
 
   function dismiss() {
     try {
-      localStorage.setItem(DISMISSED_KEY, '1');
+      localStorage.setItem(snoozeKey(variant), String(Date.now() + SNOOZE_DAYS[variant] * 86_400_000));
     } catch {
       // ignore
     }
@@ -58,7 +71,7 @@ export default function ReminderCard() {
 
   return (
     <>
-      <div className="neu-raised rounded-neu-md px-[14px] py-[13px] mt-4">
+      <div className={`neu-raised rounded-neu-md px-[14px] py-[13px] ${variant === 'plan' ? 'mt-4' : 'w-full mb-[22px]'}`}>
         <div className="flex items-start gap-3">
           <span
             aria-hidden="true"

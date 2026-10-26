@@ -5,6 +5,7 @@ import { getSubjectLabel } from '@/lib/i18n/getSubjectLabel';
 import { createSupabaseServerClient } from '@/lib/supabaseServerClient';
 import ProgressStrip from '@/components/ProgressStrip';
 import NavArrows from '@/components/NavArrows';
+import ReminderCard from '@/components/push/ReminderCard';
 import StreakStatus from '@/components/streak/StreakStatus';
 
 // Quote text lives in messages (sessionComplete.quotes.q1..q8).
@@ -91,6 +92,8 @@ export default async function SessionCompletePage({
       <div className="w-full mt-2 mb-[22px]">
         <ProgressStrip completedFlags={rows.map((r) => r.completed)} />
       </div>
+
+      <ReminderCard variant="complete" />
 
       {allCompleted && (
         <div className="neu-raised rounded-neu-md px-[16px] py-[18px] w-full">
