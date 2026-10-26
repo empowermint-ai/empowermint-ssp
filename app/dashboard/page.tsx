@@ -7,6 +7,7 @@ import SettingsMenu from '@/components/SettingsMenu';
 import InstallAppBanner from '@/components/InstallAppBanner';
 import ExamReflectionPrompt from '@/components/ExamReflectionPrompt';
 import AppReviewPrompt from '@/components/AppReviewPrompt';
+import DeviceRecorder from '@/components/DeviceRecorder';
 import ReminderCard from '@/components/push/ReminderCard';
 import StreakStatus from '@/components/streak/StreakStatus';
 import BottomNav from '@/components/BottomNav';
@@ -244,6 +245,8 @@ export default async function DashboardPage() {
       <InstallAppBanner />
 
       <ReminderCard />
+
+      <DeviceRecorder userId={user.id} />
 
       <ExamReflectionPrompt initialReflections={pendingReflections} />
 
