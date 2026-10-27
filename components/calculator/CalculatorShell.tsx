@@ -10,7 +10,7 @@ import { getDir, getEnabledLocales } from '@/config/locales';
 import type { Messages } from '@/lib/i18n/loadMessages';
 
 // Pill-row order requested for the calculator screen.
-const PILL_ORDER = ['en', 'af', 'fr', 'ar', 'zu', 'xh', 'sw', 'ha', 'hi'];
+const PILL_ORDER = ['en', 'af', 'fr', 'ar', 'zu', 'xh', 'sw', 'ha', 'hi', 'pt'];
 
 const bundleCache = new Map<string, Messages>();
 

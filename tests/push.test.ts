@@ -39,7 +39,7 @@ describe('buildDailyMessage', () => {
     expect(m.body).toBe('4 sessions, about 100 min: Mathematics, Life Sciences, Accounting +1. Mathematics is in 21 days.');
   });
 
-  it.each(['en', 'af', 'zu', 'xh', 'fr', 'ar', 'sw', 'ha', 'hi'])('builds a complete message in %s', async (locale) => {
+  it.each(['en', 'af', 'zu', 'xh', 'fr', 'ar', 'sw', 'ha', 'hi', 'pt'])('builds a complete message in %s', async (locale) => {
     const m = await buildDailyMessage({ ...base, locale });
     expect(m.title.length).toBeGreaterThan(5);
     expect(m.body).toContain('100');

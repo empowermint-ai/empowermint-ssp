@@ -71,6 +71,13 @@ export const LOCALES: LocaleConfig[] = [
     nonLatin: true,
     noticeNative: 'नया: प्लानर अब हिन्दी में उपलब्ध है।',
   },
+  {
+    // European Portuguese norms (the standard in Mozambique and Angola too), informal "tu".
+    code: 'pt',
+    nativeName: 'Português',
+    intl: 'pt-PT',
+    noticeNative: 'Novidade: o planeador já está disponível em português.',
+  },
 ];
 
 export const DEFAULT_LOCALE = 'en';

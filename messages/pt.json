@@ -1,0 +1,581 @@
+{
+  "metadata": {
+    "title": "empowermint SSP",
+    "description": "empowermint Planeador de Estudo Inteligente"
+  },
+  "common": {
+    "pleaseWait": "Aguarda um momento…",
+    "back": "Voltar",
+    "forward": "Avançar",
+    "close": "Fechar"
+  },
+  "language": {
+    "label": "Language · Idioma",
+    "title": "Language / Idioma",
+    "open": "Language / Idioma",
+    "changed": "Idioma alterado para {language}"
+  },
+  "notice": {
+    "aria": "Novo idioma disponível",
+    "headline": "Novidade: o planeador já está disponível em {languages}.",
+    "switch": "Mudar para {language}",
+    "notNow": "Agora não",
+    "listAnd": "e"
+  },
+  "calculatorNotice": {
+    "aria": "Nova funcionalidade: calculadora",
+    "headline": "Novidade: uma calculadora, mesmo dentro do teu planeador.",
+    "bodyScientific": "Uma calculadora científica para matemática e ciências — funciona junto com o teu temporizador de estudo.",
+    "bodyFinancial": "Uma calculadora financeira para empréstimos, poupanças, VAL e TIR — funciona junto com o teu temporizador de estudo.",
+    "bodyGeneric": "Uma calculadora científica ou financeira que se adapta aos teus estudos — funciona junto com o teu temporizador de estudo.",
+    "open": "Abrir calculadora"
+  },
+  "welcome": {
+    "title": "O planeador de estudo inteligente",
+    "tagline": "Acredita que consegues, planeia como vais conseguir",
+    "start": "começar o meu planeador",
+    "haveAccount": "Já tens uma conta? Inicia sessão aqui"
+  },
+  "auth": {
+    "signOut": "Terminar sessão",
+    "phone": {
+      "country": "País",
+      "placeholder": "83 123 4567"
+    },
+    "password": {
+      "show": "Mostrar palavra-passe",
+      "hide": "Ocultar palavra-passe"
+    },
+    "changePassword": {
+      "newPassword": "Nova palavra-passe",
+      "update": "Atualizar palavra-passe",
+      "success": "Palavra-passe atualizada."
+    },
+    "login": {
+      "title": "Bem-vindo\nde volta.",
+      "subtitle": "É bom ver-te outra vez.",
+      "mobileLabel": "Número de telemóvel",
+      "passwordLabel": "Palavra-passe",
+      "passwordPlaceholder": "Introduz a tua palavra-passe",
+      "submit": "Iniciar sessão",
+      "forgot": "Esqueceste-te da palavra-passe?",
+      "newHere": "É a tua primeira vez? Começar o meu planeador",
+      "invalid": "Nome de utilizador ou palavra-passe incorretos. Tenta novamente."
+    },
+    "register": {
+      "step": "PASSO 1 DE 2",
+      "title": "Vamos configurar tudo.",
+      "intro": "Isto é teu. Só o essencial para começar.",
+      "usernameLabel": "Nome de utilizador",
+      "usernamePlaceholder": "ex.: thabo_m",
+      "mobileLabel": "Número de telemóvel",
+      "passwordLabel": "Palavra-passe",
+      "passwordPlaceholder": "Mín. 6 caracteres",
+      "continue": "Continuar",
+      "footnote": "O teu número de telemóvel é como vais iniciar sessão a partir de agora.",
+      "usernameRequired": "Introduz um nome de utilizador.",
+      "mobileRequired": "Introduz o teu número de telemóvel.",
+      "mobileInvalid": "Introduz um número de telemóvel válido para o país selecionado.",
+      "passwordRequired": "Introduz uma palavra-passe.",
+      "passwordShort": "A palavra-passe deve ter pelo menos 6 caracteres.",
+      "mobileTaken": "Este número já está registado.",
+      "loginInstead": "Iniciar sessão"
+    },
+    "step2": {
+      "title": "Quase pronto",
+      "subtitle": "Só precisamos de um email para confirmar a tua conta.",
+      "emailLabel": "Email do pai/mãe ou encarregado",
+      "emailHelp": "Usado uma só vez para confirmar esta conta. Não precisas dele para iniciar sessão.",
+      "submit": "Criar conta",
+      "emailTaken": "Esse email já está registado. Tenta iniciar sessão ou usa outro email.",
+      "numberTaken": "Esse número de telemóvel já está registado.",
+      "checkTitle": "Verifica o teu email",
+      "checkSubtitle": "Enviámos-te uma ligação de confirmação.",
+      "checkBody": "Clica na ligação do email para confirmares a tua conta. Depois, inicia sessão com o teu número de telemóvel e a tua palavra-passe.",
+      "backToLogin": "Voltar ao início de sessão"
+    },
+    "institution": {
+      "label": "Instituição",
+      "school": "Escola",
+      "uni": "Universidade / Outra",
+      "schoolName": "Nome da escola",
+      "uniName": "Nome da universidade / outra",
+      "grade": "Grade",
+      "year": "Ano de estudo",
+      "select": "Selecionar…",
+      "options": {
+        "g8": "Grade 8",
+        "g9": "Grade 9",
+        "g10": "Grade 10",
+        "g11": "Grade 11",
+        "g12": "Grade 12",
+        "y1": "1.º ano",
+        "y2": "2.º ano",
+        "y3": "3.º ano",
+        "y4": "4.º ano",
+        "postgrad": "Pós-graduação"
+      }
+    },
+    "forgot": {
+      "title": "Esqueceste-te da palavra-passe?",
+      "subtitle": "Vamos enviar uma ligação de redefinição para o email associado à tua conta.",
+      "mobileLabel": "Número de telemóvel",
+      "submit": "Enviar ligação de redefinição",
+      "noAccount": "Não foi encontrada nenhuma conta com esse número de telemóvel",
+      "checkTitle": "Verifica o teu email",
+      "checkSubtitle": "Enviámos uma ligação para redefinir a palavra-passe.",
+      "checkBody": "Clica na ligação do email para escolheres uma nova palavra-passe.",
+      "back": "Voltar ao início de sessão"
+    },
+    "reset": {
+      "title": "Escolhe uma nova palavra-passe",
+      "subtitle": "Introduz uma nova palavra-passe para a tua conta.",
+      "newPassword": "Nova palavra-passe",
+      "submit": "Atualizar palavra-passe",
+      "expiredTitle": "Ligação expirada",
+      "expiredSubtitle": "Esta ligação de redefinição é inválida ou já foi utilizada.",
+      "requestNew": "Pedir uma nova ligação de redefinição"
+    },
+    "callback": {
+      "expiredTitle": "Ligação expirada",
+      "expiredSubtitle": "Esta ligação é inválida ou já foi utilizada.",
+      "requestNew": "Pedir uma nova ligação de redefinição"
+    },
+    "parentConfirmed": {
+      "okTitle": "Está tudo pronto.",
+      "okBody": "Vais receber um breve resumo semanal dos estudos — nada mais.",
+      "expiredTitle": "Ligação expirada",
+      "expiredBody": "Esta ligação de confirmação é inválida ou já foi utilizada."
+    },
+    "parentUnsubscribed": {
+      "okTitle": "Subscrição cancelada",
+      "okBody": "Não vais receber mais atualizações semanais. O teu educando pode voltar a adicionar-te nas definições da conta a qualquer momento.",
+      "expiredTitle": "Ligação expirada",
+      "expiredBody": "Esta ligação é inválida ou já foi utilizada."
+    }
+  },
+  "errors": {
+    "generic": "Algo correu mal. Tenta novamente.",
+    "auth": {
+      "invalidCredentials": "Nome de utilizador ou palavra-passe incorretos. Tenta novamente.",
+      "alreadyRegistered": "Esse email já está registado. Tenta iniciar sessão ou usa outro email.",
+      "rateLimited": "Demasiadas tentativas. Aguarda um momento e tenta novamente.",
+      "passwordShort": "A palavra-passe deve ter pelo menos 6 caracteres.",
+      "samePassword": "A tua nova palavra-passe tem de ser diferente da anterior.",
+      "invalidEmail": "Introduz um endereço de email válido.",
+      "emailNotConfirmed": "Confirma primeiro o teu email e depois inicia sessão.",
+      "network": "Não foi possível ligar. Verifica a tua internet e tenta novamente.",
+      "mobileTaken": "Esse número de telemóvel já está registado noutra conta.",
+      "noAccount": "Não foi encontrada nenhuma conta com esse número de telemóvel",
+      "notSignedIn": "Sessão não iniciada.",
+      "saveEmail": "Não foi possível guardar esse email. Tenta novamente."
+    },
+    "retry": "Tentar novamente"
+  },
+  "presets": {
+    "accounting": "Contabilidade",
+    "afrikaansFal": "Afrikaans (segunda língua)",
+    "afrikaansHl": "Afrikaans (língua materna)",
+    "agriculturalSciences": "Ciências Agrárias",
+    "biology": "Biologia",
+    "businessStudies": "Estudos Empresariais",
+    "cat": "CAT (informática e escritório)",
+    "consumerStudies": "Ciências do Consumidor",
+    "dramaticArts": "Artes Dramáticas",
+    "economics": "Economia",
+    "engineeringGraphicsDesign": "Desenho e Design de Engenharia",
+    "englishFal": "Inglês (segunda língua)",
+    "englishHl": "Inglês (língua materna)",
+    "geography": "Geografia",
+    "history": "História",
+    "informationTechnology": "Tecnologias da Informação",
+    "lifeOrientation": "Orientação para a Vida",
+    "lifeSciences": "Ciências da Vida",
+    "mathematicalLiteracy": "Literacia Matemática",
+    "mathematics": "Matemática",
+    "music": "Música",
+    "physicalSciences": "Ciências Físicas",
+    "religionStudies": "Estudos Religiosos",
+    "sepediHl": "Sepedi (língua materna)",
+    "setswanaHl": "Setswana (língua materna)",
+    "tourism": "Turismo",
+    "visualArts": "Artes Visuais",
+    "xhosaHl": "isiXhosa (língua materna)",
+    "zuluHl": "isiZulu (língua materna)"
+  },
+  "subjects": {
+    "eyebrow": "CRIA A TUA LISTA DE DISCIPLINAS",
+    "title": "O que estás a estudar?",
+    "searchLabel": "Pesquisar ou selecionar uma disciplina",
+    "searchPlaceholder": "ex.: Matemática",
+    "customPlaceholder": "O nome da tua disciplina",
+    "add": "Adicionar",
+    "addOwn": "+ Adicionar a minha própria disciplina",
+    "saving": "A guardar…",
+    "next": "Seguinte: classificá-las",
+    "saveError": "Não foi possível guardar as tuas disciplinas. Tenta novamente.",
+    "remove": "Remover {subject}"
+  },
+  "ranking": {
+    "eyebrow": "SÊ HONESTO/A — ISTO DEFINE O TEU PLANO",
+    "title": "Que confiança tens em cada uma?",
+    "scale": "1 = mais fraca  ·  5 = mais forte",
+    "scoreAria": "{subject}: confiança {score}",
+    "saving": "A guardar…",
+    "next": "Seguinte: datas dos exames",
+    "saveError": "Não foi possível guardar as tuas classificações. Tenta novamente."
+  },
+  "examDates": {
+    "eyebrow": "ÚLTIMO PASSO",
+    "title": "Quando é cada exame?",
+    "intro": "Toca numa disciplina para adicionar uma data de exame. Podes adicionar mais do que uma, como um teste do período e o exame final.",
+    "minDate": "As datas dos exames têm de ser pelo menos amanhã — escolhe uma data posterior.",
+    "addError": "Não foi possível adicionar essa data. Tenta novamente.",
+    "removeError": "Não foi possível remover essa data. Tenta novamente.",
+    "generateError": "Não foi possível gerar o teu plano. Tenta novamente.",
+    "adding": "A adicionar…",
+    "addDate": "+ Adicionar data",
+    "removeAria": "Remover {date} de {subject}",
+    "stillNeed": "{count, plural, one {Ainda precisa de uma data: {subjects}.} other {Ainda precisam de uma data: {subjects}.}}",
+    "generating": "A gerar…",
+    "generate": "Gerar o meu plano",
+    "footnote": "O teu horário é criado instantaneamente e atualiza-se todos os dias."
+  },
+  "manage": {
+    "eyebrow": "GERIR O MEU PLANEADOR",
+    "title": "Atualiza a tua classificação ou as datas dos exames",
+    "tabSubjects": "Disciplinas",
+    "tabRanking": "Classificação",
+    "tabDates": "Datas dos exames",
+    "addSubjectLabel": "Adicionar uma disciplina",
+    "searchPlaceholder": "ex.: Matemática",
+    "customPlaceholder": "O nome da tua disciplina",
+    "add": "Adicionar",
+    "addOwn": "+ Adicionar a minha própria disciplina",
+    "yourSubjects": "As tuas disciplinas",
+    "newSubjectNote": "As novas disciplinas precisam de uma classificação de confiança e de uma data de exame antes de aparecerem no teu plano.",
+    "removeSubjectAria": "Remover {subject}",
+    "scale": "1 = mais fraca  ·  5 = mais forte",
+    "scoreAria": "{subject}: confiança {score}",
+    "adding": "A adicionar…",
+    "addDate": "+ Adicionar data",
+    "removeDateAria": "Remover {date} de {subject}",
+    "updating": "A atualizar o teu plano…",
+    "addSubjectError": "Não foi possível adicionar essa disciplina. Tenta novamente.",
+    "removeSubjectError": "Não foi possível remover essa disciplina. Tenta novamente.",
+    "saveError": "Não foi possível guardar. Tenta novamente.",
+    "minDate": "As datas dos exames têm de ser pelo menos amanhã — escolhe uma data posterior.",
+    "addDateError": "Não foi possível adicionar essa data. Tenta novamente.",
+    "removeDateError": "Não foi possível remover essa data. Tenta novamente."
+  },
+  "plan": {
+    "heading": "Plano de hoje (recomendado)",
+    "subheading": "A recomendação de hoje – altera-a se for preciso",
+    "dateLine": "{weekday}, {dayMonth}",
+    "fallbackName": "estudante",
+    "greetings": {
+      "g1": "Bem-vindo/a de volta, campeão/campeã!",
+      "g2": "É bom ver-te outra vez, {name}!",
+      "g3": "Vamos a isto outra vez, {name}!",
+      "g4": "Apareceste. Isso já é uma vitória, {name}.",
+      "g5": "Quando quiseres, {name}."
+    },
+    "sessionMinutes": "{minutes} min",
+    "hideNotes": "Ocultar notas do tema",
+    "addNotes": "Adicionar notas do tema",
+    "removeSession": "Remover a sessão de {subject}",
+    "markDone": "Marcar tema como concluído",
+    "markNotDone": "Marcar tema como não concluído",
+    "topicPlaceholder": "O que estás a estudar?",
+    "allDoneTitle": "Terminaste todos os teus exames atuais! 🎉",
+    "allDoneBody": "Adiciona abaixo as datas dos teus próximos exames para manter o teu plano de estudo em andamento.",
+    "examDone": "Exame feito — adiciona a próxima data",
+    "minDate": "As datas dos exames têm de ser pelo menos amanhã — escolhe uma data posterior.",
+    "adding": "A adicionar…",
+    "addDate": "+ Adicionar data",
+    "updateRanking": "Queres atualizar também a classificação das tuas disciplinas? Gerir o meu planeador",
+    "addAnother": "+ Adicionar outra sessão"
+  },
+  "share": {
+    "share": "Partilhar",
+    "preparing": "A preparar…",
+    "shareAria": "Partilhar plano",
+    "preparingAria": "A preparar a partilha",
+    "error": "Não foi possível criar o PDF. Tenta novamente.",
+    "shareTitle": "Plano de estudo de {name}",
+    "shareText": "Plano de estudo de {name} para {date}",
+    "pdf": {
+      "title": "PLANO DE ESTUDO DE HOJE",
+      "forName": "para {name}",
+      "empty": "Ainda não há sessões planeadas para hoje.",
+      "done": "Concluída",
+      "pending": "Pendente",
+      "upcoming": "PRÓXIMAS DATAS DE EXAME",
+      "when": "{days, plural, =0 {hoje} =1 {amanhã} other {daqui a # dias}}",
+      "eyebrow": "PARTILHADO A PARTIR DO EMPOWERMINT",
+      "headline": "{name} está a usar o Planeador de Estudo Inteligente para estar sempre em cima dos estudos. Experimenta também.",
+      "cta": "Começar grátis",
+      "scan": "LÊ PARA COMEÇAR",
+      "micro": "sem cartão necessário"
+    }
+  },
+  "install": {
+    "bannerTitle": "Adiciona o empowermint ao teu ecrã principal",
+    "bannerBody": "Assim podes voltar ao teu plano num instante, como qualquer outra aplicação.",
+    "dismiss": "Dispensar",
+    "addButton": "Adicionar ao ecrã principal",
+    "modalTitle": "Mantém o empowermint a um toque de distância",
+    "iosStep1": "Toca no ícone Partilhar na barra de ferramentas do Safari.",
+    "iosStep2": "Depois desce e toca em <b>Adicionar ao Ecrã principal</b>.",
+    "androidStep": "Procura <b>Adicionar ao ecrã principal</b> ou <b>Instalar aplicação</b> no menu do teu navegador.",
+    "gotIt": "Percebi"
+  },
+  "review": {
+    "title": "Como te tem corrido o SSP até agora?",
+    "subtitle": "O teu feedback ajuda-nos a melhorar.",
+    "starAria": "{count, plural, one {# estrela} other {# estrelas}}",
+    "commentPlaceholder": "Queres partilhar mais alguma coisa? (opcional)",
+    "submit": "Enviar avaliação",
+    "submitting": "A enviar…",
+    "notNow": "Agora não",
+    "saveError": "Não foi possível guardar. Tenta novamente."
+  },
+  "reflection": {
+    "title": "Como correu o teu exame de {subject}?",
+    "subtitle": "{date} — isto ajuda-nos a planear as tuas próximas sessões.",
+    "saveError": "Não foi possível guardar. Tenta novamente.",
+    "choices": {
+      "tougher": "Mais difícil do que esperava",
+      "expected": "Mais ou menos o que esperava",
+      "better": "Melhor do que esperava"
+    }
+  },
+  "nav": {
+    "primary": "Principal",
+    "plan": "Plano",
+    "calendar": "Calendário",
+    "manage": "Gerir",
+    "calculator": "Calculadora"
+  },
+  "settings": {
+    "aria": "Definições",
+    "manage": "Gerir o meu planeador",
+    "language": "Language / Idioma",
+    "addToHome": "Adicionar ao ecrã principal",
+    "logout": "Terminar sessão"
+  },
+  "exams": {
+    "title": "Datas dos exames",
+    "loading": "A carregar…",
+    "empty": "Ainda não há disciplinas.",
+    "daysBadge": "{days, plural, =0 {Hoje} =1 {1 dia} other {# dias}}",
+    "adding": "A adicionar…",
+    "addDate": "+ Adicionar data",
+    "removeAria": "Remover {date} de {subject}",
+    "pastPapers": "Provas anteriores →",
+    "minDate": "As datas dos exames têm de ser pelo menos amanhã — escolhe uma data posterior.",
+    "addError": "Não foi possível adicionar essa data. Tenta novamente.",
+    "removeError": "Não foi possível remover essa data. Tenta novamente.",
+    "upcoming": "Próximas datas de exame",
+    "examIn": "Exame de {subject} daqui a",
+    "daysCount": "{days} dias"
+  },
+  "timer": {
+    "eyebrow": "SESSÃO DE FOCO · {session} DE {total} HOJE",
+    "studySession": "Sessão de estudo",
+    "status": {
+      "green": "RESTANTE · TEMPO DE SOBRA",
+      "amber": "RESTANTE · RITMO CONSTANTE",
+      "red": "RESTANTE · QUASE LÁ"
+    },
+    "pause": "Pausar",
+    "resume": "Retomar",
+    "end": "Terminar sessão",
+    "start": "Iniciar sessão",
+    "hintRunning": "A sessão fica registada automaticamente no plano de hoje quando terminar.",
+    "hintIdle": "Toca em Iniciar quando estiveres pronto/a para te concentrares."
+  },
+  "examTimer": {
+    "durationHours": "{hours, plural, one {# hora} other {# horas}}",
+    "durationHoursMinutes": "{hours} h {minutes} min",
+    "entry": {
+      "title": "Treina o tempo do teu exame",
+      "badge": "Novo",
+      "subtitle": "Contagem decrescente completa para a tua próxima prova"
+    },
+    "setup": {
+      "eyebrow": "Configuração da simulação de exame",
+      "intro": "Vamos configurar aqui a tua simulação de exame. Escolhe nas listas a disciplina para a qual queres treinar um exame, bem como a duração do exame.",
+      "subjectLabel": "Selecionar disciplina",
+      "select": "Selecionar…",
+      "timeLabel": "Selecionar tempo (número de horas)",
+      "go": "Ir para a sessão de exame"
+    },
+    "session": {
+      "eyebrow": "Sessão de temporizador de simulação de exame",
+      "subject": "Disciplina:",
+      "duration": "Duração:",
+      "studySession": "Sessão de estudo",
+      "minutes": "{minutes} minutos",
+      "start": "Começar, boa sorte.",
+      "pause": "Pausar",
+      "resume": "Retomar",
+      "endEarly": "Terminar a sessão mais cedo",
+      "timesUp": "TEMPO ESGOTADO",
+      "howDidItGo": "COMO CORREU?",
+      "thumbsUp": "Polegar para cima",
+      "thumbsDown": "Polegar para baixo",
+      "thanks": "Obrigado pelo feedback",
+      "back": "Voltar ao planeador"
+    },
+    "status": {
+      "green": "Restante · Tempo de sobra.",
+      "amber": "Restante · Mantém o foco.",
+      "red": "Restante · Reta final."
+    }
+  },
+  "calendar": {
+    "title": "Vista de calendário",
+    "subtitle": "Toca numa data para ver o que está agendado.",
+    "prevMonth": "Mês anterior",
+    "nextMonth": "Mês seguinte",
+    "legendExam": "Dia de exame",
+    "legendToday": "Hoje",
+    "legendStudy": "Sessão de estudo",
+    "legendMissed": "Falhada",
+    "empty": "Nada registado para este dia.",
+    "examLine": "Exame de {subject}",
+    "sessionLine": "{status, select, done {Sessão de estudo de {subject} · concluída} missed {Sessão de estudo de {subject} · falhada} other {Sessão de estudo de {subject}}}",
+    "addSession": "+ Adicionar uma sessão de estudo"
+  },
+  "sessionComplete": {
+    "title": "Bom trabalho.\nSessão concluída.",
+    "logged": "{minutes} minutos registados em <b>{subject}</b>.",
+    "quotes": {
+      "q1": "O esforço não precisa de ser perfeito para contar. Só precisa de ser repetido.",
+      "q2": "O plano não é o objetivo. O plano é o que te leva ao objetivo.",
+      "q3": "A confiança não é algo que se espera. Constrói-se sessão a sessão.",
+      "q4": "Não precisas de te sentir pronto/a. Precisas de aparecer.",
+      "q5": "Cada hora que investes agora é uma nota com que não terás de te preocupar mais tarde.",
+      "q6": "Quem planeia ganha a quem entra em pânico — sempre.",
+      "q7": "O progresso nem sempre se vê. Mas é sempre real.",
+      "q8": "Estás mais perto do que pensas."
+    },
+    "quoteSource": "— Mastering Your Studies",
+    "whatsNext": "E agora?",
+    "startNext": "Começar a seguir: {subject}",
+    "doneToday": "Terminaste por hoje. Muito bem!",
+    "backToPlan": "Voltar ao plano de hoje",
+    "noPenalty": "Tu decides — não há penalização, seja qual for a escolha."
+  },
+  "pastPapers": {
+    "title": "Provas de exames anteriores",
+    "intro": "Escolhe a tua entidade para ires diretamente às provas oficiais e aos critérios de correção.",
+    "cardSubtitle": "Provas e memorandos oficiais NSC e IEB.",
+    "cardLocked": "Desbloqueia na Grade 12",
+    "toastLocked": "Isto desbloqueia quando estiveres na Grade 12.",
+    "footnote": "Os memorandos são um critério de correção, não uma chave de respostas definitiva — servem para orientar, não para substituir, o teu próprio trabalho.",
+    "boards": {
+      "caps": {
+        "label": "Provas CAPS / NSC",
+        "helper": "Departamento de Educação Básica, provas desde 2008."
+      },
+      "ieb": {
+        "label": "Provas IEB",
+        "helper": "Portal próprio do IEB, últimos 5 anos."
+      }
+    }
+  },
+  "account": {
+    "title": "Conta",
+    "signedInAs": "Sessão iniciada como",
+    "student": "Aluno: {name}",
+    "changePassword": "Alterar palavra-passe",
+    "contactUs": "Contacta-nos",
+    "contactBody": "Dúvidas ou comentários? Envia um email para <link>ebrahim@empowermint.co.za</link>"
+  },
+  "parentNotify": {
+    "title": "Mantém o teu encarregado de educação por dentro",
+    "intro": "Adiciona o email dele/dela e enviaremos uma breve atualização semanal sobre como vão os estudos — assim não tens de te explicar todas as noites ao jantar.",
+    "currentContact": "Contacto atual:",
+    "confirmed": "confirmado",
+    "waiting": "a aguardar confirmação",
+    "placeholder": "parent@email.com",
+    "sent": "Enviado! Vão receber um email de confirmação antes de qualquer coisa ser enviada.",
+    "update": "Atualizar email",
+    "add": "Adicionar o meu encarregado",
+    "error": "Algo correu mal. Tenta novamente."
+  },
+  "calculator": {
+    "title": "Calculadora",
+    "sciTitle": "Calculadora científica",
+    "finTitle": "Calculadora financeira",
+    "back": "Voltar",
+    "languageAria": "Idioma da calculadora",
+    "clear": "Limpar",
+    "clearHint": "Prime AC para limpar",
+    "angleMode": "Modo de ângulo",
+    "helpToggle": "Como funcionam os sinais e as definições",
+    "signTitle": "Convenção de sinais",
+    "signBody": "O dinheiro que pagas é negativo; o dinheiro que recebes é positivo. Pede emprestados R100,000 (PV = +100,000) e a tua prestação sai negativa.",
+    "ppyBody": "Pagamentos por ano e BGN/END: prime 2ND e depois N para alterar os pagamentos por ano (12, 1, 2, 4); 2ND e depois PV alterna entre END (pagamentos no fim de cada período) e BGN (no início). CPT e depois uma tecla calcula-a; 2ND e depois CPT limpa os cinco valores.",
+    "flowBody": "Fluxos de caixa: prime CF, escreve cada montante e prime = para o adicionar (o primeiro é hoje). Depois prime NPV (usa I/Y como taxa por período) ou IRR. 2ND e depois CF limpa a lista.",
+    "cfHint": "Escreve um montante e prime = para o adicionar. Prime CF para fechar.",
+    "cptHint": "Agora prime o valor a calcular",
+    "focus": {
+      "label": "Sessão de foco",
+      "finance": "Finanças",
+      "pause": "pausar",
+      "resume": "retomar",
+      "finished": "Sessão terminada — toca para concluir"
+    },
+    "finError": {
+      "missing": "Introduz primeiro os outros valores",
+      "no-solution": "Não há solução para estes valores",
+      "invalid": "Verifica os teus valores",
+      "syntax": "Verifica o que escreveste"
+    },
+    "annual": {
+      "title": "Novo ano letivo",
+      "subtitle": "Confirma os teus dados para que a calculadora e o plano se ajustem a ti.",
+      "confirm": "Confirmar e continuar",
+      "saving": "A guardar…",
+      "incomplete": "Preenche todos os campos.",
+      "saveError": "Não foi possível guardar. Tenta novamente."
+    }
+  },
+  "streak": {
+    "aria": "Sequência de estudo de {count} dias",
+    "toast": "Dia {count}. Muito bem.",
+    "milestone": "{count} dias seguidos. Consistência a sério.",
+    "share": "Partilhar a tua sequência",
+    "dismiss": "Dispensar",
+    "cardLabel": "dias a estudar seguidos",
+    "cardTagline": "Presente, todos os dias.",
+    "shareTitle": "A minha sequência de estudo",
+    "shareText": "{count} dias de estudo seguidos.",
+    "shareError": "Não foi possível criar a imagem. Tenta novamente."
+  },
+  "push": {
+    "title1": "O teu eu do futuro agradece por hoje",
+    "title2": "Uma sessão curta hoje, uma grande diferença no dia do exame",
+    "title3": "Sinceramente, aparecer hoje seria impressionante",
+    "bodyPlan": "{count, plural, one {# sessão} other {# sessões}}, cerca de {minutes} min: {subjects}.",
+    "examLine": "{days, plural, =0 {O exame de {subject} é hoje.} one {O exame de {subject} é daqui a # dia.} other {O exame de {subject} é daqui a # dias.}}",
+    "actionOpen": "Abrir o meu plano",
+    "cardTitle": "Recebe um lembrete diário de estudo",
+    "cardBody": "Um lembrete calmo por dia com o teu plano. Escolhe a hora que te convém e altera-a quando quiseres em Definições.",
+    "timeLabel": "Enviar às",
+    "enable": "Ativar",
+    "notNow": "Agora não",
+    "menuLabel": "Lembrete diário",
+    "sheetTitle": "Lembrete diário",
+    "save": "Guardar hora",
+    "turnOff": "Desativar",
+    "blocked": "As notificações estão bloqueadas para esta aplicação. Ativa-as nas definições do teu telemóvel.",
+    "iosHint": "Adiciona primeiro a aplicação ao ecrã principal e volta aqui para ativar os lembretes.",
+    "error": "Não foi possível ativar os lembretes. Tenta novamente.",
+    "savedToast": "Lembrete diário definido para as {time}. Altera-o quando quiseres em Definições.",
+    "offToast": "Lembrete diário desativado"
+  }
+}
